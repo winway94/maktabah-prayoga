@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maktabah Prayoga</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='9' y='28' width='22' height='38' rx='6' fill='%237A3E15'/%3E%3Crect x='39' y='28' width='22' height='38' rx='6' fill='%233B2E17'/%3E%3Crect x='69' y='28' width='22' height='38' rx='6' fill='%237A3E15'/%3E%3Crect x='9' y='70' width='22' height='6' rx='2' fill='%237A3E15'/%3E%3Crect x='39' y='70' width='22' height='6' rx='2' fill='%233B2E17'/%3E%3Crect x='69' y='70' width='22' height='6' rx='2' fill='%237A3E15'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --slate-950:#0f172a;
+    --slate-900:#1e293b;
+    --slate-800:#334155;
+    --slate-700:#475569;
+    --slate-500:#64748b;
+    --slate-300:#cbd5e1;
+    --slate-200:#e2e8f0;
+    --slate-100:#f1f5f9;
+    --slate-50:#f8fafc;
+    --teal-700:#0f766e;
+    --teal-600:#0d9488;
+    --teal-500:#14b8a6;
+    --teal-100:#ccfbf1;
+    --teal-50:#f0fdfa;
+    --red-500:#ef4444;
+    --red-50:#fef2f2;
+    --amber-500:#f59e0b;
+    --shadow: 0 1px 3px rgba(15,23,42,0.08), 0 1px 2px rgba(15,23,42,0.06);
+    --shadow-md: 0 4px 12px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.06);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+    background: linear-gradient(180deg, var(--slate-50), #eef2f5 400px);
+    color: var(--slate-800);
+    min-height:100vh;
+    padding: 20px;
+  }
+  .container{
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom: 24px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  header h1{
+    font-size: 1.5rem;
+    color: var(--slate-900);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  header p{
+    color: var(--slate-500);
+    font-size: 0.85rem;
+    margin-top:2px;
+  }
+  .badge-count{
+    background: var(--teal-600);
+    color:white;
+    font-weight:600;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    box-shadow: var(--shadow);
+  }
+  .brand-icon{
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display:inline-flex;
+  }
+  .brand-icon svg{ width:100%; height:100%; display:block; }
+  @media (max-width: 640px){
+    .brand-icon{ width: 28px; height: 28px; }
+  }
+  .main-grid{
+    display:grid;
+    grid-template-columns: 380px 1fr;
+    gap: 20px;
+    align-items:start;
+  }
+  @media (max-width: 900px){
+    .main-grid{ grid-template-columns: 1fr; }
+  }
+  .card{
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--slate-200);
+  }
+  .card h2{
+    font-size: 1.05rem;
+    color: var(--slate-900);
+    margin-bottom: 16px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  label.field-label{
+    display:block;
+    font-size: 0.78rem;
+    font-weight:600;
+    color: var(--slate-500);
+    margin-bottom: 5px;
+    margin-top: 14px;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  input[type=text], input[type=search], input[type=password], select{
+    width:100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--slate-200);
+    border-radius: 10px;
+    font-size: 1rem;
+    color: var(--slate-800);
+    background: var(--slate-50);
+    transition: border-color .15s, box-shadow .15s;
+    outline:none;
+  }
+  input[type=text]:focus, input[type=search]:focus, input[type=password]:focus, select:focus{
+    border-color: var(--teal-500);
+    box-shadow: 0 0 0 3px var(--teal-100);
+    background:white;
+  }
+  .isbn-row{
+    display:flex;
+    gap:8px;
+  }
+  .isbn-row input{ flex:1; }
+  .btn{
+    border:none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    font-weight:600;
+    cursor:pointer;
+    transition: transform .05s, background .15s, opacity .15s;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    white-space:nowrap;
+    min-height: 46px;
+  }
+  .btn:active{ transform: scale(0.97); }
+  .btn-scan{
+    background: var(--slate-800);
+    color:white;
+  }
+  .btn-scan:hover{ background: var(--slate-700); }
+  .btn-primary{
+    background: var(--teal-600);
+    color:white;
+    width:100%;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+  .btn-primary:hover{ background: var(--teal-700); }
+  .btn-danger{
+    background: var(--red-50);
+    color: var(--red-500);
+    padding: 9px 14px;
+    font-size: 0.82rem;
+    border: 1px solid #fecaca;
+    min-height: 40px;
+  }
+  .btn-danger:hover{ background: #fee2e2; }
+  .btn-close{
+    background: var(--slate-200);
+    color: var(--slate-700);
+    width:100%;
+    margin-top:10px;
+  }
+  #scannerContainer{
+    margin-top: 12px;
+    background: var(--slate-950);
+    border-radius: 12px;
+    padding: 10px;
+  }
+  #reader{
+    border-radius: 8px;
+    overflow:hidden;
+  }
+  #lookupStatus{
+    font-size: 0.8rem;
+    margin-top: 8px;
+    min-height: 18px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .status-ok{ color: var(--teal-700); }
+  .status-loading{ color: var(--amber-500); }
+  .status-err{ color: var(--red-500); }
+  .status-toggle{
+    display:flex;
+    gap:10px;
+    margin-top: 6px;
+  }
+  .status-toggle label{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding: 12px 10px;
+    border: 1.5px solid var(--slate-200);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    cursor:pointer;
+    color: var(--slate-600);
+    background: var(--slate-50);
+    min-height: 46px;
+  }
+  .status-toggle input{ accent-color: var(--teal-600); }
+  .status-toggle label.checked{
+    border-color: var(--teal-500);
+    background: var(--teal-50);
+    color: var(--teal-700);
+    font-weight:600;
+  }
+  .list-section .list-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 14px;
+    flex-wrap:wrap;
+    margin-bottom: 16px;
+  }
+  .list-header h2{ margin:0; }
+  #searchInput{ max-width: 260px; }
+  .table-wrap{
+    overflow-x:auto;
+    border: 1px solid var(--slate-200);
+    border-radius: 12px;
+  }
+  table{
+    width:100%;
+    border-collapse: collapse;
+    font-size: 0.87rem;
+    min-width: 600px;
+  }
+  thead th{
+    text-align:left;
+    background: var(--slate-100);
+    color: var(--slate-600);
+    font-weight:700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--slate-200);
+    position:sticky;
+    top:0;
+  }
+  tbody td{
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--slate-100);
+    vertical-align: top;
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background: var(--slate-50); }
+  .title-cell{ font-weight:600; color: var(--slate-900); }
+  .isbn-cell{ color: var(--slate-500); font-size:0.8rem; font-family: ui-monospace, monospace; }
+  .cat-chip{
+    display:inline-block;
+    background: var(--teal-50);
+    color: var(--teal-700);
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight:600;
+  }
+  .status-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight:600;
+  }
+  .status-chip.selesai{ background:#dcfce7; color:#15803d; }
+  .status-chip.belum{ background:#fef3c7; color:#b45309; }
+  .empty-state{
+    text-align:center;
+    padding: 40px 20px;
+    color: var(--slate-500);
+    font-size: 0.9rem;
+  }
+  footer{
+    text-align:center;
+    color: var(--slate-500);
+    font-size: 0.78rem;
+    margin-top: 24px;
+    padding-bottom: 10px;
+  }
+
+  details.sync-card{ margin-bottom: 20px; }
+  details.sync-card summary{
+    cursor:pointer;
+    font-weight:700;
+    color: var(--slate-800);
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size: 0.95rem;
+  }
+  details.sync-card summary::-webkit-details-marker{ display:none; }
+  details.sync-card summary::before{
+    content:"▶";
+    font-size:0.65rem;
+    color: var(--teal-600);
+    transition: transform .15s;
+  }
+  details.sync-card[open] summary::before{ transform: rotate(90deg); }
+  .sync-body{ margin-top: 16px; }
+  .sync-note{
+    font-size: 0.8rem;
+    color: var(--slate-500);
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .sync-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width:600px){ .sync-grid{ grid-template-columns: 1fr; } }
+  .sync-actions{
+    display:flex;
+    gap:10px;
+    margin-top: 14px;
+    flex-wrap:wrap;
+  }
+  .sync-actions .btn{ flex:1; min-width:160px; margin-top:0; }
+  .sync-status{
+    margin-top: 10px;
+    font-size: 0.82rem;
+    min-height: 18px;
+    font-weight:600;
+  }
+
+  /* ===== Mode Mobile: layout lebih rapat & sentuhan lebih besar ===== */
+  @media (max-width: 640px){
+    body{ padding: 12px; }
+    header{ margin-bottom: 16px; }
+    header h1{ font-size: 1.2rem; }
+    header p{ font-size: 0.8rem; }
+    .badge-count{ font-size: 0.8rem; padding: 5px 12px; }
+    .card{ padding: 16px; border-radius: 14px; }
+    .main-grid{ gap: 14px; }
+    details.sync-card summary{ font-size: 0.85rem; }
+
+    .list-header{
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+    #searchInput{ max-width: 100%; }
+
+    /* Tabel jadi kartu di layar sempit */
+    .table-wrap{ overflow-x: visible; border: none; }
+    table{ min-width: 0; }
+    thead{
+      position:absolute;
+      width:1px; height:1px;
+      overflow:hidden;
+      clip:rect(0 0 0 0);
+      white-space:nowrap;
+    }
+    tbody, tr, td{ display:block; width:100%; }
+    tbody tr{
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+    tbody tr:hover{ background:white; }
+    tbody tr:last-child{ margin-bottom:0; }
+    td{
+      border-bottom: none;
+      padding: 6px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    td::before{
+      content: attr(data-label);
+      font-size: 0.68rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:0.03em;
+      color: var(--slate-500);
+      flex-shrink:0;
+    }
+    td.title-cell{
+      display:block;
+      padding-bottom:10px;
+      margin-bottom:6px;
+      border-bottom: 1px dashed var(--slate-200) !important;
+      font-size: 1rem;
+    }
+    td.title-cell::before{
+      display:block;
+      margin-bottom:3px;
+    }
+    td.action-cell{ justify-content:flex-end; padding-top:10px; }
+    td.action-cell::before{ display:none; }
+    td.action-cell .btn-danger{ width:100%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <h1>
+        <span class="brand-icon">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" y="28" width="22" height="38" rx="6" fill="#7A3E15"/>
+            <rect x="39" y="28" width="22" height="38" rx="6" fill="#3B2E17"/>
+            <rect x="69" y="28" width="22" height="38" rx="6" fill="#7A3E15"/>
+            <rect x="9" y="70" width="22" height="6" rx="2" fill="#7A3E15"/>
+            <rect x="39" y="70" width="22" height="6" rx="2" fill="#3B2E17"/>
+            <rect x="69" y="70" width="22" height="6" rx="2" fill="#7A3E15"/>
+          </svg>
+        </span>
+        Maktabah Prayoga
+      </h1>
+      <p>Kelola koleksi buku Anda — tersimpan otomatis di perangkat ini</p>
+    </div>
+    <div class="badge-count"><span id="bookCount">0</span> Buku</div>
+  </header>
+
+  <details class="card sync-card" id="syncCard">
+    <summary>🔗 Sinkronisasi GitHub (opsional) — biar data sama di semua perangkat</summary>
+    <div class="sync-body">
+      <p class="sync-note">
+        Buat repo GitHub baru (disarankan <strong>private</strong>), lalu buat
+        <strong>Fine-grained Personal Access Token</strong> di GitHub dengan izin
+        <em>Contents: Read and write</em> khusus repo tersebut. Token hanya tersimpan
+        di LocalStorage browser ini dan dipakai langsung untuk memanggil GitHub API —
+        tidak dikirim ke server lain.
+      </p>
+      <div class="sync-grid">
+        <div>
+          <label class="field-label">Personal Access Token</label>
+          <input type="password" id="ghToken" placeholder="github_pat_xxxxxxxx">
+        </div>
+        <div>
+          <label class="field-label">Repo (owner/nama-repo)</label>
+          <input type="text" id="ghRepo" placeholder="username/koleksi-buku">
+        </div>
+        <div>
+          <label class="field-label">Nama File</label>
+          <input type="text" id="ghPath" placeholder="books.json" value="books.json">
+        </div>
+        <div>
+          <label class="field-label">Branch</label>
+          <input type="text" id="ghBranch" placeholder="main" value="main">
+        </div>
+      </div>
+      <div class="sync-actions">
+        <button class="btn btn-primary" id="ghSaveBtn">🔄 Simpan &amp; Sinkron Sekarang</button>
+        <button class="btn btn-close" id="ghDisconnectBtn" style="display:none;">Putuskan Sinkronisasi</button>
+      </div>
+      <div id="ghSyncStatus" class="sync-status"></div>
+    </div>
+  </details>
+
+  <div class="main-grid">
+
+    <!-- FORM SECTION -->
+    <section class="card form-section">
+      <h2>➕ Tambah Buku</h2>
+
+      <label class="field-label">Nomor ISBN</label>
+      <div class="isbn-row">
+        <input type="text" id="isbn" placeholder="cth: 9786020633174" inputmode="numeric">
+        <button class="btn btn-scan" id="scanBtn">📷 Scan</button>
+      </div>
+
+      <div id="scannerContainer" style="display:none;">
+        <div id="reader"></div>
+        <button class="btn btn-close" id="closeScanBtn">✕ Tutup Scanner</button>
+      </div>
+
+      <div id="lookupStatus"></div>
+
+      <label class="field-label">Judul Buku</label>
+      <input type="text" id="judul" placeholder="Judul buku">
+
+      <label class="field-label">Penulis</label>
+      <input type="text" id="penulis" placeholder="Nama penulis">
+
+      <label class="field-label">Kategori</label>
+      <select id="kategori">
+        <option value="Fiksi">Fiksi</option>
+        <option value="Non-Fiksi">Non-Fiksi</option>
+        <option value="Sains">Sains</option>
+        <option value="Teknologi">Teknologi</option>
+        <option value="Sejarah">Sejarah</option>
+        <option value="Biografi">Biografi</option>
+        <option value="Agama & Spiritual">Agama & Spiritual</option>
+        <option value="Bisnis & Ekonomi">Bisnis & Ekonomi</option>
+        <option value="Anak-anak">Anak-anak</option>
+        <option value="Komik & Grafis">Komik & Grafis</option>
+        <option value="Lainnya">Lainnya</option>
+      </select>
+
+      <label class="field-label">Status Bacaan</label>
+      <div class="status-toggle" id="statusToggle">
+        <label class="checked" id="labelBelum">
+          <input type="radio" name="status" value="belum" checked> Belum Selesai
+        </label>
+        <label id="labelSelesai">
+          <input type="radio" name="status" value="selesai"> Sudah Selesai
+        </label>
+      </div>
+
+      <button class="btn btn-primary" id="saveBtn">💾 Simpan Buku</button>
+    </section>
+
+    <!-- LIST SECTION -->
+    <section class="card list-section">
+      <div class="list-header">
+        <h2>📖 Koleksi Buku</h2>
+        <input type="search" id="searchInput" placeholder="🔍 Cari judul, penulis, atau ISBN...">
+      </div>
+      <div class="table-wrap">
+        <table id="bookTable">
+          <thead>
+            <tr>
+              <th>Judul</th>
+              <th>Penulis</th>
+              <th>Kategori</th>
+              <th>Status</th>
+              <th>ISBN</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="bookTbody"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState" style="display:none;">
+          Belum ada buku. Tambahkan buku pertama Anda di form sebelah kiri.
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</footer>
+</div>
+
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  const STORAGE_KEY = "personal_library_books_v1";
+  let books = [];
+  let html5QrCode = null;
+  let scannerRunning = false;
+
+  // ---------- Elements ----------
+  const isbnInput = document.getElementById("isbn");
+  const judulInput = document.getElementById("judul");
+  const penulisInput = document.getElementById("penulis");
+  const kategoriSelect = document.getElementById("kategori");
+  const saveBtn = document.getElementById("saveBtn");
+  const scanBtn = document.getElementById("scanBtn");
+  const closeScanBtn = document.getElementById("closeScanBtn");
+  const scannerContainer = document.getElementById("scannerContainer");
+  const lookupStatus = document.getElementById("lookupStatus");
+  const searchInput = document.getElementById("searchInput");
+  const bookTbody = document.getElementById("bookTbody");
+  const emptyState = document.getElementById("emptyState");
+  const bookCountEls = document.querySelectorAll("#bookCount");
+  const labelBelum = document.getElementById("labelBelum");
+  const labelSelesai = document.getElementById("labelSelesai");
+  const ghTokenInput = document.getElementById("ghToken");
+  const ghRepoInput = document.getElementById("ghRepo");
+  const ghPathInput = document.getElementById("ghPath");
+  const ghBranchInput = document.getElementById("ghBranch");
+  const ghSaveBtn = document.getElementById("ghSaveBtn");
+  const ghDisconnectBtn = document.getElementById("ghDisconnectBtn");
+  const ghSyncStatus = document.getElementById("ghSyncStatus");
+
+  const GH_CONFIG_KEY = "github_sync_config_v1";
+  let ghConfig = null;
+
+  // ---------- Storage ----------
+  function loadBooks(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      books = raw ? JSON.parse(raw) : [];
+    }catch(e){
+      books = [];
+    }
+  }
+  function saveBooks(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+  }
+
+  // ---------- Status toggle visuals ----------
+  document.querySelectorAll('input[name="status"]').forEach(radio=>{
+    radio.addEventListener("change", ()=>{
+      labelBelum.classList.toggle("checked", document.querySelector('input[value="belum"]').checked);
+      labelSelesai.classList.toggle("checked", document.querySelector('input[value="selesai"]').checked);
+    });
+  });
+
+  // ---------- Render table ----------
+  function renderTable(){
+    const query = searchInput.value.trim().toLowerCase();
+    const filtered = books.filter(b=>{
+      if(!query) return true;
+      return (b.judul||"").toLowerCase().includes(query) ||
+             (b.penulis||"").toLowerCase().includes(query) ||
+             (b.isbn||"").toLowerCase().includes(query) ||
+             (b.kategori||"").toLowerCase().includes(query);
+    }).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
+
+    bookTbody.innerHTML = "";
+
+    if(filtered.length === 0){
+      emptyState.style.display = "block";
+      emptyState.textContent = books.length === 0
+        ? "Belum ada buku. Tambahkan buku pertama Anda di form sebelah kiri."
+        : "Tidak ada buku yang cocok dengan pencarian.";
+    } else {
+      emptyState.style.display = "none";
+      filtered.forEach(b=>{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="title-cell" data-label="Judul">${escapeHtml(b.judul || "-")}</td>
+          <td data-label="Penulis">${escapeHtml(b.penulis || "-")}</td>
+          <td data-label="Kategori"><span class="cat-chip">${escapeHtml(b.kategori || "Lainnya")}</span></td>
+          <td data-label="Status"><span class="status-chip ${b.status === 'selesai' ? 'selesai' : 'belum'}">
+                ${b.status === 'selesai' ? '✅ Selesai' : '⏳ Belum'}
+              </span></td>
+          <td class="isbn-cell" data-label="ISBN">${escapeHtml(b.isbn || "-")}</td>
+          <td class="action-cell" data-label=""><button class="btn btn-danger" data-id="${b.id}">🗑 Hapus</button></td>
+        `;
+        bookTbody.appendChild(tr);
+      });
+    }
+
+    bookCountEls.forEach(el => el.textContent = books.length);
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+
+  bookTbody.addEventListener("click", (e)=>{
+    const btn = e.target.closest("button[data-id]");
+    if(!btn) return;
+    const id = btn.getAttribute("data-id");
+    if(confirm("Hapus buku ini dari koleksi?")){
+      books = books.filter(b => String(b.id) !== String(id));
+      saveBooks();
+      renderTable();
+      if(ghConfig) pushToGithub();
+    }
+  });
+
+  // ---------- GitHub Sync ----------
+  function loadGhConfig(){
+    try{
+      const raw = localStorage.getItem(GH_CONFIG_KEY);
+      ghConfig = raw ? JSON.parse(raw) : null;
+    }catch(e){ ghConfig = null; }
+    if(ghConfig){
+      ghTokenInput.value = ghConfig.token || "";
+      ghRepoInput.value = ghConfig.repo || "";
+      ghPathInput.value = ghConfig.path || "books.json";
+      ghBranchInput.value = ghConfig.branch || "main";
+      document.getElementById("syncCard").open = false;
+    }
+    updateSyncUIState();
+  }
+
+  function saveGhConfig(cfg){
+    ghConfig = cfg;
+    localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg));
+  }
+
+  function clearGhConfig(){
+    ghConfig = null;
+    localStorage.removeItem(GH_CONFIG_KEY);
+    ghTokenInput.value = "";
+    ghRepoInput.value = "";
+    ghPathInput.value = "books.json";
+    ghBranchInput.value = "main";
+    setSyncStatus("Sinkronisasi dinonaktifkan. Data hanya tersimpan lokal di perangkat ini.", "");
+    updateSyncUIState();
+  }
+
+  function updateSyncUIState(){
+    const connected = !!(ghConfig && ghConfig.token && ghConfig.repo);
+    ghDisconnectBtn.style.display = connected ? "inline-flex" : "none";
+  }
+
+  function setSyncStatus(msg, type){
+    ghSyncStatus.textContent = msg;
+    ghSyncStatus.className = "sync-status " + (type ? ("status-" + type) : "");
+  }
+
+  function b64EncodeUnicode(str){
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+      (match, p1) => String.fromCharCode('0x' + p1)));
+  }
+  function b64DecodeUnicode(str){
+    return decodeURIComponent(atob(str).split('').map(c =>
+      '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+  }
+
+  function ghHeaders(){
+    return {
+      "Authorization": "Bearer " + ghConfig.token,
+      "Accept": "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28"
+    };
+  }
+
+  function ghApiUrl(){
+    const cleanPath = ghConfig.path.replace(/^\/+/, "");
+    return `https://api.github.com/repos/${ghConfig.repo}/contents/${cleanPath}`;
+  }
+
+  async function fetchFromGithub(){
+    setSyncStatus("Mengambil data dari GitHub...", "loading");
+    try{
+      const res = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}`, { headers: ghHeaders() });
+      if(res.status === 404){
+        setSyncStatus("File belum ada di repo, membuat baru dari data lokal...", "loading");
+        await pushToGithub();
+        return;
+      }
+      if(!res.ok){
+        const errBody = await res.json().catch(()=>({}));
+        throw new Error(errBody.message || ("HTTP " + res.status));
+      }
+      const data = await res.json();
+      const content = b64DecodeUnicode(data.content.replace(/\n/g, ""));
+      const remoteBooks = JSON.parse(content);
+      if(Array.isArray(remoteBooks)){
+        books = remoteBooks;
+        saveBooks();
+        renderTable();
+      }
+      ghConfig.sha = data.sha;
+      saveGhConfig(ghConfig);
+      setSyncStatus("✔ Tersinkron — " + new Date().toLocaleTimeString('id-ID'), "ok");
+    }catch(err){
+      setSyncStatus("Gagal mengambil data: " + err.message, "err");
+    }
+  }
+
+  async function pushToGithub(){
+    if(!ghConfig || !ghConfig.token || !ghConfig.repo) return;
+    setSyncStatus("Menyinkronkan ke GitHub...", "loading");
+    try{
+      const body = {
+        message: "Update koleksi buku - " + new Date().toISOString(),
+        content: b64EncodeUnicode(JSON.stringify(books, null, 2)),
+        branch: ghConfig.branch
+      };
+      if(ghConfig.sha) body.sha = ghConfig.sha;
+
+      let res = await fetch(ghApiUrl(), {
+        method: "PUT",
+        headers: { ...ghHeaders(), "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+
+      if(!res.ok && (res.status === 409 || res.status === 422)){
+        // sha basi -> ambil sha terbaru lalu retry sekali
+        const getRes = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}`, { headers: ghHeaders() });
+        if(getRes.ok){
+          const getData = await getRes.json();
+          body.sha = getData.sha;
+          res = await fetch(ghApiUrl(), {
+            method: "PUT",
+            headers: { ...ghHeaders(), "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+          });
+        }
+      }
+
+      if(!res.ok){
+        const errBody = await res.json().catch(()=>({}));
+        throw new Error(errBody.message || ("HTTP " + res.status));
+      }
+
+      const data = await res.json();
+      ghConfig.sha = data.content.sha;
+      saveGhConfig(ghConfig);
+      setSyncStatus("✔ Tersinkron — " + new Date().toLocaleTimeString('id-ID'), "ok");
+    }catch(err){
+      setSyncStatus("Gagal menyinkronkan: " + err.message, "err");
+    }
+  }
+
+  ghSaveBtn.addEventListener("click", async ()=>{
+    const token = ghTokenInput.value.trim();
+    const repo = ghRepoInput.value.trim();
+    const path = ghPathInput.value.trim() || "books.json";
+    const branch = ghBranchInput.value.trim() || "main";
+    if(!token || !repo){
+      setSyncStatus("Token dan Repo wajib diisi (format repo: username/nama-repo).", "err");
+      return;
+    }
+    saveGhConfig({ token, repo, path, branch, sha: (ghConfig && ghConfig.repo === repo) ? ghConfig.sha : null });
+    updateSyncUIState();
+    await fetchFromGithub();
+  });
+
+  ghDisconnectBtn.addEventListener("click", ()=>{
+    if(confirm("Putuskan sinkronisasi GitHub? Data lokal di perangkat ini tidak akan terhapus.")){
+      clearGhConfig();
+    }
+  });
+
+  searchInput.addEventListener("input", renderTable);
+
+  // ---------- Save new book ----------
+  function resetForm(){
+    isbnInput.value = "";
+    judulInput.value = "";
+    penulisInput.value = "";
+    kategoriSelect.value = "Fiksi";
+    document.querySelector('input[value="belum"]').checked = true;
+    labelBelum.classList.add("checked");
+    labelSelesai.classList.remove("checked");
+    setLookupStatus("", "");
+  }
+
+  saveBtn.addEventListener("click", ()=>{
+    const judul = judulInput.value.trim();
+    const isbn = isbnInput.value.trim();
+
+    if(!judul){
+      setLookupStatus("Judul buku wajib diisi.", "err");
+      judulInput.focus();
+      return;
+    }
+
+    const statusVal = document.querySelector('input[name="status"]:checked').value;
+
+    const newBook = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+      isbn: isbn,
+      judul: judul,
+      penulis: penulisInput.value.trim(),
+      kategori: kategoriSelect.value,
+      status: statusVal,
+      createdAt: Date.now()
+    };
+
+    books.push(newBook);
+    saveBooks();
+    renderTable();
+    resetForm();
+    if(ghConfig) pushToGithub();
+  });
+
+  // ---------- Open Library lookup ----------
+  function setLookupStatus(msg, type){
+    lookupStatus.textContent = msg;
+    lookupStatus.className = type ? ("status-" + type) : "";
+  }
+
+  let lookupDebounce = null;
+  isbnInput.addEventListener("input", ()=>{
+    clearTimeout(lookupDebounce);
+    const val = isbnInput.value.trim().replace(/[-\s]/g,"");
+    if(val.length < 10){
+      setLookupStatus("", "");
+      return;
+    }
+    lookupDebounce = setTimeout(()=> lookupISBN(val), 500);
+  });
+
+  function guessCategory(subjects){
+    if(!subjects || subjects.length === 0) return null;
+    const text = subjects.map(s => (s.name||"").toLowerCase()).join(" | ");
+    const map = [
+      ["Sains", ["science","physics","biology","chemistry","astronomy"]],
+      ["Teknologi", ["technology","computer","programming","engineering"]],
+      ["Sejarah", ["history"]],
+      ["Biografi", ["biography","autobiography"]],
+      ["Agama & Spiritual", ["religion","spiritual","islam","christian","buddhis"]],
+      ["Bisnis & Ekonomi", ["business","economics","finance","management"]],
+      ["Anak-anak", ["children","juvenile"]],
+      ["Komik & Grafis", ["comic","graphic novel"]],
+      ["Fiksi", ["fiction","fantasy","novel","romance"]],
+      ["Non-Fiksi", ["nonfiction","non-fiction"]]
+    ];
+    for(const [label, keywords] of map){
+      if(keywords.some(k => text.includes(k))) return label;
+    }
+    return null;
+  }
+
+  async function lookupISBN(isbn){
+    setLookupStatus("Mencari data buku...", "loading");
+    try{
+      const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${encodeURIComponent(isbn)}&format=json&jscmd=data`;
+      const res = await fetch(url);
+      if(!res.ok) throw new Error("Gagal menghubungi Open Library");
+      const data = await res.json();
+      const key = "ISBN:" + isbn;
+      const info = data[key];
+
+      if(!info){
+        setLookupStatus("Data tidak ditemukan untuk ISBN ini. Isi manual ya.", "err");
+        return;
+      }
+
+      if(info.title && !judulInput.value.trim()){
+        judulInput.value = info.title;
+      }
+      if(info.authors && info.authors.length > 0){
+        penulisInput.value = info.authors.map(a=>a.name).join(", ");
+      }
+      const guessed = guessCategory(info.subjects);
+      if(guessed){
+        kategoriSelect.value = guessed;
+      }
+
+      setLookupStatus("✔ Data buku berhasil ditemukan & diisi otomatis.", "ok");
+    }catch(err){
+      setLookupStatus("Tidak dapat mengambil data (cek koneksi internet).", "err");
+    }
+  }
+
+  // ---------- Barcode Scanner ----------
+  scanBtn.addEventListener("click", startScanner);
+  closeScanBtn.addEventListener("click", stopScanner);
+
+  function startScanner(){
+    scannerContainer.style.display = "block";
+    setLookupStatus("Mengaktifkan kamera...", "loading");
+
+    html5QrCode = new Html5Qrcode("reader");
+    const config = { fps: 10, qrbox: { width: 250, height: 120 } };
+
+    Html5Qrcode.getCameras().then(cameras => {
+      if(!cameras || cameras.length === 0){
+        setLookupStatus("Kamera tidak ditemukan pada perangkat ini.", "err");
+        scannerContainer.style.display = "none";
+        return;
+      }
+      // Prefer back camera if available
+      const backCam = cameras.find(c => /back|rear|environment/i.test(c.label)) || cameras[cameras.length-1];
+      html5QrCode.start(
+        backCam.id,
+        config,
+        (decodedText)=>{
+          isbnInput.value = decodedText.replace(/[^0-9Xx]/g,"");
+          stopScanner();
+          const cleaned = isbnInput.value.trim();
+          if(cleaned.length >= 10){
+            lookupISBN(cleaned);
+          }
+        },
+        ()=>{ /* ignore per-frame scan errors */ }
+      ).then(()=>{
+        scannerRunning = true;
+        setLookupStatus("Arahkan kamera ke barcode ISBN buku.", "loading");
+      }).catch(err=>{
+        setLookupStatus("Gagal membuka kamera: " + err, "err");
+        scannerContainer.style.display = "none";
+      });
+    }).catch(err=>{
+      setLookupStatus("Izin kamera ditolak atau tidak tersedia.", "err");
+      scannerContainer.style.display = "none";
+    });
+  }
+
+  function stopScanner(){
+    if(html5QrCode && scannerRunning){
+      html5QrCode.stop().then(()=>{
+        html5QrCode.clear();
+        scannerRunning = false;
+        scannerContainer.style.display = "none";
+      }).catch(()=>{
+        scannerContainer.style.display = "none";
+      });
+    } else {
+      scannerContainer.style.display = "none";
+    }
+  }
+
+  // ---------- Init ----------
+  loadBooks();
+  renderTable();
+  loadGhConfig();
+  if(ghConfig && ghConfig.token && ghConfig.repo){
+    fetchFromGithub();
+  }
+})();
+</script>
+</body>
+</html>
