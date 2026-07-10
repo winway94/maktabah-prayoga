@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0d9488">
+<meta name="theme-color" content="#7a3e15">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -23,11 +23,13 @@
     --slate-200:#e2e8f0;
     --slate-100:#f1f5f9;
     --slate-50:#f8fafc;
-    --teal-700:#0f766e;
-    --teal-600:#0d9488;
-    --teal-500:#14b8a6;
-    --teal-100:#ccfbf1;
-    --teal-50:#f0fdfa;
+    --brand-900:#3b2e17;
+    --brand-700:#7a3e15;
+    --brand-600:#95501c;
+    --brand-500:#b06a2c;
+    --brand-400:#c98a4e;
+    --brand-100:#f3e3cc;
+    --brand-50:#faf3ea;
     --red-500:#ef4444;
     --red-50:#fef2f2;
     --amber-500:#f59e0b;
@@ -67,7 +69,7 @@
     margin-top:2px;
   }
   .badge-count{
-    background: var(--teal-600);
+    background: var(--brand-600);
     color:white;
     font-weight:600;
     padding: 6px 14px;
@@ -132,8 +134,8 @@
     outline:none;
   }
   input[type=text]:focus, input[type=search]:focus, input[type=password]:focus, select:focus{
-    border-color: var(--teal-500);
-    box-shadow: 0 0 0 3px var(--teal-100);
+    border-color: var(--brand-500);
+    box-shadow: 0 0 0 3px var(--brand-100);
     background:white;
   }
   .isbn-row{
@@ -170,14 +172,14 @@
   }
   .btn-scan:hover{ background: var(--slate-700); }
   .btn-primary{
-    background: var(--teal-600);
+    background: var(--brand-600);
     color:white;
     width:100%;
     margin-top: 20px;
     padding: 12px;
     font-size: 0.95rem;
   }
-  .btn-primary:hover{ background: var(--teal-700); }
+  .btn-primary:hover{ background: var(--brand-700); }
   .btn-danger{
     background: var(--red-50);
     color: var(--red-500);
@@ -187,14 +189,14 @@
     min-height: 40px;
   }
   .btn-edit{
-    background: var(--teal-50);
-    color: var(--teal-700);
+    background: var(--brand-50);
+    color: var(--brand-700);
     padding: 9px 14px;
     font-size: 0.82rem;
-    border: 1px solid #99f6e4;
+    border: 1px solid #e3c39a;
     min-height: 40px;
   }
-  .btn-edit:hover{ background: #ccfbf1; }
+  .btn-edit:hover{ background: #f3e3cc; }
   .row-actions{
     display:flex;
     gap:8px;
@@ -205,6 +207,12 @@
     color: var(--slate-500);
   }
   tbody tr.clickable-row{ cursor: pointer; }
+  tbody tr.row-dipinjam{
+    background-color: #fff7ed;
+    border-left: 4px solid #f97316;
+  }
+  tbody tr.row-dipinjam:hover{ background-color: #ffedd5; }
+  tbody tr.row-dipinjam td:first-child{ border-radius: 0; }
 
   /* ===== Modal Detail Buku ===== */
   .modal-overlay{
@@ -244,6 +252,79 @@
     justify-content:center;
   }
   .modal-close:hover{ background: var(--slate-200); }
+
+  /* ===== Konfirmasi Hapus ===== */
+  .confirm-card{
+    max-width: 380px;
+    text-align: center;
+    padding: 30px 24px 24px;
+  }
+  .confirm-icon{
+    font-size: 2.4rem;
+    margin-bottom: 10px;
+  }
+  .confirm-title{
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--slate-900);
+    margin-bottom: 8px;
+  }
+  .confirm-message{
+    font-size: 0.92rem;
+    color: var(--slate-600);
+    line-height: 1.5;
+    margin-bottom: 22px;
+  }
+  .confirm-actions{
+    display: flex;
+    gap: 10px;
+  }
+  .confirm-actions .btn{
+    flex: 1;
+    justify-content: center;
+  }
+
+  /* ===== Toast Notifikasi ===== */
+  .toast-container{
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    max-width: 460px;
+    padding: 0 16px;
+    pointer-events: none;
+  }
+  .toast{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--slate-900);
+    color: white;
+    padding: 13px 18px;
+    border-radius: 13px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 14px 34px rgba(15,23,42,0.3);
+    width: 100%;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .25s ease, transform .25s ease;
+    pointer-events: auto;
+  }
+  .toast.show{ opacity: 1; transform: translateY(0); }
+  .toast-icon{ font-size: 1.1rem; flex-shrink: 0; }
+  .toast-success{ background: var(--brand-700); }
+  .toast-error{ background: #b91c1c; }
+  @media (max-width: 640px){
+    .toast-container{ bottom: 16px; }
+    .toast{ font-size: 0.85rem; padding: 12px 15px; }
+  }
   .detail-cover-row{
     display:flex;
     gap:16px;
@@ -328,7 +409,7 @@
   }
   .progress-fill{
     height:100%;
-    background: linear-gradient(90deg, var(--teal-500), var(--teal-700));
+    background: linear-gradient(90deg, var(--brand-500), var(--brand-700));
     border-radius: 999px;
     transition: width .2s;
   }
@@ -394,9 +475,16 @@
     align-items:center;
     gap:6px;
   }
-  .status-ok{ color: var(--teal-700); }
+  .status-ok{ color: var(--brand-700); }
   .status-loading{ color: var(--amber-500); }
   .status-err{ color: var(--red-500); }
+  #lookupStatus a{
+    color: var(--brand-600);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  #lookupStatus a:hover{ color: var(--brand-700); }
   .status-toggle{
     display:flex;
     gap:10px;
@@ -418,11 +506,11 @@
     background: var(--slate-50);
     min-height: 46px;
   }
-  .status-toggle input{ accent-color: var(--teal-600); }
+  .status-toggle input{ accent-color: var(--brand-600); }
   .status-toggle label.checked{
-    border-color: var(--teal-500);
-    background: var(--teal-50);
-    color: var(--teal-700);
+    border-color: var(--brand-500);
+    background: var(--brand-50);
+    color: var(--brand-700);
     font-weight:600;
   }
   .lending-fields{
@@ -448,11 +536,19 @@
   }
   .list-header h2{ margin:0; }
 
+  .filter-group{ margin-bottom: 14px; }
+  .filter-group-label{
+    font-size: 0.7rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color: var(--slate-500);
+    margin-bottom: 7px;
+  }
   .category-filters{
     display:flex;
     flex-wrap:wrap;
     gap: 8px;
-    margin-bottom: 16px;
   }
   .cat-filter-btn{
     border: 1.5px solid var(--slate-200);
@@ -466,10 +562,10 @@
     transition: all .12s;
     white-space:nowrap;
   }
-  .cat-filter-btn:hover{ border-color: var(--teal-500); color: var(--teal-700); }
+  .cat-filter-btn:hover{ border-color: var(--brand-500); color: var(--brand-700); }
   .cat-filter-btn.active{
-    background: var(--teal-600);
-    border-color: var(--teal-600);
+    background: var(--brand-600);
+    border-color: var(--brand-600);
     color: white;
   }
 
@@ -496,7 +592,7 @@
     align-items:center;
     gap:6px;
   }
-  .status-tab-btn:hover{ border-color: var(--teal-400, var(--teal-500)); color: var(--teal-700); }
+  .status-tab-btn:hover{ border-color: var(--brand-400, var(--brand-500)); color: var(--brand-700); }
   .status-tab-btn.active{
     background: var(--slate-900);
     border-color: var(--slate-900);
@@ -552,12 +648,20 @@
   .isbn-cell{ color: var(--slate-500); font-size:0.8rem; font-family: ui-monospace, monospace; }
   .cat-chip{
     display:inline-block;
-    background: var(--teal-50);
-    color: var(--teal-700);
+    background: var(--brand-50);
+    color: var(--brand-700);
     padding: 3px 9px;
     border-radius: 999px;
     font-size: 0.74rem;
     font-weight:600;
+  }
+  .type-chip{
+    background: var(--slate-100);
+    color: var(--slate-600);
+    margin-left: 5px;
+  }
+  @media (max-width: 640px){
+    .type-chip{ margin-left:0; margin-top:5px; }
   }
   .status-chip{
     display:inline-flex;
@@ -585,7 +689,7 @@
   }
   footer p{ margin: 0 0 4px; }
   .version-tag{
-    color: var(--teal-700);
+    color: var(--brand-700);
     font-weight:600;
     font-size: 0.78rem;
     margin-bottom: 8px !important;
@@ -601,7 +705,7 @@
     text-decoration: underline;
     text-underline-offset: 2px;
   }
-  .changelog-trigger:hover{ color: var(--teal-700); }
+  .changelog-trigger:hover{ color: var(--brand-700); }
   .changelog-modal-title{
     font-size: 1.05rem;
     color: var(--slate-900);
@@ -642,7 +746,7 @@
   details.sync-card summary::before{
     content:"▶";
     font-size:0.65rem;
-    color: var(--teal-600);
+    color: var(--brand-600);
     transition: transform .15s;
   }
   details.sync-card[open] summary::before{ transform: rotate(90deg); }
@@ -678,8 +782,8 @@
   }
   .ai-result{
     margin-top: 14px;
-    background: var(--teal-50);
-    border: 1px solid #99f6e4;
+    background: var(--brand-50);
+    border: 1px solid #e3c39a;
     border-radius: 12px;
     padding: 14px 16px;
     font-size: 0.88rem;
@@ -699,17 +803,17 @@
   .ai-feature-card{
     position:relative;
     overflow:hidden;
-    background: linear-gradient(135deg, #0f172a 0%, #134e4a 55%, #0d9488 100%);
+    background: linear-gradient(135deg, #201509 0%, #4a2e12 55%, #95501c 100%);
     border-radius: 18px;
     padding: 24px 26px;
     margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(13,148,136,0.25);
+    box-shadow: 0 10px 30px rgba(122,62,21,0.3);
   }
   .ai-feature-glow{
     position:absolute;
     top:-60px; right:-60px;
     width:200px; height:200px;
-    background: radial-gradient(circle, rgba(45,212,191,0.35), transparent 70%);
+    background: radial-gradient(circle, rgba(217,162,92,0.35), transparent 70%);
     pointer-events:none;
   }
   .ai-feature-header{
@@ -740,7 +844,7 @@
   }
   .ai-feature-subtitle{
     font-size: 0.78rem;
-    color: #99f6e4;
+    color: #e8c9a0;
     font-weight:600;
     margin-top: 2px;
   }
@@ -755,8 +859,8 @@
   .ai-feature-btn{
     position:relative;
     border:none;
-    background: linear-gradient(135deg, #2dd4bf, #0d9488);
-    color: #042f2e;
+    background: linear-gradient(135deg, #d9a25c, #7a3e15);
+    color: #2b1a0a;
     font-weight:700;
     font-size: 0.92rem;
     padding: 13px 22px;
@@ -765,13 +869,13 @@
     display:inline-flex;
     align-items:center;
     gap:8px;
-    box-shadow: 0 6px 18px rgba(45,212,191,0.35);
+    box-shadow: 0 6px 18px rgba(217,162,92,0.35);
     transition: transform .12s, box-shadow .12s;
     min-height: 46px;
   }
   .ai-feature-btn:hover{
     transform: translateY(-1px);
-    box-shadow: 0 8px 22px rgba(45,212,191,0.45);
+    box-shadow: 0 8px 22px rgba(217,162,92,0.45);
   }
   .ai-feature-btn:active{ transform: translateY(0); }
   .ai-feature-btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
@@ -784,7 +888,7 @@
     50% { transform: scale(1.25) rotate(15deg); opacity:0.7; }
   }
   .ai-feature-card #aiStatus{ color: rgba(255,255,255,0.9); }
-  .ai-feature-card #aiStatus.status-ok{ color: #5eead4; }
+  .ai-feature-card #aiStatus.status-ok{ color: #f0c48a; }
   .ai-feature-card #aiStatus.status-err{ color: #fca5a5; }
   .ai-feature-card #aiStatus.status-loading{ color: #fcd34d; }
   .ai-feature-card .ai-result{
@@ -796,6 +900,47 @@
   @media (max-width: 640px){
     .ai-feature-card{ padding: 20px 18px; }
     .ai-feature-title{ font-size: 1.02rem; }
+  }
+
+  /* ===== Nav menu mobile: Dasbor vs Tambah Buku ===== */
+  .mobile-nav-tabs{ display:none; }
+  @media (max-width: 900px){
+    .mobile-nav-tabs{
+      display:flex;
+      gap:8px;
+      margin-bottom:16px;
+      position:sticky;
+      top:0;
+      z-index:50;
+      background: var(--slate-50);
+      padding: 6px 0 10px;
+    }
+    .mobile-nav-tabs button{
+      flex:1;
+      border:1.5px solid var(--slate-200);
+      background:white;
+      color:var(--slate-600);
+      font-weight:700;
+      font-size:0.88rem;
+      padding:12px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      transition: all .12s;
+      min-height:46px;
+    }
+    .mobile-nav-tabs button.active{
+      background: var(--brand-600);
+      border-color: var(--brand-600);
+      color:white;
+      box-shadow: var(--shadow-md);
+    }
+    body[data-mobile-view="dashboard"] .form-section{ display:none; }
+    body[data-mobile-view="tambah"] .ai-feature-card{ display:none; }
+    body[data-mobile-view="tambah"] .list-section{ display:none; }
   }
 
   /* ===== Mode Mobile: layout lebih rapat & sentuhan lebih besar ===== */
@@ -815,6 +960,40 @@
       gap: 10px;
     }
     #searchInput{ max-width: 100%; }
+
+    /* Filter lebih rapi di mobile: scroll horizontal, tidak menumpuk banyak baris */
+    .status-tabs{
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 12px;
+      margin: 0 -16px 12px;
+      padding-left: 16px;
+      padding-right: 16px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .status-tabs::-webkit-scrollbar{ display:none; }
+    .status-tab-btn{
+      font-size: 0.78rem;
+      padding: 8px 13px;
+      flex-shrink: 0;
+    }
+    .filter-group{ margin: 0 -16px 12px; padding: 0 16px; }
+    .filter-group-label{ font-size: 0.66rem; margin-bottom: 6px; }
+    .category-filters{
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 6px;
+    }
+    .category-filters::-webkit-scrollbar{ display:none; }
+    .cat-filter-btn{
+      font-size: 0.74rem;
+      padding: 6px 12px;
+      flex-shrink: 0;
+    }
 
     /* Tabel jadi kartu di layar sempit */
     .table-wrap{ overflow-x: visible; border: none; }
@@ -872,7 +1051,7 @@
   }
 </style>
 </head>
-<body>
+<body data-mobile-view="dashboard">
 <div class="container">
 
   <header>
@@ -890,12 +1069,17 @@
         </span>
         Maktabah Prayoga
       </h1>
-      <p>Kelola koleksi buku Anda — tersimpan otomatis di perangkat ini</p>
+      <p>Menata Buku. Membangun Peradaban.</p>
     </div>
     <div class="badge-count"><span id="bookCount">0</span> Buku</div>
   </header>
 
   <div id="ghSyncStatus" class="sr-only-status"></div>
+
+  <nav class="mobile-nav-tabs" id="mobileNavTabs">
+    <button type="button" class="active" data-mobile-tab="dashboard">🏠 Dasbor</button>
+    <button type="button" data-mobile-tab="tambah">➕ Tambah Buku</button>
+  </nav>
 
   <div class="ai-feature-card">
     <div class="ai-feature-glow"></div>
@@ -957,6 +1141,12 @@
         <option value="Lainnya">Lainnya</option>
       </select>
 
+      <label class="field-label">Jenis Buku</label>
+      <select id="jenisBuku">
+        <option value="cetak">📘 Cetak (Fisik)</option>
+        <option value="digital">💻 Digital (PDF)</option>
+      </select>
+
       <div class="field-row">
         <div>
           <label class="field-label">Tahun Terbit</label>
@@ -1006,7 +1196,14 @@
         <input type="search" id="searchInput" placeholder="🔍 Cari judul, penulis, atau ISBN...">
       </div>
       <div class="status-tabs" id="statusTabs"></div>
-      <div class="category-filters" id="categoryFilters"></div>
+      <div class="filter-group">
+        <div class="filter-group-label">Jenis Buku</div>
+        <div class="category-filters" id="typeFilters"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-group-label">Kategori</div>
+        <div class="category-filters" id="categoryFilters"></div>
+      </div>
       <div class="table-wrap">
         <table id="bookTable">
           <thead>
@@ -1034,7 +1231,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.16.3</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.20.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1044,6 +1241,10 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.20.0</strong> — Baris tabel untuk buku berstatus "Dipinjam" kini ditandai visual: latar pastel oranye + garis kiri oranye, dan emoji 👤 di depan judul, supaya langsung terlihat mencolok saat aplikasi dibuka.</li>
+        <li><strong>v1.19.0</strong> — Pencarian ISBN otomatis sekarang bertingkat 3 lapis: Google Books → fallback Open Library (kalau tidak ketemu) → tautan manual ke katalog ISBN Perpusnas (kalau keduanya tidak ketemu).</li>
+        <li><strong>v1.18.0</strong> — Notifikasi (toast) muncul saat buku berhasil disimpan/diperbarui/dihapus; hapus buku sekarang lewat dialog konfirmasi khusus (bukan popup bawaan browser) yang menanyakan kepastian sebelum data dihapus.</li>
+        <li><strong>v1.17.0</strong> — Perbaikan key Gemini AI (format key resmi, error OAuth teratasi); tema warna diganti sesuai palet logo (coklat &amp; amber, bukan teal); menu "Tambah Buku" dipisah jadi tab tersendiri di versi mobile (tampilan awal jadi dasbor koleksi); filter kategori &amp; status dirapikan (scroll horizontal) di mobile; tambah filter Jenis Buku (Cetak / Digital PDF); tagline diganti jadi "Menata Buku. Membangun Peradaban."</li>
         <li><strong>v1.16.3</strong> — Panel "Sumber Data ISBN: Google Books" disembunyikan dari tampilan (tetap otomatis aktif di background), konsisten dengan panel GitHub Sync &amp; Gemini AI.</li>
         <li><strong>v1.16.2</strong> — Perbaikan bug: status sinkronisasi GitHub sempat muncul tidak sengaja di layar (mis. "Failed to fetch"); sekarang benar-benar tersembunyi seperti seharusnya.</li>
         <li><strong>v1.16.1</strong> — Key Google Books API diganti dengan key resmi format Google Cloud yang benar (kuota pencarian ISBN kini maksimal).</li>
@@ -1077,6 +1278,22 @@
       <div id="detailModalBody"></div>
     </div>
   </div>
+
+  <!-- KONFIRMASI HAPUS BUKU -->
+  <div class="modal-overlay confirm-overlay" id="confirmDeleteOverlay">
+    <div class="modal-card confirm-card">
+      <div class="confirm-icon">🗑️</div>
+      <h3 class="confirm-title">Hapus Buku Ini?</h3>
+      <p class="confirm-message" id="confirmDeleteMessage">Apakah kamu yakin buku ini akan dihapus dari koleksi?</p>
+      <div class="confirm-actions">
+        <button class="btn btn-close" id="confirmDeleteCancelBtn" style="margin-top:0;">Batal</button>
+        <button class="btn btn-danger" id="confirmDeleteOkBtn" style="margin-top:0;">🗑 Ya, Hapus</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFIKASI TOAST -->
+  <div class="toast-container" id="toastContainer"></div>
 </div>
 
 <script>
@@ -1102,6 +1319,11 @@
   let editingBookId = null;
   const detailModalOverlay = document.getElementById("detailModalOverlay");
   const detailModalCard = document.getElementById("detailModalCard");
+  const toastContainer = document.getElementById("toastContainer");
+  const confirmDeleteOverlay = document.getElementById("confirmDeleteOverlay");
+  const confirmDeleteMessage = document.getElementById("confirmDeleteMessage");
+  const confirmDeleteCancelBtn = document.getElementById("confirmDeleteCancelBtn");
+  const confirmDeleteOkBtn = document.getElementById("confirmDeleteOkBtn");
   const detailModalClose = document.getElementById("detailModalClose");
   const detailModalBody = document.getElementById("detailModalBody");
   const scanBtn = document.getElementById("scanBtn");
@@ -1123,6 +1345,10 @@
   const peminjamInput = document.getElementById("peminjamInput");
   const tanggalPinjamInput = document.getElementById("tanggalPinjamInput");
   const ghSyncStatus = document.getElementById("ghSyncStatus");
+  const jenisBukuSelect = document.getElementById("jenisBuku");
+  const typeFiltersEl = document.getElementById("typeFilters");
+  let activeTypeFilter = "Semua";
+  const mobileNavTabs = document.getElementById("mobileNavTabs");
   const aiRecommendBtn = document.getElementById("aiRecommendBtn");
   const aiStatus = document.getElementById("aiStatus");
   const aiResultBox = document.getElementById("aiResultBox");
@@ -1134,7 +1360,7 @@
   // halaman ini. Siapa pun yang punya link ini bisa memakai key Gemini kamu
   // (kuota/biaya pemakaian bisa terpakai oleh orang lain). Kalau curiga
   // disalahgunakan, hapus/rotasi key ini lewat Google AI Studio kapan saja.
-  const EMBEDDED_GEMINI_KEY = "AQ.Ab8RN6KHuG_99yu0UdOwXcPHR0sCCkOCh10ZOe-lzkHiBNpjgg";
+  const EMBEDDED_GEMINI_KEY = "AIzaSyCHHb6v2Jnv7O5w8eCi6vKtEVBzK1SWVos";
 
   const GOOGLE_BOOKS_KEY_STORAGE = "maktabah_google_books_key";
   // ⚠️ PERHATIAN KEAMANAN ⚠️
@@ -1194,6 +1420,7 @@
   function renderTable(){
     renderCategoryFilters();
     renderStatusTabs();
+    renderTypeFilters();
 
     const query = searchInput.value.trim().toLowerCase();
     const filtered = books.filter(b=>{
@@ -1208,7 +1435,9 @@
              (b.kategori || "Lainnya") === activeCategoryFilter;
       const bookStatus = b.status || "belum";
       const matchStatus = activeStatusFilter === "semua" || bookStatus === activeStatusFilter;
-      return matchQuery && matchCategory && matchStatus;
+      const bookType = b.jenisBuku === "digital" ? "digital" : "cetak";
+      const matchType = activeTypeFilter === "Semua" || bookType === activeTypeFilter;
+      return matchQuery && matchCategory && matchStatus && matchType;
     }).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
 
     bookTbody.innerHTML = "";
@@ -1222,12 +1451,16 @@
       emptyState.style.display = "none";
       filtered.forEach(b=>{
         const tr = document.createElement("tr");
-        tr.className = "clickable-row";
+        const isDipinjam = b.status === "dipinjam";
+        tr.className = "clickable-row" + (isDipinjam ? " row-dipinjam" : "");
         tr.setAttribute("data-book-id", b.id);
         tr.innerHTML = `
-          <td class="title-cell" data-label="Judul">${escapeHtml(b.judul || "-")}</td>
+          <td class="title-cell" data-label="Judul">${isDipinjam ? "👤 " : ""}${escapeHtml(b.judul || "-")}</td>
           <td data-label="Penulis">${escapeHtml(b.penulis || "-")}</td>
-          <td data-label="Kategori"><span class="cat-chip">${escapeHtml(b.kategori || "Lainnya")}</span></td>
+          <td data-label="Kategori">
+            <span class="cat-chip">${escapeHtml(b.kategori || "Lainnya")}</span>
+            <span class="cat-chip type-chip">${b.jenisBuku === "digital" ? "💻 Digital" : "📘 Cetak"}</span>
+          </td>
           <td data-label="Status">${renderStatusChip(b)}</td>
           <td class="isbn-cell" data-label="ISBN">${escapeHtml(b.isbn || "-")}</td>
           <td class="meta-cell" data-label="Tahun">${escapeHtml(b.tahunTerbit || "-")}</td>
@@ -1318,11 +1551,89 @@
     renderTable();
   });
 
+  function renderTypeFilters(){
+    const counts = { cetak: 0, digital: 0 };
+    books.forEach(b=>{
+      const t = b.jenisBuku === "digital" ? "digital" : "cetak";
+      counts[t]++;
+    });
+
+    let html = `<button type="button" class="cat-filter-btn ${activeTypeFilter === 'Semua' ? 'active' : ''}" data-type="Semua">📚 Semua (${books.length})</button>`;
+    html += `<button type="button" class="cat-filter-btn ${activeTypeFilter === 'cetak' ? 'active' : ''}" data-type="cetak">📘 Cetak (${counts.cetak})</button>`;
+    html += `<button type="button" class="cat-filter-btn ${activeTypeFilter === 'digital' ? 'active' : ''}" data-type="digital">💻 Digital PDF (${counts.digital})</button>`;
+    typeFiltersEl.innerHTML = html;
+  }
+
+  typeFiltersEl.addEventListener("click", (e)=>{
+    const btn = e.target.closest("button[data-type]");
+    if(!btn) return;
+    activeTypeFilter = btn.getAttribute("data-type");
+    renderTable();
+  });
+
+  // ---------- Nav menu mobile: Dasbor <-> Tambah Buku ----------
+  function setMobileView(view){
+    if(!mobileNavTabs) return;
+    mobileNavTabs.querySelectorAll("button").forEach(b=>{
+      b.classList.toggle("active", b.getAttribute("data-mobile-tab") === view);
+    });
+    document.body.setAttribute("data-mobile-view", view);
+  }
+
+  if(mobileNavTabs){
+    mobileNavTabs.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-mobile-tab]");
+      if(!btn) return;
+      setMobileView(btn.getAttribute("data-mobile-tab"));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
   function escapeHtml(str){
     return String(str)
       .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
       .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
   }
+
+  // ---------- Notifikasi Toast ----------
+  function showToast(message, type){
+    if(!toastContainer) return;
+    const icon = type === "error" ? "⚠️" : type === "delete" ? "🗑️" : "✅";
+    const cls = type === "error" ? "toast-error" : "toast-success";
+    const el = document.createElement("div");
+    el.className = "toast " + cls;
+    el.innerHTML = `<span class="toast-icon">${icon}</span><span>${escapeHtml(message)}</span>`;
+    toastContainer.appendChild(el);
+    requestAnimationFrame(()=> el.classList.add("show"));
+    setTimeout(()=>{
+      el.classList.remove("show");
+      setTimeout(()=> el.remove(), 260);
+    }, 2800);
+  }
+
+  // ---------- Konfirmasi Hapus (dialog kustom, bukan confirm() bawaan) ----------
+  let pendingDeleteResolve = null;
+  function confirmDelete(bookTitle){
+    return new Promise((resolve)=>{
+      pendingDeleteResolve = resolve;
+      confirmDeleteMessage.textContent = bookTitle
+        ? `Apakah kamu yakin buku "${bookTitle}" akan dihapus dari koleksi? Tindakan ini tidak bisa dibatalkan.`
+        : "Apakah kamu yakin buku ini akan dihapus dari koleksi? Tindakan ini tidak bisa dibatalkan.";
+      confirmDeleteOverlay.classList.add("open");
+    });
+  }
+  function closeConfirmDelete(result){
+    confirmDeleteOverlay.classList.remove("open");
+    if(pendingDeleteResolve){
+      pendingDeleteResolve(result);
+      pendingDeleteResolve = null;
+    }
+  }
+  confirmDeleteCancelBtn.addEventListener("click", ()=> closeConfirmDelete(false));
+  confirmDeleteOkBtn.addEventListener("click", ()=> closeConfirmDelete(true));
+  confirmDeleteOverlay.addEventListener("click", (e)=>{
+    if(e.target === confirmDeleteOverlay) closeConfirmDelete(false);
+  });
 
   bookTbody.addEventListener("click", (e)=>{
     const editBtn = e.target.closest("button[data-edit-id]");
@@ -1333,13 +1644,16 @@
     const delBtn = e.target.closest("button[data-id]");
     if(delBtn){
       const id = delBtn.getAttribute("data-id");
-      if(confirm("Hapus buku ini dari koleksi?")){
+      const book = books.find(b => String(b.id) === String(id));
+      confirmDelete(book ? book.judul : "").then((ok)=>{
+        if(!ok) return;
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
         if(editingBookId === id) exitEditMode();
         renderTable();
         if(ghConfig) pushToGithub();
-      }
+        showToast("Data buku sudah berhasil dihapus.", "delete");
+      });
       return;
     }
     const row = e.target.closest("tr[data-book-id]");
@@ -1357,6 +1671,7 @@
     judulInput.value = book.judul || "";
     penulisInput.value = book.penulis || "";
     kategoriSelect.value = book.kategori || "Fiksi";
+    jenisBukuSelect.value = book.jenisBuku === "digital" ? "digital" : "cetak";
     tahunTerbitInput.value = book.tahunTerbit || "";
     jumlahHalamanInput.value = book.jumlahHalaman || "";
     lokasiRakInput.value = book.lokasiRak || "";
@@ -1377,6 +1692,7 @@
     saveBtn.textContent = "💾 Update Buku";
     cancelEditBtn.style.display = "inline-flex";
     setLookupStatus("Mode edit: ubah data lalu klik \"Update Buku\".", "");
+    setMobileView("tambah");
     judulInput.closest(".card").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -1389,6 +1705,7 @@
   cancelEditBtn.addEventListener("click", ()=>{
     exitEditMode();
     resetForm();
+    setMobileView("dashboard");
   });
 
   // ---------- Modal Detail Buku ----------
@@ -1428,6 +1745,10 @@
       ` : ""}
 
       <div class="detail-grid">
+        <div class="detail-item">
+          <div class="detail-label">Jenis Buku</div>
+          <div class="detail-value">${book.jenisBuku === "digital" ? "💻 Digital (PDF)" : "📘 Cetak (Fisik)"}</div>
+        </div>
         <div class="detail-item">
           <div class="detail-label">Tahun Terbit</div>
           <div class="detail-value">${escapeHtml(book.tahunTerbit || "-")}</div>
@@ -1486,14 +1807,16 @@
     });
 
     document.getElementById("detailDeleteBtn").addEventListener("click", ()=>{
-      if(confirm("Hapus buku ini dari koleksi?")){
+      confirmDelete(book.judul).then((ok)=>{
+        if(!ok) return;
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
         if(editingBookId === id) exitEditMode();
         renderTable();
         if(ghConfig) pushToGithub();
         closeDetailModal();
-      }
+        showToast("Data buku sudah berhasil dihapus.", "delete");
+      });
     });
 
     detailModalOverlay.classList.add("open");
@@ -1530,6 +1853,7 @@
     if(e.key !== "Escape") return;
     if(detailModalOverlay.classList.contains("open")) closeDetailModal();
     if(changelogModalOverlay.classList.contains("open")) closeChangelogModal();
+    if(confirmDeleteOverlay.classList.contains("open")) closeConfirmDelete(false);
   });
 
   // ---------- GitHub Sync ----------
@@ -1675,6 +1999,7 @@
     judulInput.value = "";
     penulisInput.value = "";
     kategoriSelect.value = "Fiksi";
+    jenisBukuSelect.value = "cetak";
     tahunTerbitInput.value = "";
     jumlahHalamanInput.value = "";
     lokasiRakInput.value = "";
@@ -1706,6 +2031,7 @@
       judul: judul,
       penulis: penulisInput.value.trim(),
       kategori: kategoriSelect.value,
+      jenisBuku: jenisBukuSelect.value,
       tahunTerbit: tahunTerbitInput.value.trim(),
       jumlahHalaman: jumlahHalamanInput.value.trim(),
       lokasiRak: lokasiRakInput.value.trim(),
@@ -1721,23 +2047,30 @@
         books[idx] = { ...books[idx], ...bookData };
       }
       exitEditMode();
+      saveBooks();
+      renderTable();
+      resetForm();
+      setMobileView("dashboard");
+      if(ghConfig) pushToGithub();
+      showToast(`Buku "${judul}" berhasil diperbarui.`, "success");
     } else {
       books.push({
         id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
         createdAt: Date.now(),
         ...bookData
       });
+      saveBooks();
+      renderTable();
+      resetForm();
+      setMobileView("dashboard");
+      if(ghConfig) pushToGithub();
+      showToast(`Buku "${judul}" berhasil disimpan.`, "success");
     }
-
-    saveBooks();
-    renderTable();
-    resetForm();
-    if(ghConfig) pushToGithub();
   });
 
   // ---------- Google Books lookup ----------
   function setLookupStatus(msg, type){
-    lookupStatus.textContent = msg;
+    lookupStatus.innerHTML = msg;
     lookupStatus.className = type ? ("status-" + type) : "";
   }
 
@@ -1783,8 +2116,15 @@
     return fetch(url);
   }
 
+  async function fetchOpenLibrary(isbn){
+    const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${encodeURIComponent(isbn)}&format=json&jscmd=data`;
+    return fetch(url);
+  }
+
   async function lookupISBN(isbn){
     setLookupStatus("Mencari data buku...", "loading");
+
+    // ---------- 1) Google Books ----------
     try{
       const apiKey = getGoogleBooksApiKey();
       let res = await fetchGoogleBooks(isbn, apiKey);
@@ -1795,37 +2135,77 @@
         res = await fetchGoogleBooks(isbn, "");
       }
 
-      if(!res.ok) throw new Error("Gagal menghubungi Google Books API");
+      if(res.ok){
+        const data = await res.json();
+        if(data.items && data.items.length > 0){
+          const info = data.items[0].volumeInfo || {};
 
-      const data = await res.json();
-      if(!data.items || data.items.length === 0){
-        setLookupStatus("Data tidak ditemukan untuk ISBN ini. Isi manual ya.", "err");
-        return;
-      }
+          if(info.title && !judulInput.value.trim()){
+            judulInput.value = info.title;
+          }
+          if(info.authors && info.authors.length > 0){
+            penulisInput.value = info.authors.join(", ");
+          }
+          const guessed = guessCategoryFromGoogleBooks(info.categories);
+          kategoriSelect.value = guessed || "Lainnya";
 
-      const info = data.items[0].volumeInfo || {};
+          if(info.publishedDate && !tahunTerbitInput.value.trim()){
+            const yearMatch = String(info.publishedDate).match(/\d{4}/);
+            if(yearMatch) tahunTerbitInput.value = yearMatch[0];
+          }
+          if(info.pageCount && !jumlahHalamanInput.value.trim()){
+            jumlahHalamanInput.value = info.pageCount;
+          }
 
-      if(info.title && !judulInput.value.trim()){
-        judulInput.value = info.title;
+          setLookupStatus("✔ Data buku berhasil ditemukan &amp; diisi otomatis (Google Books).", "ok");
+          return;
+        }
       }
-      if(info.authors && info.authors.length > 0){
-        penulisInput.value = info.authors.join(", ");
-      }
-      const guessed = guessCategoryFromGoogleBooks(info.categories);
-      kategoriSelect.value = guessed || "Lainnya";
-
-      if(info.publishedDate && !tahunTerbitInput.value.trim()){
-        const yearMatch = String(info.publishedDate).match(/\d{4}/);
-        if(yearMatch) tahunTerbitInput.value = yearMatch[0];
-      }
-      if(info.pageCount && !jumlahHalamanInput.value.trim()){
-        jumlahHalamanInput.value = info.pageCount;
-      }
-
-      setLookupStatus("✔ Data buku berhasil ditemukan & diisi otomatis (Google Books).", "ok");
     }catch(err){
-      setLookupStatus("Tidak dapat mengambil data (cek koneksi internet).", "err");
+      // Diamkan; lanjut ke fallback Open Library di bawah.
     }
+
+    // ---------- 2) Fallback: Open Library ----------
+    try{
+      setLookupStatus("Tidak ditemukan di Google Books, mencoba Open Library...", "loading");
+      const olRes = await fetchOpenLibrary(isbn);
+      if(olRes.ok){
+        const olData = await olRes.json();
+        const olBook = olData["ISBN:" + isbn];
+        if(olBook){
+          if(olBook.title && !judulInput.value.trim()){
+            judulInput.value = olBook.title;
+          }
+          if(olBook.authors && olBook.authors.length > 0){
+            penulisInput.value = olBook.authors.map(a => a.name).filter(Boolean).join(", ");
+          }
+          if(olBook.number_of_pages && !jumlahHalamanInput.value.trim()){
+            jumlahHalamanInput.value = olBook.number_of_pages;
+          }
+          if(olBook.publish_date && !tahunTerbitInput.value.trim()){
+            const yearMatch = String(olBook.publish_date).match(/\d{4}/);
+            if(yearMatch) tahunTerbitInput.value = yearMatch[0];
+          }
+          const olSubjects = (olBook.subjects || []).map(s => s.name || s);
+          const guessedOl = guessCategoryFromGoogleBooks(olSubjects);
+          if(guessedOl) kategoriSelect.value = guessedOl;
+
+          setLookupStatus("✔ Data buku berhasil ditemukan &amp; diisi otomatis (Open Library).", "ok");
+          return;
+        }
+      }
+    }catch(err){
+      // Diamkan; lanjut ke tautan manual Perpusnas di bawah.
+    }
+
+    // ---------- 3) Tidak ditemukan di kedua API: tautan manual ISBN Perpusnas ----------
+    const perpusnasUrl = "https://isbn.perpusnas.go.id/Home/Katalog?txtFind=" +
+      encodeURIComponent(isbn) + "&cariberdasarkan=ISBN";
+    setLookupStatus(
+      "Data tidak ditemukan di Google Books maupun Open Library. Isi manual, atau " +
+      `<a href="${perpusnasUrl}" target="_blank" rel="noopener noreferrer">cari di katalog ISBN Perpusnas &rarr;</a>`,
+      "err"
+    );
   }
 
   // ---------- Lazy loader (hemat memori: library berat hanya dimuat saat dipakai) ----------
