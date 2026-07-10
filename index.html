@@ -141,6 +141,13 @@
     gap:8px;
   }
   .isbn-row input{ flex:1; }
+  .field-row{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .field-row .field-label{ margin-top:0; }
   .btn{
     border:none;
     border-radius: 10px;
@@ -179,6 +186,189 @@
     border: 1px solid #fecaca;
     min-height: 40px;
   }
+  .btn-edit{
+    background: var(--teal-50);
+    color: var(--teal-700);
+    padding: 9px 14px;
+    font-size: 0.82rem;
+    border: 1px solid #99f6e4;
+    min-height: 40px;
+  }
+  .btn-edit:hover{ background: #ccfbf1; }
+  .row-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .meta-cell{
+    font-size: 0.78rem;
+    color: var(--slate-500);
+  }
+  tbody tr.clickable-row{ cursor: pointer; }
+
+  /* ===== Modal Detail Buku ===== */
+  .modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background: rgba(15,23,42,0.55);
+    z-index: 1000;
+    align-items:center;
+    justify-content:center;
+    padding: 20px;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal-card{
+    background: white;
+    border-radius: 18px;
+    max-width: 480px;
+    width:100%;
+    max-height: 88vh;
+    overflow-y:auto;
+    padding: 26px 24px 24px;
+    position:relative;
+    box-shadow: 0 20px 50px rgba(15,23,42,0.25);
+  }
+  .modal-close{
+    position:absolute;
+    top:14px; right:14px;
+    border:none;
+    background: var(--slate-100);
+    color: var(--slate-600);
+    width:32px; height:32px;
+    border-radius:50%;
+    font-size:0.9rem;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .modal-close:hover{ background: var(--slate-200); }
+  .detail-cover-row{
+    display:flex;
+    gap:16px;
+    margin-bottom:16px;
+  }
+  .detail-cover{
+    width: 90px;
+    height: 130px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--slate-100);
+    flex-shrink:0;
+    box-shadow: var(--shadow);
+  }
+  .detail-title-block{ min-width:0; }
+  .detail-title{
+    font-size: 1.15rem;
+    font-weight:700;
+    color: var(--slate-900);
+    margin-bottom: 4px;
+    line-height:1.3;
+  }
+  .detail-author{
+    font-size: 0.88rem;
+    color: var(--slate-500);
+    margin-bottom: 10px;
+  }
+  .detail-chips{ display:flex; flex-wrap:wrap; gap:6px; }
+  .detail-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .detail-item{
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .detail-item .detail-label{
+    font-size: 0.68rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    color: var(--slate-500);
+    margin-bottom: 3px;
+  }
+  .detail-item .detail-value{
+    font-size: 0.92rem;
+    font-weight:600;
+    color: var(--slate-800);
+  }
+  .lending-info-box{
+    margin-top: 16px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .lending-info-box .detail-label{
+    font-size: 0.7rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    color: #c2410c;
+    margin-bottom: 6px;
+  }
+  .lending-info-box .detail-value{
+    font-size: 0.88rem;
+    color: var(--slate-700);
+    margin-bottom: 2px;
+  }
+  .progress-section{ margin-top: 18px; }
+  .progress-track{
+    width:100%;
+    height: 10px;
+    background: var(--slate-200);
+    border-radius: 999px;
+    overflow:hidden;
+    margin-top: 8px;
+  }
+  .progress-fill{
+    height:100%;
+    background: linear-gradient(90deg, var(--teal-500), var(--teal-700));
+    border-radius: 999px;
+    transition: width .2s;
+  }
+  .progress-label{
+    display:flex;
+    justify-content:space-between;
+    font-size: 0.8rem;
+    color: var(--slate-600);
+    font-weight:600;
+  }
+  .progress-update-row{
+    display:flex;
+    gap:8px;
+    margin-top: 12px;
+  }
+  .progress-update-row input{ flex:1; }
+  .progress-update-row .btn{ min-height:auto; padding: 10px 14px; }
+  .detail-actions{
+    display:flex;
+    gap:10px;
+    margin-top: 20px;
+  }
+  .detail-actions .btn{ flex:1; }
+  .detail-delete-row{
+    text-align:center;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--slate-200);
+  }
+  .btn-danger-small{
+    min-height:auto;
+    padding: 6px 12px;
+    font-size: 0.74rem;
+    opacity: 0.8;
+  }
+  .btn-danger-small:hover{ opacity:1; }
+  @media (max-width: 480px){
+    .detail-grid{ grid-template-columns: 1fr 1fr; }
+    .modal-card{ padding: 22px 18px 20px; }
+  }
   .btn-danger:hover{ background: #fee2e2; }
   .btn-close{
     background: var(--slate-200);
@@ -211,9 +401,11 @@
     display:flex;
     gap:10px;
     margin-top: 6px;
+    flex-wrap: wrap;
   }
   .status-toggle label{
     flex:1;
+    min-width: 120px;
     display:flex;
     align-items:center;
     gap:6px;
@@ -233,6 +425,19 @@
     color: var(--teal-700);
     font-weight:600;
   }
+  .lending-fields{
+    margin-top: 14px;
+    padding: 14px;
+    background: #fff7ed;
+    border: 1.5px solid #fed7aa;
+    border-radius: 12px;
+  }
+  .lending-fields .field-label{ margin-top:0; color:#c2410c; }
+  .lending-fields .field-label:not(:first-child){ margin-top:14px; }
+  .status-chip.dipinjam{
+    background: #ffedd5;
+    color: #c2410c;
+  }
   .list-section .list-header{
     display:flex;
     align-items:center;
@@ -242,6 +447,75 @@
     margin-bottom: 16px;
   }
   .list-header h2{ margin:0; }
+
+  .category-filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .cat-filter-btn{
+    border: 1.5px solid var(--slate-200);
+    background: var(--slate-50);
+    color: var(--slate-600);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 13px;
+    border-radius: 999px;
+    cursor:pointer;
+    transition: all .12s;
+    white-space:nowrap;
+  }
+  .cat-filter-btn:hover{ border-color: var(--teal-500); color: var(--teal-700); }
+  .cat-filter-btn.active{
+    background: var(--teal-600);
+    border-color: var(--teal-600);
+    color: white;
+  }
+
+  .status-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--slate-200);
+  }
+  .status-tab-btn{
+    border: 1.5px solid var(--slate-200);
+    background: white;
+    color: var(--slate-600);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 9px 15px;
+    border-radius: 10px;
+    cursor:pointer;
+    transition: all .12s;
+    white-space:nowrap;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .status-tab-btn:hover{ border-color: var(--teal-400, var(--teal-500)); color: var(--teal-700); }
+  .status-tab-btn.active{
+    background: var(--slate-900);
+    border-color: var(--slate-900);
+    color: white;
+  }
+  .status-tab-btn .tab-badge{
+    background: rgba(0,0,0,0.08);
+    color: inherit;
+    font-size: 0.72rem;
+    font-weight:700;
+    padding: 1px 7px;
+    border-radius: 999px;
+  }
+  .status-tab-btn.active .tab-badge{ background: rgba(255,255,255,0.2); }
+  .status-tab-btn.tab-dipinjam.active{
+    background: #c2410c;
+    border-color: #c2410c;
+  }
+
   #searchInput{ max-width: 260px; }
   .table-wrap{
     overflow-x:auto;
@@ -309,6 +583,49 @@
     margin-top: 24px;
     padding-bottom: 10px;
   }
+  footer p{ margin: 0 0 4px; }
+  .version-tag{
+    color: var(--teal-700);
+    font-weight:600;
+    font-size: 0.78rem;
+    margin-bottom: 8px !important;
+  }
+  .changelog-trigger{
+    border:none;
+    background:none;
+    color: var(--slate-600);
+    font-weight:600;
+    font-size: 0.78rem;
+    cursor:pointer;
+    padding: 4px 8px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .changelog-trigger:hover{ color: var(--teal-700); }
+  .changelog-modal-title{
+    font-size: 1.05rem;
+    color: var(--slate-900);
+    margin-bottom: 14px;
+    padding-right: 30px;
+  }
+  .changelog-list-modal{
+    max-height: 60vh;
+  }
+  .changelog-list{
+    list-style:none;
+    margin:0;
+    padding: 10px 14px;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    line-height: 1.7;
+    color: var(--slate-600);
+    max-height: 220px;
+    overflow-y:auto;
+  }
+  .changelog-list li{ margin-bottom: 2px; }
+  .changelog-list strong{ color: var(--slate-800); }
 
   details.sync-card{ margin-bottom: 20px; }
   details.sync-card summary{
@@ -358,6 +675,127 @@
     font-size: 0.82rem;
     min-height: 18px;
     font-weight:600;
+  }
+  .ai-result{
+    margin-top: 14px;
+    background: var(--teal-50);
+    border: 1px solid #99f6e4;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--slate-800);
+    white-space: pre-wrap;
+  }
+  .sr-only-status{
+    position:absolute;
+    width:1px; height:1px;
+    overflow:hidden;
+    clip:rect(0 0 0 0);
+    white-space:nowrap;
+  }
+
+  /* ===== Kartu Fitur AI ===== */
+  .ai-feature-card{
+    position:relative;
+    overflow:hidden;
+    background: linear-gradient(135deg, #0f172a 0%, #134e4a 55%, #0d9488 100%);
+    border-radius: 18px;
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(13,148,136,0.25);
+  }
+  .ai-feature-glow{
+    position:absolute;
+    top:-60px; right:-60px;
+    width:200px; height:200px;
+    background: radial-gradient(circle, rgba(45,212,191,0.35), transparent 70%);
+    pointer-events:none;
+  }
+  .ai-feature-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom: 12px;
+    position:relative;
+  }
+  .ai-feature-icon{
+    width: 46px;
+    height: 46px;
+    flex-shrink:0;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 1.3rem;
+    backdrop-filter: blur(4px);
+  }
+  .ai-feature-title{
+    font-size: 1.15rem;
+    font-weight:700;
+    color: white;
+    letter-spacing: 0.01em;
+  }
+  .ai-feature-subtitle{
+    font-size: 0.78rem;
+    color: #99f6e4;
+    font-weight:600;
+    margin-top: 2px;
+  }
+  .ai-feature-desc{
+    color: rgba(255,255,255,0.85);
+    font-size: 0.87rem;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    position:relative;
+    max-width: 560px;
+  }
+  .ai-feature-btn{
+    position:relative;
+    border:none;
+    background: linear-gradient(135deg, #2dd4bf, #0d9488);
+    color: #042f2e;
+    font-weight:700;
+    font-size: 0.92rem;
+    padding: 13px 22px;
+    border-radius: 12px;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    box-shadow: 0 6px 18px rgba(45,212,191,0.35);
+    transition: transform .12s, box-shadow .12s;
+    min-height: 46px;
+  }
+  .ai-feature-btn:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(45,212,191,0.45);
+  }
+  .ai-feature-btn:active{ transform: translateY(0); }
+  .ai-feature-btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+  .ai-feature-btn-sparkle{
+    display:inline-block;
+    animation: sparkle-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes sparkle-pulse{
+    0%, 100% { transform: scale(1) rotate(0deg); opacity:1; }
+    50% { transform: scale(1.25) rotate(15deg); opacity:0.7; }
+  }
+  .ai-feature-card #aiStatus{ color: rgba(255,255,255,0.9); }
+  .ai-feature-card #aiStatus.status-ok{ color: #5eead4; }
+  .ai-feature-card #aiStatus.status-err{ color: #fca5a5; }
+  .ai-feature-card #aiStatus.status-loading{ color: #fcd34d; }
+  .ai-feature-card .ai-result{
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    backdrop-filter: blur(4px);
+  }
+  @media (max-width: 640px){
+    .ai-feature-card{ padding: 20px 18px; }
+    .ai-feature-title{ font-size: 1.02rem; }
   }
 
   /* ===== Mode Mobile: layout lebih rapat & sentuhan lebih besar ===== */
@@ -429,7 +867,8 @@
     }
     td.action-cell{ justify-content:flex-end; padding-top:10px; }
     td.action-cell::before{ display:none; }
-    td.action-cell .btn-danger{ width:100%; }
+    td.action-cell .row-actions{ width:100%; }
+    td.action-cell .row-actions .btn{ flex:1; }
   }
 </style>
 </head>
@@ -456,41 +895,27 @@
     <div class="badge-count"><span id="bookCount">0</span> Buku</div>
   </header>
 
-  <details class="card sync-card" id="syncCard">
-    <summary>🔗 Sinkronisasi GitHub (opsional) — biar data sama di semua perangkat</summary>
-    <div class="sync-body">
-      <p class="sync-note">
-        Buat repo GitHub baru (disarankan <strong>private</strong>), lalu buat
-        <strong>Fine-grained Personal Access Token</strong> di GitHub dengan izin
-        <em>Contents: Read and write</em> khusus repo tersebut. Token hanya tersimpan
-        di LocalStorage browser ini dan dipakai langsung untuk memanggil GitHub API —
-        tidak dikirim ke server lain.
-      </p>
-      <div class="sync-grid">
-        <div>
-          <label class="field-label">Personal Access Token</label>
-          <input type="password" id="ghToken" placeholder="github_pat_xxxxxxxx">
-        </div>
-        <div>
-          <label class="field-label">Repo (owner/nama-repo)</label>
-          <input type="text" id="ghRepo" placeholder="username/koleksi-buku">
-        </div>
-        <div>
-          <label class="field-label">Nama File</label>
-          <input type="text" id="ghPath" placeholder="books.json" value="books.json">
-        </div>
-        <div>
-          <label class="field-label">Branch</label>
-          <input type="text" id="ghBranch" placeholder="main" value="main">
-        </div>
+  <div id="ghSyncStatus" class="sr-only-status"></div>
+
+  <div class="ai-feature-card">
+    <div class="ai-feature-glow"></div>
+    <div class="ai-feature-header">
+      <div class="ai-feature-icon">✨</div>
+      <div>
+        <div class="ai-feature-title">Rekomendasi Buku AI</div>
+        <div class="ai-feature-subtitle">Ditenagai Gemini · otomatis aktif, tanpa setup</div>
       </div>
-      <div class="sync-actions">
-        <button class="btn btn-primary" id="ghSaveBtn">🔄 Simpan &amp; Sinkron Sekarang</button>
-        <button class="btn btn-close" id="ghDisconnectBtn" style="display:none;">Putuskan Sinkronisasi</button>
-      </div>
-      <div id="ghSyncStatus" class="sync-status"></div>
     </div>
-  </details>
+    <p class="ai-feature-desc">
+      Dapatkan 3 rekomendasi buku baru berdasarkan koleksimu, lengkap dengan alasannya.
+      Cukup sekali klik — modul AI hanya diunduh saat dibutuhkan, jadi tetap ringan di HP.
+    </p>
+    <button class="ai-feature-btn" id="aiRecommendBtn">
+      <span class="ai-feature-btn-sparkle">✨</span> Minta Rekomendasi dari Koleksiku
+    </button>
+    <div id="aiStatus" class="sync-status"></div>
+    <div id="aiResultBox" class="ai-result" style="display:none;"></div>
+  </div>
 
   <div class="main-grid">
 
@@ -532,6 +957,23 @@
         <option value="Lainnya">Lainnya</option>
       </select>
 
+      <div class="field-row">
+        <div>
+          <label class="field-label">Tahun Terbit</label>
+          <input type="text" id="tahunTerbit" placeholder="cth: 2021" inputmode="numeric" maxlength="4">
+        </div>
+        <div>
+          <label class="field-label">Jumlah Halaman</label>
+          <input type="text" id="jumlahHalaman" placeholder="cth: 320" inputmode="numeric">
+        </div>
+      </div>
+
+      <label class="field-label">Lokasi Rak</label>
+      <input type="text" id="lokasiRak" placeholder="cth: Rak A2 / Lemari Kamar">
+
+      <label class="field-label">Halaman Terakhir Dibaca</label>
+      <input type="text" id="halamanTerakhir" placeholder="cth: 120 (opsional)" inputmode="numeric">
+
       <label class="field-label">Status Bacaan</label>
       <div class="status-toggle" id="statusToggle">
         <label class="checked" id="labelBelum">
@@ -540,9 +982,21 @@
         <label id="labelSelesai">
           <input type="radio" name="status" value="selesai"> Sudah Selesai
         </label>
+        <label id="labelDipinjam">
+          <input type="radio" name="status" value="dipinjam"> 🤝 Dipinjam
+        </label>
+      </div>
+
+      <div class="lending-fields" id="lendingFields" style="display:none;">
+        <label class="field-label">Nama Peminjam</label>
+        <input type="text" id="peminjamInput" placeholder="Nama orang yang meminjam">
+
+        <label class="field-label">Tanggal Dipinjam</label>
+        <input type="date" id="tanggalPinjamInput">
       </div>
 
       <button class="btn btn-primary" id="saveBtn">💾 Simpan Buku</button>
+      <button class="btn btn-close" id="cancelEditBtn" style="display:none; margin-top:10px;">✕ Batal Edit</button>
     </section>
 
     <!-- LIST SECTION -->
@@ -551,6 +1005,8 @@
         <h2>📖 Koleksi Buku</h2>
         <input type="search" id="searchInput" placeholder="🔍 Cari judul, penulis, atau ISBN...">
       </div>
+      <div class="status-tabs" id="statusTabs"></div>
+      <div class="category-filters" id="categoryFilters"></div>
       <div class="table-wrap">
         <table id="bookTable">
           <thead>
@@ -560,6 +1016,9 @@
               <th>Kategori</th>
               <th>Status</th>
               <th>ISBN</th>
+              <th>Tahun</th>
+              <th>Hal.</th>
+              <th>Rak</th>
               <th></th>
             </tr>
           </thead>
@@ -573,10 +1032,53 @@
 
   </div>
 
-  <footer>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</footer>
+  <footer>
+    <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.16.3</strong></p>
+    <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
+  </footer>
+
+  <!-- MODAL RIWAYAT UPDATE -->
+  <div class="modal-overlay" id="changelogModalOverlay">
+    <div class="modal-card" id="changelogModalCard">
+      <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
+      <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
+      <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.16.3</strong> — Panel "Sumber Data ISBN: Google Books" disembunyikan dari tampilan (tetap otomatis aktif di background), konsisten dengan panel GitHub Sync &amp; Gemini AI.</li>
+        <li><strong>v1.16.2</strong> — Perbaikan bug: status sinkronisasi GitHub sempat muncul tidak sengaja di layar (mis. "Failed to fetch"); sekarang benar-benar tersembunyi seperti seharusnya.</li>
+        <li><strong>v1.16.1</strong> — Key Google Books API diganti dengan key resmi format Google Cloud yang benar (kuota pencarian ISBN kini maksimal).</li>
+        <li><strong>v1.16.0</strong> — Sistem Pelacak Peminjaman Buku (Lending Tracker): status "Sedang Dipinjam" + nama peminjam & tanggal, tab filter status di atas tabel, badge status jingga, dan info peminjaman di modal detail.</li>
+        <li><strong>v1.15.0</strong> — Migrasi pencarian ISBN dari Open Library ke Google Books API (lebih akurat untuk buku Indonesia), dengan API key tertanam + opsi override manual &amp; fallback otomatis tanpa key.</li>
+        <li><strong>v1.14.0</strong> — Panel Sinkronisasi GitHub disembunyikan dari tampilan (tetap jalan di background). Panel Rekomendasi AI didesain ulang jadi kartu gradient yang lebih menarik.</li>
+        <li><strong>v1.13.0</strong> — Kedua API key (GitHub &amp; Gemini) tertanam penuh; tombol/input manual dihapus dari tampilan, semua otomatis aktif.</li>
+        <li><strong>v1.12.0</strong> — API Key Gemini juga tertanam di kode, otomatis aktif di semua perangkat/browser (⚠️ trade-off keamanan sama seperti token GitHub).</li>
+        <li><strong>v1.11.0</strong> — Tombol Hapus dipindah ke dalam modal detail buku saja (diperkecil), mencegah hapus tidak sengaja dari tabel.</li>
+        <li><strong>v1.10.0</strong> — Sinkron GitHub otomatis di semua perangkat/browser lewat token tertanam (⚠️ trade-off keamanan, lihat panel Sinkronisasi).</li>
+        <li><strong>v1.9.1</strong> — Perbaikan: konfirmasi dulu sebelum sinkron GitHub menimpa data HP (mencegah data hilang).</li>
+        <li><strong>v1.9.0</strong> — Riwayat update dipindah jadi tampilan popup.</li>
+        <li><strong>v1.8.0</strong> — Sistem versi aplikasi &amp; riwayat update di footer.</li>
+        <li><strong>v1.7.0</strong> — Modal detail buku saat diklik (sampul, progress bar) + field Halaman Terakhir Dibaca.</li>
+        <li><strong>v1.6.0</strong> — Menu filter kategori dengan jumlah buku per kategori.</li>
+        <li><strong>v1.5.0</strong> — Tombol Edit buku + atribut baru: Tahun Terbit, Jumlah Halaman, Lokasi Rak.</li>
+        <li><strong>v1.4.0</strong> — Rekomendasi buku dari AI Gemini (lazy-load, hemat memori HP).</li>
+        <li><strong>v1.3.0</strong> — Bisa di-install sebagai aplikasi di HP (PWA: manifest &amp; ikon).</li>
+        <li><strong>v1.2.1</strong> — Ganti nama jadi "Maktabah Prayoga" + ikon custom.</li>
+        <li><strong>v1.2.0</strong> — Optimasi tampilan mobile: tabel jadi kartu, tombol lebih besar.</li>
+        <li><strong>v1.1.0</strong> — Sinkronisasi data lewat GitHub (opsional, multi-perangkat).</li>
+        <li><strong>v1.0.0</strong> — Rilis awal: input buku, scan ISBN, autofill Open Library, tabel &amp; pencarian.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MODAL DETAIL BUKU -->
+  <div class="modal-overlay" id="detailModalOverlay">
+    <div class="modal-card" id="detailModalCard">
+      <button class="modal-close" id="detailModalClose" aria-label="Tutup">✕</button>
+      <div id="detailModalBody"></div>
+    </div>
+  </div>
 </div>
 
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
 (function(){
   "use strict";
@@ -591,27 +1093,74 @@
   const judulInput = document.getElementById("judul");
   const penulisInput = document.getElementById("penulis");
   const kategoriSelect = document.getElementById("kategori");
+  const tahunTerbitInput = document.getElementById("tahunTerbit");
+  const jumlahHalamanInput = document.getElementById("jumlahHalaman");
+  const lokasiRakInput = document.getElementById("lokasiRak");
+  const halamanTerakhirInput = document.getElementById("halamanTerakhir");
   const saveBtn = document.getElementById("saveBtn");
+  const cancelEditBtn = document.getElementById("cancelEditBtn");
+  let editingBookId = null;
+  const detailModalOverlay = document.getElementById("detailModalOverlay");
+  const detailModalCard = document.getElementById("detailModalCard");
+  const detailModalClose = document.getElementById("detailModalClose");
+  const detailModalBody = document.getElementById("detailModalBody");
   const scanBtn = document.getElementById("scanBtn");
   const closeScanBtn = document.getElementById("closeScanBtn");
   const scannerContainer = document.getElementById("scannerContainer");
   const lookupStatus = document.getElementById("lookupStatus");
   const searchInput = document.getElementById("searchInput");
+  const categoryFiltersEl = document.getElementById("categoryFilters");
+  let activeCategoryFilter = "Semua";
+  const statusTabsEl = document.getElementById("statusTabs");
+  let activeStatusFilter = "semua";
   const bookTbody = document.getElementById("bookTbody");
   const emptyState = document.getElementById("emptyState");
   const bookCountEls = document.querySelectorAll("#bookCount");
   const labelBelum = document.getElementById("labelBelum");
   const labelSelesai = document.getElementById("labelSelesai");
-  const ghTokenInput = document.getElementById("ghToken");
-  const ghRepoInput = document.getElementById("ghRepo");
-  const ghPathInput = document.getElementById("ghPath");
-  const ghBranchInput = document.getElementById("ghBranch");
-  const ghSaveBtn = document.getElementById("ghSaveBtn");
-  const ghDisconnectBtn = document.getElementById("ghDisconnectBtn");
+  const labelDipinjam = document.getElementById("labelDipinjam");
+  const lendingFieldsEl = document.getElementById("lendingFields");
+  const peminjamInput = document.getElementById("peminjamInput");
+  const tanggalPinjamInput = document.getElementById("tanggalPinjamInput");
   const ghSyncStatus = document.getElementById("ghSyncStatus");
+  const aiRecommendBtn = document.getElementById("aiRecommendBtn");
+  const aiStatus = document.getElementById("aiStatus");
+  const aiResultBox = document.getElementById("aiResultBox");
+  const GEMINI_KEY_STORAGE = "gemini_api_key_v1";
+  let genAiModulePromise = null;
+
+  // ⚠️ PERHATIAN KEAMANAN ⚠️
+  // Key di bawah ini TERTANAM di kode & terlihat oleh SIAPA SAJA yang membuka
+  // halaman ini. Siapa pun yang punya link ini bisa memakai key Gemini kamu
+  // (kuota/biaya pemakaian bisa terpakai oleh orang lain). Kalau curiga
+  // disalahgunakan, hapus/rotasi key ini lewat Google AI Studio kapan saja.
+  const EMBEDDED_GEMINI_KEY = "AQ.Ab8RN6KHuG_99yu0UdOwXcPHR0sCCkOCh10ZOe-lzkHiBNpjgg";
+
+  const GOOGLE_BOOKS_KEY_STORAGE = "maktabah_google_books_key";
+  // ⚠️ PERHATIAN KEAMANAN ⚠️
+  // Sama seperti key Gemini & token GitHub di atas: key ini TERTANAM di kode
+  // & terlihat oleh siapa saja yang membuka halaman ini (lewat "View Page
+  // Source"). Sudah berupa API key resmi dari Google Cloud Console (format
+  // "AIzaSy..."), dibatasi ke Books API. Kode di bawah tetap punya fallback
+  // otomatis ke pencarian tanpa key kalau suatu saat key ini dinonaktifkan.
+  const EMBEDDED_GOOGLE_BOOKS_KEY = "AIzaSyCHHb6v2Jnv7O5w8eCi6vKtEVBzK1SWVos";
 
   const GH_CONFIG_KEY = "github_sync_config_v1";
   let ghConfig = null;
+
+  // ⚠️ PERHATIAN KEAMANAN ⚠️
+  // Token di bawah ini TERTANAM di kode & akan terlihat oleh SIAPA SAJA yang
+  // membuka halaman ini (lewat "View Page Source"). Siapa pun yang punya link
+  // ini bisa memakai token tsb untuk menulis/menghapus isi repo GitHub kamu.
+  // Gunakan HANYA fine-grained token yang scope-nya dibatasi ke SATU repo ini
+  // saja (izin Contents: Read and write, tanpa akses repo lain), dan rotasi
+  // (ganti) token ini secara berkala lewat GitHub Settings.
+  const EMBEDDED_GH_CONFIG = {
+    token: "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",
+    repo: "winway94/maktabah-prayoga",          // format: username/nama-repo
+    path: "books.json",
+    branch: "main"
+  };
 
   // ---------- Storage ----------
   function loadBooks(){
@@ -631,18 +1180,35 @@
     radio.addEventListener("change", ()=>{
       labelBelum.classList.toggle("checked", document.querySelector('input[value="belum"]').checked);
       labelSelesai.classList.toggle("checked", document.querySelector('input[value="selesai"]').checked);
+      labelDipinjam.classList.toggle("checked", document.querySelector('input[value="dipinjam"]').checked);
+
+      const isDipinjam = document.querySelector('input[value="dipinjam"]').checked;
+      lendingFieldsEl.style.display = isDipinjam ? "block" : "none";
+      if(isDipinjam && !tanggalPinjamInput.value){
+        tanggalPinjamInput.value = new Date().toISOString().slice(0, 10);
+      }
     });
   });
 
   // ---------- Render table ----------
   function renderTable(){
+    renderCategoryFilters();
+    renderStatusTabs();
+
     const query = searchInput.value.trim().toLowerCase();
     const filtered = books.filter(b=>{
-      if(!query) return true;
-      return (b.judul||"").toLowerCase().includes(query) ||
+      const matchQuery = !query ||
+             (b.judul||"").toLowerCase().includes(query) ||
              (b.penulis||"").toLowerCase().includes(query) ||
              (b.isbn||"").toLowerCase().includes(query) ||
-             (b.kategori||"").toLowerCase().includes(query);
+             (b.kategori||"").toLowerCase().includes(query) ||
+             (b.lokasiRak||"").toLowerCase().includes(query) ||
+             (b.peminjam||"").toLowerCase().includes(query);
+      const matchCategory = activeCategoryFilter === "Semua" ||
+             (b.kategori || "Lainnya") === activeCategoryFilter;
+      const bookStatus = b.status || "belum";
+      const matchStatus = activeStatusFilter === "semua" || bookStatus === activeStatusFilter;
+      return matchQuery && matchCategory && matchStatus;
     }).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
 
     bookTbody.innerHTML = "";
@@ -651,20 +1217,27 @@
       emptyState.style.display = "block";
       emptyState.textContent = books.length === 0
         ? "Belum ada buku. Tambahkan buku pertama Anda di form sebelah kiri."
-        : "Tidak ada buku yang cocok dengan pencarian.";
+        : "Tidak ada buku yang cocok dengan filter/pencarian.";
     } else {
       emptyState.style.display = "none";
       filtered.forEach(b=>{
         const tr = document.createElement("tr");
+        tr.className = "clickable-row";
+        tr.setAttribute("data-book-id", b.id);
         tr.innerHTML = `
           <td class="title-cell" data-label="Judul">${escapeHtml(b.judul || "-")}</td>
           <td data-label="Penulis">${escapeHtml(b.penulis || "-")}</td>
           <td data-label="Kategori"><span class="cat-chip">${escapeHtml(b.kategori || "Lainnya")}</span></td>
-          <td data-label="Status"><span class="status-chip ${b.status === 'selesai' ? 'selesai' : 'belum'}">
-                ${b.status === 'selesai' ? '✅ Selesai' : '⏳ Belum'}
-              </span></td>
+          <td data-label="Status">${renderStatusChip(b)}</td>
           <td class="isbn-cell" data-label="ISBN">${escapeHtml(b.isbn || "-")}</td>
-          <td class="action-cell" data-label=""><button class="btn btn-danger" data-id="${b.id}">🗑 Hapus</button></td>
+          <td class="meta-cell" data-label="Tahun">${escapeHtml(b.tahunTerbit || "-")}</td>
+          <td class="meta-cell" data-label="Halaman">${escapeHtml(b.jumlahHalaman || "-")}</td>
+          <td class="meta-cell" data-label="Rak">${escapeHtml(b.lokasiRak || "-")}</td>
+          <td class="action-cell" data-label="">
+            <div class="row-actions">
+              <button class="btn btn-edit" data-edit-id="${b.id}">✏️ Edit</button>
+            </div>
+          </td>
         `;
         bookTbody.appendChild(tr);
       });
@@ -673,6 +1246,78 @@
     bookCountEls.forEach(el => el.textContent = books.length);
   }
 
+  function renderStatusChip(b){
+    if(b.status === 'dipinjam'){
+      const namaPeminjam = b.peminjam ? escapeHtml(b.peminjam) : "seseorang";
+      return `<span class="status-chip dipinjam">⏳ Dipinjam oleh ${namaPeminjam}</span>`;
+    }
+    if(b.status === 'selesai'){
+      return `<span class="status-chip selesai">✅ Selesai</span>`;
+    }
+    return `<span class="status-chip belum">⏳ Belum</span>`;
+  }
+
+  function renderStatusTabs(){
+    const totalSemua = books.length;
+    const totalBelum = books.filter(b => (b.status||"belum") === "belum").length;
+    const totalSelesai = books.filter(b => b.status === "selesai").length;
+    const totalDipinjam = books.filter(b => b.status === "dipinjam").length;
+
+    const tabs = [
+      { key: "semua", label: "📚 Semua Koleksi", count: totalSemua, cls: "" },
+      { key: "belum", label: "⏳ Sedang Dibaca / Belum Selesai", count: totalBelum, cls: "" },
+      { key: "selesai", label: "✅ Sudah Selesai", count: totalSelesai, cls: "" },
+      { key: "dipinjam", label: "🤝 Sedang Dipinjam", count: totalDipinjam, cls: "tab-dipinjam" }
+    ];
+
+    statusTabsEl.innerHTML = tabs.map(t => `
+      <button type="button" class="status-tab-btn ${t.cls} ${activeStatusFilter === t.key ? 'active' : ''}" data-status-tab="${t.key}">
+        ${t.label} <span class="tab-badge">${t.count}</span>
+      </button>
+    `).join("");
+  }
+
+  statusTabsEl.addEventListener("click", (e)=>{
+    const btn = e.target.closest("button[data-status-tab]");
+    if(!btn) return;
+    activeStatusFilter = btn.getAttribute("data-status-tab");
+    renderTable();
+  });
+
+  function renderCategoryFilters(){
+    const counts = {};
+    books.forEach(b=>{
+      const cat = b.kategori || "Lainnya";
+      counts[cat] = (counts[cat] || 0) + 1;
+    });
+
+    const categories = Object.keys(counts).sort((a,b)=> a.localeCompare(b));
+
+    if(categories.length === 0){
+      categoryFiltersEl.innerHTML = "";
+      return;
+    }
+
+    // kalau kategori aktif sudah tidak ada bukunya, kembali ke "Semua"
+    if(activeCategoryFilter !== "Semua" && !counts[activeCategoryFilter]){
+      activeCategoryFilter = "Semua";
+    }
+
+    let html = `<button type="button" class="cat-filter-btn ${activeCategoryFilter === 'Semua' ? 'active' : ''}" data-cat="Semua">Semua (${books.length})</button>`;
+    categories.forEach(cat=>{
+      html += `<button type="button" class="cat-filter-btn ${activeCategoryFilter === cat ? 'active' : ''}" data-cat="${escapeHtml(cat)}">${escapeHtml(cat)} (${counts[cat]})</button>`;
+    });
+
+    categoryFiltersEl.innerHTML = html;
+  }
+
+  categoryFiltersEl.addEventListener("click", (e)=>{
+    const btn = e.target.closest("button[data-cat]");
+    if(!btn) return;
+    activeCategoryFilter = btn.getAttribute("data-cat");
+    renderTable();
+  });
+
   function escapeHtml(str){
     return String(str)
       .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
@@ -680,15 +1325,211 @@
   }
 
   bookTbody.addEventListener("click", (e)=>{
-    const btn = e.target.closest("button[data-id]");
-    if(!btn) return;
-    const id = btn.getAttribute("data-id");
-    if(confirm("Hapus buku ini dari koleksi?")){
-      books = books.filter(b => String(b.id) !== String(id));
-      saveBooks();
-      renderTable();
-      if(ghConfig) pushToGithub();
+    const editBtn = e.target.closest("button[data-edit-id]");
+    if(editBtn){
+      startEditBook(editBtn.getAttribute("data-edit-id"));
+      return;
     }
+    const delBtn = e.target.closest("button[data-id]");
+    if(delBtn){
+      const id = delBtn.getAttribute("data-id");
+      if(confirm("Hapus buku ini dari koleksi?")){
+        books = books.filter(b => String(b.id) !== String(id));
+        saveBooks();
+        if(editingBookId === id) exitEditMode();
+        renderTable();
+        if(ghConfig) pushToGithub();
+      }
+      return;
+    }
+    const row = e.target.closest("tr[data-book-id]");
+    if(row){
+      openBookDetail(row.getAttribute("data-book-id"));
+    }
+  });
+
+  function startEditBook(id){
+    const book = books.find(b => String(b.id) === String(id));
+    if(!book) return;
+
+    editingBookId = book.id;
+    isbnInput.value = book.isbn || "";
+    judulInput.value = book.judul || "";
+    penulisInput.value = book.penulis || "";
+    kategoriSelect.value = book.kategori || "Fiksi";
+    tahunTerbitInput.value = book.tahunTerbit || "";
+    jumlahHalamanInput.value = book.jumlahHalaman || "";
+    lokasiRakInput.value = book.lokasiRak || "";
+    halamanTerakhirInput.value = book.halamanTerakhir || "";
+    peminjamInput.value = book.peminjam || "";
+    tanggalPinjamInput.value = book.tanggalPinjam || "";
+
+    const statusVal = book.status === 'selesai' ? 'selesai' : (book.status === 'dipinjam' ? 'dipinjam' : 'belum');
+    const statusRadio = document.querySelector(`input[name="status"][value="${statusVal}"]`);
+    if(statusRadio){
+      statusRadio.checked = true;
+      labelBelum.classList.toggle("checked", statusVal === 'belum');
+      labelSelesai.classList.toggle("checked", statusVal === 'selesai');
+      labelDipinjam.classList.toggle("checked", statusVal === 'dipinjam');
+      lendingFieldsEl.style.display = statusVal === 'dipinjam' ? "block" : "none";
+    }
+
+    saveBtn.textContent = "💾 Update Buku";
+    cancelEditBtn.style.display = "inline-flex";
+    setLookupStatus("Mode edit: ubah data lalu klik \"Update Buku\".", "");
+    judulInput.closest(".card").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function exitEditMode(){
+    editingBookId = null;
+    saveBtn.textContent = "💾 Simpan Buku";
+    cancelEditBtn.style.display = "none";
+  }
+
+  cancelEditBtn.addEventListener("click", ()=>{
+    exitEditMode();
+    resetForm();
+  });
+
+  // ---------- Modal Detail Buku ----------
+  function openBookDetail(id){
+    const book = books.find(b => String(b.id) === String(id));
+    if(!book) return;
+
+    const jumlahHalaman = parseInt(book.jumlahHalaman, 10) || 0;
+    const halamanTerakhir = parseInt(book.halamanTerakhir, 10) || 0;
+    const persen = jumlahHalaman > 0
+      ? Math.min(100, Math.round((halamanTerakhir / jumlahHalaman) * 100))
+      : 0;
+
+    const coverUrl = book.isbn
+      ? `https://covers.openlibrary.org/b/isbn/${encodeURIComponent(book.isbn)}-M.jpg`
+      : "";
+
+    detailModalBody.innerHTML = `
+      <div class="detail-cover-row">
+        ${coverUrl ? `<img class="detail-cover" src="${coverUrl}" alt="Sampul buku" onerror="this.style.display='none'">` : ""}
+        <div class="detail-title-block">
+          <div class="detail-title">${escapeHtml(book.judul || "-")}</div>
+          <div class="detail-author">${escapeHtml(book.penulis || "Penulis tidak diketahui")}</div>
+          <div class="detail-chips">
+            <span class="cat-chip">${escapeHtml(book.kategori || "Lainnya")}</span>
+            ${renderStatusChip(book)}
+          </div>
+        </div>
+      </div>
+
+      ${book.status === 'dipinjam' ? `
+      <div class="lending-info-box">
+        <div class="detail-label">🤝 Info Peminjaman</div>
+        <div class="detail-value">Dipinjam oleh <strong>${escapeHtml(book.peminjam || "-")}</strong></div>
+        <div class="detail-value">Sejak tanggal: <strong>${escapeHtml(book.tanggalPinjam || "-")}</strong></div>
+      </div>
+      ` : ""}
+
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="detail-label">Tahun Terbit</div>
+          <div class="detail-value">${escapeHtml(book.tahunTerbit || "-")}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Total Halaman</div>
+          <div class="detail-value">${escapeHtml(book.jumlahHalaman || "-")}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ISBN</div>
+          <div class="detail-value">${escapeHtml(book.isbn || "-")}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Lokasi Rak</div>
+          <div class="detail-value">${escapeHtml(book.lokasiRak || "-")}</div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-label">
+          <span>📖 Progress Baca</span>
+          <span>${halamanTerakhir} ${jumlahHalaman ? "/ " + jumlahHalaman : ""} halaman ${jumlahHalaman ? "(" + persen + "%)" : ""}</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" style="width:${persen}%"></div>
+        </div>
+        <div class="progress-update-row">
+          <input type="text" id="detailProgressInput" inputmode="numeric" placeholder="Update halaman terakhir..." value="${escapeHtml(book.halamanTerakhir || "")}">
+          <button class="btn btn-primary" id="detailProgressSaveBtn" style="margin-top:0;">Simpan</button>
+        </div>
+      </div>
+
+      <div class="detail-actions">
+        <button class="btn btn-edit" id="detailEditBtn" style="flex:1;">✏️ Edit Buku</button>
+      </div>
+      <div class="detail-delete-row">
+        <button class="btn btn-danger btn-danger-small" id="detailDeleteBtn">🗑 Hapus buku ini</button>
+      </div>
+    `;
+
+    document.getElementById("detailProgressSaveBtn").addEventListener("click", ()=>{
+      const val = document.getElementById("detailProgressInput").value.trim();
+      const idx = books.findIndex(b => String(b.id) === String(id));
+      if(idx !== -1){
+        books[idx].halamanTerakhir = val;
+        saveBooks();
+        renderTable();
+        if(ghConfig) pushToGithub();
+        openBookDetail(id); // refresh tampilan modal dengan data terbaru
+      }
+    });
+
+    document.getElementById("detailEditBtn").addEventListener("click", ()=>{
+      closeDetailModal();
+      startEditBook(id);
+    });
+
+    document.getElementById("detailDeleteBtn").addEventListener("click", ()=>{
+      if(confirm("Hapus buku ini dari koleksi?")){
+        books = books.filter(b => String(b.id) !== String(id));
+        saveBooks();
+        if(editingBookId === id) exitEditMode();
+        renderTable();
+        if(ghConfig) pushToGithub();
+        closeDetailModal();
+      }
+    });
+
+    detailModalOverlay.classList.add("open");
+  }
+
+  function closeDetailModal(){
+    detailModalOverlay.classList.remove("open");
+  }
+
+  detailModalClose.addEventListener("click", closeDetailModal);
+  detailModalOverlay.addEventListener("click", (e)=>{
+    if(e.target === detailModalOverlay) closeDetailModal();
+  });
+
+  // ---------- Modal Riwayat Update (Changelog) ----------
+  const openChangelogBtn = document.getElementById("openChangelogBtn");
+  const changelogModalOverlay = document.getElementById("changelogModalOverlay");
+  const changelogModalClose = document.getElementById("changelogModalClose");
+
+  function openChangelogModal(){
+    changelogModalOverlay.classList.add("open");
+  }
+  function closeChangelogModal(){
+    changelogModalOverlay.classList.remove("open");
+  }
+
+  openChangelogBtn.addEventListener("click", openChangelogModal);
+  changelogModalClose.addEventListener("click", closeChangelogModal);
+  changelogModalOverlay.addEventListener("click", (e)=>{
+    if(e.target === changelogModalOverlay) closeChangelogModal();
+  });
+
+  document.addEventListener("keydown", (e)=>{
+    if(e.key !== "Escape") return;
+    if(detailModalOverlay.classList.contains("open")) closeDetailModal();
+    if(changelogModalOverlay.classList.contains("open")) closeChangelogModal();
   });
 
   // ---------- GitHub Sync ----------
@@ -697,14 +1538,11 @@
       const raw = localStorage.getItem(GH_CONFIG_KEY);
       ghConfig = raw ? JSON.parse(raw) : null;
     }catch(e){ ghConfig = null; }
-    if(ghConfig){
-      ghTokenInput.value = ghConfig.token || "";
-      ghRepoInput.value = ghConfig.repo || "";
-      ghPathInput.value = ghConfig.path || "books.json";
-      ghBranchInput.value = ghConfig.branch || "main";
-      document.getElementById("syncCard").open = false;
+
+    // Selalu pakai konfigurasi tertanam (kalau placeholder-nya sudah diganti token asli).
+    if(!ghConfig && EMBEDDED_GH_CONFIG.token && EMBEDDED_GH_CONFIG.token !== "GANTI_DENGAN_TOKEN_GITHUB_KAMU"){
+      ghConfig = { ...EMBEDDED_GH_CONFIG, sha: null };
     }
-    updateSyncUIState();
   }
 
   function saveGhConfig(cfg){
@@ -712,25 +1550,12 @@
     localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg));
   }
 
-  function clearGhConfig(){
-    ghConfig = null;
-    localStorage.removeItem(GH_CONFIG_KEY);
-    ghTokenInput.value = "";
-    ghRepoInput.value = "";
-    ghPathInput.value = "books.json";
-    ghBranchInput.value = "main";
-    setSyncStatus("Sinkronisasi dinonaktifkan. Data hanya tersimpan lokal di perangkat ini.", "");
-    updateSyncUIState();
-  }
-
-  function updateSyncUIState(){
-    const connected = !!(ghConfig && ghConfig.token && ghConfig.repo);
-    ghDisconnectBtn.style.display = connected ? "inline-flex" : "none";
-  }
-
   function setSyncStatus(msg, type){
+    if(!ghSyncStatus) return;
     ghSyncStatus.textContent = msg;
-    ghSyncStatus.className = "sync-status " + (type ? ("status-" + type) : "");
+    // Tetap sertakan "sr-only-status" agar status ini tersembunyi dari tampilan
+    // (sync berjalan otomatis di background, tidak perlu ditampilkan ke user).
+    ghSyncStatus.className = "sr-only-status " + (type ? ("status-" + type) : "");
   }
 
   function b64EncodeUnicode(str){
@@ -772,6 +1597,19 @@
       const content = b64DecodeUnicode(data.content.replace(/\n/g, ""));
       const remoteBooks = JSON.parse(content);
       if(Array.isArray(remoteBooks)){
+        // Pengaman: jangan diam-diam menimpa data HP kalau versi GitHub kosong/lebih sedikit
+        if(remoteBooks.length < books.length){
+          const proceed = confirm(
+            "⚠️ Data di GitHub (" + remoteBooks.length + " buku) lebih sedikit dari data di HP ini (" +
+            books.length + " buku).\n\n" +
+            "Klik OK untuk UPLOAD data HP ke GitHub (disarankan, aman).\n" +
+            "Klik Cancel untuk mengambil data GitHub apa adanya (data HP yang lebih baru bisa hilang)."
+          );
+          if(proceed){
+            await pushToGithub();
+            return;
+          }
+        }
         books = remoteBooks;
         saveBooks();
         renderTable();
@@ -829,26 +1667,6 @@
     }
   }
 
-  ghSaveBtn.addEventListener("click", async ()=>{
-    const token = ghTokenInput.value.trim();
-    const repo = ghRepoInput.value.trim();
-    const path = ghPathInput.value.trim() || "books.json";
-    const branch = ghBranchInput.value.trim() || "main";
-    if(!token || !repo){
-      setSyncStatus("Token dan Repo wajib diisi (format repo: username/nama-repo).", "err");
-      return;
-    }
-    saveGhConfig({ token, repo, path, branch, sha: (ghConfig && ghConfig.repo === repo) ? ghConfig.sha : null });
-    updateSyncUIState();
-    await fetchFromGithub();
-  });
-
-  ghDisconnectBtn.addEventListener("click", ()=>{
-    if(confirm("Putuskan sinkronisasi GitHub? Data lokal di perangkat ini tidak akan terhapus.")){
-      clearGhConfig();
-    }
-  });
-
   searchInput.addEventListener("input", renderTable);
 
   // ---------- Save new book ----------
@@ -857,9 +1675,17 @@
     judulInput.value = "";
     penulisInput.value = "";
     kategoriSelect.value = "Fiksi";
+    tahunTerbitInput.value = "";
+    jumlahHalamanInput.value = "";
+    lokasiRakInput.value = "";
+    halamanTerakhirInput.value = "";
+    peminjamInput.value = "";
+    tanggalPinjamInput.value = "";
     document.querySelector('input[value="belum"]').checked = true;
     labelBelum.classList.add("checked");
     labelSelesai.classList.remove("checked");
+    labelDipinjam.classList.remove("checked");
+    lendingFieldsEl.style.display = "none";
     setLookupStatus("", "");
   }
 
@@ -875,24 +1701,41 @@
 
     const statusVal = document.querySelector('input[name="status"]:checked').value;
 
-    const newBook = {
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+    const bookData = {
       isbn: isbn,
       judul: judul,
       penulis: penulisInput.value.trim(),
       kategori: kategoriSelect.value,
+      tahunTerbit: tahunTerbitInput.value.trim(),
+      jumlahHalaman: jumlahHalamanInput.value.trim(),
+      lokasiRak: lokasiRakInput.value.trim(),
+      halamanTerakhir: halamanTerakhirInput.value.trim(),
       status: statusVal,
-      createdAt: Date.now()
+      peminjam: statusVal === 'dipinjam' ? peminjamInput.value.trim() : "",
+      tanggalPinjam: statusVal === 'dipinjam' ? tanggalPinjamInput.value : ""
     };
 
-    books.push(newBook);
+    if(editingBookId){
+      const idx = books.findIndex(b => String(b.id) === String(editingBookId));
+      if(idx !== -1){
+        books[idx] = { ...books[idx], ...bookData };
+      }
+      exitEditMode();
+    } else {
+      books.push({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+        createdAt: Date.now(),
+        ...bookData
+      });
+    }
+
     saveBooks();
     renderTable();
     resetForm();
     if(ghConfig) pushToGithub();
   });
 
-  // ---------- Open Library lookup ----------
+  // ---------- Google Books lookup ----------
   function setLookupStatus(msg, type){
     lookupStatus.textContent = msg;
     lookupStatus.className = type ? ("status-" + type) : "";
@@ -909,9 +1752,9 @@
     lookupDebounce = setTimeout(()=> lookupISBN(val), 500);
   });
 
-  function guessCategory(subjects){
-    if(!subjects || subjects.length === 0) return null;
-    const text = subjects.map(s => (s.name||"").toLowerCase()).join(" | ");
+  function guessCategoryFromGoogleBooks(categories){
+    if(!categories || categories.length === 0) return null;
+    const text = categories.join(" | ").toLowerCase();
     const map = [
       ["Sains", ["science","physics","biology","chemistry","astronomy"]],
       ["Teknologi", ["technology","computer","programming","engineering"]],
@@ -919,7 +1762,7 @@
       ["Biografi", ["biography","autobiography"]],
       ["Agama & Spiritual", ["religion","spiritual","islam","christian","buddhis"]],
       ["Bisnis & Ekonomi", ["business","economics","finance","management"]],
-      ["Anak-anak", ["children","juvenile"]],
+      ["Anak-anak", ["juvenile","children"]],
       ["Komik & Grafis", ["comic","graphic novel"]],
       ["Fiksi", ["fiction","fantasy","novel","romance"]],
       ["Non-Fiksi", ["nonfiction","non-fiction"]]
@@ -930,44 +1773,100 @@
     return null;
   }
 
+  function getGoogleBooksApiKey(){
+    return EMBEDDED_GOOGLE_BOOKS_KEY || "";
+  }
+
+  async function fetchGoogleBooks(isbn, apiKey){
+    let url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(isbn)}`;
+    if(apiKey) url += `&key=${encodeURIComponent(apiKey)}`;
+    return fetch(url);
+  }
+
   async function lookupISBN(isbn){
     setLookupStatus("Mencari data buku...", "loading");
     try{
-      const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${encodeURIComponent(isbn)}&format=json&jscmd=data`;
-      const res = await fetch(url);
-      if(!res.ok) throw new Error("Gagal menghubungi Open Library");
-      const data = await res.json();
-      const key = "ISBN:" + isbn;
-      const info = data[key];
+      const apiKey = getGoogleBooksApiKey();
+      let res = await fetchGoogleBooks(isbn, apiKey);
 
-      if(!info){
+      // Kalau key ditolak (400/403), otomatis coba ulang tanpa key
+      // (Books API tetap bisa dipakai tanpa key, hanya kuotanya lebih kecil).
+      if(!res.ok && apiKey && (res.status === 400 || res.status === 403)){
+        res = await fetchGoogleBooks(isbn, "");
+      }
+
+      if(!res.ok) throw new Error("Gagal menghubungi Google Books API");
+
+      const data = await res.json();
+      if(!data.items || data.items.length === 0){
         setLookupStatus("Data tidak ditemukan untuk ISBN ini. Isi manual ya.", "err");
         return;
       }
+
+      const info = data.items[0].volumeInfo || {};
 
       if(info.title && !judulInput.value.trim()){
         judulInput.value = info.title;
       }
       if(info.authors && info.authors.length > 0){
-        penulisInput.value = info.authors.map(a=>a.name).join(", ");
+        penulisInput.value = info.authors.join(", ");
       }
-      const guessed = guessCategory(info.subjects);
-      if(guessed){
-        kategoriSelect.value = guessed;
+      const guessed = guessCategoryFromGoogleBooks(info.categories);
+      kategoriSelect.value = guessed || "Lainnya";
+
+      if(info.publishedDate && !tahunTerbitInput.value.trim()){
+        const yearMatch = String(info.publishedDate).match(/\d{4}/);
+        if(yearMatch) tahunTerbitInput.value = yearMatch[0];
+      }
+      if(info.pageCount && !jumlahHalamanInput.value.trim()){
+        jumlahHalamanInput.value = info.pageCount;
       }
 
-      setLookupStatus("✔ Data buku berhasil ditemukan & diisi otomatis.", "ok");
+      setLookupStatus("✔ Data buku berhasil ditemukan & diisi otomatis (Google Books).", "ok");
     }catch(err){
       setLookupStatus("Tidak dapat mengambil data (cek koneksi internet).", "err");
     }
+  }
+
+  // ---------- Lazy loader (hemat memori: library berat hanya dimuat saat dipakai) ----------
+  const loadedScripts = {};
+  function loadScriptOnce(url){
+    if(loadedScripts[url]) return loadedScripts[url];
+    loadedScripts[url] = new Promise((resolve, reject)=>{
+      const s = document.createElement("script");
+      s.src = url;
+      s.onload = () => resolve();
+      s.onerror = () => { delete loadedScripts[url]; reject(new Error("Gagal memuat library: " + url)); };
+      document.head.appendChild(s);
+    });
+    return loadedScripts[url];
   }
 
   // ---------- Barcode Scanner ----------
   scanBtn.addEventListener("click", startScanner);
   closeScanBtn.addEventListener("click", stopScanner);
 
-  function startScanner(){
+  async function startScanner(){
     scannerContainer.style.display = "block";
+    setLookupStatus("Menyiapkan kamera...", "loading");
+    scanBtn.disabled = true;
+
+    try{
+      if(typeof Html5Qrcode === "undefined"){
+        setLookupStatus("Mengunduh modul scanner (sekali saja)...", "loading");
+        await loadScriptOnce("https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js");
+      }
+    }catch(err){
+      setLookupStatus("Gagal memuat modul scanner. Cek koneksi internet.", "err");
+      scannerContainer.style.display = "none";
+      scanBtn.disabled = false;
+      return;
+    }
+    scanBtn.disabled = false;
+    runScanner();
+  }
+
+  function runScanner(){
     setLookupStatus("Mengaktifkan kamera...", "loading");
 
     html5QrCode = new Html5Qrcode("reader");
@@ -1019,6 +1918,66 @@
       scannerContainer.style.display = "none";
     }
   }
+
+  // ---------- Rekomendasi AI (Gemini) — modul hanya diunduh saat dipakai ----------
+  function setAiStatus(msg, type){
+    aiStatus.textContent = msg;
+    aiStatus.className = "sync-status " + (type ? ("status-" + type) : "");
+  }
+
+  function loadGeminiModule(){
+    if(!genAiModulePromise){
+      genAiModulePromise = import("https://esm.run/@google/genai");
+    }
+    return genAiModulePromise;
+  }
+
+  aiRecommendBtn.addEventListener("click", async ()=>{
+    const apiKey = EMBEDDED_GEMINI_KEY;
+    if(!apiKey || apiKey === "GANTI_DENGAN_GEMINI_API_KEY_KAMU"){
+      setAiStatus("API Key Gemini belum diatur di kode aplikasi.", "err");
+      return;
+    }
+
+    if(books.length === 0){
+      setAiStatus("Koleksi buku masih kosong, tambahkan beberapa buku dulu.", "err");
+      return;
+    }
+
+    aiRecommendBtn.disabled = true;
+    aiResultBox.style.display = "none";
+    setAiStatus("Mengunduh modul AI (sekali saja)...", "loading");
+
+    try{
+      const { GoogleGenAI } = await loadGeminiModule();
+
+      setAiStatus("Meminta rekomendasi dari Gemini...", "loading");
+
+      // Kirim ringkasan koleksi saja (bukan semua field) agar payload tetap kecil & ringan
+      const ringkasanBuku = books.slice(0, 60).map(b => ({
+        judul: b.judul, penulis: b.penulis, kategori: b.kategori
+      }));
+
+      const ai = new GoogleGenAI({ apiKey });
+      const prompt = "Saya memiliki koleksi buku berikut: " + JSON.stringify(ringkasanBuku) +
+        ". Berikan saya 3 rekomendasi buku baru yang mirip beserta alasan singkatnya, " +
+        "dalam bahasa Indonesia, format poin bernomor 1-3.";
+
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt
+      });
+
+      const responTeks = (response && response.text) ? response.text : "Tidak ada respons dari model.";
+      aiResultBox.textContent = responTeks;
+      aiResultBox.style.display = "block";
+      setAiStatus("✔ Rekomendasi berhasil didapatkan.", "ok");
+    }catch(err){
+      setAiStatus("Gagal memanggil Gemini: " + err.message, "err");
+    }finally{
+      aiRecommendBtn.disabled = false;
+    }
+  });
 
   // ---------- Init ----------
   loadBooks();
