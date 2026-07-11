@@ -170,6 +170,37 @@
     gap:8px;
   }
   .isbn-row input{ flex:1; }
+  .cover-preview-row{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    margin: 14px 0;
+    padding: 16px;
+    background: var(--slate-50);
+    border: 1px dashed var(--slate-300);
+    border-radius: 12px;
+  }
+  .cover-preview-wrap{
+    width:100px;
+    height:145px;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow: 0 6px 16px rgba(15,23,42,0.16);
+    background: white;
+  }
+  .cover-preview-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .cover-preview-caption{
+    font-size: 0.72rem;
+    color: var(--slate-500);
+    font-weight:600;
+    text-align:center;
+  }
   .field-row{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -807,7 +838,34 @@
   tbody tr:hover{ background: var(--slate-50); }
   .title-cell{ font-weight:600; color: var(--slate-900); }
   /* Sel cover thumbnail otomatis — hanya tampil di kartu mobile */
-  td.mobile-cover-cell{ display:none; }
+  /* Cover thumbnail otomatis — tampil di desktop (kecil, inline) & mobile (besar, ala kartu) */
+  td.mobile-cover-cell{ width:56px; vertical-align:middle; }
+  .row-cover-wrap{
+    width:44px;
+    height:64px;
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow: 0 3px 8px rgba(15,23,42,0.15);
+    flex-shrink:0;
+  }
+  .row-cover-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .row-cover-fallback{
+    width:44px;
+    height:64px;
+    border-radius:6px;
+    background: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.3rem;
+    flex-shrink:0;
+  }
   .isbn-cell{ color: var(--slate-500); font-size:0.8rem; font-family: ui-monospace, monospace; }
   .cat-chip{
     display:inline-block;
@@ -1182,8 +1240,53 @@
   }
 
   @media (min-width: 901px){
-    /* Di desktop, drawer tetap tampil normal (inline), backdrop & tombol hamburger tidak dipakai */
-    .filter-drawer{ position:static; transform:none; width:auto; max-width:none; padding:0; box-shadow:none; background:transparent; }
+    /* Di desktop, filter ditampilkan sebagai panel elegan (bukan drawer geser) */
+    .filter-drawer{
+      position:static;
+      transform:none;
+      width:auto;
+      max-width:none;
+      background: linear-gradient(180deg, var(--slate-50), #ffffff);
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .filter-drawer-header{ display:none; }
+    .filter-drawer .status-tabs{
+      margin: 0 0 18px;
+      padding: 0 0 18px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .filter-groups-row{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .filter-drawer .filter-group{ margin:0; }
+    .filter-drawer .filter-group-label{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size: 0.74rem;
+      color: var(--brand-700);
+      margin-bottom: 9px;
+    }
+    .filter-drawer .category-filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 7px;
+    }
+    .filter-drawer .cat-filter-btn{
+      box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+    }
+    .filter-drawer .cat-filter-btn.active{
+      box-shadow: 0 3px 10px rgba(149,80,28,0.25);
+    }
+  }
+  @media (min-width: 901px) and (max-width: 1099px){
+    .filter-groups-row{ grid-template-columns: 1fr; gap: 16px; }
   }
 
 
@@ -1398,6 +1501,13 @@
 
       <div id="lookupStatus"></div>
 
+      <div class="cover-preview-row" id="coverPreviewRow" style="display:none;">
+        <div class="cover-preview-wrap" id="coverPreviewWrap">
+          <img id="coverPreviewImg" alt="Pratinjau sampul buku">
+        </div>
+        <div class="cover-preview-caption">Pratinjau sampul otomatis dari Open Library</div>
+      </div>
+
       <label class="field-label">Judul Buku</label>
       <input type="text" id="judul" placeholder="Judul buku">
 
@@ -1486,17 +1596,19 @@
           <button type="button" class="filter-drawer-close" id="filterDrawerClose" aria-label="Tutup menu filter">✕</button>
         </div>
         <div class="status-tabs" id="statusTabs"></div>
-        <div class="filter-group">
-          <div class="filter-group-label">Jenis Buku</div>
-          <div class="category-filters" id="typeFilters"></div>
-        </div>
-        <div class="filter-group">
-          <div class="filter-group-label">Kategori</div>
-          <div class="category-filters" id="categoryFilters"></div>
-        </div>
-        <div class="filter-group">
-          <div class="filter-group-label">Penerbit</div>
-          <div class="category-filters" id="publisherFilters"></div>
+        <div class="filter-groups-row">
+          <div class="filter-group">
+            <div class="filter-group-label">📚 Jenis Buku</div>
+            <div class="category-filters" id="typeFilters"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-group-label">🏷️ Kategori</div>
+            <div class="category-filters" id="categoryFilters"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-group-label">🏢 Penerbit</div>
+            <div class="category-filters" id="publisherFilters"></div>
+          </div>
         </div>
       </aside>
 
@@ -1504,6 +1616,7 @@
         <table id="bookTable">
           <thead>
             <tr>
+              <th></th>
               <th>Judul</th>
               <th>Penulis</th>
               <th>Kategori</th>
@@ -1524,7 +1637,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.27.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.28.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1534,6 +1647,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.28.0</strong> — Penyesuaian tampilan desktop: cover foto otomatis kini juga tampil di tabel desktop (thumbnail kecil di kolom pertama). Panel filter (Status/Jenis/Kategori/Penerbit) dirombak jadi panel elegan dengan latar & border rapi, disusun 3 kolom sejajar, lengkap ikon di tiap label — menggantikan tampilan drawer polos sebelumnya.</li>
         <li><strong>v1.27.0</strong> — Tambah <strong>pagination</strong>: daftar koleksi dibatasi 20 buku per halaman dengan tombol "Sebelumnya"/"Selanjutnya" di bawah list. Mencegah dasbor memanjang tak terbatas kalau koleksi sudah ratusan buku. Halaman otomatis kembali ke 1 setiap ganti filter/pencarian.</li>
         <li><strong>v1.26.0</strong> — Kartu buku di list (mobile) dirombak jadi lebih ringkas ala "rak buku": tampilkan cover foto otomatis + Judul + Penulis + Kategori/Jenis + Status saja. Detail teknis (ISBN, Tahun, Rak, Penerbit, Progress) dipindah sepenuhnya ke tombol "👁️ Detail" agar kartu tidak terlalu padat.</li>
         <li><strong>v1.25.0</strong> — Cegah ISBN duplikat: saat tambah buku baru atau edit buku, sistem cek dulu apakah ISBN sudah dipakai buku lain di koleksi. Kalau sudah ada, penyimpanan ditolak dengan pesan peringatan (kolom ISBN boleh kosong, tidak wajib diisi).</li>
@@ -1715,8 +1829,14 @@
       books = [];
     }
   }
-  function saveBooks(){
+  function saveBooks(pushToCloud){
+    if(pushToCloud === undefined) pushToCloud = true;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+    // Auto-Sync: setiap perubahan data lokal (tambah/edit/hapus) langsung
+    // dipicu ke GitHub secara instan, selama konfigurasi GitHub aktif.
+    if(pushToCloud && ghConfig && ghConfig.token && ghConfig.repo){
+      pushToGithub();
+    }
   }
 
   // ---------- Status toggle visuals ----------
@@ -2085,7 +2205,6 @@
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
         renderTable();
-        if(ghConfig) pushToGithub();
         showToast("Data buku sudah berhasil dihapus.", "delete");
       });
       return;
@@ -2415,7 +2534,6 @@
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
         renderTable();
-        if(ghConfig) pushToGithub();
         closeDetailModal();
         alert("✅ Buku berhasil dihapus!");
       }
@@ -2488,7 +2606,6 @@
         books = books.filter(b => String(b.id) !== String(book.id));
         saveBooks();
         renderTable();
-        if(ghConfig) pushToGithub();
         closeDetailModal();
         alert("✅ Buku berhasil dihapus!");
       }
@@ -2539,7 +2656,6 @@
       books[idx] = Object.assign({}, books[idx], updatedData);
       saveBooks();
       renderTable();
-      if(ghConfig) pushToGithub();
       alert("✅ Buku \"" + judul + "\" berhasil diperbarui!");
       closeDetailModal();
     }
@@ -2669,7 +2785,7 @@
           }
         }
         books = remoteBooks;
-        saveBooks();
+        saveBooks(false); // data ini baru ditarik dari GitHub, jangan push balik (hindari round-trip sia-sia)
         renderTable();
       }
       ghConfig.sha = data.sha;
@@ -2679,6 +2795,67 @@
       setSyncStatus("Gagal mengambil data: " + err.message, "err");
     }
   }
+
+  // ---------- Auto-Sync latar belakang: cek perubahan dari perangkat lain ----------
+  // Dipanggil secara berkala + saat tab kembali aktif. Diam-diam (tanpa alert/confirm)
+  // supaya tidak mengganggu; kalau memang ada perubahan mencurigakan (data berkurang
+  // banyak) atau user sedang mengetik di form/modal, polling ini melewati (skip) saja
+  // demi keamanan data, tidak pernah menimpa paksa.
+  let isSilentPulling = false;
+  async function silentPullIfChanged(){
+    if(!ghConfig || !ghConfig.token || !ghConfig.repo) return;
+    if(isSilentPulling) return; // cegah tumpang tindih kalau dipanggil beruntun
+    // Jangan ganggu kalau user sedang aktif mengedit (form tambah/edit atau modal detail terbuka)
+    if(editingBookId) return;
+    if(detailModalOverlay && detailModalOverlay.classList.contains("open")) return;
+
+    isSilentPulling = true;
+    try{
+      const res = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}`, { headers: ghHeaders() });
+      if(!res.ok) return; // diam saja kalau gagal (jangan ganggu user dengan error polling background)
+
+      const data = await res.json();
+      if(data.sha === ghConfig.sha) return; // tidak ada perubahan baru di GitHub
+
+      const content = b64DecodeUnicode(data.content.replace(/\n/g, ""));
+      const remoteBooks = JSON.parse(content);
+      if(!Array.isArray(remoteBooks)) return;
+
+      // Pengaman yang sama seperti fetchFromGithub manual: kalau data remote jauh lebih
+      // sedikit, jangan diam-diam menimpa — lewati saja siklus polling ini.
+      if(remoteBooks.length < books.length) return;
+
+      books = remoteBooks;
+      saveBooks(false); // data dari remote, jangan push balik
+      renderTable();
+      ghConfig.sha = data.sha;
+      saveGhConfig(ghConfig);
+      setSyncStatus("🔄 Diperbarui otomatis dari perangkat lain — " + new Date().toLocaleTimeString('id-ID'), "ok");
+      showToast("📚 Koleksi diperbarui dari perangkat lain", "success");
+    }catch(err){
+      // diam - jangan ganggu user dengan error polling background
+    }finally{
+      isSilentPulling = false;
+    }
+  }
+
+  let ghPollTimer = null;
+  function startGhAutoPoll(){
+    if(ghPollTimer) clearInterval(ghPollTimer);
+    ghPollTimer = setInterval(()=>{
+      if(document.visibilityState === "visible"){
+        silentPullIfChanged();
+      }
+    }, 45000); // cek tiap 45 detik selagi tab aktif/terlihat
+  }
+
+  // Saat user kembali ke tab ini (buka lagi dari app lain / minimize), langsung cek
+  document.addEventListener("visibilitychange", ()=>{
+    if(document.visibilityState === "visible"){
+      silentPullIfChanged();
+    }
+  });
+  window.addEventListener("focus", silentPullIfChanged);
 
   async function pushToGithub(){
     if(!ghConfig || !ghConfig.token || !ghConfig.repo) return;
@@ -2814,7 +2991,6 @@
       renderTable();
       resetForm();
       setMobileView("dashboard");
-      if(ghConfig) pushToGithub();
       showToast(`Buku "${judul}" berhasil diperbarui.`, "success");
     } else {
       books.push({
@@ -2826,7 +3002,6 @@
       renderTable();
       resetForm();
       setMobileView("dashboard");
-      if(ghConfig) pushToGithub();
       showToast(`Buku "${judul}" berhasil disimpan.`, "success");
     }
   });
@@ -3166,6 +3341,7 @@
   
   if(ghConfig && ghConfig.token && ghConfig.repo){
     fetchFromGithub();
+    startGhAutoPoll(); // Auto-Sync: cek perubahan dari perangkat lain tiap 45 detik + saat tab aktif kembali
   }
 
   // ---------- PWA: daftarkan service worker ----------
