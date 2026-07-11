@@ -41,22 +41,5 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
-  },
-  {
-    "id": "mrg8d9upw2f1s",
-    "createdAt": 1783766248225,
-    "isbn": "9786027123700",
-    "judul": "Api sejarah jilid 2",
-    "penulis": "Ahmad Mansur Suryanegara",
-    "kategori": "Lainnya",
-    "jenisBuku": "cetak",
-    "tahunTerbit": "2020",
-    "jumlahHalaman": "597",
-    "lokasiRak": "",
-    "penerbit": "",
-    "halamanTerakhir": "",
-    "status": "belum",
-    "peminjam": "",
-    "tanggalPinjam": ""
   }
 ]
