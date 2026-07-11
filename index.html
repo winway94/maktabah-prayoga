@@ -368,6 +368,63 @@
     box-shadow: var(--shadow);
   }
   .detail-title-block{ min-width:0; }
+  .detail-input{ width:100%; margin-bottom:12px; }
+  select.detail-input{ margin-bottom:0; }
+  #modalJudul, #modalPenulis{ text-align:center; }
+  .cover-photo-row{
+    display:flex;
+    justify-content:center;
+    margin-bottom:14px;
+  }
+  .cover-photo-wrap{
+    width:110px;
+    height:160px;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow: 0 6px 16px rgba(15,23,42,0.18);
+    flex-shrink:0;
+  }
+  .cover-photo-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .cover-fallback-box{
+    width:110px;
+    height:160px;
+    border-radius:8px;
+    background: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2.4rem;
+    box-shadow: 0 6px 16px rgba(15,23,42,0.10);
+    flex-shrink:0;
+  }
+  .detail-pill-row{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin: 4px 0 18px;
+  }
+  .pill-badge{
+    display:inline-block;
+    padding:4px 13px;
+    border-radius:999px;
+    font-size:0.76rem;
+    font-weight:700;
+    background: var(--brand-50);
+    color: var(--brand-700);
+    border: 1px solid #e3c39a;
+  }
+  .pill-badge-type{
+    background: var(--slate-100);
+    color: var(--slate-600);
+    border-color: var(--slate-200);
+  }
   .detail-title{
     font-size: 1.15rem;
     font-weight:700;
@@ -583,6 +640,28 @@
   }
   .filter-drawer-toggle:active{ background: var(--brand-900); }
 
+  /* Tombol pencarian buku (ikon) — hanya tampil di mobile, expand jadi kolom cari saat ditekan */
+  .search-toggle-btn{
+    display:none;
+    border: 1.5px solid var(--slate-200);
+    background: white;
+    color: var(--slate-600);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    cursor:pointer;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    transition: all .12s;
+  }
+  .search-toggle-btn.active{
+    background: var(--brand-600);
+    border-color: var(--brand-600);
+    color: white;
+  }
+
   .filter-drawer-header{ display:none; }
   .filter-drawer-backdrop{ display:none; }
 
@@ -668,6 +747,38 @@
     border: 1px solid var(--slate-200);
     border-radius: 12px;
   }
+  .pagination-bar{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .pagination-bar button{
+    border: 1.5px solid var(--slate-200);
+    background: white;
+    color: var(--slate-700);
+    font-weight:700;
+    font-size: 0.85rem;
+    padding: 9px 16px;
+    border-radius: 10px;
+    cursor:pointer;
+    min-height: 42px;
+  }
+  .pagination-bar button:disabled{
+    opacity: 0.4;
+    cursor:not-allowed;
+  }
+  .pagination-bar button:not(:disabled):hover{
+    border-color: var(--brand-500);
+    color: var(--brand-700);
+  }
+  .pagination-info{
+    font-size: 0.82rem;
+    font-weight:600;
+    color: var(--slate-600);
+    white-space:nowrap;
+  }
   table{
     width:100%;
     border-collapse: collapse;
@@ -695,6 +806,8 @@
   tbody tr:last-child td{ border-bottom:none; }
   tbody tr:hover{ background: var(--slate-50); }
   .title-cell{ font-weight:600; color: var(--slate-900); }
+  /* Sel cover thumbnail otomatis — hanya tampil di kartu mobile */
+  td.mobile-cover-cell{ display:none; }
   .isbn-cell{ color: var(--slate-500); font-size:0.8rem; font-family: ui-monospace, monospace; }
   .cat-chip{
     display:inline-block;
@@ -1092,7 +1205,14 @@
       gap: 10px;
     }
     .list-header h2{ flex:1; min-width:0; }
-    #searchInput{ flex-basis:100%; max-width: 100%; }
+    .search-toggle-btn{ display:flex; }
+    #searchInput{
+      display:none;
+      flex-basis:100%;
+      max-width: 100%;
+      order: 10;
+    }
+    #searchInput.mobile-open{ display:block; }
 
     /* Filter lebih rapi di mobile: scroll horizontal, tidak menumpuk banyak baris */
     .status-tabs{
@@ -1181,6 +1301,40 @@
     td.action-cell::before{ display:none; }
     td.action-cell .row-actions{ width:100%; }
     td.action-cell .row-actions .btn{ flex:1; }
+
+    /* Cover thumbnail otomatis di kartu list (mobile) */
+    td.mobile-cover-cell{
+      display:flex;
+      justify-content:center;
+      padding: 4px 0 12px;
+    }
+    td.mobile-cover-cell::before{ display:none; }
+    .row-cover-wrap{
+      width:90px;
+      height:130px;
+      border-radius:8px;
+      overflow:hidden;
+      box-shadow: 0 6px 14px rgba(15,23,42,0.16);
+      flex-shrink:0;
+    }
+    .row-cover-img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .row-cover-fallback{
+      width:90px;
+      height:130px;
+      border-radius:8px;
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:2rem;
+      flex-shrink:0;
+    }
   }
 </style>
 </head>
@@ -1285,6 +1439,9 @@
       <label class="field-label">Lokasi Rak</label>
       <input type="text" id="lokasiRak" placeholder="cth: Rak A2 / Lemari Kamar">
 
+      <label class="field-label">Penerbit</label>
+      <input type="text" id="penerbit" placeholder="cth: Gramedia Pustaka Utama">
+
       <label class="field-label">Halaman Terakhir Dibaca</label>
       <input type="text" id="halamanTerakhir" placeholder="cth: 120 (opsional)" inputmode="numeric">
 
@@ -1318,6 +1475,7 @@
       <div class="list-header">
         <button type="button" class="filter-drawer-toggle" id="filterDrawerToggle" aria-label="Buka menu filter">☰</button>
         <h2>📖 Koleksi Buku</h2>
+        <button type="button" class="search-toggle-btn" id="searchToggleBtn" aria-label="Cari buku">🔍</button>
         <input type="search" id="searchInput" placeholder="🔍 Cari judul, penulis, atau ISBN...">
       </div>
 
@@ -1335,6 +1493,10 @@
         <div class="filter-group">
           <div class="filter-group-label">Kategori</div>
           <div class="category-filters" id="categoryFilters"></div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-label">Penerbit</div>
+          <div class="category-filters" id="publisherFilters"></div>
         </div>
       </aside>
 
@@ -1355,13 +1517,14 @@
           Belum ada buku. Tambahkan buku pertama Anda di form sebelah kiri.
         </div>
       </div>
+      <div class="pagination-bar" id="paginationBar" style="display:none;"></div>
     </section>
 
   </div>
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.22.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.27.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1371,6 +1534,11 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.27.0</strong> — Tambah <strong>pagination</strong>: daftar koleksi dibatasi 20 buku per halaman dengan tombol "Sebelumnya"/"Selanjutnya" di bawah list. Mencegah dasbor memanjang tak terbatas kalau koleksi sudah ratusan buku. Halaman otomatis kembali ke 1 setiap ganti filter/pencarian.</li>
+        <li><strong>v1.26.0</strong> — Kartu buku di list (mobile) dirombak jadi lebih ringkas ala "rak buku": tampilkan cover foto otomatis + Judul + Penulis + Kategori/Jenis + Status saja. Detail teknis (ISBN, Tahun, Rak, Penerbit, Progress) dipindah sepenuhnya ke tombol "👁️ Detail" agar kartu tidak terlalu padat.</li>
+        <li><strong>v1.25.0</strong> — Cegah ISBN duplikat: saat tambah buku baru atau edit buku, sistem cek dulu apakah ISBN sudah dipakai buku lain di koleksi. Kalau sudah ada, penyimpanan ditolak dengan pesan peringatan (kolom ISBN boleh kosong, tidak wajib diisi).</li>
+        <li><strong>v1.24.0</strong> — Tambah field baru <strong>Penerbit</strong>: input di form Tambah Buku, bisa diedit di modal detail, tampil di kartu list, dan otomatis terisi saat lookup ISBN via Google Books. Tambah juga filter Penerbit di menu ☰ (samping filter Kategori).</li>
+        <li><strong>v1.23.0</strong> — Alur lihat/edit buku dirombak: kartu buku di list kini langsung tampil lengkap (ISBN, Tahun, Rak, Progress) tanpa perlu diklik. Tombol kartu diganti dari "Edit" jadi "👁️ Detail" — buka tampilan baca-saja dulu; tombol "✏️ Edit Buku" ada di dalam modal untuk mulai mengedit, semua field diedit di tempat (tidak pindah tab), lengkap dengan tombol Simpan/Batal/Hapus di modal yang sama.</li>
         <li><strong>v1.22.0</strong> — Tipografi header diganti sesuai brand guideline: judul "Maktabah Prayoga" pakai font DM Serif Display, teks isi/body pakai Plus Jakarta Sans (via Google Fonts, bukan gambar).</li>
         <li><strong>v1.21.2</strong> — Ikon logo (header, favicon, ikon PWA) diganti pakai gambar logo asli yang di-crop presisi, menggantikan SVG buatan ulang yang proporsinya kurang pas ("gemuk").</li>
         <li><strong>v1.21.1</strong> — Tombol ☰ (buka filter) diperjelas: latar tombol jadi coklat (sesuai tema), ikon jadi putih — hanya pada kotak tombolnya saja, latar section "Koleksi Buku" tetap seperti semula.</li>
@@ -1451,10 +1619,12 @@
   const tahunTerbitInput = document.getElementById("tahunTerbit");
   const jumlahHalamanInput = document.getElementById("jumlahHalaman");
   const lokasiRakInput = document.getElementById("lokasiRak");
+  const penerbitInput = document.getElementById("penerbit");
   const halamanTerakhirInput = document.getElementById("halamanTerakhir");
   const saveBtn = document.getElementById("saveBtn");
   const cancelEditBtn = document.getElementById("cancelEditBtn");
   let editingBookId = null;
+  let currentDetailBookId = null;
   const detailModalOverlay = document.getElementById("detailModalOverlay");
   const detailModalCard = document.getElementById("detailModalCard");
   const toastContainer = document.getElementById("toastContainer");
@@ -1469,8 +1639,12 @@
   const scannerContainer = document.getElementById("scannerContainer");
   const lookupStatus = document.getElementById("lookupStatus");
   const searchInput = document.getElementById("searchInput");
+  const searchToggleBtn = document.getElementById("searchToggleBtn");
   const categoryFiltersEl = document.getElementById("categoryFilters");
   let activeCategoryFilter = "Semua";
+  const paginationBar = document.getElementById("paginationBar");
+  const ITEMS_PER_PAGE = 20;
+  let currentPage = 1;
   const statusTabsEl = document.getElementById("statusTabs");
   let activeStatusFilter = "semua";
   const bookTbody = document.getElementById("bookTbody");
@@ -1486,6 +1660,8 @@
   const jenisBukuSelect = document.getElementById("jenisBuku");
   const typeFiltersEl = document.getElementById("typeFilters");
   let activeTypeFilter = "Semua";
+  const publisherFiltersEl = document.getElementById("publisherFilters");
+  let activePublisherFilter = "Semua";
   const mobileNavTabs = document.getElementById("mobileNavTabs");
   const filterDrawer = document.getElementById("filterDrawer");
   const filterDrawerToggle = document.getElementById("filterDrawerToggle");
@@ -1563,6 +1739,7 @@
     renderCategoryFilters();
     renderStatusTabs();
     renderTypeFilters();
+    renderPublisherFilters();
 
     const query = searchInput.value.trim().toLowerCase();
     const filtered = books.filter(b=>{
@@ -1572,6 +1749,7 @@
              (b.isbn||"").toLowerCase().includes(query) ||
              (b.kategori||"").toLowerCase().includes(query) ||
              (b.lokasiRak||"").toLowerCase().includes(query) ||
+             (b.penerbit||"").toLowerCase().includes(query) ||
              (b.peminjam||"").toLowerCase().includes(query);
       const matchCategory = activeCategoryFilter === "Semua" ||
              (b.kategori || "Lainnya") === activeCategoryFilter;
@@ -1579,8 +1757,18 @@
       const matchStatus = activeStatusFilter === "semua" || bookStatus === activeStatusFilter;
       const bookType = b.jenisBuku === "digital" ? "digital" : "cetak";
       const matchType = activeTypeFilter === "Semua" || bookType === activeTypeFilter;
-      return matchQuery && matchCategory && matchStatus && matchType;
+      const matchPublisher = activePublisherFilter === "Semua" ||
+             (b.penerbit || "Tidak Diketahui") === activePublisherFilter;
+      return matchQuery && matchCategory && matchStatus && matchType && matchPublisher;
     }).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
+
+    // ---------- Pagination: potong data sesuai halaman aktif ----------
+    const totalItems = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
+    if(currentPage > totalPages) currentPage = totalPages;
+    if(currentPage < 1) currentPage = 1;
+    const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+    const pageItems = filtered.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
     bookTbody.innerHTML = "";
 
@@ -1591,12 +1779,31 @@
         : "Tidak ada buku yang cocok dengan filter/pencarian.";
     } else {
       emptyState.style.display = "none";
-      filtered.forEach(b=>{
+      pageItems.forEach(b=>{
         const tr = document.createElement("tr");
         const isDipinjam = b.status === "dipinjam";
         tr.className = "clickable-row" + (isDipinjam ? " row-dipinjam" : "");
         tr.setAttribute("data-book-id", b.id);
+
+        // Cover thumbnail dari Open Library (gratis, tanpa simpan lokal), dibangun via concatenation string
+        const coverUrlRow = b.isbn
+          ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-M.jpg"
+          : "";
+        const fallbackId = "coverFallbackRow_" + b.id;
+        const onErrorJsRow = "this.parentNode.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; }";
+        let coverCellHtml = "";
+        if(coverUrlRow){
+          coverCellHtml =
+            '<div class="row-cover-wrap">' +
+              '<img class="row-cover-img" src="' + coverUrlRow + '" alt="Sampul buku" onerror="' + onErrorJsRow + '">' +
+            '</div>' +
+            '<div class="row-cover-fallback" id="' + fallbackId + '" style="display:none;">📘</div>';
+        } else {
+          coverCellHtml = '<div class="row-cover-fallback" id="' + fallbackId + '" style="display:flex;">📘</div>';
+        }
+
         tr.innerHTML = `
+          <td class="mobile-cover-cell" data-label="">${coverCellHtml}</td>
           <td class="title-cell" data-label="Judul">${isDipinjam ? "👤 " : ""}${escapeHtml(b.judul || "-")}</td>
           <td data-label="Penulis">${escapeHtml(b.penulis || "-")}</td>
           <td data-label="Kategori">
@@ -1606,7 +1813,7 @@
           <td data-label="Status">${renderStatusChip(b)}</td>
           <td class="action-cell" data-label="">
             <div class="row-actions">
-              <button class="btn btn-edit" data-edit-id="${b.id}">✏️ Edit</button>
+              <button class="btn btn-edit" data-edit-id="${b.id}">👁️ Detail</button>
             </div>
           </td>
         `;
@@ -1615,6 +1822,42 @@
     }
 
     bookCountEls.forEach(el => el.textContent = books.length);
+    renderPagination(totalItems, totalPages);
+  }
+
+  function renderPagination(totalItems, totalPages){
+    if(totalItems === 0 || totalPages <= 1){
+      paginationBar.style.display = "none";
+      paginationBar.innerHTML = "";
+      return;
+    }
+
+    paginationBar.style.display = "flex";
+    paginationBar.innerHTML =
+      '<button type="button" id="paginationPrevBtn" ' + (currentPage <= 1 ? "disabled" : "") + '>← Sebelumnya</button>' +
+      '<span class="pagination-info">Halaman ' + currentPage + ' dari ' + totalPages + ' (' + totalItems + ' buku)</span>' +
+      '<button type="button" id="paginationNextBtn" ' + (currentPage >= totalPages ? "disabled" : "") + '>Selanjutnya →</button>';
+
+    const prevBtn = document.getElementById("paginationPrevBtn");
+    const nextBtn = document.getElementById("paginationNextBtn");
+    if(prevBtn){
+      prevBtn.addEventListener("click", ()=>{
+        if(currentPage > 1){
+          currentPage--;
+          renderTable();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+    }
+    if(nextBtn){
+      nextBtn.addEventListener("click", ()=>{
+        if(currentPage < totalPages){
+          currentPage++;
+          renderTable();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+    }
   }
 
   function renderStatusChip(b){
@@ -1652,6 +1895,7 @@
     const btn = e.target.closest("button[data-status-tab]");
     if(!btn) return;
     activeStatusFilter = btn.getAttribute("data-status-tab");
+    currentPage = 1;
     renderTable();
   });
 
@@ -1686,6 +1930,42 @@
     const btn = e.target.closest("button[data-cat]");
     if(!btn) return;
     activeCategoryFilter = btn.getAttribute("data-cat");
+    currentPage = 1;
+    renderTable();
+  });
+
+  function renderPublisherFilters(){
+    const counts = {};
+    books.forEach(b=>{
+      const pub = b.penerbit || "Tidak Diketahui";
+      counts[pub] = (counts[pub] || 0) + 1;
+    });
+
+    const publishers = Object.keys(counts).sort((a,b)=> a.localeCompare(b));
+
+    if(publishers.length === 0){
+      publisherFiltersEl.innerHTML = "";
+      return;
+    }
+
+    // kalau penerbit aktif sudah tidak ada bukunya, kembali ke "Semua"
+    if(activePublisherFilter !== "Semua" && !counts[activePublisherFilter]){
+      activePublisherFilter = "Semua";
+    }
+
+    let html = `<button type="button" class="cat-filter-btn ${activePublisherFilter === 'Semua' ? 'active' : ''}" data-pub="Semua">Semua (${books.length})</button>`;
+    publishers.forEach(pub=>{
+      html += `<button type="button" class="cat-filter-btn ${activePublisherFilter === pub ? 'active' : ''}" data-pub="${escapeHtml(pub)}">${escapeHtml(pub)} (${counts[pub]})</button>`;
+    });
+
+    publisherFiltersEl.innerHTML = html;
+  }
+
+  publisherFiltersEl.addEventListener("click", (e)=>{
+    const btn = e.target.closest("button[data-pub]");
+    if(!btn) return;
+    activePublisherFilter = btn.getAttribute("data-pub");
+    currentPage = 1;
     renderTable();
   });
 
@@ -1706,6 +1986,7 @@
     const btn = e.target.closest("button[data-type]");
     if(!btn) return;
     activeTypeFilter = btn.getAttribute("data-type");
+    currentPage = 1;
     renderTable();
   });
 
@@ -1791,7 +2072,8 @@
   bookTbody.addEventListener("click", (e)=>{
     const editBtn = e.target.closest("button[data-edit-id]");
     if(editBtn){
-      startEditBook(editBtn.getAttribute("data-edit-id"));
+      const bookId = editBtn.getAttribute("data-edit-id");
+      openBookDetail(bookId);
       return;
     }
     const delBtn = e.target.closest("button[data-id]");
@@ -1802,7 +2084,6 @@
         if(!ok) return;
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
-        if(editingBookId === id) exitEditMode();
         renderTable();
         if(ghConfig) pushToGithub();
         showToast("Data buku sudah berhasil dihapus.", "delete");
@@ -1996,115 +2277,272 @@
     const book = books.find(b => String(b.id) === String(id));
     if(!book) return;
 
-    const jumlahHalaman = parseInt(book.jumlahHalaman, 10) || 0;
-    const halamanTerakhir = parseInt(book.halamanTerakhir, 10) || 0;
-    const persen = jumlahHalaman > 0
-      ? Math.min(100, Math.round((halamanTerakhir / jumlahHalaman) * 100))
-      : 0;
+    currentDetailBookId = id;
 
+    const statusVal = book.status === 'selesai' ? 'selesai' : (book.status === 'dipinjam' ? 'dipinjam' : 'belum');
+
+    // ---------- Cover foto otomatis dari Open Library (gratis, tanpa API key, tanpa simpan lokal) ----------
+    // Dibangun via concatenation string (bukan nested backtick) untuk menghindari syntax error.
     const coverUrl = book.isbn
-      ? `https://covers.openlibrary.org/b/isbn/${encodeURIComponent(book.isbn)}-M.jpg`
+      ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(book.isbn) + "-M.jpg"
       : "";
 
+    const onErrorJs = "this.parentNode.style.display='none'; var fb=document.getElementById('coverFallbackBox'); if(fb){ fb.style.display='flex'; }";
+
+    let coverBlockHtml = "";
+    if(coverUrl){
+      coverBlockHtml =
+        '<div class="cover-photo-row">' +
+          '<div class="cover-photo-wrap">' +
+            '<img class="cover-photo-img" src="' + coverUrl + '" alt="Sampul buku" onerror="' + onErrorJs + '">' +
+          '</div>' +
+          '<div class="cover-fallback-box" id="coverFallbackBox" style="display:none;">📘</div>' +
+        '</div>';
+    } else {
+      coverBlockHtml =
+        '<div class="cover-photo-row">' +
+          '<div class="cover-fallback-box" id="coverFallbackBox" style="display:flex;">📘</div>' +
+        '</div>';
+    }
+
+    // Pill badge kategori & jenis buku (dekoratif, ringkasan visual di atas — field asli untuk edit tetap di bawah, tidak diubah)
+    const pillRowHtml =
+      '<div class="detail-pill-row">' +
+        '<span class="pill-badge">' + escapeHtml(book.kategori || "Lainnya") + '</span>' +
+        '<span class="pill-badge pill-badge-type">' + (book.jenisBuku === "digital" ? "💻 Digital" : "📘 Cetak") + '</span>' +
+      '</div>';
+
+    // Bangun kotak field peminjam/tanggal via concatenation string (hindari nested backtick)
+    const lendingBoxHtml =
+      '<div class="lending-fields" id="modalLendingFields" style="display:' + (statusVal === 'dipinjam' ? 'block' : 'none') + ';">' +
+        '<label class="field-label" style="margin-top:0;">Nama Peminjam</label>' +
+        '<input type="text" class="detail-input" id="modalPeminjam" value="' + escapeHtml(book.peminjam || "") + '" disabled>' +
+        '<label class="field-label">Tanggal Dipinjam</label>' +
+        '<input type="date" class="detail-input" id="modalTanggalPinjam" value="' + escapeHtml(book.tanggalPinjam || "") + '" disabled>' +
+      '</div>';
+
     detailModalBody.innerHTML = `
-      <div class="detail-cover-row">
-        ${coverUrl ? `<img class="detail-cover" src="${coverUrl}" alt="Sampul buku" onerror="this.style.display='none'">` : ""}
-        <div class="detail-title-block">
-          <div class="detail-title">${escapeHtml(book.judul || "-")}</div>
-          <div class="detail-author">${escapeHtml(book.penulis || "Penulis tidak diketahui")}</div>
-          <div class="detail-chips">
-            <span class="cat-chip">${escapeHtml(book.kategori || "Lainnya")}</span>
-            ${renderStatusChip(book)}
-          </div>
+      ${coverBlockHtml}
+
+      <label class="field-label" style="margin-top:0;">Judul Buku</label>
+      <input type="text" class="detail-input" id="modalJudul" value="${escapeHtml(book.judul || "")}" disabled>
+
+      <label class="field-label">Penulis</label>
+      <input type="text" class="detail-input" id="modalPenulis" value="${escapeHtml(book.penulis || "")}" disabled>
+
+      ${pillRowHtml}
+
+      <div class="field-row">
+        <div>
+          <label class="field-label" style="margin-top:0;">Kategori</label>
+          <select class="detail-input" id="modalKategori" disabled>
+            <option value="Fiksi">Fiksi</option>
+            <option value="Non-Fiksi">Non-Fiksi</option>
+            <option value="Sains">Sains</option>
+            <option value="Teknologi">Teknologi</option>
+            <option value="Sejarah">Sejarah</option>
+            <option value="Biografi">Biografi</option>
+            <option value="Agama & Spiritual">Agama & Spiritual</option>
+            <option value="Bisnis & Ekonomi">Bisnis & Ekonomi</option>
+            <option value="Anak-anak">Anak-anak</option>
+            <option value="Komik & Grafis">Komik & Grafis</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" style="margin-top:0;">Jenis Buku</label>
+          <select class="detail-input" id="modalJenisBuku" disabled>
+            <option value="cetak">📘 Cetak (Fisik)</option>
+            <option value="digital">💻 Digital (PDF)</option>
+          </select>
         </div>
       </div>
 
-      ${book.status === 'dipinjam' ? `
-      <div class="lending-info-box">
-        <div class="detail-label">🤝 Info Peminjaman</div>
-        <div class="detail-value">Dipinjam oleh <strong>${escapeHtml(book.peminjam || "-")}</strong></div>
-        <div class="detail-value">Sejak tanggal: <strong>${escapeHtml(book.tanggalPinjam || "-")}</strong></div>
-      </div>
-      ` : ""}
-
-      <div class="detail-grid">
-        <div class="detail-item">
-          <div class="detail-label">Jenis Buku</div>
-          <div class="detail-value">${book.jenisBuku === "digital" ? "💻 Digital (PDF)" : "📘 Cetak (Fisik)"}</div>
+      <div class="field-row">
+        <div>
+          <label class="field-label">Tahun Terbit</label>
+          <input type="text" class="detail-input" id="modalTahunTerbit" value="${escapeHtml(book.tahunTerbit || "")}" disabled>
         </div>
-        <div class="detail-item">
-          <div class="detail-label">Tahun Terbit</div>
-          <div class="detail-value">${escapeHtml(book.tahunTerbit || "-")}</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Total Halaman</div>
-          <div class="detail-value">${escapeHtml(book.jumlahHalaman || "-")}</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">ISBN</div>
-          <div class="detail-value">${escapeHtml(book.isbn || "-")}</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Lokasi Rak</div>
-          <div class="detail-value">${escapeHtml(book.lokasiRak || "-")}</div>
+        <div>
+          <label class="field-label">Jumlah Halaman</label>
+          <input type="text" class="detail-input" id="modalJumlahHalaman" value="${escapeHtml(book.jumlahHalaman || "")}" disabled>
         </div>
       </div>
 
-      <div class="progress-section">
-        <div class="progress-label">
-          <span>📖 Progress Baca</span>
-          <span>${halamanTerakhir} ${jumlahHalaman ? "/ " + jumlahHalaman : ""} halaman ${jumlahHalaman ? "(" + persen + "%)" : ""}</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" style="width:${persen}%"></div>
-        </div>
-        <div class="progress-update-row">
-          <input type="text" id="detailProgressInput" inputmode="numeric" placeholder="Update halaman terakhir..." value="${escapeHtml(book.halamanTerakhir || "")}">
-          <button class="btn btn-primary" id="detailProgressSaveBtn" style="margin-top:0;">Simpan</button>
-        </div>
+      <label class="field-label">ISBN</label>
+      <input type="text" class="detail-input" id="modalIsbn" value="${escapeHtml(book.isbn || "")}" disabled>
+
+      <label class="field-label">Lokasi Rak</label>
+      <input type="text" class="detail-input" id="modalLokasiRak" value="${escapeHtml(book.lokasiRak || "")}" disabled>
+
+      <label class="field-label">Penerbit</label>
+      <input type="text" class="detail-input" id="modalPenerbit" value="${escapeHtml(book.penerbit || "")}" disabled>
+
+      <label class="field-label">Halaman Terakhir Dibaca</label>
+      <input type="text" class="detail-input" id="modalHalamanTerakhir" value="${escapeHtml(book.halamanTerakhir || "")}" disabled>
+
+      <label class="field-label">Status Bacaan</label>
+      <div class="status-toggle" id="modalStatusToggle">
+        <label class="${statusVal === 'belum' ? 'checked' : ''}" id="modalLabelBelum">
+          <input type="radio" name="modalStatus" value="belum" ${statusVal === 'belum' ? 'checked' : ''} disabled> Belum Selesai
+        </label>
+        <label class="${statusVal === 'selesai' ? 'checked' : ''}" id="modalLabelSelesai">
+          <input type="radio" name="modalStatus" value="selesai" ${statusVal === 'selesai' ? 'checked' : ''} disabled> Sudah Selesai
+        </label>
+        <label class="${statusVal === 'dipinjam' ? 'checked' : ''}" id="modalLabelDipinjam">
+          <input type="radio" name="modalStatus" value="dipinjam" ${statusVal === 'dipinjam' ? 'checked' : ''} disabled> 🤝 Dipinjam
+        </label>
       </div>
 
-      <div class="detail-actions">
-        <button class="btn btn-edit" id="detailEditBtn" style="flex:1;">✏️ Edit Buku</button>
-      </div>
-      <div class="detail-delete-row" id="detailDeleteRowContainer" style="display:none;">
-        <button class="btn btn-danger btn-danger-small" id="detailDeleteBtn">🗑 Hapus buku ini</button>
+      ${lendingBoxHtml}
+
+      <div class="detail-actions" id="modalDetailActions" style="margin-top:20px;">
+        <button type="button" class="btn btn-edit" id="detailEditBtn" style="flex:1;">✏️ Edit Buku</button>
+        <button type="button" class="btn btn-danger" id="detailDeleteBtn" style="flex:1;">🗑 Hapus</button>
       </div>
     `;
 
-    document.getElementById("detailProgressSaveBtn").addEventListener("click", ()=>{
-      const val = document.getElementById("detailProgressInput").value.trim();
-      const idx = books.findIndex(b => String(b.id) === String(id));
-      if(idx !== -1){
-        books[idx].halamanTerakhir = val;
-        saveBooks();
-        renderTable();
-        if(ghConfig) pushToGithub();
-        openBookDetail(id); // refresh tampilan modal dengan data terbaru
-      }
-    });
+    // Set nilai select (lebih aman lewat JS daripada nulis atribut "selected" manual)
+    document.getElementById("modalKategori").value = book.kategori || "Fiksi";
+    document.getElementById("modalJenisBuku").value = book.jenisBuku === "digital" ? "digital" : "cetak";
 
     document.getElementById("detailEditBtn").addEventListener("click", ()=>{
-      closeDetailModal();
-      startEditBook(id);
-      // Segera enable field agar user bisa edit langsung
-      setTimeout(() => enableEditMode(), 100);
+      enableModalEditMode(book);
     });
 
     document.getElementById("detailDeleteBtn").addEventListener("click", ()=>{
-      confirmDelete(book.judul).then((ok)=>{
-        if(!ok) return;
+      if(confirm("Yakin ingin menghapus buku \"" + book.judul + "\"?")){
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
-        if(editingBookId === id) exitEditMode();
         renderTable();
         if(ghConfig) pushToGithub();
         closeDetailModal();
-        showToast("Data buku sudah berhasil dihapus.", "delete");
-      });
+        alert("✅ Buku berhasil dihapus!");
+      }
     });
 
     detailModalOverlay.classList.add("open");
+  }
+
+  // ---------- Mode Edit di dalam Modal (tanpa pindah tab) ----------
+  function enableModalEditMode(book){
+    const fields = detailModalBody.querySelectorAll('.detail-input');
+    fields.forEach(f => { f.disabled = false; });
+    detailModalBody.querySelectorAll('#modalStatusToggle input[type="radio"]').forEach(r => { r.disabled = false; });
+
+    const modalIsbnField = document.getElementById("modalIsbn");
+    if(modalIsbnField){
+      modalIsbnField.addEventListener("input", ()=>{
+        const cursorPos = modalIsbnField.selectionStart;
+        const rawValue = modalIsbnField.value;
+        const cleanedValue = rawValue.replace(/[-\s]/g, "");
+        if(cleanedValue !== rawValue){
+          const beforeCursor = rawValue.slice(0, cursorPos);
+          const validCharsBeforeCursor = beforeCursor.replace(/[-\s]/g, "").length;
+          modalIsbnField.value = cleanedValue;
+          modalIsbnField.setSelectionRange(validCharsBeforeCursor, validCharsBeforeCursor);
+        }
+      });
+    }
+
+    detailModalBody.querySelectorAll('#modalStatusToggle input[name="modalStatus"]').forEach(radio=>{
+      radio.addEventListener("change", ()=>{
+        const checkedEl = detailModalBody.querySelector('#modalStatusToggle input[name="modalStatus"]:checked');
+        const val = checkedEl ? checkedEl.value : "belum";
+        document.getElementById("modalLabelBelum").classList.toggle("checked", val === "belum");
+        document.getElementById("modalLabelSelesai").classList.toggle("checked", val === "selesai");
+        document.getElementById("modalLabelDipinjam").classList.toggle("checked", val === "dipinjam");
+        const lendingBox = document.getElementById("modalLendingFields");
+        if(lendingBox){
+          lendingBox.style.display = val === "dipinjam" ? "block" : "none";
+          lendingBox.querySelectorAll("input").forEach(inp => { inp.disabled = false; });
+        }
+      });
+    });
+
+    const actionsDiv = document.getElementById("modalDetailActions");
+    actionsDiv.innerHTML = "";
+
+    const saveBtnEl = document.createElement("button");
+    saveBtnEl.type = "button";
+    saveBtnEl.className = "btn btn-primary";
+    saveBtnEl.style.flex = "1";
+    saveBtnEl.style.marginTop = "0";
+    saveBtnEl.textContent = "💾 Simpan Perubahan";
+    saveBtnEl.addEventListener("click", ()=> saveModalEdit(book.id));
+
+    const cancelBtnEl = document.createElement("button");
+    cancelBtnEl.type = "button";
+    cancelBtnEl.className = "btn btn-close";
+    cancelBtnEl.style.flex = "1";
+    cancelBtnEl.textContent = "↩️ Batal";
+    cancelBtnEl.addEventListener("click", ()=> openBookDetail(book.id));
+
+    const delBtnEl = document.createElement("button");
+    delBtnEl.type = "button";
+    delBtnEl.className = "btn btn-danger";
+    delBtnEl.style.flex = "1";
+    delBtnEl.textContent = "🗑 Hapus";
+    delBtnEl.addEventListener("click", ()=>{
+      if(confirm("Yakin ingin menghapus buku \"" + book.judul + "\"?")){
+        books = books.filter(b => String(b.id) !== String(book.id));
+        saveBooks();
+        renderTable();
+        if(ghConfig) pushToGithub();
+        closeDetailModal();
+        alert("✅ Buku berhasil dihapus!");
+      }
+    });
+
+    actionsDiv.appendChild(saveBtnEl);
+    actionsDiv.appendChild(cancelBtnEl);
+    actionsDiv.appendChild(delBtnEl);
+  }
+
+  function saveModalEdit(id){
+    const judul = document.getElementById("modalJudul").value.trim();
+    if(!judul){
+      alert("Judul buku wajib diisi.");
+      return;
+    }
+
+    const isbnBaru = document.getElementById("modalIsbn").value.trim();
+    if(isbnBaru){
+      const isbnSudahAda = books.some(b => String(b.id) !== String(id) && (b.isbn || "").trim() === isbnBaru);
+      if(isbnSudahAda){
+        alert("⚠️ ISBN " + isbnBaru + " sudah dipakai buku lain di koleksi. Buku ini kemungkinan duplikat.");
+        return;
+      }
+    }
+
+    const checkedStatusEl = detailModalBody.querySelector('#modalStatusToggle input[name="modalStatus"]:checked');
+    const statusVal = checkedStatusEl ? checkedStatusEl.value : "belum";
+
+    const updatedData = {
+      judul: judul,
+      penulis: document.getElementById("modalPenulis").value.trim(),
+      kategori: document.getElementById("modalKategori").value,
+      jenisBuku: document.getElementById("modalJenisBuku").value,
+      tahunTerbit: document.getElementById("modalTahunTerbit").value.trim(),
+      jumlahHalaman: document.getElementById("modalJumlahHalaman").value.trim(),
+      isbn: document.getElementById("modalIsbn").value.trim(),
+      lokasiRak: document.getElementById("modalLokasiRak").value.trim(),
+      penerbit: document.getElementById("modalPenerbit").value.trim(),
+      halamanTerakhir: document.getElementById("modalHalamanTerakhir").value.trim(),
+      status: statusVal,
+      peminjam: statusVal === "dipinjam" ? document.getElementById("modalPeminjam").value.trim() : "",
+      tanggalPinjam: statusVal === "dipinjam" ? document.getElementById("modalTanggalPinjam").value : ""
+    };
+
+    const idx = books.findIndex(b => String(b.id) === String(id));
+    if(idx !== -1){
+      books[idx] = Object.assign({}, books[idx], updatedData);
+      saveBooks();
+      renderTable();
+      if(ghConfig) pushToGithub();
+      alert("✅ Buku \"" + judul + "\" berhasil diperbarui!");
+      closeDetailModal();
+    }
   }
 
   function closeDetailModal(){
@@ -2287,7 +2725,25 @@
     }
   }
 
-  searchInput.addEventListener("input", renderTable);
+  searchInput.addEventListener("input", ()=>{
+    currentPage = 1;
+    renderTable();
+  });
+
+  // ---------- Tombol pencarian mobile: expand/collapse kolom cari ----------
+  if(searchToggleBtn){
+    searchToggleBtn.addEventListener("click", ()=>{
+      const isOpen = searchInput.classList.toggle("mobile-open");
+      searchToggleBtn.classList.toggle("active", isOpen);
+      searchToggleBtn.setAttribute("aria-label", isOpen ? "Tutup pencarian" : "Cari buku");
+      if(isOpen){
+        searchInput.focus();
+      } else if(searchInput.value){
+        searchInput.value = "";
+        renderTable();
+      }
+    });
+  }
 
   // ---------- Save new book ----------
   function resetForm(){
@@ -2299,6 +2755,7 @@
     tahunTerbitInput.value = "";
     jumlahHalamanInput.value = "";
     lokasiRakInput.value = "";
+    penerbitInput.value = "";
     halamanTerakhirInput.value = "";
     peminjamInput.value = "";
     tanggalPinjamInput.value = "";
@@ -2320,6 +2777,15 @@
       return;
     }
 
+    if(isbn){
+      const isbnSudahAda = books.some(b => (b.isbn || "").trim() === isbn);
+      if(isbnSudahAda){
+        setLookupStatus("⚠️ ISBN " + escapeHtml(isbn) + " sudah ada di koleksi. Buku ini kemungkinan duplikat.", "err");
+        isbnInput.focus();
+        return;
+      }
+    }
+
     const statusVal = document.querySelector('input[name="status"]:checked').value;
 
     const bookData = {
@@ -2331,6 +2797,7 @@
       tahunTerbit: tahunTerbitInput.value.trim(),
       jumlahHalaman: jumlahHalamanInput.value.trim(),
       lokasiRak: lokasiRakInput.value.trim(),
+      penerbit: penerbitInput.value.trim(),
       halamanTerakhir: halamanTerakhirInput.value.trim(),
       status: statusVal,
       peminjam: statusVal === 'dipinjam' ? peminjamInput.value.trim() : "",
@@ -2372,8 +2839,21 @@
 
   let lookupDebounce = null;
   isbnInput.addEventListener("input", ()=>{
+    // Auto-hilangkan strip/spasi dari kolom ISBN tanpa mengubah angkanya,
+    // sambil menjaga posisi kursor supaya tidak lompat ke akhir saat mengetik.
+    const cursorPos = isbnInput.selectionStart;
+    const rawValue = isbnInput.value;
+    const cleanedValue = rawValue.replace(/[-\s]/g, "");
+
+    if(cleanedValue !== rawValue){
+      const beforeCursor = rawValue.slice(0, cursorPos);
+      const validCharsBeforeCursor = beforeCursor.replace(/[-\s]/g, "").length;
+      isbnInput.value = cleanedValue;
+      isbnInput.setSelectionRange(validCharsBeforeCursor, validCharsBeforeCursor);
+    }
+
     clearTimeout(lookupDebounce);
-    const val = isbnInput.value.trim().replace(/[-\s]/g,"");
+    const val = isbnInput.value.trim();
     if(val.length < 10){
       setLookupStatus("", "");
       return;
@@ -2451,6 +2931,9 @@
           }
           if(info.pageCount && !jumlahHalamanInput.value.trim()){
             jumlahHalamanInput.value = info.pageCount;
+          }
+          if(info.publisher && !penerbitInput.value.trim()){
+            penerbitInput.value = info.publisher;
           }
 
           setLookupStatus("✔ Data buku berhasil ditemukan &amp; diisi otomatis (Google Books).", "ok");
