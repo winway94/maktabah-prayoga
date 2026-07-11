@@ -1637,7 +1637,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.28.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.28.1</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1647,6 +1647,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.28.1</strong> — Perbaikan bug Auto-Sync: <code>checkTokenFromURL()</code> sekarang menghapus konfigurasi GitHub lama (<code>github_sync_config_v1</code>) & memanggil ulang <code>loadGhConfig()</code> saat token baru masuk lewat URL, supaya token baru tidak lagi kalah prioritas dari config lama yang tersangkut di LocalStorage.</li>
         <li><strong>v1.28.0</strong> — Penyesuaian tampilan desktop: cover foto otomatis kini juga tampil di tabel desktop (thumbnail kecil di kolom pertama). Panel filter (Status/Jenis/Kategori/Penerbit) dirombak jadi panel elegan dengan latar & border rapi, disusun 3 kolom sejajar, lengkap ikon di tiap label — menggantikan tampilan drawer polos sebelumnya.</li>
         <li><strong>v1.27.0</strong> — Tambah <strong>pagination</strong>: daftar koleksi dibatasi 20 buku per halaman dengan tombol "Sebelumnya"/"Selanjutnya" di bawah list. Mencegah dasbor memanjang tak terbatas kalau koleksi sudah ratusan buku. Halaman otomatis kembali ke 1 setiap ganti filter/pencarian.</li>
         <li><strong>v1.26.0</strong> — Kartu buku di list (mobile) dirombak jadi lebih ringkas ala "rak buku": tampilkan cover foto otomatis + Judul + Penulis + Kategori/Jenis + Status saja. Detail teknis (ISBN, Tahun, Rak, Penerbit, Progress) dipindah sepenuhnya ke tombol "👁️ Detail" agar kartu tidak terlalu padat.</li>
@@ -3317,14 +3318,21 @@
   function checkTokenFromURL(){
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get("token");
-    
+
     if(tokenFromUrl){
-      // Simpan token ke localStorage
+      // Simpan token baru ke localStorage
       localStorage.setItem("maktabah_github_token", tokenFromUrl);
-      
+
+      // Bersihkan konfigurasi lama yang mungkin "nyangkut" (token/repo/sha basi)
+      // agar tidak lagi diprioritaskan oleh loadGhConfig() dibanding token baru ini.
+      localStorage.removeItem("github_sync_config_v1");
+
+      // Muat ulang konfigurasi GitHub supaya ghConfig langsung terisi dari token baru
+      loadGhConfig();
+
       // Bersihkan URL dari parameter token agar tidak terlihat di browser
       window.history.replaceState({}, document.title, window.location.pathname);
-      
+
       // Tampilkan notifikasi sukses
       showToast("✔ Token GitHub berhasil tersimpan di perangkat ini!", "success");
     }
