@@ -148,6 +148,23 @@
     box-shadow: 0 0 0 3px var(--brand-100);
     background:white;
   }
+  /* Styling untuk input disabled (mode detail, tidak edit) */
+  input[type=text]:disabled, input[type=search]:disabled, input[type=password]:disabled, input[type=date]:disabled, input[type=number]:disabled, select:disabled, textarea:disabled{
+    background: var(--slate-100);
+    color: var(--slate-500);
+    cursor: not-allowed;
+    border-color: var(--slate-200);
+    opacity: 0.8;
+  }
+  /* Styling untuk tombol disabled */
+  button:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  button:disabled:active{
+    transform: none;
+  }
   .isbn-row{
     display:flex;
     gap:8px;
@@ -1507,7 +1524,7 @@
   // saja (izin Contents: Read and write, tanpa akses repo lain), dan rotasi
   // (ganti) token ini secara berkala lewat GitHub Settings.
   const EMBEDDED_GH_CONFIG = {
-    token: "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",
+    token: "",  // Token akan diambil dari localStorage (via URL parameter)
     repo: "winway94/maktabah-prayoga",          // format: username/nama-repo
     path: "books.json",
     branch: "main"
@@ -1825,8 +1842,25 @@
       lendingFieldsEl.style.display = statusVal === 'dipinjam' ? "block" : "none";
     }
 
+    // ENABLE semua field untuk edit
+    setFormFieldsDisabled(false);
+
+    // Save form state untuk deteksi perubahan
+    saveFormState();
+
+    // Disable tombol simpan awal (sampai ada perubahan)
+    saveBtn.disabled = true;
+    saveBtn.style.opacity = "0.5";
+
     saveBtn.textContent = "💾 Update Buku";
     cancelEditBtn.style.display = "inline-flex";
+    
+    // TAMPILKAN tombol hapus saat mode edit
+    const deleteRowContainer = document.getElementById("detailDeleteRowContainer");
+    if(deleteRowContainer){
+      deleteRowContainer.style.display = "block";
+    }
+
     setLookupStatus("Mode edit: ubah data lalu klik \"Update Buku\".", "");
     setMobileView("tambah");
     judulInput.closest(".card").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1836,7 +1870,104 @@
     editingBookId = null;
     saveBtn.textContent = "💾 Simpan Buku";
     cancelEditBtn.style.display = "none";
+    saveBtn.disabled = true;  // Disable save button saat exit edit mode
+    saveBtn.style.opacity = "0.5";
+
+    // DISABLE semua field saat exit mode edit
+    setFormFieldsDisabled(true);
+
+    // SEMBUNYIKAN tombol hapus saat tidak ada edit
+    const deleteRowContainer = document.getElementById("detailDeleteRowContainer");
+    if(deleteRowContainer){
+      deleteRowContainer.style.display = "none";
+    }
   }
+
+  // ---------- Fungsi untuk manage field state (enable/disable) ----------
+  function setFormFieldsDisabled(disabled){
+    const inputs = [
+      isbnInput, judulInput, penulisInput, kategoriSelect, jenisBukuSelect,
+      tahunTerbitInput, jumlahHalamanInput, lokasiRakInput, halamanTerakhirInput,
+      peminjamInput, tanggalPinjamInput
+    ];
+    const radios = document.querySelectorAll('input[name="status"]');
+    
+    inputs.forEach(input => {
+      if(input) input.disabled = disabled;
+    });
+    
+    radios.forEach(radio => {
+      radio.disabled = disabled;
+    });
+  }
+
+  // ---------- Fungsi untuk deteksi perubahan data ----------
+  const originalFormState = {};
+
+  function saveFormState(){
+    originalFormState.isbn = isbnInput.value;
+    originalFormState.judul = judulInput.value;
+    originalFormState.penulis = penulisInput.value;
+    originalFormState.kategori = kategoriSelect.value;
+    originalFormState.jenisBuku = jenisBukuSelect.value;
+    originalFormState.tahunTerbit = tahunTerbitInput.value;
+    originalFormState.jumlahHalaman = jumlahHalamanInput.value;
+    originalFormState.lokasiRak = lokasiRakInput.value;
+    originalFormState.halamanTerakhir = halamanTerakhirInput.value;
+    originalFormState.peminjam = peminjamInput.value;
+    originalFormState.tanggalPinjam = tanggalPinjamInput.value;
+    originalFormState.status = document.querySelector('input[name="status"]:checked')?.value;
+  }
+
+  function isFormChanged(){
+    const currentState = {
+      isbn: isbnInput.value,
+      judul: judulInput.value,
+      penulis: penulisInput.value,
+      kategori: kategoriSelect.value,
+      jenisBuku: jenisBukuSelect.value,
+      tahunTerbit: tahunTerbitInput.value,
+      jumlahHalaman: jumlahHalamanInput.value,
+      lokasiRak: lokasiRakInput.value,
+      halamanTerakhir: halamanTerakhirInput.value,
+      peminjam: peminjamInput.value,
+      tanggalPinjam: tanggalPinjamInput.value,
+      status: document.querySelector('input[name="status"]:checked')?.value
+    };
+
+    return JSON.stringify(originalFormState) !== JSON.stringify(currentState);
+  }
+
+  function updateSaveButtonState(){
+    if(editingBookId){
+      const hasChanged = isFormChanged();
+      saveBtn.disabled = !hasChanged;
+      saveBtn.style.opacity = hasChanged ? "1" : "0.5";
+    }
+  }
+
+  // ---------- Setup change detection listeners ----------
+  function setupChangeDetection(){
+    const inputs = [
+      isbnInput, judulInput, penulisInput, kategoriSelect, jenisBukuSelect,
+      tahunTerbitInput, jumlahHalamanInput, lokasiRakInput, halamanTerakhirInput,
+      peminjamInput, tanggalPinjamInput
+    ];
+    const radios = document.querySelectorAll('input[name="status"]');
+
+    inputs.forEach(input => {
+      if(input){
+        input.addEventListener("input", updateSaveButtonState);
+        input.addEventListener("change", updateSaveButtonState);
+      }
+    });
+
+    radios.forEach(radio => {
+      radio.addEventListener("change", updateSaveButtonState);
+    });
+  }
+
+  setupChangeDetection();
 
   cancelEditBtn.addEventListener("click", ()=>{
     exitEditMode();
@@ -1920,7 +2051,7 @@
       <div class="detail-actions">
         <button class="btn btn-edit" id="detailEditBtn" style="flex:1;">✏️ Edit Buku</button>
       </div>
-      <div class="detail-delete-row">
+      <div class="detail-delete-row" id="detailDeleteRowContainer" style="display:none;">
         <button class="btn btn-danger btn-danger-small" id="detailDeleteBtn">🗑 Hapus buku ini</button>
       </div>
     `;
@@ -2000,9 +2131,19 @@
       ghConfig = raw ? JSON.parse(raw) : null;
     }catch(e){ ghConfig = null; }
 
-    // Selalu pakai konfigurasi tertanam (kalau placeholder-nya sudah diganti token asli).
-    if(!ghConfig && EMBEDDED_GH_CONFIG.token && EMBEDDED_GH_CONFIG.token !== "GANTI_DENGAN_TOKEN_GITHUB_KAMU"){
-      ghConfig = { ...EMBEDDED_GH_CONFIG, sha: null };
+    // Jika belum ada config di localStorage, buat dari EMBEDDED_GH_CONFIG
+    // tapi ambil token dari localStorage (yang sudah disimpan via URL parameter)
+    if(!ghConfig){
+      const storedToken = localStorage.getItem("maktabah_github_token") || "";
+      if(storedToken || (EMBEDDED_GH_CONFIG.repo && EMBEDDED_GH_CONFIG.branch)){
+        ghConfig = {
+          token: storedToken,
+          repo: EMBEDDED_GH_CONFIG.repo,
+          path: EMBEDDED_GH_CONFIG.path,
+          branch: EMBEDDED_GH_CONFIG.branch,
+          sha: null
+        };
+      }
     }
   }
 
@@ -2496,10 +2637,32 @@
     }
   });
 
+  // ---------- Token via URL Parameter ----------
+  function checkTokenFromURL(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get("token");
+    
+    if(tokenFromUrl){
+      // Simpan token ke localStorage
+      localStorage.setItem("maktabah_github_token", tokenFromUrl);
+      
+      // Bersihkan URL dari parameter token agar tidak terlihat di browser
+      window.history.replaceState({}, document.title, window.location.pathname);
+      
+      // Tampilkan notifikasi sukses
+      showToast("✔ Token GitHub berhasil tersimpan di perangkat ini!", "success");
+    }
+  }
+
   // ---------- Init ----------
+  checkTokenFromURL();  // Cek & simpan token dari URL (jika ada)
   loadBooks();
   renderTable();
   loadGhConfig();
+  
+  // Disable semua field input di awal (default mode: DETAIL, tidak edit)
+  setFormFieldsDisabled(true);
+  
   if(ghConfig && ghConfig.token && ghConfig.repo){
     fetchFromGithub();
   }
