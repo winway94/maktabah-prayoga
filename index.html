@@ -1777,7 +1777,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.36.6</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.36.7</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1787,6 +1787,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.36.7</strong> — Key Gemini diganti dengan key baru yang sudah tervalidasi aktif (dibuat lewat aistudio.google.com/apikey, project dengan Generative Language API sudah enable).</li>
         <li><strong>v1.36.6</strong> — Fix "API key not valid": Google merilis format API key baru "AQ.Ab..." (Auth key) yang harus dikirim via header <code>x-goog-api-key</code>, bukan <code>?key=</code> di URL seperti format lama "AIzaSy...". Kode Gemini disesuaikan + key baru dipasang.</li>
         <li><strong>v1.36.5</strong> — Bersihkan sisa kode SDK Gemini (loadGeminiModule, genAiModulePromise) yang sudah tidak dipakai sejak pindah ke fetch() REST API langsung di v1.36.4.</li>
         <li><strong>v1.36.4</strong> — Fix "DataCloneError" dari SDK @google/genai (bug di WebView Android). Diganti pakai panggilan REST API Gemini langsung via fetch(), tanpa SDK/CDN sama sekali.</li>
@@ -1982,7 +1983,7 @@
   // halaman ini. Siapa pun yang punya link ini bisa memakai key Gemini kamu
   // (kuota/biaya pemakaian bisa terpakai oleh orang lain). Kalau curiga
   // disalahgunakan, hapus/rotasi key ini lewat Google AI Studio kapan saja.
-  const EMBEDDED_GEMINI_KEY = "AQ.Ab8RN6JlcWt6trtXSs4RixOtXdm_GpTEP8VQ1CkUEbGnpdseGg";
+  const EMBEDDED_GEMINI_KEY = "AQ.Ab8RN6K83AvUAT7xaCO9k_JyIgVghjMdpDLTpUbTzxE56iXSMA";
 
   const GOOGLE_BOOKS_KEY_STORAGE = "maktabah_google_books_key";
   // ⚠️ PERHATIAN KEAMANAN ⚠️
