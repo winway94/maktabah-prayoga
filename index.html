@@ -1805,6 +1805,7 @@
   const EMBEDDED_GOOGLE_BOOKS_KEY = "AIzaSyCHHb6v2Jnv7O5w8eCi6vKtEVBzK1SWVos";
 
   const GH_CONFIG_KEY = "github_sync_config_v1";
+  const PENDING_PUSH_KEY = "maktabah_pending_push_v1"; // penanda: ada perubahan lokal yang belum sukses ter-push ke GitHub
   let ghConfig = null;
 
   // ⚠️ PERHATIAN KEAMANAN ⚠️
@@ -1836,6 +1837,10 @@
     // Auto-Sync: setiap perubahan data lokal (tambah/edit/hapus) langsung
     // dipicu ke GitHub secara instan, selama konfigurasi GitHub aktif.
     if(pushToCloud && ghConfig && ghConfig.token && ghConfig.repo){
+      // Tandai dulu: ada perubahan lokal yang BELUM tentu sukses ter-push.
+      // Penanda ini mencegah fetch/pull (termasuk saat reload halaman)
+      // menimpa data lokal yang baru ini dengan versi GitHub yang masih basi.
+      localStorage.setItem(PENDING_PUSH_KEY, "1");
       pushToGithub();
     }
   }
@@ -2756,6 +2761,17 @@
   }
 
   async function fetchFromGithub(){
+    // Kalau ada perubahan lokal yang belum sukses ter-push (misalnya push kemarin
+    // gagal/terputus), utamakan push dulu supaya data lokal tidak ditimpa oleh
+    // versi GitHub yang masih basi/lama.
+    if(localStorage.getItem(PENDING_PUSH_KEY) === "1"){
+      await pushToGithub();
+      if(localStorage.getItem(PENDING_PUSH_KEY) === "1"){
+        // Push masih gagal (mis. offline) -> jangan tarik data GitHub sama sekali,
+        // supaya perubahan lokal yang belum aman ini tidak hilang.
+        return;
+      }
+    }
     setSyncStatus("Mengambil data dari GitHub...", "loading");
     try{
       const res = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}`, { headers: ghHeaders() });
@@ -2798,6 +2814,12 @@
     // Jangan ganggu kalau user sedang aktif mengedit (form tambah/edit atau modal detail terbuka)
     if(editingBookId) return;
     if(detailModalOverlay && detailModalOverlay.classList.contains("open")) return;
+    // Ada perubahan lokal yang belum sukses ter-push -> coba push dulu, jangan pull
+    // (mencegah data lokal yang baru saja diubah ditimpa versi GitHub yang masih basi).
+    if(localStorage.getItem(PENDING_PUSH_KEY) === "1"){
+      await pushToGithub();
+      return;
+    }
 
     isSilentPulling = true;
     try{
@@ -2882,8 +2904,11 @@
       const data = await res.json();
       ghConfig.sha = data.content.sha;
       saveGhConfig(ghConfig);
+      localStorage.removeItem(PENDING_PUSH_KEY); // berhasil ter-push, tidak ada lagi perubahan lokal yang menggantung
       setSyncStatus("✔ Tersinkron — " + new Date().toLocaleTimeString('id-ID'), "ok");
     }catch(err){
+      // Gagal push -> flag PENDING_PUSH_KEY sengaja DIBIARKAN menyala,
+      // supaya fetch/pull berikutnya tahu ada perubahan lokal yang belum aman ditimpa.
       setSyncStatus("Gagal menyinkronkan: " + err.message, "err");
     }
   }
