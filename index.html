@@ -1661,7 +1661,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.29.2</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.29.3</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1671,6 +1671,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.29.3</strong> — Perbaikan bug: kotak cover kosong/putih polos muncul di preview form, modal detail, dan kartu list saat Open Library mengirim gambar placeholder 1x1px alih-alih error 404. Sekarang terdeteksi otomatis dan ditampilkan sebagai fallback "📘 tidak ditemukan" di ketiga tempat tersebut.</li>
         <li><strong>v1.29.2</strong> — Perbaikan bug: pratinjau cover tidak muncul sama sekali kalau ISBN diisi lewat tombol 📷 Scan (barcode). Sekarang cover preview jalan baik lewat ketik manual maupun scan.</li>
         <li><strong>v1.29.1</strong> — Pratinjau cover di form Tambah Buku sekarang kasih keterangan "📘 Cover tidak ditemukan" kalau gambar gagal dimuat, bukan sekadar hilang diam-diam.</li>
         <li><strong>v1.29.0</strong> — Pratinjau cover otomatis saat mengisi form Tambah Buku: begitu ISBN valid diketik, sampul langsung tampil di atas form (sebelum buku disimpan).</li>
@@ -1932,11 +1933,14 @@
           : "";
         const fallbackId = "coverFallbackRow_" + b.id;
         const onErrorJsRow = "this.parentNode.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; }";
+        // Open Library kadang "berhasil" memuat gambar placeholder kosong 1x1px alih-alih 404.
+        // onload ini mendeteksi & memperlakukannya sama seperti gagal (tampilkan fallback).
+        const onLoadJsRow = "if(this.naturalWidth<=1||this.naturalHeight<=1){ this.parentNode.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; } }";
         let coverCellHtml = "";
         if(coverUrlRow){
           coverCellHtml =
             '<div class="row-cover-wrap">' +
-              '<img class="row-cover-img" src="' + coverUrlRow + '" alt="Sampul buku" onerror="' + onErrorJsRow + '">' +
+              '<img class="row-cover-img" src="' + coverUrlRow + '" alt="Sampul buku" onerror="' + onErrorJsRow + '" onload="' + onLoadJsRow + '">' +
             '</div>' +
             '<div class="row-cover-fallback" id="' + fallbackId + '" style="display:none;">📘</div>';
         } else {
@@ -2429,13 +2433,14 @@
       : "";
 
     const onErrorJs = "this.parentNode.style.display='none'; var fb=document.getElementById('coverFallbackBox'); if(fb){ fb.style.display='flex'; }";
+    const onLoadJs = "if(this.naturalWidth<=1||this.naturalHeight<=1){ this.parentNode.style.display='none'; var fb=document.getElementById('coverFallbackBox'); if(fb){ fb.style.display='flex'; } }";
 
     let coverBlockHtml = "";
     if(coverUrl){
       coverBlockHtml =
         '<div class="cover-photo-row">' +
           '<div class="cover-photo-wrap">' +
-            '<img class="cover-photo-img" src="' + coverUrl + '" alt="Sampul buku" onerror="' + onErrorJs + '">' +
+            '<img class="cover-photo-img" src="' + coverUrl + '" alt="Sampul buku" onerror="' + onErrorJs + '" onload="' + onLoadJs + '">' +
           '</div>' +
           '<div class="cover-fallback-box" id="coverFallbackBox" style="display:none;">📘</div>' +
         '</div>';
@@ -2906,6 +2911,14 @@
       fallback.style.display = "flex";
     };
     img.onload = function(){
+      // Open Library kadang tidak mengirim 404 untuk cover yang tidak ada,
+      // tapi malah gambar placeholder kosong berukuran sangat kecil (1x1 px).
+      // Deteksi itu dan perlakukan sebagai "tidak ditemukan".
+      if(img.naturalWidth <= 1 || img.naturalHeight <= 1){
+        wrap.style.display = "none";
+        fallback.style.display = "flex";
+        return;
+      }
       wrap.style.display = "block";
       fallback.style.display = "none";
     };
