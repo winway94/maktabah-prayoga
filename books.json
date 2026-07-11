@@ -58,5 +58,22 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrgewesjoyikq",
+    "createdAt": 1783777218788,
+    "isbn": "9786239726201",
+    "judul": "Janji",
+    "penulis": "Tere-Liye",
+    "kategori": "Non-Fiksi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2021",
+    "jumlahHalaman": "486",
+    "lokasiRak": "",
+    "penerbit": "",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
