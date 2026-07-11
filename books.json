@@ -48,7 +48,7 @@
     "isbn": "9786027123700",
     "judul": "Api sejarah jilid 2",
     "penulis": "Ahmad Mansur Suryanegara",
-    "kategori": "Lainnya",
+    "kategori": "Sejarah & Historiografi",
     "jenisBuku": "cetak",
     "tahunTerbit": "2020",
     "jumlahHalaman": "597",
@@ -57,7 +57,8 @@
     "halamanTerakhir": "",
     "status": "belum",
     "peminjam": "",
-    "tanggalPinjam": ""
+    "tanggalPinjam": "",
+    "pemilik": ""
   },
   {
     "id": "mrgewesjoyikq",
