@@ -48,7 +48,7 @@
     width:100%;
   }
   .container{
-    max-width: 1180px;
+    max-width: 1080px;
     margin: 0 auto;
   }
   header{
@@ -541,6 +541,26 @@
   }
   .list-header h2{ margin:0; }
 
+  /* Tombol hamburger untuk buka drawer filter (hanya tampil di mobile) */
+  .filter-drawer-toggle{
+    display:none;
+    border: 1.5px solid var(--slate-200);
+    background: white;
+    color: var(--slate-700);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    cursor:pointer;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .filter-drawer-toggle:active{ background: var(--slate-100); }
+
+  .filter-drawer-header{ display:none; }
+  .filter-drawer-backdrop{ display:none; }
+
   .filter-group{ margin-bottom: 14px; }
   .filter-group-label{
     font-size: 0.7rem;
@@ -950,7 +970,84 @@
     body[data-mobile-view="dashboard"] .form-section{ display:none; }
     body[data-mobile-view="tambah"] .ai-feature-card{ display:none; }
     body[data-mobile-view="tambah"] .list-section{ display:none; }
+
+    /* ===== Menu Filter jadi drawer tersembunyi (buka via tombol ☰) ===== */
+    .filter-drawer-toggle{ display:flex; }
+
+    .filter-drawer-backdrop{
+      display:block;
+      position:fixed;
+      inset:0;
+      background: rgba(15,23,42,0.55);
+      z-index: 1400;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .25s ease;
+    }
+    .filter-drawer-backdrop.open{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .filter-drawer{
+      position:fixed;
+      top:0;
+      left:0;
+      height:100%;
+      width:82%;
+      max-width:320px;
+      background: var(--slate-50);
+      z-index:1500;
+      padding: 18px 16px 24px;
+      overflow-y:auto;
+      transform: translateX(-105%);
+      transition: transform .28s ease;
+      box-shadow: 4px 0 24px rgba(15,23,42,0.25);
+    }
+    .filter-drawer.open{ transform: translateX(0); }
+
+    .filter-drawer-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      font-weight:800;
+      font-size:0.95rem;
+      color: var(--slate-900);
+      margin-bottom:16px;
+      padding-bottom:14px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .filter-drawer-close{
+      border:none;
+      background: var(--slate-100);
+      color: var(--slate-600);
+      width:32px; height:32px;
+      border-radius:50%;
+      font-size:0.9rem;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .filter-drawer-close:hover{ background: var(--slate-200); }
+
+    /* Di dalam drawer, filter tidak perlu scroll horizontal lagi -- lebih enak wrap ke bawah */
+    .filter-drawer .status-tabs,
+    .filter-drawer .category-filters{
+      flex-wrap: wrap;
+      overflow-x: visible;
+      margin: 0 0 12px;
+      padding: 0;
+      border-bottom: none;
+    }
+    .filter-drawer .filter-group{ margin: 0 0 14px; padding:0; }
   }
+
+  @media (min-width: 901px){
+    /* Di desktop, drawer tetap tampil normal (inline), backdrop & tombol hamburger tidak dipakai */
+    .filter-drawer{ position:static; transform:none; width:auto; max-width:none; padding:0; box-shadow:none; background:transparent; }
+  }
+
 
   /* ===== Mode Mobile: layout lebih rapat & sentuhan lebih besar ===== */
   @media (max-width: 640px){
@@ -964,11 +1061,13 @@
     details.sync-card summary{ font-size: 0.85rem; }
 
     .list-header{
-      flex-direction: column;
-      align-items: stretch;
+      display:flex;
+      flex-wrap: wrap;
+      align-items:center;
       gap: 10px;
     }
-    #searchInput{ max-width: 100%; }
+    .list-header h2{ flex:1; min-width:0; }
+    #searchInput{ flex-basis:100%; max-width: 100%; }
 
     /* Filter lebih rapi di mobile: scroll horizontal, tidak menumpuk banyak baris */
     .status-tabs{
@@ -1201,18 +1300,28 @@
     <!-- LIST SECTION -->
     <section class="card list-section">
       <div class="list-header">
+        <button type="button" class="filter-drawer-toggle" id="filterDrawerToggle" aria-label="Buka menu filter">☰</button>
         <h2>📖 Koleksi Buku</h2>
         <input type="search" id="searchInput" placeholder="🔍 Cari judul, penulis, atau ISBN...">
       </div>
-      <div class="status-tabs" id="statusTabs"></div>
-      <div class="filter-group">
-        <div class="filter-group-label">Jenis Buku</div>
-        <div class="category-filters" id="typeFilters"></div>
-      </div>
-      <div class="filter-group">
-        <div class="filter-group-label">Kategori</div>
-        <div class="category-filters" id="categoryFilters"></div>
-      </div>
+
+      <div class="filter-drawer-backdrop" id="filterDrawerBackdrop"></div>
+      <aside class="filter-drawer" id="filterDrawer">
+        <div class="filter-drawer-header">
+          <span>🔍 Filter Koleksi</span>
+          <button type="button" class="filter-drawer-close" id="filterDrawerClose" aria-label="Tutup menu filter">✕</button>
+        </div>
+        <div class="status-tabs" id="statusTabs"></div>
+        <div class="filter-group">
+          <div class="filter-group-label">Jenis Buku</div>
+          <div class="category-filters" id="typeFilters"></div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-label">Kategori</div>
+          <div class="category-filters" id="categoryFilters"></div>
+        </div>
+      </aside>
+
       <div class="table-wrap">
         <table id="bookTable">
           <thead>
@@ -1221,10 +1330,6 @@
               <th>Penulis</th>
               <th>Kategori</th>
               <th>Status</th>
-              <th>ISBN</th>
-              <th>Tahun</th>
-              <th>Hal.</th>
-              <th>Rak</th>
               <th></th>
             </tr>
           </thead>
@@ -1240,7 +1345,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.20.2</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.21.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1250,6 +1355,9 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.21.0</strong> — Menu filter (Status, Jenis Buku, Kategori) di mobile sekarang tersembunyi dalam drawer/panel geser dari kiri, dibuka lewat tombol ☰ di pojok kiri atas daftar koleksi — mirip menu aplikasi ReadEra. Tampilan desktop tidak berubah (filter tetap tampil normal).</li>
+        <li><strong>v1.20.4</strong> — Kolom ISBN, Tahun, Hal., dan Rak dihapus dari tabel dasbor (sudah ada di modal detail buku, tidak perlu double). Tabel dasbor sekarang lebih ringkas: Judul, Penulis, Kategori, Status.</li>
+        <li><strong>v1.20.3</strong> — Lebar halaman dikunci fix maksimal 1080px (tidak melebar lagi di layar besar), kolom form "Tambah Buku" tidak diubah sama sekali.</li>
         <li><strong>v1.20.2</strong> — Perbaikan tampilan mobile agar tidak "membesar" sendiri: input tanggal diberi ukuran font 16px (penyebab auto-zoom iOS), viewport dikunci (tidak bisa ke-pinch/zoom tidak sengaja), dan overflow horizontal dicegah agar layout tetap rapi & fix.</li>
         <li><strong>v1.20.1</strong> — Kartu "Rekomendasi Buku AI" disembunyikan sementara dari tampilan (via CSS <code>display:none</code>), logika JavaScript-nya tetap ada dan tidak dihapus.</li>
         <li><strong>v1.20.0</strong> — Baris tabel untuk buku berstatus "Dipinjam" kini ditandai visual: latar pastel oranye + garis kiri oranye, dan emoji 👤 di depan judul, supaya langsung terlihat mencolok saat aplikasi dibuka.</li>
@@ -1360,6 +1468,10 @@
   const typeFiltersEl = document.getElementById("typeFilters");
   let activeTypeFilter = "Semua";
   const mobileNavTabs = document.getElementById("mobileNavTabs");
+  const filterDrawer = document.getElementById("filterDrawer");
+  const filterDrawerToggle = document.getElementById("filterDrawerToggle");
+  const filterDrawerClose = document.getElementById("filterDrawerClose");
+  const filterDrawerBackdrop = document.getElementById("filterDrawerBackdrop");
   const aiRecommendBtn = document.getElementById("aiRecommendBtn");
   const aiStatus = document.getElementById("aiStatus");
   const aiResultBox = document.getElementById("aiResultBox");
@@ -1473,10 +1585,6 @@
             <span class="cat-chip type-chip">${b.jenisBuku === "digital" ? "💻 Digital" : "📘 Cetak"}</span>
           </td>
           <td data-label="Status">${renderStatusChip(b)}</td>
-          <td class="isbn-cell" data-label="ISBN">${escapeHtml(b.isbn || "-")}</td>
-          <td class="meta-cell" data-label="Tahun">${escapeHtml(b.tahunTerbit || "-")}</td>
-          <td class="meta-cell" data-label="Halaman">${escapeHtml(b.jumlahHalaman || "-")}</td>
-          <td class="meta-cell" data-label="Rak">${escapeHtml(b.lokasiRak || "-")}</td>
           <td class="action-cell" data-label="">
             <div class="row-actions">
               <button class="btn btn-edit" data-edit-id="${b.id}">✏️ Edit</button>
@@ -1598,6 +1706,21 @@
       setMobileView(btn.getAttribute("data-mobile-tab"));
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+  }
+
+  // ---------- Drawer Filter (khusus mobile, dibuka via tombol ☰) ----------
+  function openFilterDrawer(){
+    filterDrawer.classList.add("open");
+    filterDrawerBackdrop.classList.add("open");
+  }
+  function closeFilterDrawer(){
+    filterDrawer.classList.remove("open");
+    filterDrawerBackdrop.classList.remove("open");
+  }
+  if(filterDrawerToggle){
+    filterDrawerToggle.addEventListener("click", openFilterDrawer);
+    filterDrawerClose.addEventListener("click", closeFilterDrawer);
+    filterDrawerBackdrop.addEventListener("click", closeFilterDrawer);
   }
 
   function escapeHtml(str){
@@ -1865,6 +1988,7 @@
     if(detailModalOverlay.classList.contains("open")) closeDetailModal();
     if(changelogModalOverlay.classList.contains("open")) closeChangelogModal();
     if(confirmDeleteOverlay.classList.contains("open")) closeConfirmDelete(false);
+    if(filterDrawer && filterDrawer.classList.contains("open")) closeFilterDrawer();
   });
 
   // ---------- GitHub Sync ----------
