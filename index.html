@@ -1661,7 +1661,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.29.1</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.29.2</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1671,6 +1671,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.29.2</strong> — Perbaikan bug: pratinjau cover tidak muncul sama sekali kalau ISBN diisi lewat tombol 📷 Scan (barcode). Sekarang cover preview jalan baik lewat ketik manual maupun scan.</li>
         <li><strong>v1.29.1</strong> — Pratinjau cover di form Tambah Buku sekarang kasih keterangan "📘 Cover tidak ditemukan" kalau gambar gagal dimuat, bukan sekadar hilang diam-diam.</li>
         <li><strong>v1.29.0</strong> — Pratinjau cover otomatis saat mengisi form Tambah Buku: begitu ISBN valid diketik, sampul langsung tampil di atas form (sebelum buku disimpan).</li>
         <li><strong>v1.28.0</strong> — Penyesuaian tampilan desktop: cover foto otomatis kini juga tampil di tabel desktop (thumbnail kecil di kolom pertama). Panel filter (Status/Jenis/Kategori/Penerbit) dirombak jadi panel elegan dengan latar & border rapi, disusun 3 kolom sejajar, lengkap ikon di tiap label — menggantikan tampilan drawer polos sebelumnya.</li>
@@ -3216,6 +3217,7 @@
           const cleaned = isbnInput.value.trim();
           if(cleaned.length >= 10){
             lookupISBN(cleaned);
+            updateCoverPreview(cleaned);
           }
         },
         ()=>{ /* ignore per-frame scan errors */ }
