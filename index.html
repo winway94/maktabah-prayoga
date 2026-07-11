@@ -246,10 +246,10 @@
   }
   .btn:active{ transform: scale(0.97); }
   .btn-scan{
-    background: var(--slate-800);
+    background: var(--brand-700);
     color:white;
   }
-  .btn-scan:hover{ background: var(--slate-700); }
+  .btn-scan:hover{ background: var(--brand-600); }
   .btn-primary{
     background: var(--brand-600);
     color:white;
@@ -786,8 +786,8 @@
   }
   .status-tab-btn:hover{ border-color: var(--brand-400, var(--brand-500)); color: var(--brand-700); }
   .status-tab-btn.active{
-    background: var(--slate-900);
-    border-color: var(--slate-900);
+    background: var(--brand-700);
+    border-color: var(--brand-700);
     color: white;
   }
   .status-tab-btn .tab-badge{
@@ -806,7 +806,25 @@
 
   #searchInput{ max-width: 260px; }
   .search-wrap{ position:relative; }
-  .search-wrap #searchInput{ max-width: 260px; width:100%; }
+  .search-wrap #searchInput{ max-width: 260px; width:100%; padding-left: 34px; }
+  .search-icon{
+    position:absolute;
+    left:12px;
+    top:50%;
+    transform:translateY(-50%);
+    pointer-events:none;
+    z-index:1;
+  }
+  .select-icon-wrap{ position:relative; }
+  .select-icon-wrap select{ padding-left: 34px; }
+  .select-icon{
+    position:absolute;
+    left:12px;
+    top:50%;
+    transform:translateY(-50%);
+    pointer-events:none;
+    z-index:1;
+  }
   .search-suggest-box{
     position:absolute;
     top: calc(100% + 6px);
@@ -1355,7 +1373,7 @@
     }
     .filter-groups-row{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       align-items:start;
     }
@@ -1554,8 +1572,8 @@
   <div id="ghSyncStatus" class="sr-only-status"></div>
 
   <nav class="mobile-nav-tabs" id="mobileNavTabs">
-    <button type="button" class="active" data-mobile-tab="dashboard">🏠 Koleksi Buku</button>
-    <button type="button" data-mobile-tab="tambah">➕ Tambah Buku</button>
+    <button type="button" class="active" data-mobile-tab="dashboard"><svg width="17" height="17" viewBox="0 0 24 24" style="flex-shrink:0;"><rect x="1.5" y="6" width="5" height="15" rx="1" fill="currentColor" transform="rotate(18 4 20.5)"/><rect x="9.5" y="3" width="5" height="18" rx="1" fill="currentColor"/><rect x="16" y="3" width="5" height="18" rx="1" fill="currentColor"/></svg> Koleksi Buku</button>
+    <button type="button" data-mobile-tab="tambah"><svg width="15" height="15" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Tambah Buku</button>
   </nav>
 
   <div class="ai-feature-card">
@@ -1582,7 +1600,7 @@
 
     <!-- FORM SECTION -->
     <section class="card form-section">
-      <h2>➕ Tambah Buku</h2>
+      <h2><svg width="16" height="16" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19" stroke="var(--brand-600)" stroke-width="2.4" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="var(--brand-600)" stroke-width="2.4" stroke-linecap="round"/></svg>Tambah Buku</h2>
 
       <label class="field-label">Nomor ISBN</label>
       <div class="isbn-row">
@@ -1602,7 +1620,7 @@
           <img id="coverPreviewImg" alt="Pratinjau sampul buku">
         </div>
         <div class="cover-preview-fallback" id="coverPreviewFallback" style="display:none;">
-          <span class="cover-preview-fallback-icon">📘</span>
+          <span class="cover-preview-fallback-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></span>
           <span class="cover-preview-fallback-text">Cover tidak ditemukan</span>
         </div>
         <div class="cover-preview-caption">Pratinjau sampul otomatis dari Open Library</div>
@@ -1634,10 +1652,13 @@
       </select>
 
       <label class="field-label">Jenis Buku</label>
-      <select id="jenisBuku">
-        <option value="cetak">📘 Cetak (Fisik)</option>
-        <option value="digital">💻 Digital (PDF)</option>
-      </select>
+      <div class="select-icon-wrap">
+        <svg class="select-icon" id="jenisBukuIcon" width="16" height="16" viewBox="0 0 24 24"><path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="var(--brand-600)" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="var(--brand-600)" stroke-width="1.6"/></svg>
+        <select id="jenisBuku">
+          <option value="cetak">Cetak (Fisik)</option>
+          <option value="digital">Digital (PDF)</option>
+        </select>
+      </div>
 
       <div class="field-row">
         <div>
@@ -1655,6 +1676,9 @@
 
       <label class="field-label">Penerbit</label>
       <input type="text" id="penerbit" placeholder="cth: Gramedia Pustaka Utama">
+
+      <label class="field-label">Pemilik Buku</label>
+      <input type="text" id="pemilik" placeholder="cth: Ayah / Ibu / Nama Anda">
 
       <label class="field-label">Halaman Terakhir Dibaca</label>
       <input type="text" id="halamanTerakhir" placeholder="cth: 120 (opsional)" inputmode="numeric">
@@ -1680,7 +1704,7 @@
         <input type="date" id="tanggalPinjamInput">
       </div>
 
-      <button class="btn btn-primary" id="saveBtn">💾 Simpan Buku</button>
+      <button class="btn btn-primary" id="saveBtn"><svg width="15" height="15" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><path d="M5 4C5 3.4 5.4 3 6 3H16L20 7V20C20 20.6 19.6 21 19 21H6C5.4 21 5 20.6 5 20V4Z" fill="none" stroke="white" stroke-width="1.8" stroke-linejoin="round"/><rect x="8" y="3" width="8" height="6" fill="white"/><rect x="7.5" y="13" width="9" height="6" fill="none" stroke="white" stroke-width="1.6"/></svg>Simpan Buku</button>
       <button class="btn btn-close" id="cancelEditBtn" style="display:none; margin-top:10px;">✕ Batal Edit</button>
     </section>
 
@@ -1688,10 +1712,11 @@
     <section class="card list-section">
       <div class="list-header">
         <button type="button" class="filter-drawer-toggle" id="filterDrawerToggle" aria-label="Buka menu filter">☰</button>
-        <h2>📖 Koleksi Buku</h2>
-        <button type="button" class="search-toggle-btn" id="searchToggleBtn" aria-label="Cari buku">🔍</button>
+        <h2><svg width="17" height="17" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;"><path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="var(--brand-600)" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="var(--brand-600)" stroke-width="1.6"/></svg>Koleksi Buku</h2>
+        <button type="button" class="search-toggle-btn" id="searchToggleBtn" aria-label="Cari buku"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
         <div class="search-wrap" id="searchWrap">
-          <input type="search" id="searchInput" placeholder="🔍 Cari judul, penulis, atau ISBN..." autocomplete="off">
+          <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="var(--brand-600)" stroke-width="2"/><line x1="16.65" y1="16.65" x2="21" y2="21" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"/></svg>
+          <input type="search" id="searchInput" placeholder="Cari judul, penulis, atau ISBN..." autocomplete="off">
           <div class="search-suggest-box" id="searchSuggestBox" style="display:none;"></div>
         </div>
       </div>
@@ -1699,22 +1724,26 @@
       <div class="filter-drawer-backdrop" id="filterDrawerBackdrop"></div>
       <aside class="filter-drawer" id="filterDrawer">
         <div class="filter-drawer-header">
-          <span>🔍 Filter Koleksi</span>
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:-2px; margin-right:4px;"><circle cx="11" cy="11" r="7" stroke="var(--brand-600)" stroke-width="2"/><line x1="16.65" y1="16.65" x2="21" y2="21" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"/></svg>Filter Koleksi</span>
           <button type="button" class="filter-drawer-close" id="filterDrawerClose" aria-label="Tutup menu filter">✕</button>
         </div>
         <div class="status-tabs" id="statusTabs"></div>
         <div class="filter-groups-row">
           <div class="filter-group">
-            <div class="filter-group-label">📚 Jenis Buku</div>
+            <div class="filter-group-label"><svg width="13" height="13" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><rect x="3" y="4" width="8" height="6" rx="1" fill="var(--brand-700)"/><rect x="13" y="4" width="8" height="6" rx="1" fill="var(--brand-700)" opacity="0.55"/><rect x="3" y="14" width="8" height="6" rx="1" fill="var(--brand-700)" opacity="0.55"/><rect x="13" y="14" width="8" height="6" rx="1" fill="var(--brand-700)"/></svg>Jenis Buku</div>
             <select class="category-filters" id="typeFilters"></select>
           </div>
           <div class="filter-group">
-            <div class="filter-group-label">🏷️ Kategori</div>
+            <div class="filter-group-label"><svg width="13" height="13" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><path d="M11.5 3H4C3.4 3 3 3.4 3 4V11.5C3 11.8 3.1 12.1 3.3 12.3L11.7 20.7C12.1 21.1 12.7 21.1 13.1 20.7L20.7 13.1C21.1 12.7 21.1 12.1 20.7 11.7L12.3 3.3C12.1 3.1 11.8 3 11.5 3Z" fill="none" stroke="var(--brand-700)" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7.3" cy="7.3" r="1.3" fill="var(--brand-700)"/></svg>Kategori</div>
             <select class="category-filters" id="categoryFilters"></select>
           </div>
           <div class="filter-group">
-            <div class="filter-group-label">🏢 Penerbit</div>
+            <div class="filter-group-label"><svg width="13" height="13" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><rect x="4" y="9" width="16" height="12" fill="none" stroke="var(--brand-700)" stroke-width="1.8"/><path d="M4 9L12 3L20 9" fill="none" stroke="var(--brand-700)" stroke-width="1.8" stroke-linejoin="round"/><rect x="10.5" y="14" width="3" height="7" fill="var(--brand-700)"/></svg>Penerbit</div>
             <select class="category-filters" id="publisherFilters"></select>
+          </div>
+          <div class="filter-group">
+            <div class="filter-group-label">👤 Pemilik</div>
+            <select class="category-filters" id="ownerFilters"></select>
           </div>
         </div>
       </aside>
@@ -1744,7 +1773,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.33.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.35.6</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1754,6 +1783,22 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.35.6</strong> — Blokir simpan untuk ISBN non-standar (v1.35.5) dibatalkan. Kembali ke peringatan saja saat mengetik (v1.35.4) — buku tetap bisa disimpan meski panjang ISBN-nya tidak 10/13 digit.</li>
+        <li><strong>v1.35.5</strong> — Validasi ISBN diperketat jadi <strong>blocking</strong>: kalau panjang ISBN bukan tepat 10 atau 13 digit, penyimpanan buku ditolak sepenuhnya (baik di form Tambah Buku maupun modal edit) — bukan cuma peringatan seperti sebelumnya. Kolom ISBN boleh dikosongkan kalau tidak ingin diisi.</li>
+        <li><strong>v1.35.4</strong> — Validasi panjang ISBN: sekarang harus tepat 10 digit (buku lama) atau 13 digit (buku modern). Kalau panjangnya lain (mis. 8 atau 12 digit), muncul peringatan "⚠️ Panjang ISBN tidak standar" dan pencarian otomatis tidak dijalankan (mencegah buang-buang request ke Google Books/Open Library untuk kode yang jelas salah). Buku tetap bisa disimpan manual meski ISBN-nya tidak standar.</li>
+        <li><strong>v1.35.3</strong> — Perbaikan hasil audit: field Tahun Terbit di modal edit sekarang dibatasi 4 digit (konsisten dengan form Tambah Buku, sebelumnya tidak dibatasi). Ikon "🏷️ Kategori" di panel filter diganti SVG brand, menyamakan dengan Penerbit dan Jenis Buku di sebelahnya.</li>
+        <li><strong>v1.35.2</strong> — Field yang seharusnya angka (Tahun Terbit, Jumlah Halaman, Halaman Terakhir Dibaca) sekarang benar-benar menolak huruf/simbol — bukan cuma keyboard HP yang berubah jadi angka, tapi ketik/paste huruf apapun otomatis dibuang saat mengetik. Berlaku di form Tambah Buku maupun modal edit.</li>
+        <li><strong>v1.35.1</strong> — Audit ikon menyeluruh: 4 emoji yang warnanya tidak konsisten (💾 disk biru di tombol Simpan, 👁️ mata di tombol Detail, 🏢 gedung di label Penerbit, 📚 warna-warni di label Jenis Buku) diganti jadi SVG warna coklat brand. Ikon Jenis Buku pakai bentuk grid 4 kotak.</li>
+        <li><strong>v1.35.0</strong> — Dropdown "Jenis Buku" (form Tambah Buku & modal edit) akhirnya bebas dari emoji biru: teks opsi jadi polos, digantikan ikon SVG warna brand yang menempel di sisi kiri kotak dropdown dan otomatis berganti bentuk (buku ↔ tablet) sesuai pilihan. Filter dropdown Jenis Buku di panel juga dibersihkan dari emoji.</li>
+        <li><strong>v1.34.4</strong> — Warna tombol "📷 Scan" dan tab status aktif ("Semua Koleksi" dkk) diganti dari abu-abu gelap jadi coklat brand. Ikon "+" (Tambah Buku), buku terbuka (Koleksi Buku), dan tumpukan buku warna-warni (Semua Koleksi) diganti jadi SVG bergaya konsisten warna brand.</li>
+        <li><strong>v1.34.3</strong> — Ikon jenis buku pada chip "Cetak"/"Digital" (kartu list & modal detail) diganti dari emoji 📘💻 jadi SVG warna coklat brand (buku terbuka untuk Cetak, tablet untuk Digital). Latar & warna teks chip tetap abu-abu seperti semula, dropdown pilihan jenis buku tidak berubah (ikon SVG tidak bisa tampil di elemen dropdown).</li>
+        <li><strong>v1.34.2</strong> — Ikon 🏠 rumah di tombol tab mobile "Koleksi Buku" diganti jadi ikon SVG 3 buku (1 buku bersandar ke kanan) — lebih sesuai tema perpustakaan.</li>
+        <li><strong>v1.34.1</strong> — Ikon kaca pembesar 🔍 biru bawaan diganti jadi SVG warna coklat brand di 3 tempat: kotak pencarian (kini ikon menempel permanen di dalam kotak, bukan cuma placeholder yang hilang saat mengetik), tombol toggle cari mobile, dan judul panel "Filter Koleksi".</li>
+        <li><strong>v1.34.0</strong> — Tambah field & filter baru <strong>Pemilik Buku</strong> (mis. Ayah/Ibu/nama anggota keluarga): input di form Tambah Buku, bisa diedit di modal detail, ikut kena pencarian, dan ada dropdown filter "👤 Pemilik" sejajar filter Penerbit di panel.</li>
+        <li><strong>v1.33.4</strong> — Perbaikan fokus kamera saat scan barcode: kini meminta mode "continuous autofocus" ke kamera HP, membantu kamera terus menyesuaikan fokus untuk jarak dekat (barcode). Paling efektif di Android/Chrome; iOS Safari punya keterbatasan platform untuk kontrol fokus lewat web.</li>
+        <li><strong>v1.33.3</strong> — Bersih-bersih kode mati (dead code) sisa arsitektur edit lama yang sudah tidak pernah terpanggil (<code>startEditBook</code>, <code>enableEditMode</code>, <code>setupUpdateBookButton</code>, <code>saveFormState</code>, <code>isFormChanged</code>, <code>updateSaveButtonState</code>, <code>setupChangeDetection</code>). Nol perubahan fitur/perilaku — murni file lebih ringkas (~5KB lebih kecil).</li>
+        <li><strong>v1.33.2</strong> — Optimasi performa: gambar cover di kartu list & dropdown pencarian sekarang <em>lazy-load</em> (baru dimuat saat masuk area layar), mengurangi beban loading saat koleksi buku sudah banyak.</li>
+        <li><strong>v1.33.1</strong> — Ikon "cover tidak ditemukan" (kartu list, modal detail, preview form, dropdown pencarian) diganti dari emoji 📘 biru bawaan jadi ikon buku SVG warna coklat brand Maktabah Prayoga. Label "📘 Cetak" (jenis buku) tetap emoji seperti semula.</li>
         <li><strong>v1.33.0</strong> — Auto-Sync GitHub disempurnakan: token baru dari URL otomatis membersihkan config lama yang expired; <code>saveBooks()</code> kini otomatis push ke GitHub setiap tambah/edit/hapus buku (pemanggilan manual yang duplikat dihapus). Daftar kategori dirombak total jadi 15 kategori akademis baru (Sejarah & Historiografi, Sosiologi & Ilmu Sosial, Politik & HI, Filsafat & Logika, Agama & Pemikiran Islam, Ekonomi & Teori Pembangunan, Bisnis/Manajemen/Keuangan, Sains/Matematika/Alam, Teknologi/Komputer/Coding, Kesehatan/Kedokteran/Psikologi, Sastra/Novel/Puisi, Komik/Manga/Novel Grafis, Biografi/Otobiografi/Memoar, Pengembangan Diri & Edukasi, Lainnya/Serba-Serbi) — deteksi otomatis dari Google Books juga disesuaikan.</li>
         <li><strong>v1.32.2</strong> — Orientasi layar dibedakan per ukuran perangkat: HP (lebar &lt;900px) otomatis dikunci portrait, tablet & desktop tetap bebas rotasi ke landscape. Hanya aktif saat PWA dibuka sebagai app terinstall.</li>
         <li><strong>v1.32.1</strong> — Lebar halaman desktop diperlebar dari 1080px jadi 1600px, tidak lagi terasa sempit di layar besar. Label tab mobile "🏠 Dasbor" diganti jadi "🏠 Koleksi Buku".</li>
@@ -1854,6 +1899,7 @@
   const jumlahHalamanInput = document.getElementById("jumlahHalaman");
   const lokasiRakInput = document.getElementById("lokasiRak");
   const penerbitInput = document.getElementById("penerbit");
+  const pemilikInput = document.getElementById("pemilik");
   const halamanTerakhirInput = document.getElementById("halamanTerakhir");
   const saveBtn = document.getElementById("saveBtn");
   const cancelEditBtn = document.getElementById("cancelEditBtn");
@@ -1892,10 +1938,22 @@
   const tanggalPinjamInput = document.getElementById("tanggalPinjamInput");
   const ghSyncStatus = document.getElementById("ghSyncStatus");
   const jenisBukuSelect = document.getElementById("jenisBuku");
+
+  // ---------- Ikon dropdown Jenis Buku: berganti bentuk (buku/tablet) sesuai pilihan ----------
+  const ICON_PATH_CETAK = '<path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="var(--brand-600)" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="var(--brand-600)" stroke-width="1.6"/>';
+  const ICON_PATH_DIGITAL = '<rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="var(--brand-600)" stroke-width="1.6"/><line x1="9" y1="19" x2="15" y2="19" stroke="var(--brand-600)" stroke-width="1.6" stroke-linecap="round"/>';
+
+  function updateJenisBukuIcon(){
+    const icon = document.getElementById("jenisBukuIcon");
+    if(icon) icon.innerHTML = jenisBukuSelect.value === "digital" ? ICON_PATH_DIGITAL : ICON_PATH_CETAK;
+  }
+  jenisBukuSelect.addEventListener("change", updateJenisBukuIcon);
   const typeFiltersEl = document.getElementById("typeFilters");
   let activeTypeFilter = "Semua";
   const publisherFiltersEl = document.getElementById("publisherFilters");
   let activePublisherFilter = "Semua";
+  const ownerFiltersEl = document.getElementById("ownerFilters");
+  let activeOwnerFilter = "Semua";
   const mobileNavTabs = document.getElementById("mobileNavTabs");
   const filterDrawer = document.getElementById("filterDrawer");
   const filterDrawerToggle = document.getElementById("filterDrawerToggle");
@@ -1979,6 +2037,7 @@
     renderStatusTabs();
     renderTypeFilters();
     renderPublisherFilters();
+    renderOwnerFilters();
 
     const query = searchInput.value.trim().toLowerCase();
     const filtered = books.filter(b=>{
@@ -1989,6 +2048,7 @@
              (b.kategori||"").toLowerCase().includes(query) ||
              (b.lokasiRak||"").toLowerCase().includes(query) ||
              (b.penerbit||"").toLowerCase().includes(query) ||
+             (b.pemilik||"").toLowerCase().includes(query) ||
              (b.peminjam||"").toLowerCase().includes(query);
       const matchCategory = activeCategoryFilter === "Semua" ||
              (b.kategori || "Lainnya / Serba-Serbi") === activeCategoryFilter;
@@ -1998,7 +2058,9 @@
       const matchType = activeTypeFilter === "Semua" || bookType === activeTypeFilter;
       const matchPublisher = activePublisherFilter === "Semua" ||
              (b.penerbit || "Tidak Diketahui") === activePublisherFilter;
-      return matchQuery && matchCategory && matchStatus && matchType && matchPublisher;
+      const matchOwner = activeOwnerFilter === "Semua" ||
+             (b.pemilik || "Tidak Diketahui") === activeOwnerFilter;
+      return matchQuery && matchCategory && matchStatus && matchType && matchPublisher && matchOwner;
     }).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
 
     // ---------- Pagination: potong data sesuai halaman aktif ----------
@@ -2037,11 +2099,11 @@
         if(coverUrlRow){
           coverCellHtml =
             '<div class="row-cover-wrap">' +
-              '<img class="row-cover-img" src="' + coverUrlRow + '" alt="Sampul buku" onerror="' + onErrorJsRow + '" onload="' + onLoadJsRow + '">' +
+              '<img class="row-cover-img" src="' + coverUrlRow + '" alt="Sampul buku" loading="lazy" onerror="' + onErrorJsRow + '" onload="' + onLoadJsRow + '">' +
             '</div>' +
-            '<div class="row-cover-fallback" id="' + fallbackId + '" style="display:none;">📘</div>';
+            '<div class="row-cover-fallback" id="' + fallbackId + '" style="display:none;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
         } else {
-          coverCellHtml = '<div class="row-cover-fallback" id="' + fallbackId + '" style="display:flex;">📘</div>';
+          coverCellHtml = '<div class="row-cover-fallback" id="' + fallbackId + '" style="display:flex;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
         }
 
         tr.innerHTML = `
@@ -2050,12 +2112,12 @@
           <td data-label="Penulis">${escapeHtml(b.penulis || "-")}</td>
           <td data-label="Kategori">
             <span class="cat-chip">${escapeHtml(b.kategori || "Lainnya / Serba-Serbi")}</span>
-            <span class="cat-chip type-chip">${b.jenisBuku === "digital" ? "💻 Digital" : "📘 Cetak"}</span>
+            <span class="cat-chip type-chip">${b.jenisBuku === "digital" ? '<svg width="12" height="12" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:3px;"><rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="var(--brand-700)" stroke-width="1.6"/><line x1="9" y1="19" x2="15" y2="19" stroke="var(--brand-700)" stroke-width="1.6" stroke-linecap="round"/></svg>Digital' : '<svg width="12" height="12" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:3px;"><path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="var(--brand-700)" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="var(--brand-700)" stroke-width="1.6"/></svg>Cetak'}</span>
           </td>
           <td data-label="Status">${renderStatusChip(b)}</td>
           <td class="action-cell" data-label="">
             <div class="row-actions">
-              <button class="btn btn-edit" data-edit-id="${b.id}">👁️ Detail</button>
+              <button class="btn btn-edit" data-edit-id="${b.id}"><svg width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><path d="M2 12C2 12 5.5 5 12 5C18.5 5 22 12 22 12C22 12 18.5 19 12 19C5.5 19 2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Detail</button>
             </div>
           </td>
         `;
@@ -2120,7 +2182,7 @@
     const totalDipinjam = books.filter(b => b.status === "dipinjam").length;
 
     const tabs = [
-      { key: "semua", label: "📚 Semua Koleksi", count: totalSemua, cls: "" },
+      { key: "semua", label: '<svg width="13" height="13" viewBox="0 0 24 24" style="vertical-align:-2px;"><rect x="1.5" y="6" width="5" height="15" rx="1" fill="currentColor" transform="rotate(18 4 20.5)"/><rect x="9.5" y="3" width="5" height="18" rx="1" fill="currentColor"/><rect x="16" y="3" width="5" height="18" rx="1" fill="currentColor"/></svg> Semua Koleksi', count: totalSemua, cls: "" },
       { key: "belum", label: "⏳ Sedang Dibaca / Belum Selesai", count: totalBelum, cls: "" },
       { key: "selesai", label: "✅ Sudah Selesai", count: totalSelesai, cls: "" },
       { key: "dipinjam", label: "🤝 Sedang Dipinjam", count: totalDipinjam, cls: "tab-dipinjam" }
@@ -2207,6 +2269,39 @@
     renderTable();
   });
 
+  function renderOwnerFilters(){
+    const counts = {};
+    books.forEach(b=>{
+      const own = b.pemilik || "Tidak Diketahui";
+      counts[own] = (counts[own] || 0) + 1;
+    });
+
+    const owners = Object.keys(counts).sort((a,b)=> a.localeCompare(b));
+
+    if(owners.length === 0){
+      ownerFiltersEl.innerHTML = "";
+      return;
+    }
+
+    // kalau pemilik aktif sudah tidak ada bukunya, kembali ke "Semua"
+    if(activeOwnerFilter !== "Semua" && !counts[activeOwnerFilter]){
+      activeOwnerFilter = "Semua";
+    }
+
+    let html = `<option value="Semua" ${activeOwnerFilter === 'Semua' ? 'selected' : ''}>Semua (${books.length})</option>`;
+    owners.forEach(own=>{
+      html += `<option value="${escapeHtml(own)}" ${activeOwnerFilter === own ? 'selected' : ''}>${escapeHtml(own)} (${counts[own]})</option>`;
+    });
+
+    ownerFiltersEl.innerHTML = html;
+  }
+
+  ownerFiltersEl.addEventListener("change", ()=>{
+    activeOwnerFilter = ownerFiltersEl.value;
+    currentPage = 1;
+    renderTable();
+  });
+
   function renderTypeFilters(){
     const counts = { cetak: 0, digital: 0 };
     books.forEach(b=>{
@@ -2214,9 +2309,9 @@
       counts[t]++;
     });
 
-    let html = `<option value="Semua" ${activeTypeFilter === 'Semua' ? 'selected' : ''}>📚 Semua (${books.length})</option>`;
-    html += `<option value="cetak" ${activeTypeFilter === 'cetak' ? 'selected' : ''}>📘 Cetak (${counts.cetak})</option>`;
-    html += `<option value="digital" ${activeTypeFilter === 'digital' ? 'selected' : ''}>💻 Digital PDF (${counts.digital})</option>`;
+    let html = `<option value="Semua" ${activeTypeFilter === 'Semua' ? 'selected' : ''}>Semua (${books.length})</option>`;
+    html += `<option value="cetak" ${activeTypeFilter === 'cetak' ? 'selected' : ''}>Cetak (${counts.cetak})</option>`;
+    html += `<option value="digital" ${activeTypeFilter === 'digital' ? 'selected' : ''}>Digital PDF (${counts.digital})</option>`;
     typeFiltersEl.innerHTML = html;
   }
 
@@ -2331,76 +2426,9 @@
     }
   });
 
-  function startEditBook(id){
-    const book = books.find(b => String(b.id) === String(id));
-    if(!book) return;
-
-    editingBookId = book.id;
-    isbnInput.value = book.isbn || "";
-    judulInput.value = book.judul || "";
-    penulisInput.value = book.penulis || "";
-    kategoriSelect.value = book.kategori || "Fiksi";
-    jenisBukuSelect.value = book.jenisBuku === "digital" ? "digital" : "cetak";
-    tahunTerbitInput.value = book.tahunTerbit || "";
-    jumlahHalamanInput.value = book.jumlahHalaman || "";
-    lokasiRakInput.value = book.lokasiRak || "";
-    halamanTerakhirInput.value = book.halamanTerakhir || "";
-    peminjamInput.value = book.peminjam || "";
-    tanggalPinjamInput.value = book.tanggalPinjam || "";
-
-    const statusVal = book.status === 'selesai' ? 'selesai' : (book.status === 'dipinjam' ? 'dipinjam' : 'belum');
-    const statusRadio = document.querySelector(`input[name="status"][value="${statusVal}"]`);
-    if(statusRadio){
-      statusRadio.checked = true;
-      labelBelum.classList.toggle("checked", statusVal === 'belum');
-      labelSelesai.classList.toggle("checked", statusVal === 'selesai');
-      labelDipinjam.classList.toggle("checked", statusVal === 'dipinjam');
-      lendingFieldsEl.style.display = statusVal === 'dipinjam' ? "block" : "none";
-    }
-
-    // PENTING: Disable field hanya saat edit mode DETAIL buku
-    // (field masuk dalam kondisi disabled untuk mode "detail baca")
-    setFormFieldsDisabled(true);  // ← Field dimulai DISABLED (mode detail)
-
-    // Save form state untuk deteksi perubahan
-    saveFormState();
-
-    // Disable tombol simpan awal (sampai ada perubahan)
-    saveBtn.disabled = true;
-    saveBtn.style.opacity = "0.5";
-
-    saveBtn.textContent = "💾 Update Buku";
-    cancelEditBtn.style.display = "inline-flex";
-    
-    // TAMPILKAN tombol hapus saat mode edit
-    const deleteRowContainer = document.getElementById("detailDeleteRowContainer");
-    if(deleteRowContainer){
-      deleteRowContainer.style.display = "block";
-    }
-
-    setLookupStatus("Mode detail: klik 'Update Buku' untuk edit.", "");
-    setMobileView("tambah");
-    judulInput.closest(".card").scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  // ---------- Fungsi untuk enable field ketika user klik "Update Buku" di detail mode ----------
-  function enableEditMode(){
-    setFormFieldsDisabled(false);  // ENABLE semua field
-    saveFormState();  // Save state terbaru
-    updateSaveButtonState();  // Update tombol simpan
-    setLookupStatus("Mode edit: ubah data lalu klik 'Update Buku'.", "");
-  }
-
-  // Setup event listener untuk tombol "Update Buku" (di form, akan dibuat saat dibutuhkan)
-  function setupUpdateBookButton(){
-    // Tombol ini adalah saveBtn yang di-trigger setelah startEditBook
-    // Tambahkan listener untuk deteksi ketika form pertama kali di-load
-    // Akan ditangani via modal button click
-  }
-
   function exitEditMode(){
     editingBookId = null;
-    saveBtn.textContent = "💾 Simpan Buku";
+    saveBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><path d="M5 4C5 3.4 5.4 3 6 3H16L20 7V20C20 20.6 19.6 21 19 21H6C5.4 21 5 20.6 5 20V4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="8" y="3" width="8" height="6" fill="currentColor"/><rect x="7.5" y="13" width="9" height="6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Simpan Buku';
     cancelEditBtn.style.display = "none";
     saveBtn.disabled = true;  // Disable save button saat exit edit mode
     saveBtn.style.opacity = "0.5";
@@ -2433,74 +2461,6 @@
     });
   }
 
-  // ---------- Fungsi untuk deteksi perubahan data ----------
-  const originalFormState = {};
-
-  function saveFormState(){
-    originalFormState.isbn = isbnInput.value;
-    originalFormState.judul = judulInput.value;
-    originalFormState.penulis = penulisInput.value;
-    originalFormState.kategori = kategoriSelect.value;
-    originalFormState.jenisBuku = jenisBukuSelect.value;
-    originalFormState.tahunTerbit = tahunTerbitInput.value;
-    originalFormState.jumlahHalaman = jumlahHalamanInput.value;
-    originalFormState.lokasiRak = lokasiRakInput.value;
-    originalFormState.halamanTerakhir = halamanTerakhirInput.value;
-    originalFormState.peminjam = peminjamInput.value;
-    originalFormState.tanggalPinjam = tanggalPinjamInput.value;
-    originalFormState.status = document.querySelector('input[name="status"]:checked')?.value;
-  }
-
-  function isFormChanged(){
-    const currentState = {
-      isbn: isbnInput.value,
-      judul: judulInput.value,
-      penulis: penulisInput.value,
-      kategori: kategoriSelect.value,
-      jenisBuku: jenisBukuSelect.value,
-      tahunTerbit: tahunTerbitInput.value,
-      jumlahHalaman: jumlahHalamanInput.value,
-      lokasiRak: lokasiRakInput.value,
-      halamanTerakhir: halamanTerakhirInput.value,
-      peminjam: peminjamInput.value,
-      tanggalPinjam: tanggalPinjamInput.value,
-      status: document.querySelector('input[name="status"]:checked')?.value
-    };
-
-    return JSON.stringify(originalFormState) !== JSON.stringify(currentState);
-  }
-
-  function updateSaveButtonState(){
-    if(editingBookId){
-      const hasChanged = isFormChanged();
-      saveBtn.disabled = !hasChanged;
-      saveBtn.style.opacity = hasChanged ? "1" : "0.5";
-    }
-  }
-
-  // ---------- Setup change detection listeners ----------
-  function setupChangeDetection(){
-    const inputs = [
-      isbnInput, judulInput, penulisInput, kategoriSelect, jenisBukuSelect,
-      tahunTerbitInput, jumlahHalamanInput, lokasiRakInput, halamanTerakhirInput,
-      peminjamInput, tanggalPinjamInput
-    ];
-    const radios = document.querySelectorAll('input[name="status"]');
-
-    inputs.forEach(input => {
-      if(input){
-        input.addEventListener("input", updateSaveButtonState);
-        input.addEventListener("change", updateSaveButtonState);
-      }
-    });
-
-    radios.forEach(radio => {
-      radio.addEventListener("change", updateSaveButtonState);
-    });
-  }
-
-  setupChangeDetection();
-
   cancelEditBtn.addEventListener("click", ()=>{
     exitEditMode();
     resetForm();
@@ -2532,12 +2492,12 @@
           '<div class="cover-photo-wrap">' +
             '<img class="cover-photo-img" src="' + coverUrl + '" alt="Sampul buku" onerror="' + onErrorJs + '" onload="' + onLoadJs + '">' +
           '</div>' +
-          '<div class="cover-fallback-box" id="coverFallbackBox" style="display:none;">📘</div>' +
+          '<div class="cover-fallback-box" id="coverFallbackBox" style="display:none;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>' +
         '</div>';
     } else {
       coverBlockHtml =
         '<div class="cover-photo-row">' +
-          '<div class="cover-fallback-box" id="coverFallbackBox" style="display:flex;">📘</div>' +
+          '<div class="cover-fallback-box" id="coverFallbackBox" style="display:flex;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>' +
         '</div>';
     }
 
@@ -2545,7 +2505,7 @@
     const pillRowHtml =
       '<div class="detail-pill-row">' +
         '<span class="pill-badge">' + escapeHtml(book.kategori || "Lainnya / Serba-Serbi") + '</span>' +
-        '<span class="pill-badge pill-badge-type">' + (book.jenisBuku === "digital" ? "💻 Digital" : "📘 Cetak") + '</span>' +
+        '<span class="pill-badge pill-badge-type">' + (book.jenisBuku === "digital" ? '<svg width="12" height="12" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:3px;"><rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="var(--brand-700)" stroke-width="1.6"/><line x1="9" y1="19" x2="15" y2="19" stroke="var(--brand-700)" stroke-width="1.6" stroke-linecap="round"/></svg>Digital' : '<svg width="12" height="12" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:3px;"><path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="var(--brand-700)" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="var(--brand-700)" stroke-width="1.6"/></svg>Cetak') + '</span>' +
       '</div>';
 
     // Bangun kotak field peminjam/tanggal via concatenation string (hindari nested backtick)
@@ -2591,17 +2551,20 @@
         </div>
         <div>
           <label class="field-label" style="margin-top:0;">Jenis Buku</label>
-          <select class="detail-input" id="modalJenisBuku" disabled>
-            <option value="cetak">📘 Cetak (Fisik)</option>
-            <option value="digital">💻 Digital (PDF)</option>
-          </select>
+          <div class="select-icon-wrap">
+            <svg class="select-icon" id="modalJenisBukuIcon" width="16" height="16" viewBox="0 0 24 24"><path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="var(--brand-600)" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="var(--brand-600)" stroke-width="1.6"/></svg>
+            <select class="detail-input" id="modalJenisBuku" disabled>
+              <option value="cetak">Cetak (Fisik)</option>
+              <option value="digital">Digital (PDF)</option>
+            </select>
+          </div>
         </div>
       </div>
 
       <div class="field-row">
         <div>
           <label class="field-label">Tahun Terbit</label>
-          <input type="text" class="detail-input" id="modalTahunTerbit" value="${escapeHtml(book.tahunTerbit || "")}" disabled>
+          <input type="text" class="detail-input" id="modalTahunTerbit" value="${escapeHtml(book.tahunTerbit || "")}" maxlength="4" disabled>
         </div>
         <div>
           <label class="field-label">Jumlah Halaman</label>
@@ -2617,6 +2580,9 @@
 
       <label class="field-label">Penerbit</label>
       <input type="text" class="detail-input" id="modalPenerbit" value="${escapeHtml(book.penerbit || "")}" disabled>
+
+      <label class="field-label">Pemilik Buku</label>
+      <input type="text" class="detail-input" id="modalPemilik" value="${escapeHtml(book.pemilik || "")}" disabled>
 
       <label class="field-label">Halaman Terakhir Dibaca</label>
       <input type="text" class="detail-input" id="modalHalamanTerakhir" value="${escapeHtml(book.halamanTerakhir || "")}" disabled>
@@ -2645,6 +2611,15 @@
     // Set nilai select (lebih aman lewat JS daripada nulis atribut "selected" manual)
     document.getElementById("modalKategori").value = book.kategori || "Fiksi";
     document.getElementById("modalJenisBuku").value = book.jenisBuku === "digital" ? "digital" : "cetak";
+    const modalJenisBukuIconEl = document.getElementById("modalJenisBukuIcon");
+    if(modalJenisBukuIconEl){
+      modalJenisBukuIconEl.innerHTML = book.jenisBuku === "digital" ? ICON_PATH_DIGITAL : ICON_PATH_CETAK;
+    }
+    document.getElementById("modalJenisBuku").addEventListener("change", function(){
+      if(modalJenisBukuIconEl){
+        modalJenisBukuIconEl.innerHTML = this.value === "digital" ? ICON_PATH_DIGITAL : ICON_PATH_CETAK;
+      }
+    });
 
     document.getElementById("detailEditBtn").addEventListener("click", ()=>{
       enableModalEditMode(book);
@@ -2684,6 +2659,13 @@
       });
     }
 
+    const modalTahunTerbitField = document.getElementById("modalTahunTerbit");
+    const modalJumlahHalamanField = document.getElementById("modalJumlahHalaman");
+    const modalHalamanTerakhirField = document.getElementById("modalHalamanTerakhir");
+    if(modalTahunTerbitField) restrictToNumeric(modalTahunTerbitField);
+    if(modalJumlahHalamanField) restrictToNumeric(modalJumlahHalamanField);
+    if(modalHalamanTerakhirField) restrictToNumeric(modalHalamanTerakhirField);
+
     detailModalBody.querySelectorAll('#modalStatusToggle input[name="modalStatus"]').forEach(radio=>{
       radio.addEventListener("change", ()=>{
         const checkedEl = detailModalBody.querySelector('#modalStatusToggle input[name="modalStatus"]:checked');
@@ -2707,7 +2689,7 @@
     saveBtnEl.className = "btn btn-primary";
     saveBtnEl.style.flex = "1";
     saveBtnEl.style.marginTop = "0";
-    saveBtnEl.textContent = "💾 Simpan Perubahan";
+    saveBtnEl.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><path d="M5 4C5 3.4 5.4 3 6 3H16L20 7V20C20 20.6 19.6 21 19 21H6C5.4 21 5 20.6 5 20V4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="8" y="3" width="8" height="6" fill="currentColor"/><rect x="7.5" y="13" width="9" height="6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Simpan Perubahan';
     saveBtnEl.addEventListener("click", ()=> saveModalEdit(book.id));
 
     const cancelBtnEl = document.createElement("button");
@@ -2766,6 +2748,7 @@
       isbn: document.getElementById("modalIsbn").value.trim(),
       lokasiRak: document.getElementById("modalLokasiRak").value.trim(),
       penerbit: document.getElementById("modalPenerbit").value.trim(),
+      pemilik: document.getElementById("modalPemilik").value.trim(),
       halamanTerakhir: document.getElementById("modalHalamanTerakhir").value.trim(),
       status: statusVal,
       peminjam: statusVal === "dipinjam" ? document.getElementById("modalPeminjam").value.trim() : "",
@@ -2984,13 +2967,16 @@
       return;
     }
 
+    const BOOK_SVG_ICON = '<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg>';
+
     searchSuggestBox.innerHTML = matches.map(b=>{
       const coverUrl = b.isbn
         ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-S.jpg?default=false"
         : "";
       const coverHtml = coverUrl
-        ? '<img src="' + coverUrl + '" alt="" onerror="this.parentNode.textContent=\'📘\'">'
-        : "📘";
+        ? '<img class="search-suggest-cover-img" src="' + coverUrl + '" alt="" loading="lazy" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
+          '<span class="search-suggest-fallback-icon" style="display:none;">' + BOOK_SVG_ICON + '</span>'
+        : BOOK_SVG_ICON;
       return '<div class="search-suggest-item" data-suggest-id="' + b.id + '">' +
         '<div class="search-suggest-cover">' + coverHtml + '</div>' +
         '<div class="search-suggest-text">' +
@@ -3088,6 +3074,7 @@
     jumlahHalamanInput.value = "";
     lokasiRakInput.value = "";
     penerbitInput.value = "";
+    pemilikInput.value = "";
     halamanTerakhirInput.value = "";
     peminjamInput.value = "";
     tanggalPinjamInput.value = "";
@@ -3131,6 +3118,7 @@
       jumlahHalaman: jumlahHalamanInput.value.trim(),
       lokasiRak: lokasiRakInput.value.trim(),
       penerbit: penerbitInput.value.trim(),
+      pemilik: pemilikInput.value.trim(),
       halamanTerakhir: halamanTerakhirInput.value.trim(),
       status: statusVal,
       peminjam: statusVal === 'dipinjam' ? peminjamInput.value.trim() : "",
@@ -3169,6 +3157,27 @@
   }
 
   let lookupDebounce = null;
+  // ---------- Batasi field angka: tolak karakter selain 0-9 ----------
+  // Sama seperti auto-strip ISBN, tapi lebih ketat (cuma digit, tidak ada strip/spasi).
+  // Menjaga posisi kursor supaya tidak lompat ke akhir saat mengetik di tengah teks.
+  function restrictToNumeric(inputEl){
+    inputEl.addEventListener("input", ()=>{
+      const cursorPos = inputEl.selectionStart;
+      const rawValue = inputEl.value;
+      const cleanedValue = rawValue.replace(/[^0-9]/g, "");
+      if(cleanedValue !== rawValue){
+        const beforeCursor = rawValue.slice(0, cursorPos);
+        const validCharsBeforeCursor = beforeCursor.replace(/[^0-9]/g, "").length;
+        inputEl.value = cleanedValue;
+        inputEl.setSelectionRange(validCharsBeforeCursor, validCharsBeforeCursor);
+      }
+    });
+  }
+
+  restrictToNumeric(tahunTerbitInput);
+  restrictToNumeric(jumlahHalamanInput);
+  restrictToNumeric(halamanTerakhirInput);
+
   isbnInput.addEventListener("input", ()=>{
     // Auto-hilangkan strip/spasi dari kolom ISBN tanpa mengubah angkanya,
     // sambil menjaga posisi kursor supaya tidak lompat ke akhir saat mengetik.
@@ -3186,7 +3195,13 @@
     clearTimeout(lookupDebounce);
     const val = isbnInput.value.trim();
     if(val.length < 10){
+      // Masih mengetik / belum cukup panjang, diamkan dulu (tidak usah warning prematur)
       setLookupStatus("", "");
+      updateCoverPreview("");
+      return;
+    }
+    if(val.length !== 10 && val.length !== 13){
+      setLookupStatus("⚠️ Panjang ISBN tidak standar (" + val.length + " digit). ISBN yang valid biasanya 10 digit (buku lama) atau 13 digit (buku modern sejak 2007).", "err");
       updateCoverPreview("");
       return;
     }
@@ -3366,7 +3381,17 @@
     setLookupStatus("Mengaktifkan kamera...", "loading");
 
     html5QrCode = new Html5Qrcode("reader");
-    const config = { fps: 10, qrbox: { width: 250, height: 120 } };
+    const config = {
+      fps: 10,
+      qrbox: { width: 250, height: 120 },
+      // Minta mode fokus kontinu (auto-refocus) ke kamera, penting untuk scan
+      // barcode jarak dekat — tanpa ini sebagian HP pakai fokus default jarak jauh.
+      videoConstraints: {
+        facingMode: "environment",
+        focusMode: "continuous",
+        advanced: [{ focusMode: "continuous" }]
+      }
+    };
 
     Html5Qrcode.getCameras().then(cameras => {
       if(!cameras || cameras.length === 0){
