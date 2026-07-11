@@ -1777,7 +1777,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.36.7</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.36.8</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1787,6 +1787,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.36.8</strong> — Fix "Request had invalid authentication credentials": header <code>x-goog-api-key</code> (v1.36.6) ternyata bermasalah, kembali ke <code>?key=</code> di URL yang sudah terbukti berhasil saat dites manual.</li>
         <li><strong>v1.36.7</strong> — Key Gemini diganti dengan key baru yang sudah tervalidasi aktif (dibuat lewat aistudio.google.com/apikey, project dengan Generative Language API sudah enable).</li>
         <li><strong>v1.36.6</strong> — Fix "API key not valid": Google merilis format API key baru "AQ.Ab..." (Auth key) yang harus dikirim via header <code>x-goog-api-key</code>, bukan <code>?key=</code> di URL seperti format lama "AIzaSy...". Kode Gemini disesuaikan + key baru dipasang.</li>
         <li><strong>v1.36.5</strong> — Bersihkan sisa kode SDK Gemini (loadGeminiModule, genAiModulePromise) yang sudah tidak dipakai sejak pindah ke fetch() REST API langsung di v1.36.4.</li>
@@ -3477,15 +3478,15 @@
 
       // Panggil REST API Gemini langsung (fetch biasa) -- lebih stabil daripada SDK
       // @google/genai yang kadang error DataCloneError di WebView Android.
-      // Key dikirim via header x-goog-api-key (bukan ?key= di URL) supaya
-      // mendukung format key baru "AQ.Ab..." (Auth key) maupun format lama "AIzaSy...".
+      // Key dikirim via query param ?key= -- terbukti jalan untuk format key
+      // baru "AQ.Ab..." maupun format lama "AIzaSy..." (header x-goog-api-key
+      // sempat dicoba tapi bermasalah, kemungkinan CORS preflight custom header).
       const res = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + encodeURIComponent(apiKey),
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            "x-goog-api-key": apiKey
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
         }
