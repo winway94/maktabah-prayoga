@@ -2772,19 +2772,8 @@
       const content = b64DecodeUnicode(data.content.replace(/\n/g, ""));
       const remoteBooks = JSON.parse(content);
       if(Array.isArray(remoteBooks)){
-        // Pengaman: jangan diam-diam menimpa data HP kalau versi GitHub kosong/lebih sedikit
-        if(remoteBooks.length < books.length){
-          const proceed = confirm(
-            "⚠️ Data di GitHub (" + remoteBooks.length + " buku) lebih sedikit dari data di HP ini (" +
-            books.length + " buku).\n\n" +
-            "Klik OK untuk UPLOAD data HP ke GitHub (disarankan, aman).\n" +
-            "Klik Cancel untuk mengambil data GitHub apa adanya (data HP yang lebih baru bisa hilang)."
-          );
-          if(proceed){
-            await pushToGithub();
-            return;
-          }
-        }
+        // Auto-Sync penuh: data dari GitHub langsung dipakai apa adanya, tanpa
+        // dialog konfirmasi lagi, supaya sinkronisasi antar-device terasa mulus.
         books = remoteBooks;
         saveBooks(false); // data ini baru ditarik dari GitHub, jangan push balik (hindari round-trip sia-sia)
         renderTable();
@@ -2821,10 +2810,6 @@
       const content = b64DecodeUnicode(data.content.replace(/\n/g, ""));
       const remoteBooks = JSON.parse(content);
       if(!Array.isArray(remoteBooks)) return;
-
-      // Pengaman yang sama seperti fetchFromGithub manual: kalau data remote jauh lebih
-      // sedikit, jangan diam-diam menimpa — lewati saja siklus polling ini.
-      if(remoteBooks.length < books.length) return;
 
       books = remoteBooks;
       saveBooks(false); // data dari remote, jangan push balik
