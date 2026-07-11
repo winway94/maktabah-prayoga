@@ -7,5 +7,22 @@
     "kategori": "Sejarah",
     "status": "belum",
     "createdAt": 1783635631196
+  },
+  {
+    "id": "mrg75hh6hx2mo",
+    "createdAt": 1783764205242,
+    "isbn": "9786230022531",
+    "judul": "Kun Bil Qur`ani Najman",
+    "penulis": "Saihul Basyir",
+    "kategori": "Agama & Spiritual",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2021",
+    "jumlahHalaman": "324",
+    "lokasiRak": "",
+    "penerbit": "Elex Media Komputindo",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
