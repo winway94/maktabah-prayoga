@@ -801,6 +801,10 @@
 
   /* ===== Kartu Fitur AI ===== */
   .ai-feature-card{
+    /* Disembunyikan sementara dari tampilan (permintaan pengguna),
+       logika JavaScript-nya (aiRecommendBtn, dsb.) tetap utuh & tidak dihapus. */
+    display: none;
+
     position:relative;
     overflow:hidden;
     background: linear-gradient(135deg, #201509 0%, #4a2e12 55%, #95501c 100%);
@@ -1231,7 +1235,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.20.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.20.1</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1241,6 +1245,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.20.1</strong> — Kartu "Rekomendasi Buku AI" disembunyikan sementara dari tampilan (via CSS <code>display:none</code>), logika JavaScript-nya tetap ada dan tidak dihapus.</li>
         <li><strong>v1.20.0</strong> — Baris tabel untuk buku berstatus "Dipinjam" kini ditandai visual: latar pastel oranye + garis kiri oranye, dan emoji 👤 di depan judul, supaya langsung terlihat mencolok saat aplikasi dibuka.</li>
         <li><strong>v1.19.0</strong> — Pencarian ISBN otomatis sekarang bertingkat 3 lapis: Google Books → fallback Open Library (kalau tidak ketemu) → tautan manual ke katalog ISBN Perpusnas (kalau keduanya tidak ketemu).</li>
         <li><strong>v1.18.0</strong> — Notifikasi (toast) muncul saat buku berhasil disimpan/diperbarui/dihapus; hapus buku sekarang lewat dialog konfirmasi khusus (bukan popup bawaan browser) yang menanyakan kepastian sebelum data dihapus.</li>
