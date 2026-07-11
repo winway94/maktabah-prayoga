@@ -31,7 +31,7 @@
     "isbn": "9786027123717",
     "judul": "Api sejarah",
     "penulis": "Ahmad Mansur Suryanegara",
-    "kategori": "Lainnya",
+    "kategori": "Sejarah & Historiografi",
     "jenisBuku": "cetak",
     "tahunTerbit": "2020",
     "jumlahHalaman": "",
@@ -40,7 +40,8 @@
     "halamanTerakhir": "",
     "status": "belum",
     "peminjam": "",
-    "tanggalPinjam": ""
+    "tanggalPinjam": "",
+    "pemilik": ""
   },
   {
     "id": "mrg8d9upw2f1s",
