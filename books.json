@@ -92,5 +92,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrgimks387515",
+    "createdAt": 1783783478451,
+    "isbn": "9786024811556",
+    "judul": "Paket Kuasa Ramalan",
+    "penulis": "Peter Carey",
+    "kategori": "Lainnya / Serba-Serbi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2013",
+    "jumlahHalaman": "",
+    "lokasiRak": "",
+    "penerbit": "Kepustakaan Populer Gramedia",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
