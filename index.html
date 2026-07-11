@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#7a3e15">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -37,12 +37,15 @@
     --shadow-md: 0 4px 12px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.06);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
+  html{ overflow-x:hidden; }
   body{
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
     background: linear-gradient(180deg, var(--slate-50), #eef2f5 400px);
     color: var(--slate-800);
     min-height:100vh;
     padding: 20px;
+    overflow-x:hidden;
+    width:100%;
   }
   .container{
     max-width: 1180px;
@@ -122,7 +125,7 @@
     letter-spacing:0.03em;
   }
   label.field-label:first-of-type{ margin-top:0; }
-  input[type=text], input[type=search], input[type=password], select{
+  input[type=text], input[type=search], input[type=password], input[type=date], input[type=number], select, textarea{
     width:100%;
     padding: 12px 14px;
     border: 1.5px solid var(--slate-200);
@@ -132,8 +135,9 @@
     background: var(--slate-50);
     transition: border-color .15s, box-shadow .15s;
     outline:none;
+    /* font-size 16px mencegah iOS auto-zoom saat input di-fokus/disentuh */
   }
-  input[type=text]:focus, input[type=search]:focus, input[type=password]:focus, select:focus{
+  input[type=text]:focus, input[type=search]:focus, input[type=password]:focus, input[type=date]:focus, input[type=number]:focus, select:focus, textarea:focus{
     border-color: var(--brand-500);
     box-shadow: 0 0 0 3px var(--brand-100);
     background:white;
@@ -164,6 +168,7 @@
     gap:6px;
     white-space:nowrap;
     min-height: 46px;
+    touch-action: manipulation;
   }
   .btn:active{ transform: scale(0.97); }
   .btn-scan{
@@ -1235,7 +1240,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.20.1</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.20.2</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1245,6 +1250,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.20.2</strong> — Perbaikan tampilan mobile agar tidak "membesar" sendiri: input tanggal diberi ukuran font 16px (penyebab auto-zoom iOS), viewport dikunci (tidak bisa ke-pinch/zoom tidak sengaja), dan overflow horizontal dicegah agar layout tetap rapi & fix.</li>
         <li><strong>v1.20.1</strong> — Kartu "Rekomendasi Buku AI" disembunyikan sementara dari tampilan (via CSS <code>display:none</code>), logika JavaScript-nya tetap ada dan tidak dihapus.</li>
         <li><strong>v1.20.0</strong> — Baris tabel untuk buku berstatus "Dipinjam" kini ditandai visual: latar pastel oranye + garis kiri oranye, dan emoji 👤 di depan judul, supaya langsung terlihat mencolok saat aplikasi dibuka.</li>
         <li><strong>v1.19.0</strong> — Pencarian ISBN otomatis sekarang bertingkat 3 lapis: Google Books → fallback Open Library (kalau tidak ketemu) → tautan manual ke katalog ISBN Perpusnas (kalau keduanya tidak ketemu).</li>
