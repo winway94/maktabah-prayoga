@@ -544,19 +544,21 @@
   /* Tombol hamburger untuk buka drawer filter (hanya tampil di mobile) */
   .filter-drawer-toggle{
     display:none;
-    border: 1.5px solid var(--slate-200);
-    background: white;
-    color: var(--slate-700);
+    border: none;
+    background: var(--brand-700);
+    color: #ffffff;
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    font-size: 1.05rem;
+    font-size: 1.15rem;
+    font-weight: 700;
     cursor:pointer;
     align-items:center;
     justify-content:center;
     flex-shrink:0;
+    box-shadow: 0 2px 8px rgba(122,62,21,0.35);
   }
-  .filter-drawer-toggle:active{ background: var(--slate-100); }
+  .filter-drawer-toggle:active{ background: var(--brand-900); }
 
   .filter-drawer-header{ display:none; }
   .filter-drawer-backdrop{ display:none; }
@@ -1345,7 +1347,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.21.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.21.1</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1355,6 +1357,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.21.1</strong> — Tombol ☰ (buka filter) diperjelas: latar tombol jadi coklat (sesuai tema), ikon jadi putih — hanya pada kotak tombolnya saja, latar section "Koleksi Buku" tetap seperti semula.</li>
         <li><strong>v1.21.0</strong> — Menu filter (Status, Jenis Buku, Kategori) di mobile sekarang tersembunyi dalam drawer/panel geser dari kiri, dibuka lewat tombol ☰ di pojok kiri atas daftar koleksi — mirip menu aplikasi ReadEra. Tampilan desktop tidak berubah (filter tetap tampil normal).</li>
         <li><strong>v1.20.4</strong> — Kolom ISBN, Tahun, Hal., dan Rak dihapus dari tabel dasbor (sudah ada di modal detail buku, tidak perlu double). Tabel dasbor sekarang lebih ringkas: Judul, Penulis, Kategori, Status.</li>
         <li><strong>v1.20.3</strong> — Lebar halaman dikunci fix maksimal 1080px (tidak melebar lagi di layar besar), kolom form "Tambah Buku" tidak diubah sama sekali.</li>
