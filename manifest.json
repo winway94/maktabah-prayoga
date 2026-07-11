@@ -1,13 +1,13 @@
 {
   "name": "Maktabah Prayoga",
   "short_name": "Maktabah",
-  "description": "Sistem pendataan koleksi buku pribadi",
+  "description": "Menata Buku. Membangun Peradaban. — Sistem pendataan koleksi buku pribadi",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#f8fafc",
-  "theme_color": "#0d9488",
+  "background_color": "#FBF3EA",
+  "theme_color": "#7A3E15",
   "icons": [
     {
       "src": "icon-192.png",
