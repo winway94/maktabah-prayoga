@@ -24,5 +24,22 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrg7g5gmik183",
+    "createdAt": 1783764702886,
+    "isbn": "9786027123717",
+    "judul": "Api sejarah",
+    "penulis": "Ahmad Mansur Suryanegara",
+    "kategori": "Lainnya",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2020",
+    "jumlahHalaman": "",
+    "lokasiRak": "",
+    "penerbit": "",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
