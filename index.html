@@ -1661,7 +1661,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.29.3</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.30.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1671,6 +1671,8 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.30.0</strong> — Sinkronisasi GitHub sekarang sepenuhnya otomatis: popup konfirmasi "Data GitHub lebih sedikit..." dihapus. Kalau data HP lebih banyak/baru, otomatis langsung upload ke GitHub tanpa perlu klik apapun.</li>
+        <li><strong>v1.29.4</strong> — Tambah parameter resmi <code>?default=false</code> ke semua URL cover Open Library, supaya cover yang tidak ada memicu 404 asli (fallback "tidak ditemukan" jadi lebih pasti muncul, bukan cuma andalkan deteksi ukuran gambar).</li>
         <li><strong>v1.29.3</strong> — Perbaikan bug: kotak cover kosong/putih polos muncul di preview form, modal detail, dan kartu list saat Open Library mengirim gambar placeholder 1x1px alih-alih error 404. Sekarang terdeteksi otomatis dan ditampilkan sebagai fallback "📘 tidak ditemukan" di ketiga tempat tersebut.</li>
         <li><strong>v1.29.2</strong> — Perbaikan bug: pratinjau cover tidak muncul sama sekali kalau ISBN diisi lewat tombol 📷 Scan (barcode). Sekarang cover preview jalan baik lewat ketik manual maupun scan.</li>
         <li><strong>v1.29.1</strong> — Pratinjau cover di form Tambah Buku sekarang kasih keterangan "📘 Cover tidak ditemukan" kalau gambar gagal dimuat, bukan sekadar hilang diam-diam.</li>
@@ -1929,7 +1931,7 @@
 
         // Cover thumbnail dari Open Library (gratis, tanpa simpan lokal), dibangun via concatenation string
         const coverUrlRow = b.isbn
-          ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-M.jpg"
+          ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-M.jpg?default=false"
           : "";
         const fallbackId = "coverFallbackRow_" + b.id;
         const onErrorJsRow = "this.parentNode.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; }";
@@ -2429,7 +2431,7 @@
     // ---------- Cover foto otomatis dari Open Library (gratis, tanpa API key, tanpa simpan lokal) ----------
     // Dibangun via concatenation string (bukan nested backtick) untuk menghindari syntax error.
     const coverUrl = book.isbn
-      ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(book.isbn) + "-M.jpg"
+      ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(book.isbn) + "-M.jpg?default=false"
       : "";
 
     const onErrorJs = "this.parentNode.style.display='none'; var fb=document.getElementById('coverFallbackBox'); if(fb){ fb.style.display='flex'; }";
@@ -2801,18 +2803,11 @@
       const content = b64DecodeUnicode(data.content.replace(/\n/g, ""));
       const remoteBooks = JSON.parse(content);
       if(Array.isArray(remoteBooks)){
-        // Pengaman: jangan diam-diam menimpa data HP kalau versi GitHub kosong/lebih sedikit
+        // Otomatis: kalau data HP lebih banyak/baru, langsung upload ke GitHub tanpa tanya.
+        // Kalau data GitHub sama banyak atau lebih banyak, langsung pakai data GitHub (sync turun).
         if(remoteBooks.length < books.length){
-          const proceed = confirm(
-            "⚠️ Data di GitHub (" + remoteBooks.length + " buku) lebih sedikit dari data di HP ini (" +
-            books.length + " buku).\n\n" +
-            "Klik OK untuk UPLOAD data HP ke GitHub (disarankan, aman).\n" +
-            "Klik Cancel untuk mengambil data GitHub apa adanya (data HP yang lebih baru bisa hilang)."
-          );
-          if(proceed){
-            await pushToGithub();
-            return;
-          }
+          await pushToGithub();
+          return;
         }
         books = remoteBooks;
         saveBooks();
@@ -2922,7 +2917,7 @@
       wrap.style.display = "block";
       fallback.style.display = "none";
     };
-    img.src = "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-M.jpg";
+    img.src = "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-M.jpg?default=false";
   }
 
   function resetForm(){
