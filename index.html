@@ -1616,17 +1616,21 @@
 
       <label class="field-label">Kategori</label>
       <select id="kategori">
-        <option value="Fiksi">Fiksi</option>
-        <option value="Non-Fiksi">Non-Fiksi</option>
-        <option value="Sains">Sains</option>
-        <option value="Teknologi">Teknologi</option>
-        <option value="Sejarah">Sejarah</option>
-        <option value="Biografi">Biografi</option>
-        <option value="Agama & Spiritual">Agama & Spiritual</option>
-        <option value="Bisnis & Ekonomi">Bisnis & Ekonomi</option>
-        <option value="Anak-anak">Anak-anak</option>
-        <option value="Komik & Grafis">Komik & Grafis</option>
-        <option value="Lainnya">Lainnya</option>
+        <option value="Sejarah & Historiografi">Sejarah & Historiografi</option>
+        <option value="Sosiologi & Ilmu Sosial">Sosiologi & Ilmu Sosial</option>
+        <option value="Politik & Hubungan Internasional">Politik & Hubungan Internasional</option>
+        <option value="Filsafat & Logika">Filsafat & Logika</option>
+        <option value="Agama & Pemikiran Islam">Agama & Pemikiran Islam</option>
+        <option value="Ekonomi & Teori Pembangunan">Ekonomi & Teori Pembangunan</option>
+        <option value="Bisnis, Manajemen & Keuangan">Bisnis, Manajemen & Keuangan</option>
+        <option value="Sains, Matematika & Alam">Sains, Matematika & Alam</option>
+        <option value="Teknologi, Komputer & Coding">Teknologi, Komputer & Coding</option>
+        <option value="Kesehatan, Kedokteran & Psikologi">Kesehatan, Kedokteran & Psikologi</option>
+        <option value="Sastra, Novel & Puisi">Sastra, Novel & Puisi</option>
+        <option value="Komik, Manga & Novel Grafis">Komik, Manga & Novel Grafis</option>
+        <option value="Biografi, Otobiografi & Memoar">Biografi, Otobiografi & Memoar</option>
+        <option value="Pengembangan Diri & Edukasi">Pengembangan Diri & Edukasi</option>
+        <option value="Lainnya / Serba-Serbi">Lainnya / Serba-Serbi</option>
       </select>
 
       <label class="field-label">Jenis Buku</label>
@@ -1740,7 +1744,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.32.2</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.33.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1750,6 +1754,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.33.0</strong> — Auto-Sync GitHub disempurnakan: token baru dari URL otomatis membersihkan config lama yang expired; <code>saveBooks()</code> kini otomatis push ke GitHub setiap tambah/edit/hapus buku (pemanggilan manual yang duplikat dihapus). Daftar kategori dirombak total jadi 15 kategori akademis baru (Sejarah & Historiografi, Sosiologi & Ilmu Sosial, Politik & HI, Filsafat & Logika, Agama & Pemikiran Islam, Ekonomi & Teori Pembangunan, Bisnis/Manajemen/Keuangan, Sains/Matematika/Alam, Teknologi/Komputer/Coding, Kesehatan/Kedokteran/Psikologi, Sastra/Novel/Puisi, Komik/Manga/Novel Grafis, Biografi/Otobiografi/Memoar, Pengembangan Diri & Edukasi, Lainnya/Serba-Serbi) — deteksi otomatis dari Google Books juga disesuaikan.</li>
         <li><strong>v1.32.2</strong> — Orientasi layar dibedakan per ukuran perangkat: HP (lebar &lt;900px) otomatis dikunci portrait, tablet & desktop tetap bebas rotasi ke landscape. Hanya aktif saat PWA dibuka sebagai app terinstall.</li>
         <li><strong>v1.32.1</strong> — Lebar halaman desktop diperlebar dari 1080px jadi 1600px, tidak lagi terasa sempit di layar besar. Label tab mobile "🏠 Dasbor" diganti jadi "🏠 Koleksi Buku".</li>
         <li><strong>v1.32.0</strong> — Filter Jenis Buku/Kategori/Penerbit diganti jadi dropdown (select) — muat berapa pun jumlah kategori/penerbit tanpa pernah memanjang ke bawah. Lebih ringkas & profesional, konsisten di mobile maupun desktop.</li>
@@ -1946,6 +1951,11 @@
   }
   function saveBooks(){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+    // Auto-sync: setiap kali data buku berubah (tambah/edit/hapus), langsung
+    // push ke GitHub di latar belakang kalau config & token sudah aktif.
+    if(ghConfig && ghConfig.token && ghConfig.repo){
+      pushToGithub();
+    }
   }
 
   // ---------- Status toggle visuals ----------
@@ -1981,7 +1991,7 @@
              (b.penerbit||"").toLowerCase().includes(query) ||
              (b.peminjam||"").toLowerCase().includes(query);
       const matchCategory = activeCategoryFilter === "Semua" ||
-             (b.kategori || "Lainnya") === activeCategoryFilter;
+             (b.kategori || "Lainnya / Serba-Serbi") === activeCategoryFilter;
       const bookStatus = b.status || "belum";
       const matchStatus = activeStatusFilter === "semua" || bookStatus === activeStatusFilter;
       const bookType = b.jenisBuku === "digital" ? "digital" : "cetak";
@@ -2039,7 +2049,7 @@
           <td class="title-cell" data-label="Judul">${isDipinjam ? "👤 " : ""}${escapeHtml(b.judul || "-")}</td>
           <td data-label="Penulis">${escapeHtml(b.penulis || "-")}</td>
           <td data-label="Kategori">
-            <span class="cat-chip">${escapeHtml(b.kategori || "Lainnya")}</span>
+            <span class="cat-chip">${escapeHtml(b.kategori || "Lainnya / Serba-Serbi")}</span>
             <span class="cat-chip type-chip">${b.jenisBuku === "digital" ? "💻 Digital" : "📘 Cetak"}</span>
           </td>
           <td data-label="Status">${renderStatusChip(b)}</td>
@@ -2134,7 +2144,7 @@
   function renderCategoryFilters(){
     const counts = {};
     books.forEach(b=>{
-      const cat = b.kategori || "Lainnya";
+      const cat = b.kategori || "Lainnya / Serba-Serbi";
       counts[cat] = (counts[cat] || 0) + 1;
     });
 
@@ -2311,7 +2321,6 @@
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
         renderTable();
-        if(ghConfig) pushToGithub();
         showToast("Data buku sudah berhasil dihapus.", "delete");
       });
       return;
@@ -2535,7 +2544,7 @@
     // Pill badge kategori & jenis buku (dekoratif, ringkasan visual di atas — field asli untuk edit tetap di bawah, tidak diubah)
     const pillRowHtml =
       '<div class="detail-pill-row">' +
-        '<span class="pill-badge">' + escapeHtml(book.kategori || "Lainnya") + '</span>' +
+        '<span class="pill-badge">' + escapeHtml(book.kategori || "Lainnya / Serba-Serbi") + '</span>' +
         '<span class="pill-badge pill-badge-type">' + (book.jenisBuku === "digital" ? "💻 Digital" : "📘 Cetak") + '</span>' +
       '</div>';
 
@@ -2563,17 +2572,21 @@
         <div>
           <label class="field-label" style="margin-top:0;">Kategori</label>
           <select class="detail-input" id="modalKategori" disabled>
-            <option value="Fiksi">Fiksi</option>
-            <option value="Non-Fiksi">Non-Fiksi</option>
-            <option value="Sains">Sains</option>
-            <option value="Teknologi">Teknologi</option>
-            <option value="Sejarah">Sejarah</option>
-            <option value="Biografi">Biografi</option>
-            <option value="Agama & Spiritual">Agama & Spiritual</option>
-            <option value="Bisnis & Ekonomi">Bisnis & Ekonomi</option>
-            <option value="Anak-anak">Anak-anak</option>
-            <option value="Komik & Grafis">Komik & Grafis</option>
-            <option value="Lainnya">Lainnya</option>
+            <option value="Sejarah & Historiografi">Sejarah & Historiografi</option>
+            <option value="Sosiologi & Ilmu Sosial">Sosiologi & Ilmu Sosial</option>
+            <option value="Politik & Hubungan Internasional">Politik & Hubungan Internasional</option>
+            <option value="Filsafat & Logika">Filsafat & Logika</option>
+            <option value="Agama & Pemikiran Islam">Agama & Pemikiran Islam</option>
+            <option value="Ekonomi & Teori Pembangunan">Ekonomi & Teori Pembangunan</option>
+            <option value="Bisnis, Manajemen & Keuangan">Bisnis, Manajemen & Keuangan</option>
+            <option value="Sains, Matematika & Alam">Sains, Matematika & Alam</option>
+            <option value="Teknologi, Komputer & Coding">Teknologi, Komputer & Coding</option>
+            <option value="Kesehatan, Kedokteran & Psikologi">Kesehatan, Kedokteran & Psikologi</option>
+            <option value="Sastra, Novel & Puisi">Sastra, Novel & Puisi</option>
+            <option value="Komik, Manga & Novel Grafis">Komik, Manga & Novel Grafis</option>
+            <option value="Biografi, Otobiografi & Memoar">Biografi, Otobiografi & Memoar</option>
+            <option value="Pengembangan Diri & Edukasi">Pengembangan Diri & Edukasi</option>
+            <option value="Lainnya / Serba-Serbi">Lainnya / Serba-Serbi</option>
           </select>
         </div>
         <div>
@@ -2642,7 +2655,6 @@
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
         renderTable();
-        if(ghConfig) pushToGithub();
         closeDetailModal();
         alert("✅ Buku berhasil dihapus!");
       }
@@ -2715,7 +2727,6 @@
         books = books.filter(b => String(b.id) !== String(book.id));
         saveBooks();
         renderTable();
-        if(ghConfig) pushToGithub();
         closeDetailModal();
         alert("✅ Buku berhasil dihapus!");
       }
@@ -2766,7 +2777,6 @@
       books[idx] = Object.assign({}, books[idx], updatedData);
       saveBooks();
       renderTable();
-      if(ghConfig) pushToGithub();
       alert("✅ Buku \"" + judul + "\" berhasil diperbarui!");
       closeDetailModal();
     }
@@ -3072,7 +3082,7 @@
     isbnInput.value = "";
     judulInput.value = "";
     penulisInput.value = "";
-    kategoriSelect.value = "Fiksi";
+    kategoriSelect.value = "Lainnya / Serba-Serbi";
     jenisBukuSelect.value = "cetak";
     tahunTerbitInput.value = "";
     jumlahHalamanInput.value = "";
@@ -3137,7 +3147,6 @@
       renderTable();
       resetForm();
       setMobileView("dashboard");
-      if(ghConfig) pushToGithub();
       showToast(`Buku "${judul}" berhasil diperbarui.`, "success");
     } else {
       books.push({
@@ -3149,7 +3158,6 @@
       renderTable();
       resetForm();
       setMobileView("dashboard");
-      if(ghConfig) pushToGithub();
       showToast(`Buku "${judul}" berhasil disimpan.`, "success");
     }
   });
@@ -3190,16 +3198,20 @@
     if(!categories || categories.length === 0) return null;
     const text = categories.join(" | ").toLowerCase();
     const map = [
-      ["Sains", ["science","physics","biology","chemistry","astronomy","mathematics","math","geology","medical","medicine","psychology","sains","fisika","biologi","kimia","astronomi","matematika","kedokteran","psikologi","kesehatan","geologi","ilmu alam","ilmu pengetahuan","farmasi","gizi","lingkungan"]],
-      ["Teknologi", ["technology","computer","programming","engineering","software","internet","digital","teknologi","komputer","pemrograman","teknik","informatika","elektronik","robotik","otomotif","mesin","jaringan","perangkat lunak"]],
-      ["Sejarah", ["history","historical","sejarah","sejarawan","peradaban","kolonial","penjajahan","kemerdekaan","kerajaan","perang dunia"]],
-      ["Biografi", ["biography","autobiography","memoir","biografi","memoar","otobiografi","kisah hidup","riwayat hidup","perjalanan hidup","tokoh"]],
-      ["Agama & Spiritual", ["religion","spiritual","islam","christian","buddhis","buddhism","hindu","catholic","bible","quran","qur'an","prayer","faith","agama","islami","kristen","katolik","budha","hindu","alquran","al-quran","doa","dakwah","tasawuf","akhlak","fikih","fiqih","hadits","tafsir","ibadah","spiritualitas","rohani","religius","ustadz","ulama"]],
-      ["Bisnis & Ekonomi", ["business","economics","finance","management","marketing","entrepreneurship","investment","bisnis","ekonomi","keuangan","manajemen","pemasaran","kewirausahaan","investasi","wirausaha","akuntansi","perbankan","perdagangan","usaha","startup","keuangan pribadi"]],
-      ["Anak-anak", ["juvenile","children","kids","picture book","anak-anak","balita","dongeng","cerita anak","pendidikan anak","buku bergambar","remaja","anak sekolah"]],
-      ["Komik & Grafis", ["comic","graphic novel","manga","cartoon","komik","kartun","manga","ilustrasi","novel grafis"]],
-      ["Fiksi", ["fiction","fantasy","novel","romance","thriller","mystery","adventure","drama","science fiction","horror","fiksi","cerita","roman","novel","misteri","petualangan","percintaan","horor","fantasi","cerpen","sastra","kisah fiktif"]],
-      ["Non-Fiksi", ["nonfiction","non-fiction","self-help","essay","reference","nonfiksi","non-fiksi","esai","motivasi","pengembangan diri","referensi","panduan","tips","inspirasi","psikologi populer"]]
+      ["Sejarah & Historiografi", ["history","historical","historiography","sejarah","sejarawan","historiografi","peradaban","kolonial","penjajahan","kemerdekaan","kerajaan","perang dunia"]],
+      ["Sosiologi & Ilmu Sosial", ["sociology","social science","anthropology","culture","society","sosiologi","antropologi","budaya","masyarakat","ilmu sosial"]],
+      ["Politik & Hubungan Internasional", ["politics","political","government","international relations","diplomacy","geopolitics","politik","pemerintahan","hubungan internasional","diplomasi","geopolitik","kenegaraan"]],
+      ["Filsafat & Logika", ["philosophy","logic","ethics","metaphysics","epistemology","filsafat","logika","etika","metafisika"]],
+      ["Agama & Pemikiran Islam", ["religion","spiritual","islam","islamic","christian","buddhis","buddhism","hindu","catholic","bible","quran","qur'an","prayer","faith","agama","islami","kristen","katolik","budha","alquran","al-quran","doa","dakwah","tasawuf","akhlak","fikih","fiqih","hadits","tafsir","ibadah","spiritualitas","rohani","religius","ustadz","ulama","pemikiran islam"]],
+      ["Ekonomi & Teori Pembangunan", ["economics","economy","development economics","macroeconomics","microeconomics","ekonomi","pembangunan","makroekonomi","mikroekonomi","teori ekonomi"]],
+      ["Bisnis, Manajemen & Keuangan", ["business","finance","management","marketing","entrepreneurship","investment","bisnis","keuangan","manajemen","pemasaran","kewirausahaan","investasi","wirausaha","akuntansi","perbankan","perdagangan","usaha","startup"]],
+      ["Sains, Matematika & Alam", ["science","physics","biology","chemistry","astronomy","mathematics","math","geology","nature","environment","sains","fisika","biologi","kimia","astronomi","matematika","geologi","ilmu alam","ilmu pengetahuan","lingkungan"]],
+      ["Teknologi, Komputer & Coding", ["technology","computer","programming","coding","engineering","software","internet","digital","teknologi","komputer","pemrograman","koding","teknik","informatika","elektronik","robotik","jaringan","perangkat lunak"]],
+      ["Kesehatan, Kedokteran & Psikologi", ["medical","medicine","health","psychology","psychiatry","kedokteran","kesehatan","psikologi","farmasi","gizi","kejiwaan"]],
+      ["Sastra, Novel & Puisi", ["fiction","fantasy","novel","romance","thriller","mystery","adventure","drama","science fiction","horror","poetry","literature","fiksi","cerita","roman","misteri","petualangan","percintaan","horor","fantasi","cerpen","sastra","puisi","kisah fiktif"]],
+      ["Komik, Manga & Novel Grafis", ["comic","graphic novel","manga","cartoon","komik","kartun","ilustrasi","novel grafis"]],
+      ["Biografi, Otobiografi & Memoar", ["biography","autobiography","memoir","biografi","memoar","otobiografi","kisah hidup","riwayat hidup","perjalanan hidup","tokoh"]],
+      ["Pengembangan Diri & Edukasi", ["self-help","essay","reference","education","juvenile","children","kids","nonfiction","non-fiction","pengembangan diri","esai","motivasi","referensi","panduan","tips","inspirasi","edukasi","pendidikan","anak-anak","balita","dongeng","cerita anak","pendidikan anak","remaja"]]
     ];
     for(const [label, keywords] of map){
       if(keywords.some(k => text.includes(k))) return label;
@@ -3248,7 +3260,7 @@
             penulisInput.value = info.authors.join(", ");
           }
           const guessed = guessCategoryFromGoogleBooks(info.categories);
-          kategoriSelect.value = guessed || "Lainnya";
+          kategoriSelect.value = guessed || "Lainnya / Serba-Serbi";
 
           if(info.publishedDate && !tahunTerbitInput.value.trim()){
             const yearMatch = String(info.publishedDate).match(/\d{4}/);
@@ -3470,6 +3482,10 @@
     const tokenFromUrl = urlParams.get("token");
     
     if(tokenFromUrl){
+      // Hapus config GitHub lama supaya sisa token expired tidak nyangkut,
+      // langsung diganti token baru yang aktif.
+      localStorage.removeItem(GH_CONFIG_KEY);
+
       // Simpan token ke localStorage
       localStorage.setItem("maktabah_github_token", tokenFromUrl);
       
