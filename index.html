@@ -1842,8 +1842,9 @@
       lendingFieldsEl.style.display = statusVal === 'dipinjam' ? "block" : "none";
     }
 
-    // ENABLE semua field untuk edit
-    setFormFieldsDisabled(false);
+    // PENTING: Disable field hanya saat edit mode DETAIL buku
+    // (field masuk dalam kondisi disabled untuk mode "detail baca")
+    setFormFieldsDisabled(true);  // ← Field dimulai DISABLED (mode detail)
 
     // Save form state untuk deteksi perubahan
     saveFormState();
@@ -1861,9 +1862,24 @@
       deleteRowContainer.style.display = "block";
     }
 
-    setLookupStatus("Mode edit: ubah data lalu klik \"Update Buku\".", "");
+    setLookupStatus("Mode detail: klik 'Update Buku' untuk edit.", "");
     setMobileView("tambah");
     judulInput.closest(".card").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // ---------- Fungsi untuk enable field ketika user klik "Update Buku" di detail mode ----------
+  function enableEditMode(){
+    setFormFieldsDisabled(false);  // ENABLE semua field
+    saveFormState();  // Save state terbaru
+    updateSaveButtonState();  // Update tombol simpan
+    setLookupStatus("Mode edit: ubah data lalu klik 'Update Buku'.", "");
+  }
+
+  // Setup event listener untuk tombol "Update Buku" (di form, akan dibuat saat dibutuhkan)
+  function setupUpdateBookButton(){
+    // Tombol ini adalah saveBtn yang di-trigger setelah startEditBook
+    // Tambahkan listener untuk deteksi ketika form pertama kali di-load
+    // Akan ditangani via modal button click
   }
 
   function exitEditMode(){
@@ -2071,6 +2087,8 @@
     document.getElementById("detailEditBtn").addEventListener("click", ()=>{
       closeDetailModal();
       startEditBook(id);
+      // Segera enable field agar user bisa edit langsung
+      setTimeout(() => enableEditMode(), 100);
     });
 
     document.getElementById("detailDeleteBtn").addEventListener("click", ()=>{
@@ -2660,8 +2678,8 @@
   renderTable();
   loadGhConfig();
   
-  // Disable semua field input di awal (default mode: DETAIL, tidak edit)
-  setFormFieldsDisabled(true);
+  // JANGAN disable field di awal - hanya disable saat edit mode dimulai
+  // setFormFieldsDisabled(true);  // ← DIHAPUS, tidak boleh disable semua di awal!
   
   if(ghConfig && ghConfig.token && ghConfig.repo){
     fetchFromGithub();
