@@ -195,6 +195,26 @@
     object-fit:cover;
     display:block;
   }
+  .cover-preview-fallback{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    width:100px;
+    height:145px;
+    border-radius:8px;
+    background: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    justify-content:center;
+  }
+  .cover-preview-fallback-icon{ font-size:1.8rem; }
+  .cover-preview-fallback-text{
+    font-size: 0.68rem;
+    font-weight:700;
+    color: var(--slate-500);
+    text-align:center;
+    padding: 0 6px;
+  }
   .cover-preview-caption{
     font-size: 0.72rem;
     color: var(--slate-500);
@@ -1505,6 +1525,10 @@
         <div class="cover-preview-wrap" id="coverPreviewWrap">
           <img id="coverPreviewImg" alt="Pratinjau sampul buku">
         </div>
+        <div class="cover-preview-fallback" id="coverPreviewFallback" style="display:none;">
+          <span class="cover-preview-fallback-icon">📘</span>
+          <span class="cover-preview-fallback-text">Cover tidak ditemukan</span>
+        </div>
         <div class="cover-preview-caption">Pratinjau sampul otomatis dari Open Library</div>
       </div>
 
@@ -1637,7 +1661,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.28.1</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.29.1</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1647,7 +1671,8 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
-        <li><strong>v1.28.1</strong> — Perbaikan bug Auto-Sync: <code>checkTokenFromURL()</code> sekarang menghapus konfigurasi GitHub lama (<code>github_sync_config_v1</code>) & memanggil ulang <code>loadGhConfig()</code> saat token baru masuk lewat URL, supaya token baru tidak lagi kalah prioritas dari config lama yang tersangkut di LocalStorage.</li>
+        <li><strong>v1.29.1</strong> — Pratinjau cover di form Tambah Buku sekarang kasih keterangan "📘 Cover tidak ditemukan" kalau gambar gagal dimuat, bukan sekadar hilang diam-diam.</li>
+        <li><strong>v1.29.0</strong> — Pratinjau cover otomatis saat mengisi form Tambah Buku: begitu ISBN valid diketik, sampul langsung tampil di atas form (sebelum buku disimpan).</li>
         <li><strong>v1.28.0</strong> — Penyesuaian tampilan desktop: cover foto otomatis kini juga tampil di tabel desktop (thumbnail kecil di kolom pertama). Panel filter (Status/Jenis/Kategori/Penerbit) dirombak jadi panel elegan dengan latar & border rapi, disusun 3 kolom sejajar, lengkap ikon di tiap label — menggantikan tampilan drawer polos sebelumnya.</li>
         <li><strong>v1.27.0</strong> — Tambah <strong>pagination</strong>: daftar koleksi dibatasi 20 buku per halaman dengan tombol "Sebelumnya"/"Selanjutnya" di bawah list. Mencegah dasbor memanjang tak terbatas kalau koleksi sudah ratusan buku. Halaman otomatis kembali ke 1 setiap ganti filter/pencarian.</li>
         <li><strong>v1.26.0</strong> — Kartu buku di list (mobile) dirombak jadi lebih ringkas ala "rak buku": tampilkan cover foto otomatis + Judul + Penulis + Kategori/Jenis + Status saja. Detail teknis (ISBN, Tahun, Rak, Penerbit, Progress) dipindah sepenuhnya ke tombol "👁️ Detail" agar kartu tidak terlalu padat.</li>
@@ -1805,7 +1830,6 @@
   const EMBEDDED_GOOGLE_BOOKS_KEY = "AIzaSyCHHb6v2Jnv7O5w8eCi6vKtEVBzK1SWVos";
 
   const GH_CONFIG_KEY = "github_sync_config_v1";
-  const PENDING_PUSH_KEY = "maktabah_pending_push_v1"; // penanda: ada perubahan lokal yang belum sukses ter-push ke GitHub
   let ghConfig = null;
 
   // ⚠️ PERHATIAN KEAMANAN ⚠️
@@ -1831,18 +1855,8 @@
       books = [];
     }
   }
-  function saveBooks(pushToCloud){
-    if(pushToCloud === undefined) pushToCloud = true;
+  function saveBooks(){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
-    // Auto-Sync: setiap perubahan data lokal (tambah/edit/hapus) langsung
-    // dipicu ke GitHub secara instan, selama konfigurasi GitHub aktif.
-    if(pushToCloud && ghConfig && ghConfig.token && ghConfig.repo){
-      // Tandai dulu: ada perubahan lokal yang BELUM tentu sukses ter-push.
-      // Penanda ini mencegah fetch/pull (termasuk saat reload halaman)
-      // menimpa data lokal yang baru ini dengan versi GitHub yang masih basi.
-      localStorage.setItem(PENDING_PUSH_KEY, "1");
-      pushToGithub();
-    }
   }
 
   // ---------- Status toggle visuals ----------
@@ -2211,6 +2225,7 @@
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
         renderTable();
+        if(ghConfig) pushToGithub();
         showToast("Data buku sudah berhasil dihapus.", "delete");
       });
       return;
@@ -2540,6 +2555,7 @@
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
         renderTable();
+        if(ghConfig) pushToGithub();
         closeDetailModal();
         alert("✅ Buku berhasil dihapus!");
       }
@@ -2612,6 +2628,7 @@
         books = books.filter(b => String(b.id) !== String(book.id));
         saveBooks();
         renderTable();
+        if(ghConfig) pushToGithub();
         closeDetailModal();
         alert("✅ Buku berhasil dihapus!");
       }
@@ -2662,6 +2679,7 @@
       books[idx] = Object.assign({}, books[idx], updatedData);
       saveBooks();
       renderTable();
+      if(ghConfig) pushToGithub();
       alert("✅ Buku \"" + judul + "\" berhasil diperbarui!");
       closeDetailModal();
     }
@@ -2761,17 +2779,6 @@
   }
 
   async function fetchFromGithub(){
-    // Kalau ada perubahan lokal yang belum sukses ter-push (misalnya push kemarin
-    // gagal/terputus), utamakan push dulu supaya data lokal tidak ditimpa oleh
-    // versi GitHub yang masih basi/lama.
-    if(localStorage.getItem(PENDING_PUSH_KEY) === "1"){
-      await pushToGithub();
-      if(localStorage.getItem(PENDING_PUSH_KEY) === "1"){
-        // Push masih gagal (mis. offline) -> jangan tarik data GitHub sama sekali,
-        // supaya perubahan lokal yang belum aman ini tidak hilang.
-        return;
-      }
-    }
     setSyncStatus("Mengambil data dari GitHub...", "loading");
     try{
       const res = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}`, { headers: ghHeaders() });
@@ -2788,10 +2795,21 @@
       const content = b64DecodeUnicode(data.content.replace(/\n/g, ""));
       const remoteBooks = JSON.parse(content);
       if(Array.isArray(remoteBooks)){
-        // Auto-Sync penuh: data dari GitHub langsung dipakai apa adanya, tanpa
-        // dialog konfirmasi lagi, supaya sinkronisasi antar-device terasa mulus.
+        // Pengaman: jangan diam-diam menimpa data HP kalau versi GitHub kosong/lebih sedikit
+        if(remoteBooks.length < books.length){
+          const proceed = confirm(
+            "⚠️ Data di GitHub (" + remoteBooks.length + " buku) lebih sedikit dari data di HP ini (" +
+            books.length + " buku).\n\n" +
+            "Klik OK untuk UPLOAD data HP ke GitHub (disarankan, aman).\n" +
+            "Klik Cancel untuk mengambil data GitHub apa adanya (data HP yang lebih baru bisa hilang)."
+          );
+          if(proceed){
+            await pushToGithub();
+            return;
+          }
+        }
         books = remoteBooks;
-        saveBooks(false); // data ini baru ditarik dari GitHub, jangan push balik (hindari round-trip sia-sia)
+        saveBooks();
         renderTable();
       }
       ghConfig.sha = data.sha;
@@ -2801,69 +2819,6 @@
       setSyncStatus("Gagal mengambil data: " + err.message, "err");
     }
   }
-
-  // ---------- Auto-Sync latar belakang: cek perubahan dari perangkat lain ----------
-  // Dipanggil secara berkala + saat tab kembali aktif. Diam-diam (tanpa alert/confirm)
-  // supaya tidak mengganggu; kalau memang ada perubahan mencurigakan (data berkurang
-  // banyak) atau user sedang mengetik di form/modal, polling ini melewati (skip) saja
-  // demi keamanan data, tidak pernah menimpa paksa.
-  let isSilentPulling = false;
-  async function silentPullIfChanged(){
-    if(!ghConfig || !ghConfig.token || !ghConfig.repo) return;
-    if(isSilentPulling) return; // cegah tumpang tindih kalau dipanggil beruntun
-    // Jangan ganggu kalau user sedang aktif mengedit (form tambah/edit atau modal detail terbuka)
-    if(editingBookId) return;
-    if(detailModalOverlay && detailModalOverlay.classList.contains("open")) return;
-    // Ada perubahan lokal yang belum sukses ter-push -> coba push dulu, jangan pull
-    // (mencegah data lokal yang baru saja diubah ditimpa versi GitHub yang masih basi).
-    if(localStorage.getItem(PENDING_PUSH_KEY) === "1"){
-      await pushToGithub();
-      return;
-    }
-
-    isSilentPulling = true;
-    try{
-      const res = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}`, { headers: ghHeaders() });
-      if(!res.ok) return; // diam saja kalau gagal (jangan ganggu user dengan error polling background)
-
-      const data = await res.json();
-      if(data.sha === ghConfig.sha) return; // tidak ada perubahan baru di GitHub
-
-      const content = b64DecodeUnicode(data.content.replace(/\n/g, ""));
-      const remoteBooks = JSON.parse(content);
-      if(!Array.isArray(remoteBooks)) return;
-
-      books = remoteBooks;
-      saveBooks(false); // data dari remote, jangan push balik
-      renderTable();
-      ghConfig.sha = data.sha;
-      saveGhConfig(ghConfig);
-      setSyncStatus("🔄 Diperbarui otomatis dari perangkat lain — " + new Date().toLocaleTimeString('id-ID'), "ok");
-      showToast("📚 Koleksi diperbarui dari perangkat lain", "success");
-    }catch(err){
-      // diam - jangan ganggu user dengan error polling background
-    }finally{
-      isSilentPulling = false;
-    }
-  }
-
-  let ghPollTimer = null;
-  function startGhAutoPoll(){
-    if(ghPollTimer) clearInterval(ghPollTimer);
-    ghPollTimer = setInterval(()=>{
-      if(document.visibilityState === "visible"){
-        silentPullIfChanged();
-      }
-    }, 45000); // cek tiap 45 detik selagi tab aktif/terlihat
-  }
-
-  // Saat user kembali ke tab ini (buka lagi dari app lain / minimize), langsung cek
-  document.addEventListener("visibilitychange", ()=>{
-    if(document.visibilityState === "visible"){
-      silentPullIfChanged();
-    }
-  });
-  window.addEventListener("focus", silentPullIfChanged);
 
   async function pushToGithub(){
     if(!ghConfig || !ghConfig.token || !ghConfig.repo) return;
@@ -2904,11 +2859,8 @@
       const data = await res.json();
       ghConfig.sha = data.content.sha;
       saveGhConfig(ghConfig);
-      localStorage.removeItem(PENDING_PUSH_KEY); // berhasil ter-push, tidak ada lagi perubahan lokal yang menggantung
       setSyncStatus("✔ Tersinkron — " + new Date().toLocaleTimeString('id-ID'), "ok");
     }catch(err){
-      // Gagal push -> flag PENDING_PUSH_KEY sengaja DIBIARKAN menyala,
-      // supaya fetch/pull berikutnya tahu ada perubahan lokal yang belum aman ditimpa.
       setSyncStatus("Gagal menyinkronkan: " + err.message, "err");
     }
   }
@@ -2934,6 +2886,31 @@
   }
 
   // ---------- Save new book ----------
+  function updateCoverPreview(isbn){
+    const row = document.getElementById("coverPreviewRow");
+    const img = document.getElementById("coverPreviewImg");
+    const wrap = document.getElementById("coverPreviewWrap");
+    const fallback = document.getElementById("coverPreviewFallback");
+    if(!row || !img || !wrap || !fallback) return;
+    if(!isbn){
+      row.style.display = "none";
+      img.removeAttribute("src");
+      return;
+    }
+    row.style.display = "flex";
+    wrap.style.display = "none";
+    fallback.style.display = "none";
+    img.onerror = function(){
+      wrap.style.display = "none";
+      fallback.style.display = "flex";
+    };
+    img.onload = function(){
+      wrap.style.display = "block";
+      fallback.style.display = "none";
+    };
+    img.src = "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-M.jpg";
+  }
+
   function resetForm(){
     isbnInput.value = "";
     judulInput.value = "";
@@ -2947,6 +2924,7 @@
     halamanTerakhirInput.value = "";
     peminjamInput.value = "";
     tanggalPinjamInput.value = "";
+    updateCoverPreview("");
     document.querySelector('input[value="belum"]').checked = true;
     labelBelum.classList.add("checked");
     labelSelesai.classList.remove("checked");
@@ -3002,6 +2980,7 @@
       renderTable();
       resetForm();
       setMobileView("dashboard");
+      if(ghConfig) pushToGithub();
       showToast(`Buku "${judul}" berhasil diperbarui.`, "success");
     } else {
       books.push({
@@ -3013,6 +2992,7 @@
       renderTable();
       resetForm();
       setMobileView("dashboard");
+      if(ghConfig) pushToGithub();
       showToast(`Buku "${judul}" berhasil disimpan.`, "success");
     }
   });
@@ -3042,8 +3022,10 @@
     const val = isbnInput.value.trim();
     if(val.length < 10){
       setLookupStatus("", "");
+      updateCoverPreview("");
       return;
     }
+    updateCoverPreview(val);
     lookupDebounce = setTimeout(()=> lookupISBN(val), 500);
   });
 
@@ -3328,21 +3310,14 @@
   function checkTokenFromURL(){
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get("token");
-
+    
     if(tokenFromUrl){
-      // Simpan token baru ke localStorage
+      // Simpan token ke localStorage
       localStorage.setItem("maktabah_github_token", tokenFromUrl);
-
-      // Bersihkan konfigurasi lama yang mungkin "nyangkut" (token/repo/sha basi)
-      // agar tidak lagi diprioritaskan oleh loadGhConfig() dibanding token baru ini.
-      localStorage.removeItem("github_sync_config_v1");
-
-      // Muat ulang konfigurasi GitHub supaya ghConfig langsung terisi dari token baru
-      loadGhConfig();
-
+      
       // Bersihkan URL dari parameter token agar tidak terlihat di browser
       window.history.replaceState({}, document.title, window.location.pathname);
-
+      
       // Tampilkan notifikasi sukses
       showToast("✔ Token GitHub berhasil tersimpan di perangkat ini!", "success");
     }
@@ -3359,7 +3334,6 @@
   
   if(ghConfig && ghConfig.token && ghConfig.repo){
     fetchFromGithub();
-    startGhAutoPoll(); // Auto-Sync: cek perubahan dari perangkat lain tiap 45 detik + saat tab aktif kembali
   }
 
   // ---------- PWA: daftarkan service worker ----------
