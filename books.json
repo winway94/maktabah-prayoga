@@ -110,5 +110,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrgis3bm58qkl",
+    "createdAt": 1783783735762,
+    "isbn": "9786027888883",
+    "judul": "Steve Jobs by Walter Isaacson",
+    "penulis": "Walter Isaacson",
+    "kategori": "Biografi, Otobiografi & Memoar",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2011",
+    "jumlahHalaman": "728",
+    "lokasiRak": "Rak",
+    "penerbit": "Bentang pustaka",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
