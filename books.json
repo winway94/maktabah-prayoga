@@ -75,5 +75,22 @@
     "status": "selesai",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrgfdmr8knlsd",
+    "createdAt": 1783778022260,
+    "isbn": "9786025792403",
+    "judul": "Buku Madilog Tan Malaka: Materialisme, Dialektika & Logika",
+    "penulis": "Tan Malaka",
+    "kategori": "Filsafat & Logika",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2014",
+    "jumlahHalaman": "560",
+    "lokasiRak": "halawa office",
+    "penerbit": "Narasi",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
