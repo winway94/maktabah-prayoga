@@ -202,5 +202,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhnjafetw5h8",
+    "createdAt": 1783852189322,
+    "isbn": "9789799254177",
+    "judul": "Saatnya Dunia Berubah: Tangan Tuhan di Balik Virus Flu Burung",
+    "penulis": "Siti Fadilah Supari",
+    "kategori": "Kesehatan, Kedokteran & Psikologi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "",
+    "pemilik": "",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
