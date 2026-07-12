@@ -2041,7 +2041,6 @@
     <section class="card list-section">
       <div class="stat-cards-row" id="statCardsRow"></div>
       <div id="aiStatus" class="sync-status"></div>
-      <div id="aiResultBox" class="ai-result" style="display:none;"></div>
 
       <div class="carousel-section" id="readingSection" style="display:none;">
         <div class="carousel-section-header">
@@ -2105,9 +2104,18 @@
 
   <footer>
     <p>Data buku disimpan di browser (LocalStorage) & disinkron otomatis ke repo GitHub Anda. Ringkasan judul/penulis/kategori dikirim ke Gemini AI hanya saat Anda klik "Rekomendasi AI".</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.40.7</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.41.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
+
+  <!-- MODAL HASIL REKOMENDASI AI -->
+  <div class="modal-overlay" id="aiResultModalOverlay">
+    <div class="modal-card" id="aiResultModalCard">
+      <button class="modal-close" id="aiResultModalClose" aria-label="Tutup">✕</button>
+      <h3 class="changelog-modal-title">✨ Rekomendasi Buku AI</h3>
+      <div id="aiResultBox" class="ai-result"></div>
+    </div>
+  </div>
 
   <!-- MODAL RIWAYAT UPDATE -->
   <div class="modal-overlay" id="changelogModalOverlay">
@@ -2115,6 +2123,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.41.0</strong> — Hasil "Rekomendasi Buku AI" sekarang tampil sebagai **popup/modal** (bukan kotak yang nempel di halaman tanpa bisa ditutup lagi). Ada tombol ✕, bisa ditutup dengan klik di luar modal, atau tombol Escape — konsisten dengan modal Detail Buku & Riwayat Update.</li>
         <li><strong>v1.40.7</strong> — Fix akar masalah SESUNGGUHNYA kartu statistik tidak 2 kolom di HP tertentu (setelah investigasi mendalam bareng user, pakai tes pixel-precise berulang): teks panjang di kartu AI ("Ditenagai Gemini — klik untuk mulai") tidak bisa menyusut, memaksa <code>.main-grid</code> (grid utama halaman) melebar melebihi viewport. Ditambahkan <code>min-width:0</code> berlapis di 3 level (kartu individual, wrapper teks, dan grid item utama) — bug klasik CSS Grid yang memang butuh perbaikan bertingkat. Sudah diverifikasi ulang lewat pengukuran pixel-precise: kartu sekarang selalu muat rapi 2 kolom di layar sempit, tidak overflow.</li>
         <li><strong>v1.40.6</strong> — Fix presisi bottom nav mobile: tombol "Tambah" (FAB terangkat) sekarang diposisikan absolut benar-benar center (diverifikasi lewat pixel-check: selisih 0.5px dari tengah layar), tidak lagi mengandalkan distribusi flex yang jadi timpang sejak tombol "Beranda" dihapus.</li>
         <li><strong>v1.40.5</strong> — Tombol "Beranda" dihapus dari bottom nav mobile (redundan dengan "Rak Buku" yang sama-sama tampilan dasbor). Sisa 3 tombol: Cari, Tambah, Rak Buku — "Rak Buku" jadi status aktif default.</li>
@@ -3291,6 +3300,8 @@
   const openChangelogBtn = document.getElementById("openChangelogBtn");
   const changelogModalOverlay = document.getElementById("changelogModalOverlay");
   const changelogModalClose = document.getElementById("changelogModalClose");
+  const aiResultModalOverlay = document.getElementById("aiResultModalOverlay");
+  const aiResultModalClose = document.getElementById("aiResultModalClose");
 
   function openChangelogModal(){
     changelogModalOverlay.classList.add("open");
@@ -3298,17 +3309,25 @@
   function closeChangelogModal(){
     changelogModalOverlay.classList.remove("open");
   }
+  function closeAiResultModal(){
+    aiResultModalOverlay.classList.remove("open");
+  }
 
   openChangelogBtn.addEventListener("click", openChangelogModal);
   changelogModalClose.addEventListener("click", closeChangelogModal);
   changelogModalOverlay.addEventListener("click", (e)=>{
     if(e.target === changelogModalOverlay) closeChangelogModal();
   });
+  aiResultModalClose.addEventListener("click", closeAiResultModal);
+  aiResultModalOverlay.addEventListener("click", (e)=>{
+    if(e.target === aiResultModalOverlay) closeAiResultModal();
+  });
 
   document.addEventListener("keydown", (e)=>{
     if(e.key !== "Escape") return;
     if(detailModalOverlay.classList.contains("open")) closeDetailModal();
     if(changelogModalOverlay.classList.contains("open")) closeChangelogModal();
+    if(aiResultModalOverlay.classList.contains("open")) closeAiResultModal();
     if(confirmDeleteOverlay.classList.contains("open")) closeConfirmDelete(false);
     if(filterDrawer && filterDrawer.classList.contains("open")) closeFilterDrawer();
   });
@@ -3958,7 +3977,6 @@
     }
 
     if(aiBtn) aiBtn.disabled = true;
-    aiResultBox.style.display = "none";
     setAiStatus("Meminta rekomendasi dari Gemini...", "loading");
 
     try{
@@ -3994,7 +4012,7 @@
         : "Tidak ada respons dari model.";
 
       aiResultBox.textContent = responTeks;
-      aiResultBox.style.display = "block";
+      document.getElementById("aiResultModalOverlay").classList.add("open");
       setAiStatus("✔ Rekomendasi berhasil didapatkan.", "ok");
     }catch(err){
       setAiStatus("Gagal memanggil Gemini: " + err.message, "err");
