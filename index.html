@@ -110,6 +110,7 @@
     border-radius: 16px;
     padding: 22px;
     box-shadow: var(--shadow);
+    min-width:0;
     border: 1px solid var(--slate-200);
   }
   .card h2{
@@ -678,6 +679,8 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
     margin-bottom: 14px;
+    width:100%;
+    box-sizing:border-box;
   }
   @media (max-width: 640px){
     .stat-cards-row{ grid-template-columns: repeat(2, 1fr); }
@@ -689,9 +692,12 @@
     justify-content:center;
     flex-direction:row;
     gap:8px;
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
   }
   .stat-card.stat-card-ai:hover{ filter: brightness(0.92); }
-  .stat-card-ai-text{ display:flex; flex-direction:column; gap:1px; text-align:left; }
+  .stat-card-ai-text{ display:flex; flex-direction:column; gap:1px; text-align:left; min-width:0; }
   .stat-card-ai-label{
     color:white;
     font-size:0.85rem;
@@ -702,6 +708,7 @@
     color: rgba(255,255,255,0.85);
     font-size:0.7rem;
     font-weight:600;
+    overflow-wrap:break-word;
   }
   .stat-card.stat-card-ai:disabled{ opacity:0.7; cursor:not-allowed; }
   .stat-card{
@@ -714,6 +721,8 @@
     padding: 14px 16px;
     cursor:pointer;
     transition: border-color .12s, box-shadow .12s;
+    min-width:0;
+    overflow:hidden;
   }
   .stat-card:hover{ border-color: var(--brand-400); }
   .stat-card.active{
@@ -733,6 +742,7 @@
   .stat-card-icon.icon-dipinjam{ background:#dcfce7; }
   .stat-card-icon.icon-dibaca{ background:#fef3c7; }
   .stat-card-icon.icon-selesai{ background:#dbeafe; }
+  .stat-card-text{ min-width:0; }
   .stat-card-number{
     font-size:1.35rem;
     font-weight:800;
@@ -2095,7 +2105,7 @@
 
   <footer>
     <p>Data buku disimpan di browser (LocalStorage) & disinkron otomatis ke repo GitHub Anda. Ringkasan judul/penulis/kategori dikirim ke Gemini AI hanya saat Anda klik "Rekomendasi AI".</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.40.6</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.40.7</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -2105,6 +2115,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.40.7</strong> — Fix akar masalah SESUNGGUHNYA kartu statistik tidak 2 kolom di HP tertentu (setelah investigasi mendalam bareng user, pakai tes pixel-precise berulang): teks panjang di kartu AI ("Ditenagai Gemini — klik untuk mulai") tidak bisa menyusut, memaksa <code>.main-grid</code> (grid utama halaman) melebar melebihi viewport. Ditambahkan <code>min-width:0</code> berlapis di 3 level (kartu individual, wrapper teks, dan grid item utama) — bug klasik CSS Grid yang memang butuh perbaikan bertingkat. Sudah diverifikasi ulang lewat pengukuran pixel-precise: kartu sekarang selalu muat rapi 2 kolom di layar sempit, tidak overflow.</li>
         <li><strong>v1.40.6</strong> — Fix presisi bottom nav mobile: tombol "Tambah" (FAB terangkat) sekarang diposisikan absolut benar-benar center (diverifikasi lewat pixel-check: selisih 0.5px dari tengah layar), tidak lagi mengandalkan distribusi flex yang jadi timpang sejak tombol "Beranda" dihapus.</li>
         <li><strong>v1.40.5</strong> — Tombol "Beranda" dihapus dari bottom nav mobile (redundan dengan "Rak Buku" yang sama-sama tampilan dasbor). Sisa 3 tombol: Cari, Tambah, Rak Buku — "Rak Buku" jadi status aktif default.</li>
         <li><strong>v1.40.4</strong> — Fix bottom nav bar mobile (Beranda/Cari/Tambah/Rak Buku): tombolnya tadinya `flex:1` yang memaksa melebar rata isi lebar layar. Dihapus, sekarang tombol compact & center (tidak melebar ke samping), tetap fixed menempel di bawah layar.</li>
@@ -2510,7 +2521,7 @@
     statCardsRow.innerHTML = cards.map(c => `
       <div class="stat-card ${activeStatusFilter === c.filter ? 'active' : ''}" data-stat-filter="${c.filter}">
         <div class="stat-card-icon ${c.icon}">${c.svg}</div>
-        <div>
+        <div class="stat-card-text">
           <div class="stat-card-number">${c.value}</div>
           <div class="stat-card-label">${c.label}</div>
         </div>
