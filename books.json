@@ -256,5 +256,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrho2ujk3a8wu",
+    "createdAt": 1783853101857,
+    "isbn": "9786231864949",
+    "judul": "Who Rules The World",
+    "penulis": "https://mizanstore.com/penulis/noam_chomsky_2467",
+    "kategori": "Pengembangan Diri & Edukasi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Bentang Pustaka",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
