@@ -328,5 +328,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhoqzu8o57id",
+    "createdAt": 1783854228464,
+    "isbn": "9786025734311",
+    "judul": "The Power of Ideas",
+    "penulis": "BJ Habibie",
+    "kategori": "Pengembangan Diri & Edukasi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2022",
+    "jumlahHalaman": "",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
