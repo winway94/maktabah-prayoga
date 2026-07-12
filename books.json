@@ -148,5 +148,23 @@
     "status": "selesai",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhnar1xaj579",
+    "createdAt": 1783851790965,
+    "isbn": "9789791327169",
+    "judul": "Good to Great (indonesia)",
+    "penulis": "Kim Collins",
+    "kategori": "Pengembangan Diri & Edukasi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
