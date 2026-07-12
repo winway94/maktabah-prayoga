@@ -356,5 +356,23 @@
     "status": "selesai",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhove4iybpns",
+    "createdAt": 1783854433602,
+    "isbn": "9789792294293",
+    "judul": "Negeri Di Ujung Tanduk",
+    "penulis": "Tere Liye",
+    "kategori": "Politik & Hubungan Internasional",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2013",
+    "jumlahHalaman": "359",
+    "lokasiRak": "Halawa",
+    "penerbit": "Penerbit Sabak Grip",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
