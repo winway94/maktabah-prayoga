@@ -274,5 +274,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrho5js8xrwj6",
+    "createdAt": 1783853227880,
+    "isbn": "9789795926511",
+    "judul": "Memoar Sultan Abdul Hamid II",
+    "penulis": "Dr. Muhammad Harb",
+    "kategori": "Sejarah & Historiografi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Pustaka Al Kautsar",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
