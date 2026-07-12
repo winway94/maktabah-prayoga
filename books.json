@@ -410,5 +410,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhua0bs4pac7",
+    "createdAt": 1783863513640,
+    "isbn": "9786022912347",
+    "judul": "1984",
+    "penulis": "George Orwell",
+    "kategori": "Sastra, Novel & Puisi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "210",
+    "lokasiRak": "halawa office",
+    "penerbit": "Mizan",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
