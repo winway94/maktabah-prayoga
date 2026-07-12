@@ -672,6 +672,341 @@
   }
   .list-header h2{ margin:0; }
 
+  /* ===== Kartu Statistik ===== */
+  .stat-cards-row{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 640px){
+    .stat-cards-row{ grid-template-columns: repeat(2, 1fr); }
+  }
+  .stat-card.stat-card-ai{
+    grid-column: 1 / -1;
+    background: linear-gradient(90deg, #4F86F7, #9C6CF4, #EF7BC4);
+    border-color: transparent;
+    justify-content:center;
+    flex-direction:row;
+    gap:8px;
+  }
+  .stat-card.stat-card-ai:hover{ filter: brightness(0.92); }
+  .stat-card-ai-text{ display:flex; flex-direction:column; gap:1px; text-align:left; }
+  .stat-card-ai-label{
+    color:white;
+    font-size:0.85rem;
+    font-weight:800;
+    line-height:1.2;
+  }
+  .stat-card-ai-sub{
+    color: rgba(255,255,255,0.85);
+    font-size:0.7rem;
+    font-weight:600;
+  }
+  .stat-card.stat-card-ai:disabled{ opacity:0.7; cursor:not-allowed; }
+  .stat-card{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background: var(--slate-50);
+    border: 1.5px solid var(--slate-200);
+    border-radius: 14px;
+    padding: 14px 16px;
+    cursor:pointer;
+    transition: border-color .12s, box-shadow .12s;
+  }
+  .stat-card:hover{ border-color: var(--brand-400); }
+  .stat-card.active{
+    border-color: var(--brand-600);
+    box-shadow: 0 0 0 2px var(--brand-100);
+  }
+  .stat-card-icon{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .stat-card-icon.icon-total{ background:#f3e3cc; }
+  .stat-card-icon.icon-dipinjam{ background:#dcfce7; }
+  .stat-card-icon.icon-dibaca{ background:#fef3c7; }
+  .stat-card-icon.icon-selesai{ background:#dbeafe; }
+  .stat-card-number{
+    font-size:1.35rem;
+    font-weight:800;
+    color: var(--slate-900);
+    line-height:1.1;
+  }
+  .stat-card-label{
+    font-size:0.76rem;
+    color: var(--slate-500);
+    font-weight:600;
+  }
+
+
+  /* ===== Carousel: Sedang Dibaca & Buku Terbaru ===== */
+  .carousel-section{ margin-bottom: 22px; }
+  .carousel-section-header{ margin-bottom: 10px; }
+  .carousel-section-header h3{
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--slate-900);
+    display:flex;
+    align-items:center;
+  }
+  .carousel-row{
+    display:flex;
+    gap: 12px;
+    overflow-x:auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .carousel-card{
+    flex-shrink:0;
+    width: 130px;
+    cursor:pointer;
+  }
+  .carousel-card-cover{
+    position:relative;
+    width:100%;
+    padding-top: 150%;
+    border-radius: 10px;
+    overflow:hidden;
+    background: var(--slate-100);
+    box-shadow: var(--shadow);
+    margin-bottom: 6px;
+    flex-shrink:0;
+  }
+  .carousel-card-cover img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .carousel-card-cover-fallback{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.8rem;
+  }
+  .carousel-badge-new{
+    position:absolute;
+    top:6px; left:6px;
+    background: var(--brand-700);
+    color:white;
+    font-size:0.6rem;
+    font-weight:800;
+    padding: 2px 7px;
+    border-radius:999px;
+    text-transform:uppercase;
+    z-index:2;
+  }
+  .carousel-card-title{
+    font-size: 0.8rem;
+    font-weight:700;
+    color: var(--slate-900);
+    line-height:1.3;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    margin-bottom:2px;
+  }
+  .carousel-card-author{
+    font-size: 0.7rem;
+    color: var(--slate-500);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .carousel-progress-track{
+    height:5px;
+    background: var(--slate-200);
+    border-radius:999px;
+    overflow:hidden;
+    margin-top:5px;
+  }
+  .carousel-progress-fill{
+    height:100%;
+    background: linear-gradient(90deg, var(--brand-500), var(--brand-700));
+    border-radius:999px;
+  }
+  .carousel-progress-pct{
+    font-size:0.66rem;
+    color: var(--slate-500);
+    font-weight:700;
+    margin-top:2px;
+  }
+
+  /* ===== Toggle tampilan Grid / Daftar ===== */
+  .view-toggle-row{
+    display:flex;
+    gap:8px;
+    flex-shrink:0;
+  }
+  .view-toggle-btn{
+    border: 1.5px solid var(--slate-200);
+    background: white;
+    color: var(--slate-600);
+    font-size: 0.78rem;
+    font-weight:700;
+    padding: 7px 13px;
+    border-radius: 9px;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+  }
+  .view-toggle-btn.active{
+    background: var(--brand-600);
+    border-color: var(--brand-600);
+    color:white;
+  }
+
+  /* ===== Grid Kartu Buku (menggantikan tampilan list/tabel) ===== */
+  .book-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+  }
+  .book-grid-card{
+    background: white;
+    border: 1px solid var(--slate-200);
+    border-radius: 14px;
+    overflow:hidden;
+    box-shadow: var(--shadow);
+    transition: box-shadow .15s, transform .1s;
+    cursor:pointer;
+  }
+  .book-grid-card:hover{ box-shadow: var(--shadow-md); }
+  .book-grid-cover-wrap{
+    position:relative;
+    width:100%;
+    padding-top: 150%; /* rasio 2:3, dihitung dari lebar -- selalu jalan, tidak tergantung flex context */
+    background: var(--slate-100);
+    flex-shrink:0;
+  }
+  .book-grid-cover-wrap img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .book-grid-cover-fallback{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2.5rem;
+  }
+  .book-grid-badge-new{
+    position:absolute;
+    top:8px;
+    left:8px;
+    background: var(--brand-700);
+    color:white;
+    font-size:0.65rem;
+    font-weight:800;
+    padding: 3px 9px;
+    border-radius:999px;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  }
+  .book-grid-badge-dipinjam{
+    position:absolute;
+    top:8px;
+    right:8px;
+    background: #c2410c;
+    color:white;
+    font-size:0.65rem;
+    font-weight:800;
+    padding: 3px 8px;
+    border-radius:999px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  }
+  .book-grid-info{
+    padding: 10px 12px 12px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .book-grid-title{
+    font-size:0.86rem;
+    font-weight:700;
+    color: var(--slate-900);
+    line-height:1.3;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .book-grid-author{
+    font-size:0.74rem;
+    color: var(--slate-500);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .book-grid-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px;
+    margin-top:4px;
+  }
+  .book-grid-detail-btn{
+    margin-top:8px;
+    width:100%;
+    font-size:0.78rem;
+    padding: 8px 10px;
+    min-height:auto;
+  }
+
+  /* ===== Mode "Daftar" (list) -- alternatif tampilan grid ===== */
+  .book-grid.list-mode{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .book-grid.list-mode .book-grid-card{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:12px;
+    padding:8px;
+  }
+  .book-grid.list-mode .book-grid-cover-wrap{
+    width:52px;
+    height:74px;
+    padding-top:0;
+    flex-shrink:0;
+    border-radius:6px;
+  }
+  .book-grid.list-mode .book-grid-info{
+    padding:0;
+    flex:1;
+    min-width:0;
+    gap:3px;
+  }
+  .book-grid.list-mode .book-grid-title{ -webkit-line-clamp:1; }
+  .book-grid.list-mode .book-grid-detail-btn{
+    width:auto;
+    margin-top:6px;
+    flex-shrink:0;
+  }
+  @media (max-width: 480px){
+    .book-grid{ grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap:12px; }
+  }
+
   /* Tombol hamburger untuk buka drawer filter (hanya tampil di mobile) */
   .filter-drawer-toggle{
     display:none;
@@ -807,6 +1142,21 @@
   #searchInput{ max-width: 260px; }
   .search-wrap{ position:relative; }
   .search-wrap #searchInput{ max-width: 260px; width:100%; padding-left: 34px; }
+  .search-wrap-top{
+    max-width: none;
+    margin-bottom: 20px;
+  }
+  .search-wrap-top #searchInput{
+    max-width: none;
+    padding: 14px 16px 14px 42px;
+    font-size: 0.95rem;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+  .search-wrap-top .search-icon{ left:16px; }
+  @media (max-width: 640px){
+    .search-wrap-top{ margin-bottom: 16px; }
+  }
   .search-icon{
     position:absolute;
     left:12px;
@@ -1134,106 +1484,71 @@
 
   /* ===== Kartu Fitur AI ===== */
   .ai-feature-card{
-
-    position:relative;
-    overflow:hidden;
-    background: linear-gradient(135deg, #201509 0%, #4a2e12 55%, #95501c 100%);
-    border-radius: 18px;
-    padding: 24px 26px;
+    background: var(--brand-50);
+    border: 1px solid #e3c39a;
+    border-radius: 14px;
+    padding: 22px;
     margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(122,62,21,0.3);
-  }
-  .ai-feature-glow{
-    position:absolute;
-    top:-60px; right:-60px;
-    width:200px; height:200px;
-    background: radial-gradient(circle, rgba(217,162,92,0.35), transparent 70%);
-    pointer-events:none;
   }
   .ai-feature-header{
     display:flex;
     align-items:center;
-    gap:14px;
-    margin-bottom: 12px;
-    position:relative;
+    gap:16px;
+    flex-wrap:wrap;
   }
   .ai-feature-icon{
-    width: 46px;
-    height: 46px;
+    width: 52px;
+    height: 52px;
     flex-shrink:0;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 13px;
+    background: var(--brand-600);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size: 1.3rem;
-    backdrop-filter: blur(4px);
   }
+  .ai-feature-text{ flex:1; min-width:180px; }
   .ai-feature-title{
-    font-size: 1.15rem;
-    font-weight:700;
-    color: white;
-    letter-spacing: 0.01em;
+    font-size: 1.05rem;
+    font-weight:800;
+    color: #2b1a0a;
+    line-height:1.2;
+    margin-bottom: 4px;
   }
   .ai-feature-subtitle{
-    font-size: 0.78rem;
-    color: #e8c9a0;
-    font-weight:600;
-    margin-top: 2px;
-  }
-  .ai-feature-desc{
-    color: rgba(255,255,255,0.85);
-    font-size: 0.87rem;
-    line-height: 1.6;
-    margin-bottom: 18px;
-    position:relative;
-    max-width: 560px;
+    font-size: 0.85rem;
+    color: #5c4326;
+    font-weight:500;
+    line-height:1.4;
   }
   .ai-feature-btn{
-    position:relative;
     border:none;
-    background: linear-gradient(135deg, #d9a25c, #7a3e15);
-    color: #2b1a0a;
-    font-weight:700;
-    font-size: 0.92rem;
-    padding: 13px 22px;
-    border-radius: 12px;
+    background: var(--brand-600);
+    color: #ffffff;
+    font-weight:800;
+    font-size: 0.85rem;
+    padding: 12px 24px;
+    border-radius: 9px;
     cursor:pointer;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    box-shadow: 0 6px 18px rgba(217,162,92,0.35);
-    transition: transform .12s, box-shadow .12s;
+    transition: background .12s;
     min-height: 46px;
+    flex-shrink:0;
   }
-  .ai-feature-btn:hover{
-    transform: translateY(-1px);
-    box-shadow: 0 8px 22px rgba(217,162,92,0.45);
-  }
-  .ai-feature-btn:active{ transform: translateY(0); }
-  .ai-feature-btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
-  .ai-feature-btn-sparkle{
-    display:inline-block;
-    animation: sparkle-pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes sparkle-pulse{
-    0%, 100% { transform: scale(1) rotate(0deg); opacity:1; }
-    50% { transform: scale(1.25) rotate(15deg); opacity:0.7; }
-  }
-  .ai-feature-card #aiStatus{ color: rgba(255,255,255,0.9); }
-  .ai-feature-card #aiStatus.status-ok{ color: #f0c48a; }
-  .ai-feature-card #aiStatus.status-err{ color: #fca5a5; }
-  .ai-feature-card #aiStatus.status-loading{ color: #fcd34d; }
+  .ai-feature-btn:hover{ background: var(--brand-700); }
+  .ai-feature-btn:disabled{ opacity:0.6; cursor:not-allowed; }
+  .ai-feature-card #aiStatus{ color: var(--slate-600); margin-top:10px; }
+  .ai-feature-card #aiStatus.status-ok{ color: var(--brand-700); }
+  .ai-feature-card #aiStatus.status-err{ color: var(--red-500); }
+  .ai-feature-card #aiStatus.status-loading{ color: var(--amber-500); }
   .ai-feature-card .ai-result{
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
-    backdrop-filter: blur(4px);
+    background: white;
+    border: 1px solid var(--slate-200);
+    color: var(--slate-800);
+    margin-top: 14px;
   }
   @media (max-width: 640px){
-    .ai-feature-card{ padding: 20px 18px; }
-    .ai-feature-title{ font-size: 1.02rem; }
+    .ai-feature-card{ padding: 18px; }
+    .ai-feature-header{ gap:12px; }
+    .ai-feature-btn{ width:100%; }
   }
 
   /* ===== Nav menu mobile: Dasbor vs Tambah Buku ===== */
@@ -1424,14 +1739,6 @@
       gap: 10px;
     }
     .list-header h2{ flex:1; min-width:0; }
-    .search-toggle-btn{ display:flex; }
-    #searchInput{
-      display:none;
-      flex-basis:100%;
-      max-width: 100%;
-      order: 10;
-    }
-    #searchInput.mobile-open{ display:block; }
 
     /* Filter lebih rapi di mobile: scroll horizontal, tidak menumpuk banyak baris */
     .status-tabs{
@@ -1575,30 +1882,17 @@
 
   <div id="ghSyncStatus" class="sr-only-status"></div>
 
+  <div class="search-wrap search-wrap-top" id="searchWrap">
+    <svg class="search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="var(--brand-600)" stroke-width="2"/><line x1="16.65" y1="16.65" x2="21" y2="21" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"/></svg>
+    <input type="search" id="searchInput" placeholder="Cari judul, penulis, atau ISBN..." autocomplete="off">
+    <div class="search-suggest-box" id="searchSuggestBox" style="display:none;"></div>
+  </div>
+
   <nav class="mobile-nav-tabs" id="mobileNavTabs">
     <button type="button" class="active" data-mobile-tab="dashboard"><svg width="17" height="17" viewBox="0 0 24 24" style="flex-shrink:0;"><rect x="1.5" y="6" width="5" height="15" rx="1" fill="currentColor" transform="rotate(18 4 20.5)"/><rect x="9.5" y="3" width="5" height="18" rx="1" fill="currentColor"/><rect x="16" y="3" width="5" height="18" rx="1" fill="currentColor"/></svg> Koleksi Buku</button>
     <button type="button" data-mobile-tab="tambah"><svg width="15" height="15" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Tambah Buku</button>
   </nav>
 
-  <div class="ai-feature-card">
-    <div class="ai-feature-glow"></div>
-    <div class="ai-feature-header">
-      <div class="ai-feature-icon">✨</div>
-      <div>
-        <div class="ai-feature-title">Rekomendasi Buku AI</div>
-        <div class="ai-feature-subtitle">Ditenagai Gemini · otomatis aktif, tanpa setup</div>
-      </div>
-    </div>
-    <p class="ai-feature-desc">
-      Dapatkan 3 rekomendasi buku baru berdasarkan koleksimu, lengkap dengan alasannya.
-      Cukup sekali klik — modul AI hanya diunduh saat dibutuhkan, jadi tetap ringan di HP.
-    </p>
-    <button class="ai-feature-btn" id="aiRecommendBtn">
-      <span class="ai-feature-btn-sparkle">✨</span> Minta Rekomendasi dari Koleksiku
-    </button>
-    <div id="aiStatus" class="sync-status"></div>
-    <div id="aiResultBox" class="ai-result" style="display:none;"></div>
-  </div>
 
   <div class="main-grid">
 
@@ -1714,14 +2008,29 @@
 
     <!-- LIST SECTION -->
     <section class="card list-section">
+      <div class="stat-cards-row" id="statCardsRow"></div>
+      <div id="aiStatus" class="sync-status"></div>
+      <div id="aiResultBox" class="ai-result" style="display:none;"></div>
+
+      <div class="carousel-section" id="readingSection" style="display:none;">
+        <div class="carousel-section-header">
+          <h3><svg width="15" height="15" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:4px;"><path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="var(--brand-600)" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="var(--brand-600)" stroke-width="1.6"/></svg>Sedang Dibaca</h3>
+        </div>
+        <div class="carousel-row" id="readingCarousel"></div>
+      </div>
+
+      <div class="carousel-section" id="newestSection" style="display:none;">
+        <div class="carousel-section-header">
+          <h3><svg width="15" height="15" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:4px;"><path d="M12 2L14.5 8.5L21 9.5L16.5 14L17.7 20.5L12 17.3L6.3 20.5L7.5 14L3 9.5L9.5 8.5Z" fill="var(--brand-600)"/></svg>Buku Terbaru</h3>
+        </div>
+        <div class="carousel-row" id="newestCarousel"></div>
+      </div>
       <div class="list-header">
         <button type="button" class="filter-drawer-toggle" id="filterDrawerToggle" aria-label="Buka menu filter">☰</button>
         <h2><svg width="17" height="17" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;"><path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="var(--brand-600)" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="var(--brand-600)" stroke-width="1.6"/></svg>Koleksi Buku</h2>
-        <button type="button" class="search-toggle-btn" id="searchToggleBtn" aria-label="Cari buku"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
-        <div class="search-wrap" id="searchWrap">
-          <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="var(--brand-600)" stroke-width="2"/><line x1="16.65" y1="16.65" x2="21" y2="21" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"/></svg>
-          <input type="search" id="searchInput" placeholder="Cari judul, penulis, atau ISBN..." autocomplete="off">
-          <div class="search-suggest-box" id="searchSuggestBox" style="display:none;"></div>
+        <div class="view-toggle-row">
+          <button type="button" class="view-toggle-btn active" id="viewGridBtn" data-view="grid"><svg width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="3" width="8" height="8" rx="1" fill="currentColor"/><rect x="13" y="3" width="8" height="8" rx="1" fill="currentColor"/><rect x="3" y="13" width="8" height="8" rx="1" fill="currentColor"/><rect x="13" y="13" width="8" height="8" rx="1" fill="currentColor"/></svg>Grid</button>
+          <button type="button" class="view-toggle-btn" id="viewListBtn" data-view="list"><svg width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="4" width="18" height="3.5" rx="1" fill="currentColor"/><rect x="3" y="10.5" width="18" height="3.5" rx="1" fill="currentColor"/><rect x="3" y="17" width="18" height="3.5" rx="1" fill="currentColor"/></svg>Daftar</button>
         </div>
       </div>
 
@@ -1752,20 +2061,8 @@
         </div>
       </aside>
 
-      <div class="table-wrap">
-        <table id="bookTable">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Judul</th>
-              <th>Penulis</th>
-              <th>Kategori</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="bookTbody"></tbody>
-        </table>
+      <div class="table-wrap" style="border:none; overflow:visible;">
+        <div class="book-grid" id="bookGrid"></div>
         <div class="empty-state" id="emptyState" style="display:none;">
           Belum ada buku. Tambahkan buku pertama Anda di form sebelah kiri.
         </div>
@@ -1777,7 +2074,7 @@
 
   <footer>
     <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.37.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.40.2</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -1787,6 +2084,19 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.40.2</strong> — Fix tata letak berantakan: toggle "Grid/Daftar" tadinya baris terpisah dengan margin negatif (-6px) yang bikin dempet ke judul "Koleksi Buku" di atasnya. Sekarang digabung jadi 1 baris sejajar (judul kiri, toggle kanan), rapi tanpa tumpang tindih.</li>
+        <li><strong>v1.40.1</strong> — Fix bug tata letak kartu AI (v1.40.0): akar masalahnya CSS grid 5-kolom yang tidak pas jumlah track-nya di beberapa lebar layar, membuat kartu AI nyempil transparan di slot sempit. Sekarang kartu AI selalu jadi baris sendiri lebar penuh di bawah 4 kartu statistik — konsisten di semua ukuran layar. Warna juga diganti dari coklat brand jadi gradasi khas Gemini (biru-ungu-pink), lebih jelas menonjol sebagai fitur AI dan tidak tertukar dengan kartu statistik biasa. Ditambah subjudul "Ditenagai Gemini — klik untuk mulai".</li>
+        <li><strong>v1.40.0</strong> — Kartu "Rekomendasi Buku AI" diintegrasikan jadi kartu ke-5 di baris statistik (bukan blok besar terpisah lagi) — solid coklat, ikon sparkle + "Rekomendasi AI". Hasil rekomendasi muncul dalam kotak di bawah baris statistik saat diklik. Di mobile, kartu AI otomatis pindah ke baris sendiri (lebar penuh).</li>
+        <li><strong>v1.39.3</strong> — Kartu "Rekomendasi Buku AI" dirombak total: dari kartu gelap gradient besar jadi kartu terang ringkas satu baris (ikon + judul/subjudul + tombol sejajar kanan). Hasil rekomendasi tampil dalam kotak putih di bawahnya, tombol berubah jadi "Minta Lagi" setelah hasil pertama muncul.</li>
+        <li><strong>v1.39.2</strong> — 4 kartu statistik sekarang bisa diklik untuk filter (Buku=Semua, Dipinjam, Sedang Dibaca, Selesai) — tersinkron dengan tab filter status yang sudah ada, kartu yang aktif ditandai border coklat.</li>
+        <li><strong>v1.39.1</strong> — Kotak pencarian dipindah jadi baris tersendiri full-width di paling atas (setelah header, sebelum kartu AI), sesuai referensi desain. Sekarang selalu tampil (mobile & desktop) — tombol toggle "🔍" lama di header "Koleksi Buku" dihapus karena tidak perlu lagi.</li>
+        <li><strong>v1.39.0</strong> — Tambah section "Sedang Dibaca" (carousel horizontal, cover + progress bar % dari Halaman Terakhir/Jumlah Halaman) dan "Buku Terbaru" (5 buku terakhir ditambahkan, badge "Baru"). Kedua section otomatis sembunyi kalau tidak ada data yang cocok. Tambah toggle "▦ Grid / ☰ Daftar" untuk daftar utama buku — mode Daftar tampil ringkas 1 kolom (cover kecil + info di samping).</li>
+        <li><strong>v1.38.5</strong> — Tambah ikon SVG di 4 kartu statistik (Buku: tumpukan buku, Dipinjam: 2 orang, Sedang Dibaca: buku terbuka, Selesai: centang) — warnanya menyesuaikan warna latar tiap kartu.</li>
+        <li><strong>v1.38.4</strong> — Fix akar masalah SEBENARNYA untuk cover yang hilang total: saat gambar gagal load (mis. ISBN tidak punya cover di Open Library), kode lama menyembunyikan `parentNode` (seluruh wrapper) alih-alih cuma gambar yang gagal — akibatnya fallback ikon yang jadi tetangganya di wrapper yang sama ikut tersembunyi juga. v1.38.1-1.38.3 memperbaiki CSS layout (perlu, tapi bukan akar masalah); ini bug JavaScript yang sesungguhnya.</li>
+        <li><strong>v1.38.3</strong> — Fix cover collapse (akar masalah sebenarnya): `display:flex` di kartu grid ternyata bentrok dengan trik `padding-top` untuk cover. Dihapus, ganti block layout biasa. <strong>Sudah diverifikasi visual pakai screenshot browser</strong> sebelum dikirim, bukan tebak-tebak lagi.</li>
+        <li><strong>v1.38.2</strong> — Fix cover collapse (lanjutan v1.38.1): ganti `aspect-ratio` CSS (tidak stabil di flex container) dengan teknik `padding-top` + posisi absolut yang selalu konsisten di semua browser.</li>
+        <li><strong>v1.38.1</strong> — Fix bug kritis: area cover di kartu grid buku collapse/hilang total (flexbox mengecilkan tingginya jadi 0). Sekarang cover selalu tampil normal.</li>
+        <li><strong>v1.38.0</strong> — Tampilan dasbor dirombak: (1) baris 4 kartu statistik (Buku/Dipinjam/Sedang Dibaca/Selesai) di atas daftar, (2) daftar buku diganti dari list memanjang jadi grid cover-besar (responsif, otomatis menyesuaikan lebar layar), (3) badge "Baru" muncul di buku yang ditambahkan &lt;7 hari terakhir. Modal Detail/Edit tidak diubah sama sekali.</li>
         <li><strong>v1.37.0</strong> — Arsitektur AI diganti total: browser tidak lagi kontak Google langsung (yang berulang kali gagal auth), sekarang lewat proxy <strong>Cloudflare Worker</strong>. Key Gemini dipindah ke Worker (lebih aman, tidak lagi terlihat di kode HTML). Perlu file <code>worker.js</code> terpisah, deploy manual ke Cloudflare.</li>
         <li><strong>v1.36.9</strong> — Fix "model no longer available": <code>gemini-2.5-flash</code> sudah deprecated untuk user baru. Diganti ke <code>gemini-flash-latest</code> (alias otomatis ke versi Flash terbaru, tidak perlu update lagi tiap model baru rilis).</li>
         <li><strong>v1.36.8</strong> — Fix "Request had invalid authentication credentials": header <code>x-goog-api-key</code> (v1.36.6) ternyata bermasalah, kembali ke <code>?key=</code> di URL yang sudah terbukti berhasil saat dites manual.</li>
@@ -1936,7 +2246,6 @@
   const scannerContainer = document.getElementById("scannerContainer");
   const lookupStatus = document.getElementById("lookupStatus");
   const searchInput = document.getElementById("searchInput");
-  const searchToggleBtn = document.getElementById("searchToggleBtn");
   const categoryFiltersEl = document.getElementById("categoryFilters");
   let activeCategoryFilter = "Semua";
   const paginationBar = document.getElementById("paginationBar");
@@ -1944,7 +2253,15 @@
   let currentPage = 1;
   const statusTabsEl = document.getElementById("statusTabs");
   let activeStatusFilter = "semua";
-  const bookTbody = document.getElementById("bookTbody");
+  const bookGrid = document.getElementById("bookGrid");
+  const statCardsRow = document.getElementById("statCardsRow");
+  const readingSection = document.getElementById("readingSection");
+  const readingCarousel = document.getElementById("readingCarousel");
+  const newestSection = document.getElementById("newestSection");
+  const newestCarousel = document.getElementById("newestCarousel");
+  const viewGridBtn = document.getElementById("viewGridBtn");
+  const viewListBtn = document.getElementById("viewListBtn");
+  let viewMode = "grid";
   const emptyState = document.getElementById("emptyState");
   const bookCountEls = document.querySelectorAll("#bookCount");
   const labelBelum = document.getElementById("labelBelum");
@@ -1976,7 +2293,6 @@
   const filterDrawerToggle = document.getElementById("filterDrawerToggle");
   const filterDrawerClose = document.getElementById("filterDrawerClose");
   const filterDrawerBackdrop = document.getElementById("filterDrawerBackdrop");
-  const aiRecommendBtn = document.getElementById("aiRecommendBtn");
   const aiStatus = document.getElementById("aiStatus");
   const aiResultBox = document.getElementById("aiResultBox");
   const GEMINI_KEY_STORAGE = "gemini_api_key_v1";
@@ -2092,7 +2408,9 @@
     const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
     const pageItems = filtered.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
-    bookTbody.innerHTML = "";
+    renderStatCards();
+    renderCarouselSections();
+    bookGrid.innerHTML = "";
 
     if(filtered.length === 0){
       emptyState.style.display = "block";
@@ -2101,54 +2419,183 @@
         : "Tidak ada buku yang cocok dengan filter/pencarian.";
     } else {
       emptyState.style.display = "none";
+      const now = Date.now();
+      const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
       pageItems.forEach(b=>{
-        const tr = document.createElement("tr");
+        const card = document.createElement("div");
         const isDipinjam = b.status === "dipinjam";
-        tr.className = "clickable-row" + (isDipinjam ? " row-dipinjam" : "");
-        tr.setAttribute("data-book-id", b.id);
+        const isBaru = b.createdAt && (now - b.createdAt) < SEVEN_DAYS;
+        card.className = "book-grid-card";
+        card.setAttribute("data-book-id", b.id);
 
-        // Cover thumbnail dari Open Library (gratis, tanpa simpan lokal), dibangun via concatenation string
         const coverUrlRow = b.isbn
           ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-M.jpg?default=false"
           : "";
         const fallbackId = "coverFallbackRow_" + b.id;
-        const onErrorJsRow = "this.parentNode.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; }";
-        // Open Library kadang "berhasil" memuat gambar placeholder kosong 1x1px alih-alih 404.
-        // onload ini mendeteksi & memperlakukannya sama seperti gagal (tampilkan fallback).
-        const onLoadJsRow = "if(this.naturalWidth<=1||this.naturalHeight<=1){ this.parentNode.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; } }";
+        const onErrorJsRow = "this.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; }";
+        const onLoadJsRow = "if(this.naturalWidth<=1||this.naturalHeight<=1){ this.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; } }";
         let coverCellHtml = "";
         if(coverUrlRow){
           coverCellHtml =
-            '<div class="row-cover-wrap">' +
-              '<img class="row-cover-img" src="' + coverUrlRow + '" alt="Sampul buku" loading="lazy" onerror="' + onErrorJsRow + '" onload="' + onLoadJsRow + '">' +
-            '</div>' +
-            '<div class="row-cover-fallback" id="' + fallbackId + '" style="display:none;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
+            '<img class="row-cover-img" src="' + coverUrlRow + '" alt="Sampul buku" loading="lazy" onerror="' + onErrorJsRow + '" onload="' + onLoadJsRow + '">' +
+            '<div class="book-grid-cover-fallback" id="' + fallbackId + '" style="display:none;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
         } else {
-          coverCellHtml = '<div class="row-cover-fallback" id="' + fallbackId + '" style="display:flex;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
+          coverCellHtml = '<div class="book-grid-cover-fallback" id="' + fallbackId + '" style="display:flex;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
         }
 
-        tr.innerHTML = `
-          <td class="mobile-cover-cell" data-label="">${coverCellHtml}</td>
-          <td class="title-cell" data-label="Judul">${isDipinjam ? "👤 " : ""}${escapeHtml(b.judul || "-")}</td>
-          <td data-label="Penulis">${escapeHtml(b.penulis || "-")}</td>
-          <td data-label="Kategori">
-            <span class="cat-chip">${escapeHtml(b.kategori || "Lainnya / Serba-Serbi")}</span>
-            <span class="cat-chip type-chip">${b.jenisBuku === "digital" ? '<svg width="12" height="12" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:3px;"><rect x="5" y="2" width="14" height="20" rx="2" fill="none" stroke="var(--brand-700)" stroke-width="1.6"/><line x1="9" y1="19" x2="15" y2="19" stroke="var(--brand-700)" stroke-width="1.6" stroke-linecap="round"/></svg>Digital' : '<svg width="12" height="12" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:3px;"><path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="var(--brand-700)" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="var(--brand-700)" stroke-width="1.6"/></svg>Cetak'}</span>
-          </td>
-          <td data-label="Status">${renderStatusChip(b)}</td>
-          <td class="action-cell" data-label="">
-            <div class="row-actions">
-              <button class="btn btn-edit" data-edit-id="${b.id}"><svg width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><path d="M2 12C2 12 5.5 5 12 5C18.5 5 22 12 22 12C22 12 18.5 19 12 19C5.5 19 2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Detail</button>
+        card.innerHTML = `
+          <div class="book-grid-cover-wrap">
+            ${coverCellHtml}
+            ${isBaru ? '<span class="book-grid-badge-new">Baru</span>' : ''}
+            ${isDipinjam ? '<span class="book-grid-badge-dipinjam">Dipinjam</span>' : ''}
+          </div>
+          <div class="book-grid-info">
+            <div class="book-grid-title">${escapeHtml(b.judul || "-")}</div>
+            <div class="book-grid-author">${escapeHtml(b.penulis || "Penulis tidak diketahui")}</div>
+            <div class="book-grid-chips">
+              <span class="cat-chip">${escapeHtml(b.kategori || "Lainnya / Serba-Serbi")}</span>
+              ${renderStatusChip(b)}
             </div>
-          </td>
+            <button class="btn btn-edit book-grid-detail-btn" data-edit-id="${b.id}"><svg width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><path d="M2 12C2 12 5.5 5 12 5C18.5 5 22 12 22 12C22 12 18.5 19 12 19C5.5 19 2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Detail</button>
+          </div>
         `;
-        bookTbody.appendChild(tr);
+        bookGrid.appendChild(card);
       });
     }
 
     bookCountEls.forEach(el => el.textContent = books.length);
     renderPagination(totalItems, totalPages);
   }
+
+  function renderStatCards(){
+    const totalSemua = books.length;
+    const totalDipinjam = books.filter(b => b.status === "dipinjam").length;
+    const totalBelum = books.filter(b => (b.status||"belum") === "belum").length;
+    const totalSelesai = books.filter(b => b.status === "selesai").length;
+    const iconBuku = '<svg width="20" height="20" viewBox="0 0 24 24"><rect x="1.5" y="6" width="5" height="15" rx="1" fill="#7a3e15" transform="rotate(18 4 20.5)"/><rect x="9.5" y="3" width="5" height="18" rx="1" fill="#7a3e15"/><rect x="16" y="3" width="5" height="18" rx="1" fill="#7a3e15"/></svg>';
+    const iconDipinjam = '<svg width="20" height="20" viewBox="0 0 24 24"><circle cx="8" cy="9" r="3" fill="none" stroke="#15803d" stroke-width="2"/><path d="M3 20c0-3 2-5 5-5s5 2 5 5" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="9" r="3" fill="none" stroke="#15803d" stroke-width="2"/><path d="M14 20c0-3 1.5-5 4-5s4.5 1.5 5 4" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round"/></svg>';
+    const iconDibaca = '<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 4C10 3 6 3 4 4V18C6 17 10 17 12 18C14 17 18 17 20 18V4C18 3 14 3 12 4Z" fill="none" stroke="#b45309" stroke-width="1.8" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="18" stroke="#b45309" stroke-width="1.8"/></svg>';
+    const iconSelesai = '<svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#1d4ed8" stroke-width="2"/><path d="M7.5 12.5L10.5 15.5L16.5 8.5" fill="none" stroke="#1d4ed8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const cards = [
+      { icon: "icon-total", svg: iconBuku, label: "Buku", value: totalSemua, filter: "semua" },
+      { icon: "icon-dipinjam", svg: iconDipinjam, label: "Dipinjam", value: totalDipinjam, filter: "dipinjam" },
+      { icon: "icon-dibaca", svg: iconDibaca, label: "Sedang Dibaca", value: totalBelum, filter: "belum" },
+      { icon: "icon-selesai", svg: iconSelesai, label: "Selesai", value: totalSelesai, filter: "selesai" }
+    ];
+    statCardsRow.innerHTML = cards.map(c => `
+      <div class="stat-card ${activeStatusFilter === c.filter ? 'active' : ''}" data-stat-filter="${c.filter}">
+        <div class="stat-card-icon ${c.icon}">${c.svg}</div>
+        <div>
+          <div class="stat-card-number">${c.value}</div>
+          <div class="stat-card-label">${c.label}</div>
+        </div>
+      </div>
+    `).join("") + `
+      <button type="button" class="stat-card stat-card-ai" id="aiRecommendBtn">
+        <svg width="22" height="22" viewBox="0 0 24 24" style="flex-shrink:0;"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5Z" fill="white"/></svg>
+        <span class="stat-card-ai-text">
+          <span class="stat-card-ai-label">Rekomendasi Buku AI</span>
+          <span class="stat-card-ai-sub">Ditenagai Gemini — klik untuk mulai</span>
+        </span>
+      </button>
+    `;
+  }
+
+  statCardsRow.addEventListener("click", (e)=>{
+    const card = e.target.closest(".stat-card[data-stat-filter]");
+    if(card){
+      activeStatusFilter = card.getAttribute("data-stat-filter");
+      currentPage = 1;
+      renderTable();
+      return;
+    }
+    if(e.target.closest("#aiRecommendBtn")){
+      requestAiRecommendation();
+    }
+  });
+
+  const FALLBACK_ICON_SVG = '<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg>';
+
+  // ---------- Helper: bangun HTML cover + fallback (dipakai grid utama & carousel) ----------
+  function buildCoverHtml(book, fallbackId, imgClass, fallbackClass){
+    const coverUrl = book.isbn
+      ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(book.isbn) + "-M.jpg?default=false"
+      : "";
+    if(!coverUrl){
+      return '<div class="' + fallbackClass + '" id="' + fallbackId + '" style="display:flex;">' + FALLBACK_ICON_SVG + '</div>';
+    }
+    const onErrorJs = "this.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; }";
+    const onLoadJs = "if(this.naturalWidth<=1||this.naturalHeight<=1){ this.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; } }";
+    return '<img class="' + imgClass + '" src="' + coverUrl + '" alt="Sampul buku" loading="lazy" onerror="' + onErrorJs + '" onload="' + onLoadJs + '">' +
+           '<div class="' + fallbackClass + '" id="' + fallbackId + '" style="display:none;">' + FALLBACK_ICON_SVG + '</div>';
+  }
+
+  // ---------- Render 2 carousel: Sedang Dibaca & Buku Terbaru ----------
+  function renderCarouselSections(){
+    // Sedang Dibaca: status "belum" + progress bisa dihitung (jumlahHalaman & halamanTerakhir terisi)
+    const readingBooks = books.filter(b =>
+      (b.status || "belum") === "belum" &&
+      parseInt(b.jumlahHalaman, 10) > 0 &&
+      parseInt(b.halamanTerakhir, 10) >= 0
+    ).slice(0, 10);
+
+    if(readingBooks.length === 0){
+      readingSection.style.display = "none";
+    } else {
+      readingSection.style.display = "block";
+      readingCarousel.innerHTML = readingBooks.map(b=>{
+        const fallbackId = "carouselCoverReading_" + b.id;
+        const coverHtml = buildCoverHtml(b, fallbackId, "carousel-img", "carousel-card-cover-fallback");
+        const pct = Math.min(100, Math.round((parseInt(b.halamanTerakhir,10) / parseInt(b.jumlahHalaman,10)) * 100));
+        return '<div class="carousel-card" data-book-id="' + b.id + '">' +
+          '<div class="carousel-card-cover">' + coverHtml + '</div>' +
+          '<div class="carousel-card-title">' + escapeHtml(b.judul || "-") + '</div>' +
+          '<div class="carousel-card-author">' + escapeHtml(b.penulis || "-") + '</div>' +
+          '<div class="carousel-progress-track"><div class="carousel-progress-fill" style="width:' + pct + '%;"></div></div>' +
+          '<div class="carousel-progress-pct">' + pct + '%</div>' +
+        '</div>';
+      }).join("");
+    }
+
+    // Buku Terbaru: 5 buku terakhir ditambahkan (books sudah tidak diurutkan di sini, urutkan manual)
+    const newestBooks = books.slice().sort((a,b)=> (b.createdAt||0) - (a.createdAt||0)).slice(0, 5);
+    if(newestBooks.length === 0){
+      newestSection.style.display = "none";
+    } else {
+      newestSection.style.display = "block";
+      newestCarousel.innerHTML = newestBooks.map(b=>{
+        const fallbackId = "carouselCoverNewest_" + b.id;
+        const coverHtml = buildCoverHtml(b, fallbackId, "carousel-img", "carousel-card-cover-fallback");
+        return '<div class="carousel-card" data-book-id="' + b.id + '">' +
+          '<div class="carousel-card-cover">' +
+            '<span class="carousel-badge-new">Baru</span>' +
+            coverHtml +
+          '</div>' +
+          '<div class="carousel-card-title">' + escapeHtml(b.judul || "-") + '</div>' +
+          '<div class="carousel-card-author">' + escapeHtml(b.penulis || "-") + '</div>' +
+        '</div>';
+      }).join("");
+    }
+  }
+
+  readingCarousel.addEventListener("click", (e)=>{
+    const card = e.target.closest(".carousel-card[data-book-id]");
+    if(card) openBookDetail(card.getAttribute("data-book-id"));
+  });
+  newestCarousel.addEventListener("click", (e)=>{
+    const card = e.target.closest(".carousel-card[data-book-id]");
+    if(card) openBookDetail(card.getAttribute("data-book-id"));
+  });
+
+  // ---------- Toggle tampilan Grid / Daftar ----------
+  function setViewMode(mode){
+    viewMode = mode;
+    bookGrid.classList.toggle("list-mode", mode === "list");
+    viewGridBtn.classList.toggle("active", mode === "grid");
+    viewListBtn.classList.toggle("active", mode === "list");
+  }
+  viewGridBtn.addEventListener("click", ()=> setViewMode("grid"));
+  viewListBtn.addEventListener("click", ()=> setViewMode("list"));
 
   function renderPagination(totalItems, totalPages){
     if(totalItems === 0 || totalPages <= 1){
@@ -2421,7 +2868,7 @@
     if(e.target === confirmDeleteOverlay) closeConfirmDelete(false);
   });
 
-  bookTbody.addEventListener("click", (e)=>{
+  bookGrid.addEventListener("click", (e)=>{
     const editBtn = e.target.closest("button[data-edit-id]");
     if(editBtn){
       const bookId = editBtn.getAttribute("data-edit-id");
@@ -2441,9 +2888,9 @@
       });
       return;
     }
-    const row = e.target.closest("tr[data-book-id]");
-    if(row){
-      openBookDetail(row.getAttribute("data-book-id"));
+    const card = e.target.closest(".book-grid-card[data-book-id]");
+    if(card){
+      openBookDetail(card.getAttribute("data-book-id"));
     }
   });
 
@@ -3025,21 +3472,6 @@
     if(e.key === "Escape") searchSuggestBox.style.display = "none";
   });
 
-  // ---------- Tombol pencarian mobile: expand/collapse kolom cari ----------
-  if(searchToggleBtn){
-    searchToggleBtn.addEventListener("click", ()=>{
-      const isOpen = searchInput.classList.toggle("mobile-open");
-      searchToggleBtn.classList.toggle("active", isOpen);
-      searchToggleBtn.setAttribute("aria-label", isOpen ? "Tutup pencarian" : "Cari buku");
-      if(isOpen){
-        searchInput.focus();
-      } else if(searchInput.value){
-        searchInput.value = "";
-        renderTable();
-      }
-    });
-  }
-
   // ---------- Save new book ----------
   function updateCoverPreview(isbn){
     const row = document.getElementById("coverPreviewRow");
@@ -3457,7 +3889,8 @@
     aiStatus.className = "sync-status " + (type ? ("status-" + type) : "");
   }
 
-  aiRecommendBtn.addEventListener("click", async ()=>{
+  async function requestAiRecommendation(){
+    const aiBtn = document.getElementById("aiRecommendBtn");
     if(!GEMINI_WORKER_URL || GEMINI_WORKER_URL.includes("GANTI_DENGAN")){
       setAiStatus("URL Cloudflare Worker belum diatur di kode aplikasi.", "err");
       return;
@@ -3468,7 +3901,7 @@
       return;
     }
 
-    aiRecommendBtn.disabled = true;
+    if(aiBtn) aiBtn.disabled = true;
     aiResultBox.style.display = "none";
     setAiStatus("Meminta rekomendasi dari Gemini...", "loading");
 
@@ -3510,9 +3943,10 @@
     }catch(err){
       setAiStatus("Gagal memanggil Gemini: " + err.message, "err");
     }finally{
-      aiRecommendBtn.disabled = false;
+      const btnAgain = document.getElementById("aiRecommendBtn");
+      if(btnAgain) btnAgain.disabled = false;
     }
-  });
+  }
 
   // ---------- Token via URL Parameter ----------
   function checkTokenFromURL(){
