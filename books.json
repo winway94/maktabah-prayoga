@@ -292,5 +292,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhom6gai46qe",
+    "createdAt": 1783854003754,
+    "isbn": "9786020033983",
+    "judul": "Manufacturing hope: bisa!",
+    "penulis": "Dahlan Iskan",
+    "kategori": "Bisnis, Manajemen & Keuangan",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2012",
+    "jumlahHalaman": "262",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
