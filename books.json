@@ -4,9 +4,18 @@
     "isbn": "9786232411855",
     "judul": "Takdir (Riwayat Pangeran Diponegoro)",
     "penulis": "Peter Cerey",
-    "kategori": "Sejarah",
-    "status": "belum",
-    "createdAt": 1783635631196
+    "kategori": "",
+    "status": "selesai",
+    "createdAt": 1783635631196,
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "",
+    "lokasiRak": "",
+    "penerbit": "",
+    "pemilik": "",
+    "halamanTerakhir": "",
+    "peminjam": "",
+    "tanggalPinjam": ""
   },
   {
     "id": "mrg75hh6hx2mo",
