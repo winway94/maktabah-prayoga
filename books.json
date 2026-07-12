@@ -184,5 +184,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhngsabrc9x5",
+    "createdAt": 1783852072499,
+    "isbn": "9786239488673",
+    "judul": "They Named Him Sontoloyo",
+    "penulis": "Mardigu WP",
+    "kategori": "Bisnis, Manajemen & Keuangan",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "",
+    "pemilik": "",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
