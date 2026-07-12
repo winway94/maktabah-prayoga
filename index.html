@@ -2185,24 +2185,22 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.44.2</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.43.1</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
-  <!-- MODAL PENGATURAN REPOSITORY GITHUB -->
+  <!-- MODAL HUBUNGKAN TOKEN GITHUB -->
   <div class="modal-overlay" id="tokenModalOverlay">
     <div class="modal-card" id="tokenModalCard">
       <button class="modal-close" id="tokenModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">🔗 Hubungkan Sinkronisasi GitHub</h3>
       <p style="font-size:0.85rem; color:var(--slate-600); line-height:1.6; margin-bottom:14px;">
-        Token GitHub tidak lagi diisi di sini — token kini disimpan aman sebagai
-        <b>Secret Env (GITHUB_TOKEN)</b> langsung di dasbor Cloudflare Worker.
-        Cukup isi nama pemilik (owner) & repository yang ingin disinkronkan.
+        Tempel token GitHub Anda di bawah ini. Belum punya token?
+        <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer">Buat token baru &rarr;</a>
+        (pilih akses <b>Contents: Read and write</b> untuk repo koleksi buku Anda).
       </p>
-      <label class="field-label" style="margin-top:0;">Owner / Username</label>
-      <input type="text" id="tokenModalOwnerInput" placeholder="mis. winway94">
-      <label class="field-label">Repository Name</label>
-      <input type="text" id="tokenModalRepoInput" placeholder="mis. maktabah-prayoga">
+      <label class="field-label" style="margin-top:0;">Token GitHub</label>
+      <input type="password" id="tokenModalInput" placeholder="ghp_... atau github_pat_...">
       <div id="tokenModalStatus" class="sync-status" style="margin-bottom:4px;"></div>
       <button class="btn btn-primary" id="tokenModalConnectBtn">Hubungkan</button>
     </div>
@@ -2223,9 +2221,6 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
-        <li><strong>v1.44.2</strong> — Sederhanakan teks indikator status sinkron di footer: 🟢 "Sinkron aktif" (tanpa detail nama repo) saat terhubung, 🔴 "Sinkron tidak berjalan" saat belum dikonfigurasi.</li>
-        <li><strong>v1.44.1</strong> — Update konfigurasi: <code>GITHUB_WORKER_URL</code> diarahkan ke endpoint Cloudflare Worker proxy GitHub yang aktif (<code>still-cake-b87c.edw-yoga1.workers.dev</code>). Tidak ada perubahan logika/fitur, hanya penyesuaian URL.</li>
-        <li><strong>v1.44.0</strong> — 🔒 Perombakan keamanan sinkronisasi GitHub: Token GitHub <strong>tidak lagi tersimpan di browser/kode</strong> sama sekali. Semua request sinkronisasi sekarang lewat Cloudflare Worker (reverse proxy) yang menyimpan token sebagai Secret Env di dasbornya. Modal "Hubungkan Sinkronisasi GitHub" diganti: field Token dihapus, digantikan Owner/Username & Repository Name. Indikator status footer disesuaikan (menampilkan nama repo yang tersambung, bukan status token). Mekanisme lama "token via parameter URL" turut dihapus karena sudah tidak relevan.</li>
         <li><strong>v1.43.1</strong> — Fix tata letak pagination di mobile sempit (&le;480px): tombol "Sebelumnya"/"Selanjutnya" tadinya berebut ruang sampai terpotong/wrap berantakan. Sekarang info "Halaman X dari Y" pindah ke baris sendiri di atas, 2 tombol sejajar rapi di bawahnya (lebar sama rata). Sudah diverifikasi pixel-precise, tidak overflow.</li>
         <li><strong>v1.43.0</strong> — Sugesti kata (autocomplete) yang ada di form Tambah Buku sekarang juga berlaku di <strong>modal Edit Buku</strong>, untuk 4 field yang sama: Penulis, Lokasi Rak, Penerbit, Pemilik Buku. Aktif begitu klik "Edit Buku" dan mulai ketik minimal 3 karakter.</li>
         <li><strong>v1.42.2</strong> — Tombol pagination "Sebelumnya"/"Selanjutnya" yang bisa diklik sekarang bergaya outline warna brand (border & teks coklat, model B) — bukan cuma muncul saat hover seperti sebelumnya. Tombol nonaktif tetap abu-abu pudar.</li>
@@ -2386,9 +2381,6 @@
   const saveBtn = document.getElementById("saveBtn");
   const cancelEditBtn = document.getElementById("cancelEditBtn");
   let editingBookId = null;
-  // URL sampul dari Google Books untuk ISBN yang sedang diisi di form Tambah Buku
-  // (dipakai sebagai fallback kalau Open Library tidak punya cover-nya).
-  let googleBooksCoverUrl = "";
   let currentDetailBookId = null;
   const detailModalOverlay = document.getElementById("detailModalOverlay");
   const detailModalCard = document.getElementById("detailModalCard");
@@ -2455,38 +2447,40 @@
   const aiResultBox = document.getElementById("aiResultBox");
   const GEMINI_KEY_STORAGE = "gemini_api_key_v1";
 
-  // ⚠️ CATATAN KEAMANAN ⚠️
-  // Key Gemini TIDAK LAGI disimpan di sisi klien. Semua panggilan ke Gemini
-  // sudah lewat GEMINI_WORKER_URL (Cloudflare Worker) yang menyimpan API key
-  // sebagai Secret Env di dasbor Worker -- browser tidak pernah menyentuh key asli.
-  const EMBEDDED_GEMINI_KEY = "";
+  // ⚠️ PERHATIAN KEAMANAN ⚠️
+  // Key di bawah ini TERTANAM di kode & terlihat oleh SIAPA SAJA yang membuka
+  // halaman ini. Siapa pun yang punya link ini bisa memakai key Gemini kamu
+  // (kuota/biaya pemakaian bisa terpakai oleh orang lain). Kalau curiga
+  // disalahgunakan, hapus/rotasi key ini lewat Google AI Studio kapan saja.
+  const EMBEDDED_GEMINI_KEY = "AQ.Ab8RN6K83AvUAT7xaCO9k_JyIgVghjMdpDLTpUbTzxE56iXSMA";
 
   // URL Cloudflare Worker (proxy) untuk panggilan Gemini AI. Worker yang
   // menyimpan & mengirim API key ke Google, browser tidak lagi kontak
   // Google langsung -- menghindari masalah auth/CORS di sisi browser.
   const GEMINI_WORKER_URL = "https://blue-glade-1eba.edw-yoga1.workers.dev";
 
-  // URL Cloudflare Worker (reverse proxy) untuk sinkronisasi GitHub. Worker
-  // ini yang menyimpan GITHUB_TOKEN sebagai Secret Env & meneruskan request
-  // GET/PUT ke api.github.com -- browser tidak pernah memegang token GitHub.
-  const GITHUB_WORKER_URL = "https://still-cake-b87e.edw-yoga1.workers.dev";
-
   const GOOGLE_BOOKS_KEY_STORAGE = "maktabah_google_books_key";
-  // ⚠️ CATATAN KEAMANAN ⚠️
-  // Key Google Books TIDAK LAGI ditanam di kode. Kalau kosong, pencarian ISBN
-  // otomatis jatuh ke mode tanpa key (fetchGoogleBooks() sudah punya fallback).
-  const EMBEDDED_GOOGLE_BOOKS_KEY = "";
+  // ⚠️ PERHATIAN KEAMANAN ⚠️
+  // Sama seperti key Gemini & token GitHub di atas: key ini TERTANAM di kode
+  // & terlihat oleh siapa saja yang membuka halaman ini (lewat "View Page
+  // Source"). Sudah berupa API key resmi dari Google Cloud Console (format
+  // "AIzaSy..."), dibatasi ke Books API. Kode di bawah tetap punya fallback
+  // otomatis ke pencarian tanpa key kalau suatu saat key ini dinonaktifkan.
+  const EMBEDDED_GOOGLE_BOOKS_KEY = "AIzaSyCHHb6v2Jnv7O5w8eCi6vKtEVBzK1SWVos";
 
   const GH_CONFIG_KEY = "github_sync_config_v1";
   let ghConfig = null;
 
-  // Konfigurasi default repo GitHub untuk sinkronisasi. Ini BUKAN rahasia --
-  // hanya nama owner/repo (publik/terbuka layaknya URL repo GitHub biasa).
-  // Token otentikasi tidak lagi ada di sini sama sekali; token disimpan HANYA
-  // sebagai Secret Env (GITHUB_TOKEN) di dasbor Cloudflare Worker (GITHUB_WORKER_URL).
+  // ⚠️ PERHATIAN KEAMANAN ⚠️
+  // Token di bawah ini TERTANAM di kode & akan terlihat oleh SIAPA SAJA yang
+  // membuka halaman ini (lewat "View Page Source"). Siapa pun yang punya link
+  // ini bisa memakai token tsb untuk menulis/menghapus isi repo GitHub kamu.
+  // Gunakan HANYA fine-grained token yang scope-nya dibatasi ke SATU repo ini
+  // saja (izin Contents: Read and write, tanpa akses repo lain), dan rotasi
+  // (ganti) token ini secara berkala lewat GitHub Settings.
   const EMBEDDED_GH_CONFIG = {
-    owner: "winway94",          // username/organisasi pemilik repo
-    repo: "maktabah-prayoga",   // nama repo
+    token: "",  // Token akan diambil dari localStorage (via URL parameter)
+    repo: "winway94/maktabah-prayoga",          // format: username/nama-repo
     path: "books.json",
     branch: "main"
   };
@@ -2503,8 +2497,8 @@
   function saveBooks(){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
     // Auto-sync: setiap kali data buku berubah (tambah/edit/hapus), langsung
-    // push ke GitHub (lewat Worker proxy) di latar belakang kalau config repo sudah diisi.
-    if(ghConfig && ghConfig.owner && ghConfig.repo){
+    // push ke GitHub di latar belakang kalau config & token sudah aktif.
+    if(ghConfig && ghConfig.token && ghConfig.repo){
       pushToGithub();
     }
   }
@@ -2587,16 +2581,13 @@
         const coverUrlRow = b.isbn
           ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-M.jpg?default=false"
           : "";
-        // Google Books diprioritaskan: sampul Open Library sering kosong untuk buku terbitan Indonesia.
-        const coverFallbackRow = (b.sampulUrl && coverUrlRow) ? coverUrlRow : "";
         const fallbackId = "coverFallbackRow_" + b.id;
+        const onErrorJsRow = "this.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; }";
+        const onLoadJsRow = "if(this.naturalWidth<=1||this.naturalHeight<=1){ this.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; } }";
         let coverCellHtml = "";
-        if(coverUrlRow || b.sampulUrl){
-          // Sama seperti buildCoverHtml: hanya sampul Google Books yang di-proxy lewat weserv.nl.
-          // Open Library dibiarkan mentah supaya deteksi placeholder 1x1px tetap akurat.
-          const coverSrcRow = b.sampulUrl ? optimizeCoverUrl(b.sampulUrl, 120) : coverUrlRow;
+        if(coverUrlRow){
           coverCellHtml =
-            '<img class="row-cover-img" src="' + coverSrcRow + '" data-fallback-cover="' + escapeHtml(coverFallbackRow) + '" alt="Sampul buku" loading="lazy" onerror="handleCoverImgError(this,\'' + fallbackId + '\')" onload="handleCoverImgLoad(this,\'' + fallbackId + '\')">' +
+            '<img class="row-cover-img" src="' + coverUrlRow + '" alt="Sampul buku" loading="lazy" onerror="' + onErrorJsRow + '" onload="' + onLoadJsRow + '">' +
             '<div class="book-grid-cover-fallback" id="' + fallbackId + '" style="display:none;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
         } else {
           coverCellHtml = '<div class="book-grid-cover-fallback" id="' + fallbackId + '" style="display:flex;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
@@ -2675,59 +2666,17 @@
 
   const FALLBACK_ICON_SVG = '<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg>';
 
-  // ---------- Helper: optimasi gambar sampul lewat images.weserv.nl ----------
-  // Menyeragamkan lebar & mengonversi ke WebP (jauh lebih ringan dari JPG/PNG asli
-  // dari Open Library/Google Books), supaya hemat kuota data & lebih cepat di HP.
-  // `width` disesuaikan per konteks tampilan (kartu grid kecil vs cover modal besar dst).
-  function optimizeCoverUrl(url, width){
-    if(!url) return "";
-    const w = width || 120;
-    return "https://images.weserv.nl/?url=" + encodeURIComponent(url) + "&w=" + w + "&output=webp";
-  }
-
-  // ---------- Helper global: fallback sampul berjenjang ----------
-  // Urutan: gambar utama (biasanya Open Library) -> data-fallback-cover (Google Books, kalau ada) -> ikon placeholder.
-  // Dipasang di window karena dipanggil dari atribut onerror/onload di dalam string HTML (di luar closure ini).
-  window.handleCoverImgError = function(imgEl, fallbackId, hideParent){
-    const nextUrl = imgEl.getAttribute("data-fallback-cover");
-    if(nextUrl){
-      // Masih ada 1 sumber cadangan (Google Books) yang belum dicoba -> coba itu dulu.
-      imgEl.removeAttribute("data-fallback-cover");
-      imgEl.src = nextUrl;
-      return;
-    }
-    const hideEl = hideParent ? imgEl.parentNode : imgEl;
-    hideEl.style.display = "none";
-    const fb = fallbackId ? document.getElementById(fallbackId) : imgEl.nextElementSibling;
-    if(fb) fb.style.display = "flex";
-  };
-  window.handleCoverImgLoad = function(imgEl, fallbackId, hideParent){
-    // Open Library kadang tidak mengirim 404 untuk cover yang tidak ada,
-    // tapi malah gambar placeholder kosong berukuran sangat kecil (1x1 px).
-    if(imgEl.naturalWidth <= 1 || imgEl.naturalHeight <= 1){
-      window.handleCoverImgError(imgEl, fallbackId, hideParent);
-    }
-  };
-
   // ---------- Helper: bangun HTML cover + fallback (dipakai grid utama & carousel) ----------
   function buildCoverHtml(book, fallbackId, imgClass, fallbackClass){
-    const olUrl = book.isbn
+    const coverUrl = book.isbn
       ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(book.isbn) + "-M.jpg?default=false"
       : "";
-    const gbUrl = book.sampulUrl || "";
-    // Google Books diprioritaskan: sampul Open Library sering kosong untuk buku terbitan Indonesia.
-    const primaryUrl = gbUrl || olUrl;
-    const secondaryUrl = (gbUrl && olUrl) ? olUrl : "";
-    if(!primaryUrl){
+    if(!coverUrl){
       return '<div class="' + fallbackClass + '" id="' + fallbackId + '" style="display:flex;">' + FALLBACK_ICON_SVG + '</div>';
     }
-    // PENTING: hanya URL Google Books yang dioptimasi lewat weserv.nl. URL Open Library
-    // sengaja dibiarkan mentah/tidak di-proxy, karena weserv akan me-resize APA PUN sumbernya
-    // (termasuk placeholder 200-OK 1x1px milik Open Library) menjadi ukuran yang diminta --
-    // itu akan merusak deteksi naturalWidth<=1 di handleCoverImgLoad.
-    const primaryOpt = (primaryUrl === gbUrl) ? optimizeCoverUrl(gbUrl, 120) : primaryUrl;
-    const secondaryOpt = (secondaryUrl === gbUrl) ? optimizeCoverUrl(gbUrl, 120) : secondaryUrl;
-    return '<img class="' + imgClass + '" src="' + primaryOpt + '" data-fallback-cover="' + escapeHtml(secondaryOpt) + '" alt="Sampul buku" loading="lazy" onerror="handleCoverImgError(this,\'' + fallbackId + '\')" onload="handleCoverImgLoad(this,\'' + fallbackId + '\')">' +
+    const onErrorJs = "this.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; }";
+    const onLoadJs = "if(this.naturalWidth<=1||this.naturalHeight<=1){ this.style.display='none'; var fb=document.getElementById('" + fallbackId + "'); if(fb){ fb.style.display='flex'; } }";
+    return '<img class="' + imgClass + '" src="' + coverUrl + '" alt="Sampul buku" loading="lazy" onerror="' + onErrorJs + '" onload="' + onLoadJs + '">' +
            '<div class="' + fallbackClass + '" id="' + fallbackId + '" style="display:none;">' + FALLBACK_ICON_SVG + '</div>';
   }
 
@@ -3167,20 +3116,19 @@
 
     // ---------- Cover foto otomatis dari Open Library (gratis, tanpa API key, tanpa simpan lokal) ----------
     // Dibangun via concatenation string (bukan nested backtick) untuk menghindari syntax error.
-    const coverUrlOl = book.isbn
+    const coverUrl = book.isbn
       ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(book.isbn) + "-M.jpg?default=false"
       : "";
-    // OL (primary di sini) tetap raw supaya deteksi placeholder 1x1px akurat;
-    // Google Books (fallback) yang dioptimasi lewat weserv.nl.
-    const coverUrl = coverUrlOl || optimizeCoverUrl(book.sampulUrl || "", 220);
-    const coverFallback = (coverUrlOl && book.sampulUrl) ? optimizeCoverUrl(book.sampulUrl, 220) : "";
+
+    const onErrorJs = "this.parentNode.style.display='none'; var fb=document.getElementById('coverFallbackBox'); if(fb){ fb.style.display='flex'; }";
+    const onLoadJs = "if(this.naturalWidth<=1||this.naturalHeight<=1){ this.parentNode.style.display='none'; var fb=document.getElementById('coverFallbackBox'); if(fb){ fb.style.display='flex'; } }";
 
     let coverBlockHtml = "";
     if(coverUrl){
       coverBlockHtml =
         '<div class="cover-photo-row">' +
           '<div class="cover-photo-wrap">' +
-            '<img class="cover-photo-img" src="' + coverUrl + '" data-fallback-cover="' + escapeHtml(coverFallback) + '" alt="Sampul buku" onerror="handleCoverImgError(this,\'coverFallbackBox\',true)" onload="handleCoverImgLoad(this,\'coverFallbackBox\',true)">' +
+            '<img class="cover-photo-img" src="' + coverUrl + '" alt="Sampul buku" onerror="' + onErrorJs + '" onload="' + onLoadJs + '">' +
           '</div>' +
           '<div class="cover-fallback-box" id="coverFallbackBox" style="display:none;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>' +
         '</div>';
@@ -3498,21 +3446,19 @@
     if(e.target === aiResultModalOverlay) closeAiResultModal();
   });
 
-  // ---------- Modal Pengaturan Repository GitHub ----------
+  // ---------- Modal Hubungkan Token GitHub ----------
   const tokenModalOverlay = document.getElementById("tokenModalOverlay");
   const tokenModalClose = document.getElementById("tokenModalClose");
-  const tokenModalOwnerInput = document.getElementById("tokenModalOwnerInput");
-  const tokenModalRepoInput = document.getElementById("tokenModalRepoInput");
+  const tokenModalInput = document.getElementById("tokenModalInput");
   const tokenModalStatus = document.getElementById("tokenModalStatus");
   const tokenModalConnectBtn = document.getElementById("tokenModalConnectBtn");
 
   function openTokenModal(){
-    tokenModalOwnerInput.value = (ghConfig && ghConfig.owner) || "";
-    tokenModalRepoInput.value = (ghConfig && ghConfig.repo) || "";
+    tokenModalInput.value = "";
     tokenModalStatus.textContent = "";
     tokenModalStatus.className = "sync-status";
     tokenModalOverlay.classList.add("open");
-    setTimeout(()=> tokenModalOwnerInput.focus(), 100);
+    setTimeout(()=> tokenModalInput.focus(), 100);
   }
   function closeTokenModal(){
     tokenModalOverlay.classList.remove("open");
@@ -3534,47 +3480,41 @@
   });
 
   async function connectGithubToken(){
-    const owner = tokenModalOwnerInput.value.trim();
-    const repo = tokenModalRepoInput.value.trim();
-    if(!owner || !repo){
-      tokenModalStatus.textContent = "Owner dan Repository wajib diisi.";
-      tokenModalStatus.className = "sync-status status-err";
-      return;
-    }
-    if(!GITHUB_WORKER_URL || GITHUB_WORKER_URL.includes("username.workers.dev")){
-      tokenModalStatus.textContent = "URL Cloudflare Worker GitHub belum diatur di kode aplikasi.";
+    const token = tokenModalInput.value.trim();
+    if(!token){
+      tokenModalStatus.textContent = "Token tidak boleh kosong.";
       tokenModalStatus.className = "sync-status status-err";
       return;
     }
 
     tokenModalConnectBtn.disabled = true;
-    tokenModalStatus.textContent = "Menyimpan & memeriksa koneksi...";
+    tokenModalStatus.textContent = "Memeriksa token...";
     tokenModalStatus.className = "sync-status status-loading";
 
-    // Simpan konfigurasi repo baru (tanpa token -- otentikasi sudah ditangani
-    // sepenuhnya oleh Cloudflare Worker lewat Secret Env GITHUB_TOKEN).
-    saveGhConfig({
-      owner: owner,
-      repo: repo,
-      path: EMBEDDED_GH_CONFIG.path,
-      branch: EMBEDDED_GH_CONFIG.branch,
-      sha: null
-    });
+    // Hapus config lama supaya sisa token expired/salah tidak nyangkut,
+    // sama seperti alur checkTokenFromURL() -- lalu simpan token baru.
+    localStorage.removeItem(GH_CONFIG_KEY);
+    localStorage.setItem("maktabah_github_token", token);
+    loadGhConfig();
 
-    // Validasi koneksi lewat Worker proxy (tidak perlu header Authorization
-    // di sisi klien sama sekali -- Worker yang menyisipkan token GitHub).
+    // Validasi token dulu secara terpisah (fetchFromGithub() menelan error-nya
+    // sendiri lewat setSyncStatus, jadi tidak bisa dijadikan patokan sukses/gagal
+    // di sini). Kalau token salah/tidak punya akses, request ini akan gagal jelas.
     try{
-      const testRes = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}`, { headers: ghHeaders() });
+      const testRes = await fetch(
+        `https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}?ref=${encodeURIComponent(ghConfig.branch)}`,
+        { headers: ghHeaders() }
+      );
 
       if(testRes.status === 401 || testRes.status === 403){
-        throw new Error("Worker proxy tidak punya akses ke repo ini (cek Secret Env GITHUB_TOKEN di Worker).");
+        throw new Error("Token tidak valid atau tidak punya akses ke repo ini.");
       }
       if(!testRes.ok && testRes.status !== 404){
         const errBody = await testRes.json().catch(()=>({}));
         throw new Error(errBody.message || ("HTTP " + testRes.status));
       }
 
-      // 200 = file ada, 404 = repo ada tapi file belum ada, dua-duanya OK
+      // Token valid (200 = file ada, 404 = repo ada tapi file belum ada, dua-duanya OK)
       tokenModalStatus.textContent = "Menyinkronkan...";
       await fetchFromGithub();
 
@@ -3583,8 +3523,9 @@
       showToast("✔ Sinkronisasi GitHub berhasil terhubung!", "success");
       setTimeout(closeTokenModal, 1200);
     }catch(err){
-      // Gagal -- bersihkan lagi supaya tidak nyangkut sebagai "terhubung" palsu
+      // Token gagal -- bersihkan lagi supaya tidak nyangkut sebagai "terhubung" palsu
       localStorage.removeItem(GH_CONFIG_KEY);
+      localStorage.removeItem("maktabah_github_token");
       loadGhConfig();
       tokenModalStatus.textContent = "Gagal terhubung: " + err.message;
       tokenModalStatus.className = "sync-status status-err";
@@ -3594,7 +3535,7 @@
   }
 
   tokenModalConnectBtn.addEventListener("click", connectGithubToken);
-  tokenModalRepoInput.addEventListener("keydown", (e)=>{
+  tokenModalInput.addEventListener("keydown", (e)=>{
     if(e.key === "Enter") connectGithubToken();
   });
 
@@ -3615,13 +3556,13 @@
       ghConfig = raw ? JSON.parse(raw) : null;
     }catch(e){ ghConfig = null; }
 
-    // Jika belum ada config di localStorage, pakai default dari EMBEDDED_GH_CONFIG.
-    // Tidak ada token yang disimpan/diambil di sisi klien sama sekali -- otentikasi
-    // sepenuhnya ditangani oleh Cloudflare Worker (GITHUB_WORKER_URL) lewat Secret Env.
+    // Jika belum ada config di localStorage, buat dari EMBEDDED_GH_CONFIG
+    // tapi ambil token dari localStorage (yang sudah disimpan via URL parameter)
     if(!ghConfig){
-      if(EMBEDDED_GH_CONFIG.owner && EMBEDDED_GH_CONFIG.repo){
+      const storedToken = localStorage.getItem("maktabah_github_token") || "";
+      if(storedToken || (EMBEDDED_GH_CONFIG.repo && EMBEDDED_GH_CONFIG.branch)){
         ghConfig = {
-          owner: EMBEDDED_GH_CONFIG.owner,
+          token: storedToken,
           repo: EMBEDDED_GH_CONFIG.repo,
           path: EMBEDDED_GH_CONFIG.path,
           branch: EMBEDDED_GH_CONFIG.branch,
@@ -3636,15 +3577,13 @@
   function renderSyncIndicator(){
     const el = document.getElementById("syncIndicator");
     if(!el) return;
-    // "Terhubung" sekarang berarti: konfigurasi owner + repo sudah terisi.
-    // Otentikasi aman ditangani penuh oleh Cloudflare Worker (proxy), bukan browser.
-    const terhubung = !!(ghConfig && ghConfig.owner && ghConfig.repo);
+    const terhubung = !!(ghConfig && ghConfig.token);
     if(terhubung){
       el.className = "sync-indicator connected";
-      el.innerHTML = '<span class="dot"></span>Sinkron aktif';
+      el.innerHTML = '<span class="dot"></span>Sinkronisasi terhubung';
     } else {
       el.className = "sync-indicator disconnected";
-      el.innerHTML = '<span class="dot"></span>Sinkron tidak berjalan — <a href="#" id="openTokenModalLink">atur repository &rarr;</a>';
+      el.innerHTML = '<span class="dot"></span>Sinkronisasi tidak terhubung — <a href="#" id="openTokenModalLink">hubungkan sekarang &rarr;</a>';
     }
   }
 
@@ -3671,9 +3610,8 @@
   }
 
   function ghHeaders(){
-    // Tidak ada lagi header Authorization di sisi klien -- token GitHub
-    // disisipkan oleh Cloudflare Worker (GITHUB_WORKER_URL) dari Secret Env-nya.
     return {
+      "Authorization": "Bearer " + ghConfig.token,
       "Accept": "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28"
     };
@@ -3681,9 +3619,7 @@
 
   function ghApiUrl(){
     const cleanPath = ghConfig.path.replace(/^\/+/, "");
-    // Menembak Cloudflare Worker (reverse proxy), bukan api.github.com langsung.
-    // Worker meneruskan request ini ke GitHub sambil menambahkan token secara aman.
-    return `${GITHUB_WORKER_URL}/repos/${ghConfig.owner}/${ghConfig.repo}/contents/${cleanPath}`;
+    return `https://api.github.com/repos/${ghConfig.repo}/contents/${cleanPath}`;
   }
 
   async function fetchFromGithub(){
@@ -3722,7 +3658,7 @@
   }
 
   async function pushToGithub(){
-    if(!ghConfig || !ghConfig.owner || !ghConfig.repo) return;
+    if(!ghConfig || !ghConfig.token || !ghConfig.repo) return;
     setSyncStatus("Menyinkronkan ke GitHub...", "loading");
     try{
       const body = {
@@ -3798,14 +3734,11 @@
     const BOOK_SVG_ICON = '<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg>';
 
     searchSuggestBox.innerHTML = matches.map(b=>{
-      const coverUrlOlS = b.isbn
+      const coverUrl = b.isbn
         ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-S.jpg?default=false"
         : "";
-      // OL (primary) tetap raw untuk deteksi placeholder 1x1px; Google Books (fallback) dioptimasi.
-      const coverUrl = coverUrlOlS || optimizeCoverUrl(b.sampulUrl || "", 64);
-      const coverFallbackS = (coverUrlOlS && b.sampulUrl) ? optimizeCoverUrl(b.sampulUrl, 64) : "";
       const coverHtml = coverUrl
-        ? '<img class="search-suggest-cover-img" src="' + coverUrl + '" data-fallback-cover="' + escapeHtml(coverFallbackS) + '" alt="" loading="lazy" onerror="handleCoverImgError(this,null)" onload="handleCoverImgLoad(this,null)">' +
+        ? '<img class="search-suggest-cover-img" src="' + coverUrl + '" alt="" loading="lazy" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
           '<span class="search-suggest-fallback-icon" style="display:none;">' + BOOK_SVG_ICON + '</span>'
         : BOOK_SVG_ICON;
       return '<div class="search-suggest-item" data-suggest-id="' + b.id + '">' +
@@ -3904,34 +3837,21 @@
   setupFieldAutocomplete("pemilik", "pemilikSuggest", "pemilik");
 
   // ---------- Save new book ----------
-  function updateCoverPreview(isbn, fallbackUrl){
+  function updateCoverPreview(isbn){
     const row = document.getElementById("coverPreviewRow");
     const img = document.getElementById("coverPreviewImg");
     const wrap = document.getElementById("coverPreviewWrap");
     const fallback = document.getElementById("coverPreviewFallback");
     if(!row || !img || !wrap || !fallback) return;
-    if(!isbn && !fallbackUrl){
+    if(!isbn){
       row.style.display = "none";
       img.removeAttribute("src");
       return;
     }
-
-    // Sumber sampul: coba Open Library dulu (dari ISBN), kalau gagal/tidak ada
-    // baru coba sampul dari Google Books (hasil tangkapan lookupISBN), baru ikon.
-    const olUrl = isbn ? ("https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-M.jpg?default=false") : "";
-    const primaryUrl = olUrl || fallbackUrl || "";
-    let triedFallback = !olUrl; // kalau tidak ada URL Open Library, anggap fallback sudah "dipakai" duluan
-    if(!primaryUrl) return;
-
     row.style.display = "flex";
     wrap.style.display = "none";
     fallback.style.display = "none";
     img.onerror = function(){
-      if(!triedFallback && fallbackUrl){
-        triedFallback = true;
-        img.src = optimizeCoverUrl(fallbackUrl, 200);
-        return;
-      }
       wrap.style.display = "none";
       fallback.style.display = "flex";
     };
@@ -3940,13 +3860,14 @@
       // tapi malah gambar placeholder kosong berukuran sangat kecil (1x1 px).
       // Deteksi itu dan perlakukan sebagai "tidak ditemukan".
       if(img.naturalWidth <= 1 || img.naturalHeight <= 1){
-        img.onerror();
+        wrap.style.display = "none";
+        fallback.style.display = "flex";
         return;
       }
       wrap.style.display = "block";
       fallback.style.display = "none";
     };
-    img.src = olUrl ? olUrl : optimizeCoverUrl(primaryUrl, 200);
+    img.src = "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-M.jpg?default=false";
   }
 
   function resetForm(){
@@ -3963,7 +3884,6 @@
     halamanTerakhirInput.value = "";
     peminjamInput.value = "";
     tanggalPinjamInput.value = "";
-    googleBooksCoverUrl = "";
     updateCoverPreview("");
     document.querySelector('input[value="belum"]').checked = true;
     labelBelum.classList.add("checked");
@@ -4008,9 +3928,7 @@
       halamanTerakhir: halamanTerakhirInput.value.trim(),
       status: statusVal,
       peminjam: statusVal === 'dipinjam' ? peminjamInput.value.trim() : "",
-      tanggalPinjam: statusVal === 'dipinjam' ? tanggalPinjamInput.value : "",
-      // Sampul dari Google Books (kalau ada), dipakai sebagai fallback bila Open Library tidak punya cover-nya.
-      sampulUrl: googleBooksCoverUrl || ""
+      tanggalPinjam: statusVal === 'dipinjam' ? tanggalPinjamInput.value : ""
     };
 
     if(editingBookId){
@@ -4079,9 +3997,6 @@
       isbnInput.value = cleanedValue;
       isbnInput.setSelectionRange(validCharsBeforeCursor, validCharsBeforeCursor);
     }
-
-    // ISBN berubah -> sampul Google Books yang lama (dari ISBN sebelumnya) sudah tidak relevan.
-    googleBooksCoverUrl = "";
 
     clearTimeout(lookupDebounce);
     const val = isbnInput.value.trim();
@@ -4177,21 +4092,6 @@
           }
           if(info.publisher && !penerbitInput.value.trim()){
             penerbitInput.value = info.publisher;
-          }
-
-          // ---------- Ambil URL sampul (cover) dari imageLinks ----------
-          // Google Books mengirim URL http:// (bukan https://) dan kadang hanya
-          // menyediakan smallThumbnail; pakai thumbnail (lebih besar) kalau ada,
-          // fallback ke smallThumbnail, lalu paksa https agar tidak diblokir mixed-content.
-          const imageLinks = info.imageLinks || {};
-          const rawCoverUrl = imageLinks.thumbnail || imageLinks.smallThumbnail || "";
-          googleBooksCoverUrl = rawCoverUrl ? rawCoverUrl.replace(/^http:\/\//, "https://") : "";
-
-          // Segarkan preview di form: kalau ISBN yang sedang ditampilkan masih sama
-          // (tidak diketik ulang selama request berjalan), pakai cover Google Books
-          // ini sebagai fallback bila Open Library tidak punya sampulnya.
-          if(isbnInput.value.trim() === isbn){
-            updateCoverPreview(isbn, googleBooksCoverUrl);
           }
 
           setLookupStatus("✔ Data buku berhasil ditemukan &amp; diisi otomatis (Google Books).", "ok");
@@ -4315,10 +4215,8 @@
           stopScanner();
           const cleaned = isbnInput.value.trim();
           if(cleaned.length >= 10){
-            // Set langsung (bukan lewat event "input"), jadi reset manual di sini juga.
-            googleBooksCoverUrl = "";
-            updateCoverPreview(cleaned, "");
             lookupISBN(cleaned);
+            updateCoverPreview(cleaned);
           }
         },
         ()=>{ /* ignore per-frame scan errors */ }
@@ -4413,11 +4311,29 @@
     }
   }
 
+  // ---------- Token via URL Parameter ----------
+  function checkTokenFromURL(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get("token");
+    
+    if(tokenFromUrl){
+      // Hapus config GitHub lama supaya sisa token expired tidak nyangkut,
+      // langsung diganti token baru yang aktif.
+      localStorage.removeItem(GH_CONFIG_KEY);
+
+      // Simpan token ke localStorage
+      localStorage.setItem("maktabah_github_token", tokenFromUrl);
+      
+      // Bersihkan URL dari parameter token agar tidak terlihat di browser
+      window.history.replaceState({}, document.title, window.location.pathname);
+      
+      // Tampilkan notifikasi sukses
+      showToast("✔ Token GitHub berhasil tersimpan di perangkat ini!", "success");
+    }
+  }
+
   // ---------- Init ----------
-  // Catatan: mekanisme lama "token via URL parameter" sudah DIHAPUS.
-  // Token GitHub tidak lagi pernah disimpan di localStorage/browser sama sekali --
-  // seluruh otentikasi kini murni ditangani oleh Cloudflare Worker (GITHUB_WORKER_URL)
-  // lewat Secret Env di dasbornya.
+  checkTokenFromURL();  // Cek & simpan token dari URL (jika ada)
   loadBooks();
   renderTable();
   loadGhConfig();
@@ -4425,7 +4341,7 @@
   // JANGAN disable field di awal - hanya disable saat edit mode dimulai
   // setFormFieldsDisabled(true);  // ← DIHAPUS, tidak boleh disable semua di awal!
   
-  if(ghConfig && ghConfig.owner && ghConfig.repo){
+  if(ghConfig && ghConfig.token && ghConfig.repo){
     fetchFromGithub();
   }
 
