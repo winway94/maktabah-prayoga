@@ -392,5 +392,23 @@
     "status": "selesai",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhp3pbr1h5wo",
+    "createdAt": 1783854821367,
+    "isbn": "9786024260859",
+    "judul": "Purpose: Living in the Process",
+    "penulis": "Alamanda Shantika Santoso",
+    "kategori": "Pengembangan Diri & Edukasi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Bentang Pustaka",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
