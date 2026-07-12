@@ -1285,6 +1285,24 @@
     justify-content:center;
     gap: 12px;
     margin-top: 16px;
+    flex-wrap:wrap;
+  }
+  @media (max-width: 480px){
+    .pagination-bar{
+      gap: 8px;
+    }
+    .pagination-info{
+      order: -1;
+      flex-basis:100%;
+      text-align:center;
+      margin-bottom: 4px;
+    }
+    .pagination-bar button{
+      flex:1;
+      padding: 9px 10px;
+      font-size: 0.78rem;
+      white-space:nowrap;
+    }
   }
   .pagination-bar button{
     border: 1.5px solid var(--slate-200);
@@ -2167,7 +2185,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.42.2</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.43.1</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -2203,6 +2221,8 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.43.1</strong> — Fix tata letak pagination di mobile sempit (&le;480px): tombol "Sebelumnya"/"Selanjutnya" tadinya berebut ruang sampai terpotong/wrap berantakan. Sekarang info "Halaman X dari Y" pindah ke baris sendiri di atas, 2 tombol sejajar rapi di bawahnya (lebar sama rata). Sudah diverifikasi pixel-precise, tidak overflow.</li>
+        <li><strong>v1.43.0</strong> — Sugesti kata (autocomplete) yang ada di form Tambah Buku sekarang juga berlaku di <strong>modal Edit Buku</strong>, untuk 4 field yang sama: Penulis, Lokasi Rak, Penerbit, Pemilik Buku. Aktif begitu klik "Edit Buku" dan mulai ketik minimal 3 karakter.</li>
         <li><strong>v1.42.2</strong> — Tombol pagination "Sebelumnya"/"Selanjutnya" yang bisa diklik sekarang bergaya outline warna brand (border & teks coklat, model B) — bukan cuma muncul saat hover seperti sebelumnya. Tombol nonaktif tetap abu-abu pudar.</li>
         <li><strong>v1.42.1</strong> — Klik "hubungkan sekarang" di indikator sinkronisasi sekarang membuka <strong>popup form</strong> untuk paste token GitHub langsung (bukan cuma link ke halaman GitHub). Token divalidasi dulu (dicek benar-benar aktif & punya akses) sebelum dianggap terhubung — kalau salah, muncul pesan error jelas & token yang gagal otomatis dibersihkan lagi (tidak nyangkut jadi "terhubung" palsu). Tidak mengubah logic sinkronisasi inti yang sudah ada.</li>
         <li><strong>v1.42.0</strong> — Tambah sugesti kata (autocomplete) di form Tambah Buku untuk 4 field: Penulis, Lokasi Rak, Penerbit, Pemilik Buku. Ketik minimal 3 karakter, muncul dropdown berisi nilai yang sudah pernah dipakai di buku lain (bagian yang cocok ditebalkan), klik untuk langsung isi otomatis. Membantu jaga konsistensi data (mis. nama penulis/rak tidak ketik beda-beda tiap kali).</li>
@@ -3142,7 +3162,10 @@
       <input type="text" class="detail-input" id="modalJudul" value="${escapeHtml(book.judul || "")}" disabled>
 
       <label class="field-label">Penulis</label>
-      <input type="text" class="detail-input" id="modalPenulis" value="${escapeHtml(book.penulis || "")}" disabled>
+      <div class="autocomplete-wrap">
+        <input type="text" class="detail-input" id="modalPenulis" value="${escapeHtml(book.penulis || "")}" autocomplete="off" disabled>
+        <div class="autocomplete-suggest" id="modalPenulisSuggest" style="display:none;"></div>
+      </div>
 
       ${pillRowHtml}
 
@@ -3194,13 +3217,22 @@
       <input type="text" class="detail-input" id="modalIsbn" value="${escapeHtml(book.isbn || "")}" disabled>
 
       <label class="field-label">Lokasi Rak</label>
-      <input type="text" class="detail-input" id="modalLokasiRak" value="${escapeHtml(book.lokasiRak || "")}" disabled>
+      <div class="autocomplete-wrap">
+        <input type="text" class="detail-input" id="modalLokasiRak" value="${escapeHtml(book.lokasiRak || "")}" autocomplete="off" disabled>
+        <div class="autocomplete-suggest" id="modalLokasiRakSuggest" style="display:none;"></div>
+      </div>
 
       <label class="field-label">Penerbit</label>
-      <input type="text" class="detail-input" id="modalPenerbit" value="${escapeHtml(book.penerbit || "")}" disabled>
+      <div class="autocomplete-wrap">
+        <input type="text" class="detail-input" id="modalPenerbit" value="${escapeHtml(book.penerbit || "")}" autocomplete="off" disabled>
+        <div class="autocomplete-suggest" id="modalPenerbitSuggest" style="display:none;"></div>
+      </div>
 
       <label class="field-label">Pemilik Buku</label>
-      <input type="text" class="detail-input" id="modalPemilik" value="${escapeHtml(book.pemilik || "")}" disabled>
+      <div class="autocomplete-wrap">
+        <input type="text" class="detail-input" id="modalPemilik" value="${escapeHtml(book.pemilik || "")}" autocomplete="off" disabled>
+        <div class="autocomplete-suggest" id="modalPemilikSuggest" style="display:none;"></div>
+      </div>
 
       <label class="field-label">Halaman Terakhir Dibaca</label>
       <input type="text" class="detail-input" id="modalHalamanTerakhir" value="${escapeHtml(book.halamanTerakhir || "")}" disabled>
@@ -3250,6 +3282,12 @@
     const fields = detailModalBody.querySelectorAll('.detail-input');
     fields.forEach(f => { f.disabled = false; });
     detailModalBody.querySelectorAll('#modalStatusToggle input[type="radio"]').forEach(r => { r.disabled = false; });
+
+    // Sugesti kata (autocomplete) sama seperti di form Tambah Buku
+    setupFieldAutocomplete("modalPenulis", "modalPenulisSuggest", "penulis");
+    setupFieldAutocomplete("modalLokasiRak", "modalLokasiRakSuggest", "lokasiRak");
+    setupFieldAutocomplete("modalPenerbit", "modalPenerbitSuggest", "penerbit");
+    setupFieldAutocomplete("modalPemilik", "modalPemilikSuggest", "pemilik");
 
     const modalIsbnField = document.getElementById("modalIsbn");
     if(modalIsbnField){
