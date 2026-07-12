@@ -374,5 +374,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhp15ej36a7o",
+    "createdAt": 1783854702235,
+    "isbn": "9789794336113",
+    "judul": "Wikileaks situs paling berbahaya di dunia",
+    "penulis": "Haris Priyatna",
+    "kategori": "Teknologi, Komputer & Coding",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "240",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
