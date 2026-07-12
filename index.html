@@ -2185,7 +2185,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.44.1</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.44.2</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -2223,6 +2223,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.44.2</strong> — Sederhanakan teks indikator status sinkron di footer: 🟢 "Sinkron aktif" (tanpa detail nama repo) saat terhubung, 🔴 "Sinkron tidak berjalan" saat belum dikonfigurasi.</li>
         <li><strong>v1.44.1</strong> — Update konfigurasi: <code>GITHUB_WORKER_URL</code> diarahkan ke endpoint Cloudflare Worker proxy GitHub yang aktif (<code>still-cake-b87c.edw-yoga1.workers.dev</code>). Tidak ada perubahan logika/fitur, hanya penyesuaian URL.</li>
         <li><strong>v1.44.0</strong> — 🔒 Perombakan keamanan sinkronisasi GitHub: Token GitHub <strong>tidak lagi tersimpan di browser/kode</strong> sama sekali. Semua request sinkronisasi sekarang lewat Cloudflare Worker (reverse proxy) yang menyimpan token sebagai Secret Env di dasbornya. Modal "Hubungkan Sinkronisasi GitHub" diganti: field Token dihapus, digantikan Owner/Username & Repository Name. Indikator status footer disesuaikan (menampilkan nama repo yang tersambung, bukan status token). Mekanisme lama "token via parameter URL" turut dihapus karena sudah tidak relevan.</li>
         <li><strong>v1.43.1</strong> — Fix tata letak pagination di mobile sempit (&le;480px): tombol "Sebelumnya"/"Selanjutnya" tadinya berebut ruang sampai terpotong/wrap berantakan. Sekarang info "Halaman X dari Y" pindah ke baris sendiri di atas, 2 tombol sejajar rapi di bawahnya (lebar sama rata). Sudah diverifikasi pixel-precise, tidak overflow.</li>
@@ -2468,7 +2469,7 @@
   // URL Cloudflare Worker (reverse proxy) untuk sinkronisasi GitHub. Worker
   // ini yang menyimpan GITHUB_TOKEN sebagai Secret Env & meneruskan request
   // GET/PUT ke api.github.com -- browser tidak pernah memegang token GitHub.
-  const GITHUB_WORKER_URL = "https://still-cake-b87c.edw-yoga1.workers.dev";
+  const GITHUB_WORKER_URL = "https://still-cake-b87e.edw-yoga1.workers.dev";
 
   const GOOGLE_BOOKS_KEY_STORAGE = "maktabah_google_books_key";
   // ⚠️ CATATAN KEAMANAN ⚠️
@@ -3640,11 +3641,10 @@
     const terhubung = !!(ghConfig && ghConfig.owner && ghConfig.repo);
     if(terhubung){
       el.className = "sync-indicator connected";
-      el.innerHTML = '<span class="dot"></span>Tersambung aman via proxy — <a href="#" id="openTokenModalLink">' +
-        escapeHtml(ghConfig.owner + "/" + ghConfig.repo) + '</a>';
+      el.innerHTML = '<span class="dot"></span>Sinkron aktif';
     } else {
       el.className = "sync-indicator disconnected";
-      el.innerHTML = '<span class="dot"></span>Sinkronisasi tidak terhubung — <a href="#" id="openTokenModalLink">atur repository &rarr;</a>';
+      el.innerHTML = '<span class="dot"></span>Sinkron tidak berjalan — <a href="#" id="openTokenModalLink">atur repository &rarr;</a>';
     }
   }
 
