@@ -220,5 +220,23 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrhnnggd5qd8n",
+    "createdAt": 1783852383757,
+    "isbn": "9789795925392",
+    "judul": "Umar bin Abdul Aziz",
+    "penulis": "Ali Muhammad Ash-Shallabi",
+    "kategori": "Sejarah & Historiografi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "",
+    "pemilik": "",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": ""
   }
 ]
