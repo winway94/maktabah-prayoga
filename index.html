@@ -2073,8 +2073,8 @@
   </div>
 
   <footer>
-    <p>Data disimpan secara lokal di browser Anda (LocalStorage) — tidak dikirim ke server manapun.</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.40.2</strong></p>
+    <p>Data buku disimpan di browser (LocalStorage) & disinkron otomatis ke repo GitHub Anda. Ringkasan judul/penulis/kategori dikirim ke Gemini AI hanya saat Anda klik "Rekomendasi AI".</p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.40.3</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -2084,6 +2084,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.40.3</strong> — Teks footer "tidak dikirim ke server manapun" sudah tidak akurat sejak fitur GitHub Sync & AI ditambahkan — diperbaiki jadi jujur menjelaskan data disinkron ke GitHub & ringkasan dikirim ke Gemini saat fitur AI dipakai.</li>
         <li><strong>v1.40.2</strong> — Fix tata letak berantakan: toggle "Grid/Daftar" tadinya baris terpisah dengan margin negatif (-6px) yang bikin dempet ke judul "Koleksi Buku" di atasnya. Sekarang digabung jadi 1 baris sejajar (judul kiri, toggle kanan), rapi tanpa tumpang tindih.</li>
         <li><strong>v1.40.1</strong> — Fix bug tata letak kartu AI (v1.40.0): akar masalahnya CSS grid 5-kolom yang tidak pas jumlah track-nya di beberapa lebar layar, membuat kartu AI nyempil transparan di slot sempit. Sekarang kartu AI selalu jadi baris sendiri lebar penuh di bawah 4 kartu statistik — konsisten di semua ukuran layar. Warna juga diganti dari coklat brand jadi gradasi khas Gemini (biru-ungu-pink), lebih jelas menonjol sebagai fitur AI dan tidak tertukar dengan kartu statistik biasa. Ditambah subjudul "Ditenagai Gemini — klik untuk mulai".</li>
         <li><strong>v1.40.0</strong> — Kartu "Rekomendasi Buku AI" diintegrasikan jadi kartu ke-5 di baris statistik (bukan blok besar terpisah lagi) — solid coklat, ikon sparkle + "Rekomendasi AI". Hasil rekomendasi muncul dalam kotak di bawah baris statistik saat diklik. Di mobile, kartu AI otomatis pindah ke baris sendiri (lebar penuh).</li>
