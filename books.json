@@ -130,23 +130,5 @@
     "status": "selesai",
     "peminjam": "",
     "tanggalPinjam": ""
-  },
-  {
-    "id": "mrhn6dy62acwu",
-    "createdAt": 1783851587358,
-    "isbn": "9789791531818",
-    "judul": "Mencetak kader",
-    "penulis": "Manshur Salbu",
-    "kategori": "Agama & Pemikiran Islam",
-    "jenisBuku": "cetak",
-    "tahunTerbit": "2009",
-    "jumlahHalaman": "359",
-    "lokasiRak": "Bawah Tv",
-    "penerbit": "Optima",
-    "pemilik": "Edwin",
-    "halamanTerakhir": "",
-    "status": "selesai",
-    "peminjam": "",
-    "tanggalPinjam": ""
   }
 ]
