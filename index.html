@@ -1161,7 +1161,12 @@
     padding: 14px 16px 14px 42px;
     font-size: 0.95rem;
     border-radius: 14px;
-    box-shadow: var(--shadow);
+    border: 2px solid var(--brand-400);
+    box-shadow: 0 4px 14px rgba(122,62,21,0.14);
+  }
+  .search-wrap-top #searchInput:focus{
+    border-color: var(--brand-600);
+    box-shadow: 0 4px 16px rgba(122,62,21,0.22);
   }
   .search-wrap-top .search-icon{ left:16px; }
   @media (max-width: 640px){
@@ -1198,6 +1203,30 @@
     max-height: 320px;
     overflow-y:auto;
   }
+  .autocomplete-wrap{ position:relative; }
+  .autocomplete-suggest{
+    position:absolute;
+    top: calc(100% + 4px);
+    left:0;
+    right:0;
+    background: white;
+    border: 1px solid var(--slate-200);
+    border-radius: 10px;
+    box-shadow: var(--shadow-md);
+    z-index: 60;
+    max-height: 200px;
+    overflow-y:auto;
+  }
+  .autocomplete-item{
+    padding: 9px 14px;
+    font-size: 0.88rem;
+    color: var(--slate-800);
+    cursor:pointer;
+    border-bottom: 1px solid var(--slate-100);
+  }
+  .autocomplete-item:last-child{ border-bottom:none; }
+  .autocomplete-item:hover{ background: var(--brand-50); }
+  .autocomplete-item b{ color: var(--brand-700); }
   .search-suggest-item{
     display:flex;
     align-items:center;
@@ -1272,9 +1301,13 @@
     opacity: 0.4;
     cursor:not-allowed;
   }
-  .pagination-bar button:not(:disabled):hover{
-    border-color: var(--brand-500);
+  .pagination-bar button:not(:disabled){
+    border-color: var(--brand-600);
     color: var(--brand-700);
+  }
+  .pagination-bar button:not(:disabled):hover{
+    background: var(--brand-50);
+    border-color: var(--brand-700);
   }
   .pagination-info{
     font-size: 0.82rem;
@@ -1381,6 +1414,23 @@
     padding-bottom: 10px;
   }
   footer p{ margin: 0 0 4px; }
+  .sync-indicator{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-weight:600;
+  }
+  .sync-indicator .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    flex-shrink:0;
+  }
+  .sync-indicator.connected .dot{ background:#22c55e; }
+  .sync-indicator.connected{ color:#15803d; }
+  .sync-indicator.disconnected .dot{ background:#ef4444; }
+  .sync-indicator.disconnected{ color:#b91c1c; }
+  .sync-indicator a{ color:inherit; text-decoration:underline; text-underline-offset:2px; }
   .version-tag{
     color: var(--brand-700);
     font-weight:600;
@@ -1473,6 +1523,7 @@
     min-height: 18px;
     font-weight:600;
   }
+  #aiStatus:not(:empty){ margin-bottom: 18px; }
   .ai-result{
     margin-top: 14px;
     background: var(--brand-50);
@@ -1959,7 +2010,10 @@
       <input type="text" id="judul" placeholder="Judul buku">
 
       <label class="field-label">Penulis</label>
-      <input type="text" id="penulis" placeholder="Nama penulis">
+      <div class="autocomplete-wrap">
+        <input type="text" id="penulis" placeholder="Nama penulis" autocomplete="off">
+        <div class="autocomplete-suggest" id="penulisSuggest" style="display:none;"></div>
+      </div>
 
       <label class="field-label">Kategori</label>
       <select id="kategori">
@@ -2001,13 +2055,22 @@
       </div>
 
       <label class="field-label">Lokasi Rak</label>
-      <input type="text" id="lokasiRak" placeholder="cth: Rak A2 / Lemari Kamar">
+      <div class="autocomplete-wrap">
+        <input type="text" id="lokasiRak" placeholder="cth: Rak A2 / Lemari Kamar" autocomplete="off">
+        <div class="autocomplete-suggest" id="lokasiRakSuggest" style="display:none;"></div>
+      </div>
 
       <label class="field-label">Penerbit</label>
-      <input type="text" id="penerbit" placeholder="cth: Gramedia Pustaka Utama">
+      <div class="autocomplete-wrap">
+        <input type="text" id="penerbit" placeholder="cth: Gramedia Pustaka Utama" autocomplete="off">
+        <div class="autocomplete-suggest" id="penerbitSuggest" style="display:none;"></div>
+      </div>
 
       <label class="field-label">Pemilik Buku</label>
-      <input type="text" id="pemilik" placeholder="cth: Ayah / Ibu / Nama Anda">
+      <div class="autocomplete-wrap">
+        <input type="text" id="pemilik" placeholder="cth: Ayah / Ibu / Nama Anda" autocomplete="off">
+        <div class="autocomplete-suggest" id="pemilikSuggest" style="display:none;"></div>
+      </div>
 
       <label class="field-label">Halaman Terakhir Dibaca</label>
       <input type="text" id="halamanTerakhir" placeholder="cth: 120 (opsional)" inputmode="numeric">
@@ -2103,10 +2166,27 @@
   </div>
 
   <footer>
-    <p>Data buku disimpan di browser (LocalStorage) & disinkron otomatis ke repo GitHub Anda. Ringkasan judul/penulis/kategori dikirim ke Gemini AI hanya saat Anda klik "Rekomendasi AI".</p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.41.0</strong></p>
+    <p id="syncIndicator" class="sync-indicator"></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.42.2</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
+
+  <!-- MODAL HUBUNGKAN TOKEN GITHUB -->
+  <div class="modal-overlay" id="tokenModalOverlay">
+    <div class="modal-card" id="tokenModalCard">
+      <button class="modal-close" id="tokenModalClose" aria-label="Tutup">✕</button>
+      <h3 class="changelog-modal-title">🔗 Hubungkan Sinkronisasi GitHub</h3>
+      <p style="font-size:0.85rem; color:var(--slate-600); line-height:1.6; margin-bottom:14px;">
+        Tempel token GitHub Anda di bawah ini. Belum punya token?
+        <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer">Buat token baru &rarr;</a>
+        (pilih akses <b>Contents: Read and write</b> untuk repo koleksi buku Anda).
+      </p>
+      <label class="field-label" style="margin-top:0;">Token GitHub</label>
+      <input type="password" id="tokenModalInput" placeholder="ghp_... atau github_pat_...">
+      <div id="tokenModalStatus" class="sync-status" style="margin-bottom:4px;"></div>
+      <button class="btn btn-primary" id="tokenModalConnectBtn">Hubungkan</button>
+    </div>
+  </div>
 
   <!-- MODAL HASIL REKOMENDASI AI -->
   <div class="modal-overlay" id="aiResultModalOverlay">
@@ -2123,6 +2203,11 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.42.2</strong> — Tombol pagination "Sebelumnya"/"Selanjutnya" yang bisa diklik sekarang bergaya outline warna brand (border & teks coklat, model B) — bukan cuma muncul saat hover seperti sebelumnya. Tombol nonaktif tetap abu-abu pudar.</li>
+        <li><strong>v1.42.1</strong> — Klik "hubungkan sekarang" di indikator sinkronisasi sekarang membuka <strong>popup form</strong> untuk paste token GitHub langsung (bukan cuma link ke halaman GitHub). Token divalidasi dulu (dicek benar-benar aktif & punya akses) sebelum dianggap terhubung — kalau salah, muncul pesan error jelas & token yang gagal otomatis dibersihkan lagi (tidak nyangkut jadi "terhubung" palsu). Tidak mengubah logic sinkronisasi inti yang sudah ada.</li>
+        <li><strong>v1.42.0</strong> — Tambah sugesti kata (autocomplete) di form Tambah Buku untuk 4 field: Penulis, Lokasi Rak, Penerbit, Pemilik Buku. Ketik minimal 3 karakter, muncul dropdown berisi nilai yang sudah pernah dipakai di buku lain (bagian yang cocok ditebalkan), klik untuk langsung isi otomatis. Membantu jaga konsistensi data (mis. nama penulis/rak tidak ketik beda-beda tiap kali).</li>
+        <li><strong>v1.41.2</strong> — Tambah jarak antara status "Rekomendasi berhasil didapatkan" dan section "Buku Terbaru" di bawahnya (tadinya dempet). Kolom pencarian dibuat lebih menonjol: border coklat 2px + shadow lebih terasa, makin jelas saat difokuskan.</li>
+        <li><strong>v1.41.1</strong> — Teks footer statis diganti indikator status dinamis: 🟢 "Sinkronisasi terhubung" kalau token GitHub terdeteksi, 🔴 "Sinkronisasi tidak terhubung" + link langsung ke halaman buat token GitHub kalau belum ada.</li>
         <li><strong>v1.41.0</strong> — Hasil "Rekomendasi Buku AI" sekarang tampil sebagai **popup/modal** (bukan kotak yang nempel di halaman tanpa bisa ditutup lagi). Ada tombol ✕, bisa ditutup dengan klik di luar modal, atau tombol Escape — konsisten dengan modal Detail Buku & Riwayat Update.</li>
         <li><strong>v1.40.7</strong> — Fix akar masalah SESUNGGUHNYA kartu statistik tidak 2 kolom di HP tertentu (setelah investigasi mendalam bareng user, pakai tes pixel-precise berulang): teks panjang di kartu AI ("Ditenagai Gemini — klik untuk mulai") tidak bisa menyusut, memaksa <code>.main-grid</code> (grid utama halaman) melebar melebihi viewport. Ditambahkan <code>min-width:0</code> berlapis di 3 level (kartu individual, wrapper teks, dan grid item utama) — bug klasik CSS Grid yang memang butuh perbaikan bertingkat. Sudah diverifikasi ulang lewat pengukuran pixel-precise: kartu sekarang selalu muat rapi 2 kolom di layar sempit, tidak overflow.</li>
         <li><strong>v1.40.6</strong> — Fix presisi bottom nav mobile: tombol "Tambah" (FAB terangkat) sekarang diposisikan absolut benar-benar center (diverifikasi lewat pixel-check: selisih 0.5px dari tengah layar), tidak lagi mengandalkan distribusi flex yang jadi timpang sejak tombol "Beranda" dihapus.</li>
@@ -3323,11 +3408,105 @@
     if(e.target === aiResultModalOverlay) closeAiResultModal();
   });
 
+  // ---------- Modal Hubungkan Token GitHub ----------
+  const tokenModalOverlay = document.getElementById("tokenModalOverlay");
+  const tokenModalClose = document.getElementById("tokenModalClose");
+  const tokenModalInput = document.getElementById("tokenModalInput");
+  const tokenModalStatus = document.getElementById("tokenModalStatus");
+  const tokenModalConnectBtn = document.getElementById("tokenModalConnectBtn");
+
+  function openTokenModal(){
+    tokenModalInput.value = "";
+    tokenModalStatus.textContent = "";
+    tokenModalStatus.className = "sync-status";
+    tokenModalOverlay.classList.add("open");
+    setTimeout(()=> tokenModalInput.focus(), 100);
+  }
+  function closeTokenModal(){
+    tokenModalOverlay.classList.remove("open");
+  }
+
+  // Link "hubungkan sekarang" dibuat ulang tiap renderSyncIndicator(), jadi
+  // pakai event delegation di document supaya tetap kepasang listenernya.
+  document.addEventListener("click", (e)=>{
+    const link = e.target.closest("#openTokenModalLink");
+    if(link){
+      e.preventDefault();
+      openTokenModal();
+    }
+  });
+
+  tokenModalClose.addEventListener("click", closeTokenModal);
+  tokenModalOverlay.addEventListener("click", (e)=>{
+    if(e.target === tokenModalOverlay) closeTokenModal();
+  });
+
+  async function connectGithubToken(){
+    const token = tokenModalInput.value.trim();
+    if(!token){
+      tokenModalStatus.textContent = "Token tidak boleh kosong.";
+      tokenModalStatus.className = "sync-status status-err";
+      return;
+    }
+
+    tokenModalConnectBtn.disabled = true;
+    tokenModalStatus.textContent = "Memeriksa token...";
+    tokenModalStatus.className = "sync-status status-loading";
+
+    // Hapus config lama supaya sisa token expired/salah tidak nyangkut,
+    // sama seperti alur checkTokenFromURL() -- lalu simpan token baru.
+    localStorage.removeItem(GH_CONFIG_KEY);
+    localStorage.setItem("maktabah_github_token", token);
+    loadGhConfig();
+
+    // Validasi token dulu secara terpisah (fetchFromGithub() menelan error-nya
+    // sendiri lewat setSyncStatus, jadi tidak bisa dijadikan patokan sukses/gagal
+    // di sini). Kalau token salah/tidak punya akses, request ini akan gagal jelas.
+    try{
+      const testRes = await fetch(
+        `https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}?ref=${encodeURIComponent(ghConfig.branch)}`,
+        { headers: ghHeaders() }
+      );
+
+      if(testRes.status === 401 || testRes.status === 403){
+        throw new Error("Token tidak valid atau tidak punya akses ke repo ini.");
+      }
+      if(!testRes.ok && testRes.status !== 404){
+        const errBody = await testRes.json().catch(()=>({}));
+        throw new Error(errBody.message || ("HTTP " + testRes.status));
+      }
+
+      // Token valid (200 = file ada, 404 = repo ada tapi file belum ada, dua-duanya OK)
+      tokenModalStatus.textContent = "Menyinkronkan...";
+      await fetchFromGithub();
+
+      tokenModalStatus.textContent = "✔ Berhasil terhubung!";
+      tokenModalStatus.className = "sync-status status-ok";
+      showToast("✔ Sinkronisasi GitHub berhasil terhubung!", "success");
+      setTimeout(closeTokenModal, 1200);
+    }catch(err){
+      // Token gagal -- bersihkan lagi supaya tidak nyangkut sebagai "terhubung" palsu
+      localStorage.removeItem(GH_CONFIG_KEY);
+      localStorage.removeItem("maktabah_github_token");
+      loadGhConfig();
+      tokenModalStatus.textContent = "Gagal terhubung: " + err.message;
+      tokenModalStatus.className = "sync-status status-err";
+    }finally{
+      tokenModalConnectBtn.disabled = false;
+    }
+  }
+
+  tokenModalConnectBtn.addEventListener("click", connectGithubToken);
+  tokenModalInput.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter") connectGithubToken();
+  });
+
   document.addEventListener("keydown", (e)=>{
     if(e.key !== "Escape") return;
     if(detailModalOverlay.classList.contains("open")) closeDetailModal();
     if(changelogModalOverlay.classList.contains("open")) closeChangelogModal();
     if(aiResultModalOverlay.classList.contains("open")) closeAiResultModal();
+    if(tokenModalOverlay.classList.contains("open")) closeTokenModal();
     if(confirmDeleteOverlay.classList.contains("open")) closeConfirmDelete(false);
     if(filterDrawer && filterDrawer.classList.contains("open")) closeFilterDrawer();
   });
@@ -3352,6 +3531,21 @@
           sha: null
         };
       }
+    }
+    renderSyncIndicator();
+  }
+
+  // ---------- Indikator status koneksi sinkronisasi GitHub ----------
+  function renderSyncIndicator(){
+    const el = document.getElementById("syncIndicator");
+    if(!el) return;
+    const terhubung = !!(ghConfig && ghConfig.token);
+    if(terhubung){
+      el.className = "sync-indicator connected";
+      el.innerHTML = '<span class="dot"></span>Sinkronisasi terhubung';
+    } else {
+      el.className = "sync-indicator disconnected";
+      el.innerHTML = '<span class="dot"></span>Sinkronisasi tidak terhubung — <a href="#" id="openTokenModalLink">hubungkan sekarang &rarr;</a>';
     }
   }
 
@@ -3546,6 +3740,63 @@
   document.addEventListener("keydown", (e)=>{
     if(e.key === "Escape") searchSuggestBox.style.display = "none";
   });
+
+  // ---------- Sugesti kata (autocomplete) untuk field Penulis, Lokasi Rak, Penerbit, Pemilik ----------
+  // Ambil nilai unik yang sudah pernah dipakai di buku lain, minimal 3 karakter untuk memicu sugesti.
+  function setupFieldAutocomplete(inputId, suggestId, bookField){
+    const input = document.getElementById(inputId);
+    const box = document.getElementById(suggestId);
+    if(!input || !box) return;
+
+    function hideBox(){ box.style.display = "none"; box.innerHTML = ""; }
+
+    input.addEventListener("input", ()=>{
+      const query = input.value.trim().toLowerCase();
+      if(query.length < 3){ hideBox(); return; }
+
+      const uniqueValues = [...new Set(
+        books.map(b => (b[bookField] || "").trim()).filter(v => v.length > 0)
+      )];
+      const matches = uniqueValues
+        .filter(v => v.toLowerCase().includes(query))
+        .slice(0, 6);
+
+      if(matches.length === 0){ hideBox(); return; }
+
+      box.innerHTML = matches.map(v=>{
+        const escaped = escapeHtml(v);
+        // Bold bagian yang cocok dengan query (case-insensitive)
+        const idx = v.toLowerCase().indexOf(query);
+        let highlighted = escaped;
+        if(idx !== -1){
+          const before = escapeHtml(v.slice(0, idx));
+          const match = escapeHtml(v.slice(idx, idx + query.length));
+          const after = escapeHtml(v.slice(idx + query.length));
+          highlighted = before + "<b>" + match + "</b>" + after;
+        }
+        return '<div class="autocomplete-item" data-value="' + escaped + '">' + highlighted + '</div>';
+      }).join("");
+      box.style.display = "block";
+    });
+
+    box.addEventListener("click", (e)=>{
+      const item = e.target.closest(".autocomplete-item");
+      if(!item) return;
+      input.value = item.getAttribute("data-value");
+      hideBox();
+    });
+
+    document.addEventListener("click", (e)=>{
+      if(!e.target.closest("#" + inputId) && !e.target.closest("#" + suggestId)){
+        hideBox();
+      }
+    });
+  }
+
+  setupFieldAutocomplete("penulis", "penulisSuggest", "penulis");
+  setupFieldAutocomplete("lokasiRak", "lokasiRakSuggest", "lokasiRak");
+  setupFieldAutocomplete("penerbit", "penerbitSuggest", "penerbit");
+  setupFieldAutocomplete("pemilik", "pemilikSuggest", "pemilik");
 
   // ---------- Save new book ----------
   function updateCoverPreview(isbn){
