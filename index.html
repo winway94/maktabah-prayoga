@@ -2185,7 +2185,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.44.2</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.45.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -2223,6 +2223,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.45.0</strong> — Modal "Hubungkan Sinkronisasi GitHub" sekarang otomatis terbuka saat aplikasi pertama kali dibuka di browser/device yang belum pernah dikonfigurasi (owner/repo belum tersimpan). Mencegah lupa/terlewat menyambungkan sinkron di perangkat baru. Tidak muncul lagi setelah berhasil terhubung sekali di browser tsb.</li>
         <li><strong>v1.44.2</strong> — Sederhanakan teks indikator status sinkron di footer: 🟢 "Sinkron aktif" (tanpa detail nama repo) saat terhubung, 🔴 "Sinkron tidak berjalan" saat belum dikonfigurasi.</li>
         <li><strong>v1.44.1</strong> — Update konfigurasi: <code>GITHUB_WORKER_URL</code> diarahkan ke endpoint Cloudflare Worker proxy GitHub yang aktif (<code>still-cake-b87c.edw-yoga1.workers.dev</code>). Tidak ada perubahan logika/fitur, hanya penyesuaian URL.</li>
         <li><strong>v1.44.0</strong> — 🔒 Perombakan keamanan sinkronisasi GitHub: Token GitHub <strong>tidak lagi tersimpan di browser/kode</strong> sama sekali. Semua request sinkronisasi sekarang lewat Cloudflare Worker (reverse proxy) yang menyimpan token sebagai Secret Env di dasbornya. Modal "Hubungkan Sinkronisasi GitHub" diganti: field Token dihapus, digantikan Owner/Username & Repository Name. Indikator status footer disesuaikan (menampilkan nama repo yang tersambung, bukan status token). Mekanisme lama "token via parameter URL" turut dihapus karena sudah tidak relevan.</li>
@@ -4427,6 +4428,11 @@
   
   if(ghConfig && ghConfig.owner && ghConfig.repo){
     fetchFromGithub();
+  } else {
+    // v1.45.0: kalau browser ini belum pernah dihubungkan ke repo GitHub,
+    // otomatis buka modal "Hubungkan Sinkronisasi" -- supaya tidak rawan
+    // lupa/terlewat menyambungkan sinkron di browser/device baru.
+    setTimeout(openTokenModal, 400);
   }
 
   // ---------- PWA: daftarkan service worker ----------
