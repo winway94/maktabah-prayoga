@@ -2185,7 +2185,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.45.1</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.45.2</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -2223,6 +2223,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.45.2</strong> — 🐛 Perbaikan <code>service-worker.js</code>: app shell (index.html) sempat "nyangkut" versi lama saat pertama buka aplikasi (biasanya pagi hari, koneksi jaringan HP belum stabil), butuh refresh berkali-kali. Sekarang fetch otomatis retry sekali (jeda 0.8 detik) sebelum jatuh ke cache lama, sehingga cukup sekali refresh atau bahkan tanpa refresh sama sekali.</li>
         <li><strong>v1.45.1</strong> — 🐛 Perbaikan bug: hasil auto-sync ke GitHub (berhasil/gagal) sebelumnya tersembunyi total secara visual, jadi user tidak pernah tahu kalau sinkron gagal. Sekarang setiap tambah/edit/hapus buku menampilkan notifikasi toast singkat: "✔ Buku tersinkron ke GitHub" atau "⚠️ Gagal sinkron ke GitHub: [alasan]".</li>
         <li><strong>v1.45.0</strong> — Modal "Hubungkan Sinkronisasi GitHub" sekarang otomatis terbuka saat aplikasi pertama kali dibuka di browser/device yang belum pernah dikonfigurasi (owner/repo belum tersimpan). Mencegah lupa/terlewat menyambungkan sinkron di perangkat baru. Tidak muncul lagi setelah berhasil terhubung sekali di browser tsb.</li>
         <li><strong>v1.44.2</strong> — Sederhanakan teks indikator status sinkron di footer: 🟢 "Sinkron aktif" (tanpa detail nama repo) saat terhubung, 🔴 "Sinkron tidak berjalan" saat belum dikonfigurasi.</li>
