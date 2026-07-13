@@ -428,5 +428,24 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": ""
+  },
+  {
+    "id": "mrizlrc8kq5xl",
+    "createdAt": 1783932926120,
+    "isbn": "9790152981",
+    "judul": "The Starbucks experience",
+    "penulis": "",
+    "kategori": "Sejarah & Historiografi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "",
+    "lokasiRak": "",
+    "penerbit": "",
+    "pemilik": "",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
