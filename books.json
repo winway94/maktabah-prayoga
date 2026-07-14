@@ -504,5 +504,24 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrko59uvkw7l1",
+    "createdAt": 1784034613543,
+    "isbn": "9786021159224",
+    "judul": "Sejarah Agama Yahudi",
+    "penulis": "Khalifah Muhammad Hasan",
+    "kategori": "Sejarah & Historiografi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2017",
+    "jumlahHalaman": "320",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Tafaqquh",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
