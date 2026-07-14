@@ -485,5 +485,24 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrko0p6xcztua",
+    "createdAt": 1784034400137,
+    "isbn": "9789795926870",
+    "judul": "Khalid Bin Al-Walid: Panglima Yang Tak Terkalahkan",
+    "penulis": "Manshur Abdul Hakim",
+    "kategori": "Biografi, Otobiografi & Memoar",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "",
+    "jumlahHalaman": "621",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Pustaka Al-Kautsar",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
