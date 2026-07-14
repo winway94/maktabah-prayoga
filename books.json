@@ -447,5 +447,24 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrk3427upqfeh",
+    "createdAt": 1783999285050,
+    "isbn": "9786028812986",
+    "judul": "Einstein : Kehidupan dan Pengaruhnya bagi Dunia",
+    "penulis": "Walter Isaacson",
+    "kategori": "Sejarah & Historiografi",
+    "jenisBuku": "cetak",
+    "tahunTerbit": "2013",
+    "jumlahHalaman": "699",
+    "lokasiRak": "halawa office",
+    "penerbit": "Bentang Pustaka",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "37",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
