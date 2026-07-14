@@ -465,7 +465,8 @@
     "status": "belum",
     "peminjam": "",
     "tanggalPinjam": "",
-    "sampulUrl": ""
+    "sampulUrl": "",
+    "pdfLink": ""
   },
   {
     "id": "mrknvk7sb5098",
