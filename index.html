@@ -659,6 +659,92 @@
   }
   .lending-fields .field-label{ margin-top:0; color:#c2410c; }
   .lending-fields .field-label:not(:first-child){ margin-top:14px; }
+
+  /* ===== PDF Explorer Internal Advanced (v1.46.0) ===== */
+  .pdf-reader-wrap{
+    margin-top: 16px;
+    padding: 14px;
+    background: var(--brand-50, #fdf6ec);
+    border: 1.5px solid var(--brand-200, #e9d5b8);
+    border-radius: 12px;
+  }
+  .pdf-reader-wrap .field-label{ margin-top:0; }
+  .pdf-reader-toolbar{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:8px;
+  }
+  .pdf-reader-frame{
+    width:100%;
+    height:60vh;
+    min-height:340px;
+    border:1.5px solid var(--brand-200, #e9d5b8);
+    border-radius:10px;
+    background:#fff;
+  }
+  /* Mode Fokus: iframe memenuhi layar penuh */
+  .pdf-reader-wrap.pdf-focus-mode{
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    margin:0;
+    border-radius:0;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    overflow-y:auto;
+  }
+  .pdf-reader-wrap.pdf-focus-mode .pdf-reader-frame{
+    flex:1;
+    height:auto;
+    min-height:0;
+  }
+  .pdf-catatan-box{
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px dashed var(--brand-200, #e9d5b8);
+  }
+  .pdf-catatan-input-row{
+    display:flex;
+    gap:8px;
+  }
+  .pdf-catatan-input-row input{
+    flex:1;
+  }
+  .pdf-catatan-list{
+    list-style:none;
+    margin:12px 0 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .pdf-catatan-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding:8px 10px;
+    background:#fff;
+    border:1px solid var(--brand-200, #e9d5b8);
+    border-radius:8px;
+    font-size:0.86rem;
+    color: var(--slate-800, #292524);
+  }
+  .pdf-catatan-item button{
+    border:none;
+    background:transparent;
+    color:#b91c1c;
+    cursor:pointer;
+    font-size:0.95rem;
+    line-height:1;
+    padding:2px 4px;
+  }
+  .pdf-catatan-empty{
+    font-size:0.84rem;
+    color: var(--slate-500, #78716c);
+    margin-top:10px;
+  }
   .status-chip.dipinjam{
     background: #ffedd5;
     color: #c2410c;
@@ -2061,6 +2147,11 @@
         </select>
       </div>
 
+      <div id="pdfLinkGroup" style="display:none;">
+        <label class="field-label">Link Google Drive PDF</label>
+        <input type="text" id="pdfLinkInput" placeholder="cth: https://drive.google.com/file/d/xxxx/view?usp=sharing">
+      </div>
+
       <div class="field-row">
         <div>
           <label class="field-label">Tahun Terbit</label>
@@ -2185,7 +2276,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.45.2</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.46.1</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -2223,6 +2314,8 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.46.1</strong> — 🖼️ Sampul buku digital kini bisa otomatis diambil dari thumbnail halaman pertama PDF di Google Drive (kalau file di-share "siapa saja dengan link"), sebagai fallback paling akhir setelah ISBN (Open Library) dan Google Books tetap tidak ditemukan/kosong. Berlaku konsisten di kartu koleksi, tampilan list, saran pencarian, dan modal detail.</li>
+        <li><strong>v1.46.0</strong> — 📖 Fitur baru: Perpustakaan PDF Explorer Internal Advanced. Form Tambah Buku &amp; Modal Edit kini menampilkan field "Link Google Drive PDF" saat Jenis Buku = Digital. Modal Detail menampilkan pembaca PDF langsung di tempat (iframe, otomatis mengubah link share Drive jadi format /preview), lengkap dengan tombol Mode Fokus (layar penuh) dan Bank Catatan &amp; Pembatas Buku per buku (tambah/hapus catatan halaman). Tidak mengubah fitur LocalStorage, Google Books lookup, sinkron GitHub, service worker, atau modul AI Gemini yang sudah ada.</li>
         <li><strong>v1.45.2</strong> — 🐛 Perbaikan <code>service-worker.js</code>: app shell (index.html) sempat "nyangkut" versi lama saat pertama buka aplikasi (biasanya pagi hari, koneksi jaringan HP belum stabil), butuh refresh berkali-kali. Sekarang fetch otomatis retry sekali (jeda 0.8 detik) sebelum jatuh ke cache lama, sehingga cukup sekali refresh atau bahkan tanpa refresh sama sekali.</li>
         <li><strong>v1.45.1</strong> — 🐛 Perbaikan bug: hasil auto-sync ke GitHub (berhasil/gagal) sebelumnya tersembunyi total secara visual, jadi user tidak pernah tahu kalau sinkron gagal. Sekarang setiap tambah/edit/hapus buku menampilkan notifikasi toast singkat: "✔ Buku tersinkron ke GitHub" atau "⚠️ Gagal sinkron ke GitHub: [alasan]".</li>
         <li><strong>v1.45.0</strong> — Modal "Hubungkan Sinkronisasi GitHub" sekarang otomatis terbuka saat aplikasi pertama kali dibuka di browser/device yang belum pernah dikonfigurasi (owner/repo belum tersimpan). Mencegah lupa/terlewat menyambungkan sinkron di perangkat baru. Tidak muncul lagi setelah berhasil terhubung sekali di browser tsb.</li>
@@ -2441,6 +2534,9 @@
   function updateJenisBukuIcon(){
     const icon = document.getElementById("jenisBukuIcon");
     if(icon) icon.innerHTML = jenisBukuSelect.value === "digital" ? ICON_PATH_DIGITAL : ICON_PATH_CETAK;
+    // v1.46.0: field "Link Google Drive PDF" hanya tampil kalau Jenis Buku = digital
+    const pdfLinkGroupEl = document.getElementById("pdfLinkGroup");
+    if(pdfLinkGroupEl) pdfLinkGroupEl.style.display = jenisBukuSelect.value === "digital" ? "block" : "none";
   }
   jenisBukuSelect.addEventListener("change", updateJenisBukuIcon);
   const typeFiltersEl = document.getElementById("typeFilters");
@@ -2590,14 +2686,19 @@
         const coverUrlRow = b.isbn
           ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-M.jpg?default=false"
           : "";
+        const driveUrlRow = getDriveThumbUrl(b, 120); // v1.46.1: fallback terakhir
+        const gbUrlRow = b.sampulUrl || "";
         // Google Books diprioritaskan: sampul Open Library sering kosong untuk buku terbitan Indonesia.
-        const coverFallbackRow = (b.sampulUrl && coverUrlRow) ? coverUrlRow : "";
+        // Urutan akhir: Google Books -> Open Library -> thumbnail Drive PDF.
+        const rowChain = [gbUrlRow, coverUrlRow, driveUrlRow].filter(Boolean);
+        const optimizeRow = (u) => (u === gbUrlRow) ? optimizeCoverUrl(gbUrlRow, 120) : u;
         const fallbackId = "coverFallbackRow_" + b.id;
         let coverCellHtml = "";
-        if(coverUrlRow || b.sampulUrl){
+        if(rowChain.length > 0){
           // Sama seperti buildCoverHtml: hanya sampul Google Books yang di-proxy lewat weserv.nl.
-          // Open Library dibiarkan mentah supaya deteksi placeholder 1x1px tetap akurat.
-          const coverSrcRow = b.sampulUrl ? optimizeCoverUrl(b.sampulUrl, 120) : coverUrlRow;
+          // Open Library & Drive dibiarkan mentah supaya deteksi placeholder 1x1px tetap akurat.
+          const coverSrcRow = optimizeRow(rowChain[0]);
+          const coverFallbackRow = rowChain.slice(1).map(optimizeRow).join("|||");
           coverCellHtml =
             '<img class="row-cover-img" src="' + coverSrcRow + '" data-fallback-cover="' + escapeHtml(coverFallbackRow) + '" alt="Sampul buku" loading="lazy" onerror="handleCoverImgError(this,\'' + fallbackId + '\')" onload="handleCoverImgLoad(this,\'' + fallbackId + '\')">' +
             '<div class="book-grid-cover-fallback" id="' + fallbackId + '" style="display:none;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
@@ -2688,16 +2789,39 @@
     return "https://images.weserv.nl/?url=" + encodeURIComponent(url) + "&w=" + w + "&output=webp";
   }
 
+  // ---------- v1.46.1: Sampul otomatis dari thumbnail Google Drive (fallback terakhir) ----------
+  // Google Drive menyediakan endpoint thumbnail publik untuk file yang di-share "siapa saja
+  // dengan link" -- untuk PDF, Google otomatis me-render halaman pertama sebagai thumbnail.
+  // Prioritas TETAP: ISBN (Open Library) & Google Books lebih diutamakan; ini cuma dipakai
+  // kalau keduanya tidak ada/gagal dimuat.
+  function getDriveThumbUrl(book, width){
+    if(!book || book.jenisBuku !== "digital" || !book.pdfLink) return "";
+    const link = book.pdfLink;
+    const m = link.match(/\/d\/([a-zA-Z0-9_-]{10,})/) || link.match(/[?&]id=([a-zA-Z0-9_-]{10,})/);
+    const fileId = m ? m[1] : "";
+    if(!fileId) return "";
+    return "https://drive.google.com/thumbnail?id=" + fileId + "&sz=w" + (width || 200);
+  }
+
   // ---------- Helper global: fallback sampul berjenjang ----------
-  // Urutan: gambar utama (biasanya Open Library) -> data-fallback-cover (Google Books, kalau ada) -> ikon placeholder.
+  // Urutan default: Google Books -> Open Library -> thumbnail Drive PDF -> ikon placeholder.
+  // data-fallback-cover menampung sisa antrean URL dipisah "|||" (bukan cuma 1 URL lagi),
+  // supaya bisa menampung lebih dari 1 sumber cadangan tanpa mengubah cara pemanggilannya di HTML.
   // Dipasang di window karena dipanggil dari atribut onerror/onload di dalam string HTML (di luar closure ini).
   window.handleCoverImgError = function(imgEl, fallbackId, hideParent){
-    const nextUrl = imgEl.getAttribute("data-fallback-cover");
-    if(nextUrl){
-      // Masih ada 1 sumber cadangan (Google Books) yang belum dicoba -> coba itu dulu.
-      imgEl.removeAttribute("data-fallback-cover");
-      imgEl.src = nextUrl;
-      return;
+    const queueRaw = imgEl.getAttribute("data-fallback-cover");
+    if(queueRaw){
+      const parts = queueRaw.split("|||").filter(Boolean);
+      const nextUrl = parts.shift();
+      if(parts.length > 0){
+        imgEl.setAttribute("data-fallback-cover", parts.join("|||"));
+      } else {
+        imgEl.removeAttribute("data-fallback-cover");
+      }
+      if(nextUrl){
+        imgEl.src = nextUrl;
+        return;
+      }
     }
     const hideEl = hideParent ? imgEl.parentNode : imgEl;
     hideEl.style.display = "none";
@@ -2718,19 +2842,17 @@
       ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(book.isbn) + "-M.jpg?default=false"
       : "";
     const gbUrl = book.sampulUrl || "";
+    const driveUrl = getDriveThumbUrl(book, 200); // v1.46.1: fallback terakhir, cuma dipakai kalau ISBN & Google Books tidak ada
     // Google Books diprioritaskan: sampul Open Library sering kosong untuk buku terbitan Indonesia.
-    const primaryUrl = gbUrl || olUrl;
-    const secondaryUrl = (gbUrl && olUrl) ? olUrl : "";
-    if(!primaryUrl){
+    // Urutan akhir: Google Books -> Open Library -> thumbnail Drive PDF.
+    const chain = [gbUrl, olUrl, driveUrl].filter(Boolean);
+    if(chain.length === 0){
       return '<div class="' + fallbackClass + '" id="' + fallbackId + '" style="display:flex;">' + FALLBACK_ICON_SVG + '</div>';
     }
-    // PENTING: hanya URL Google Books yang dioptimasi lewat weserv.nl. URL Open Library
-    // sengaja dibiarkan mentah/tidak di-proxy, karena weserv akan me-resize APA PUN sumbernya
-    // (termasuk placeholder 200-OK 1x1px milik Open Library) menjadi ukuran yang diminta --
-    // itu akan merusak deteksi naturalWidth<=1 di handleCoverImgLoad.
-    const primaryOpt = (primaryUrl === gbUrl) ? optimizeCoverUrl(gbUrl, 120) : primaryUrl;
-    const secondaryOpt = (secondaryUrl === gbUrl) ? optimizeCoverUrl(gbUrl, 120) : secondaryUrl;
-    return '<img class="' + imgClass + '" src="' + primaryOpt + '" data-fallback-cover="' + escapeHtml(secondaryOpt) + '" alt="Sampul buku" loading="lazy" onerror="handleCoverImgError(this,\'' + fallbackId + '\')" onload="handleCoverImgLoad(this,\'' + fallbackId + '\')">' +
+    const optimize = (u) => (u === gbUrl) ? optimizeCoverUrl(gbUrl, 120) : u;
+    const primaryOpt = optimize(chain[0]);
+    const queueOpt = chain.slice(1).map(optimize).join("|||");
+    return '<img class="' + imgClass + '" src="' + primaryOpt + '" data-fallback-cover="' + escapeHtml(queueOpt) + '" alt="Sampul buku" loading="lazy" onerror="handleCoverImgError(this,\'' + fallbackId + '\')" onload="handleCoverImgLoad(this,\'' + fallbackId + '\')">' +
            '<div class="' + fallbackClass + '" id="' + fallbackId + '" style="display:none;">' + FALLBACK_ICON_SVG + '</div>';
   }
 
@@ -3160,6 +3282,108 @@
   });
 
   // ---------- Modal Detail Buku ----------
+  // ---------- v1.46.0: Perpustakaan PDF Explorer Internal Advanced ----------
+
+  // Deteksi link share Google Drive standar (".../view" atau ".../view?usp=sharing")
+  // dan ubah otomatis jadi ".../preview" supaya bisa dirender di dalam iframe tanpa diblokir.
+  function convertGDriveLink(url){
+    const trimmed = (url || "").trim();
+    if(!trimmed) return "";
+    if(/\/view(\?.*)?$/.test(trimmed)){
+      return trimmed.replace(/\/view(\?.*)?$/, "/preview");
+    }
+    return trimmed;
+  }
+
+  function buildPdfReaderHtml(book){
+    const embedUrl = convertGDriveLink(book.pdfLink);
+    const catatanList = Array.isArray(book.catatanBuku) ? book.catatanBuku : [];
+    return (
+      '<div class="pdf-reader-wrap" id="pdfReaderWrap">' +
+        '<label class="field-label" style="margin-top:0;">📖 Baca PDF di Tempat</label>' +
+        '<div class="pdf-reader-toolbar">' +
+          '<button type="button" class="btn btn-close" id="pdfFocusToggleBtn" style="width:auto;padding:6px 14px;font-size:0.85rem;">⛶ Mode Fokus</button>' +
+        '</div>' +
+        '<iframe class="pdf-reader-frame" id="pdfReaderFrame" src="' + escapeHtml(embedUrl) + '" allow="autoplay"></iframe>' +
+        '<div class="pdf-catatan-box">' +
+          '<label class="field-label" style="margin-top:0;">📝 Catatan &amp; Pembatas Buku</label>' +
+          '<div class="pdf-catatan-input-row">' +
+            '<input type="text" id="pdfCatatanInput" placeholder="cth: Halaman 45: Teori Asabiyah">' +
+            '<button type="button" class="btn btn-primary" id="pdfCatatanAddBtn" style="width:auto;padding:0 16px;">Tambah Catatan Halaman</button>' +
+          '</div>' +
+          '<div id="pdfCatatanListWrap">' + renderCatatanListHtml(catatanList) + '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function renderCatatanListHtml(catatanList){
+    if(!catatanList || catatanList.length === 0){
+      return '<div class="pdf-catatan-empty">Belum ada catatan/pembatas buku untuk buku ini.</div>';
+    }
+    return (
+      '<ul class="pdf-catatan-list">' +
+        catatanList.map((c, idx) =>
+          '<li class="pdf-catatan-item"><span>' + escapeHtml(c.teks || "") + '</span>' +
+          '<button type="button" data-catatan-idx="' + idx + '" class="pdf-catatan-del-btn" aria-label="Hapus catatan">✕</button></li>'
+        ).join("") +
+      '</ul>'
+    );
+  }
+
+  // Pasang event listener untuk toolbar reader (mode fokus + tambah/hapus catatan).
+  // Dipanggil setiap kali modal detail dibuka/di-render ulang, kalau reader-nya ada.
+  function wirePdfReaderEvents(bookId){
+    const wrap = document.getElementById("pdfReaderWrap");
+    if(!wrap) return;
+
+    const focusBtn = document.getElementById("pdfFocusToggleBtn");
+    if(focusBtn){
+      focusBtn.addEventListener("click", ()=>{
+        const active = wrap.classList.toggle("pdf-focus-mode");
+        focusBtn.innerHTML = active ? "✕ Tutup Mode Fokus" : "⛶ Mode Fokus";
+      });
+    }
+
+    const addBtn = document.getElementById("pdfCatatanAddBtn");
+    const inputEl = document.getElementById("pdfCatatanInput");
+    if(addBtn && inputEl){
+      const submitCatatan = ()=>{
+        const teks = inputEl.value.trim();
+        if(!teks) return;
+        const idx = books.findIndex(b => String(b.id) === String(bookId));
+        if(idx === -1) return;
+        if(!Array.isArray(books[idx].catatanBuku)) books[idx].catatanBuku = [];
+        books[idx].catatanBuku.push({ teks: teks, waktu: Date.now() });
+        saveBooks();
+        inputEl.value = "";
+        const listWrap = document.getElementById("pdfCatatanListWrap");
+        if(listWrap) listWrap.innerHTML = renderCatatanListHtml(books[idx].catatanBuku);
+        wireCatatanDeleteButtons(bookId);
+      };
+      addBtn.addEventListener("click", submitCatatan);
+      inputEl.addEventListener("keydown", (e)=>{ if(e.key === "Enter"){ e.preventDefault(); submitCatatan(); } });
+    }
+
+    wireCatatanDeleteButtons(bookId);
+  }
+
+  function wireCatatanDeleteButtons(bookId){
+    document.querySelectorAll(".pdf-catatan-del-btn").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const catatanIdx = parseInt(btn.getAttribute("data-catatan-idx"), 10);
+        const idx = books.findIndex(b => String(b.id) === String(bookId));
+        if(idx === -1) return;
+        if(!Array.isArray(books[idx].catatanBuku)) return;
+        books[idx].catatanBuku.splice(catatanIdx, 1);
+        saveBooks();
+        const listWrap = document.getElementById("pdfCatatanListWrap");
+        if(listWrap) listWrap.innerHTML = renderCatatanListHtml(books[idx].catatanBuku);
+        wireCatatanDeleteButtons(bookId);
+      });
+    });
+  }
+
   function openBookDetail(id){
     const book = books.find(b => String(b.id) === String(id));
     if(!book) return;
@@ -3173,10 +3397,12 @@
     const coverUrlOl = book.isbn
       ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(book.isbn) + "-M.jpg?default=false"
       : "";
+    const driveThumbForDetail = getDriveThumbUrl(book, 220); // v1.46.1: fallback terakhir kalau ISBN & Google Books tidak ada
     // OL (primary di sini) tetap raw supaya deteksi placeholder 1x1px akurat;
-    // Google Books (fallback) yang dioptimasi lewat weserv.nl.
-    const coverUrl = coverUrlOl || optimizeCoverUrl(book.sampulUrl || "", 220);
-    const coverFallback = (coverUrlOl && book.sampulUrl) ? optimizeCoverUrl(book.sampulUrl, 220) : "";
+    // Google Books & Drive (fallback) yang dioptimasi/dipakai belakangan.
+    const detailChain = [coverUrlOl, book.sampulUrl ? optimizeCoverUrl(book.sampulUrl, 220) : "", driveThumbForDetail].filter(Boolean);
+    const coverUrl = detailChain[0] || "";
+    const coverFallback = detailChain.slice(1).join("|||");
 
     let coverBlockHtml = "";
     if(coverUrl){
@@ -3209,6 +3435,19 @@
         '<label class="field-label">Tanggal Dipinjam</label>' +
         '<input type="date" class="detail-input" id="modalTanggalPinjam" value="' + escapeHtml(book.tanggalPinjam || "") + '" disabled>' +
       '</div>';
+
+    // v1.46.0: field edit "Link Google Drive PDF" -- hanya tampil kalau Jenis Buku = digital
+    const isDigitalBook = book.jenisBuku === "digital";
+    const modalPdfLinkGroupHtml =
+      '<div id="modalPdfLinkGroup" style="display:' + (isDigitalBook ? 'block' : 'none') + ';">' +
+        '<label class="field-label">Link Google Drive PDF</label>' +
+        '<input type="text" class="detail-input" id="modalPdfLink" value="' + escapeHtml(book.pdfLink || "") + '" placeholder="https://drive.google.com/file/d/xxxx/view?usp=sharing" disabled>' +
+      '</div>';
+
+    // v1.46.0: Perpustakaan PDF Explorer Internal Advanced -- iframe pembaca + mode fokus + bank catatan
+    const pdfReaderHtml = (isDigitalBook && book.pdfLink)
+      ? buildPdfReaderHtml(book)
+      : '';
 
     detailModalBody.innerHTML = `
       ${coverBlockHtml}
@@ -3256,6 +3495,8 @@
           </div>
         </div>
       </div>
+
+      ${modalPdfLinkGroupHtml}
 
       <div class="field-row">
         <div>
@@ -3307,6 +3548,8 @@
 
       ${lendingBoxHtml}
 
+      ${pdfReaderHtml}
+
       <div class="detail-actions" id="modalDetailActions" style="margin-top:20px;">
         <button type="button" class="btn btn-edit" id="detailEditBtn" style="flex:1;">✏️ Edit Buku</button>
       </div>
@@ -3323,11 +3566,17 @@
       if(modalJenisBukuIconEl){
         modalJenisBukuIconEl.innerHTML = this.value === "digital" ? ICON_PATH_DIGITAL : ICON_PATH_CETAK;
       }
+      // v1.46.0: field Link Google Drive PDF cuma tampil kalau Jenis Buku = digital
+      const pdfGroupEl = document.getElementById("modalPdfLinkGroup");
+      if(pdfGroupEl) pdfGroupEl.style.display = this.value === "digital" ? "block" : "none";
     });
 
     document.getElementById("detailEditBtn").addEventListener("click", ()=>{
       enableModalEditMode(book);
     });
+
+    // v1.46.0: aktifkan tombol Mode Fokus & Bank Catatan kalau reader PDF-nya dirender
+    wirePdfReaderEvents(book.id);
 
     detailModalOverlay.classList.add("open");
   }
@@ -3443,6 +3692,10 @@
       penulis: document.getElementById("modalPenulis").value.trim(),
       kategori: document.getElementById("modalKategori").value,
       jenisBuku: document.getElementById("modalJenisBuku").value,
+      // v1.46.0: Link Google Drive PDF, hanya disimpan kalau Jenis Buku = digital
+      pdfLink: document.getElementById("modalJenisBuku").value === "digital"
+        ? (document.getElementById("modalPdfLink").value || "").trim()
+        : "",
       tahunTerbit: document.getElementById("modalTahunTerbit").value.trim(),
       jumlahHalaman: document.getElementById("modalJumlahHalaman").value.trim(),
       isbn: document.getElementById("modalIsbn").value.trim(),
@@ -3809,9 +4062,11 @@
       const coverUrlOlS = b.isbn
         ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-S.jpg?default=false"
         : "";
-      // OL (primary) tetap raw untuk deteksi placeholder 1x1px; Google Books (fallback) dioptimasi.
-      const coverUrl = coverUrlOlS || optimizeCoverUrl(b.sampulUrl || "", 64);
-      const coverFallbackS = (coverUrlOlS && b.sampulUrl) ? optimizeCoverUrl(b.sampulUrl, 64) : "";
+      const driveUrlS = getDriveThumbUrl(b, 64); // v1.46.1: fallback terakhir
+      // OL (primary) tetap raw untuk deteksi placeholder 1x1px; Google Books & Drive (fallback) dioptimasi/dipakai belakangan.
+      const suggestChain = [coverUrlOlS, b.sampulUrl ? optimizeCoverUrl(b.sampulUrl, 64) : "", driveUrlS].filter(Boolean);
+      const coverUrl = suggestChain[0] || "";
+      const coverFallbackS = suggestChain.slice(1).join("|||");
       const coverHtml = coverUrl
         ? '<img class="search-suggest-cover-img" src="' + coverUrl + '" data-fallback-cover="' + escapeHtml(coverFallbackS) + '" alt="" loading="lazy" onerror="handleCoverImgError(this,null)" onload="handleCoverImgLoad(this,null)">' +
           '<span class="search-suggest-fallback-icon" style="display:none;">' + BOOK_SVG_ICON + '</span>'
@@ -3963,6 +4218,9 @@
     penulisInput.value = "";
     kategoriSelect.value = "Lainnya / Serba-Serbi";
     jenisBukuSelect.value = "cetak";
+    updateJenisBukuIcon();
+    const pdfLinkInputEl = document.getElementById("pdfLinkInput");
+    if(pdfLinkInputEl) pdfLinkInputEl.value = "";
     tahunTerbitInput.value = "";
     jumlahHalamanInput.value = "";
     lokasiRakInput.value = "";
@@ -4008,6 +4266,8 @@
       penulis: penulisInput.value.trim(),
       kategori: kategoriSelect.value,
       jenisBuku: jenisBukuSelect.value,
+      // v1.46.0: Link Google Drive PDF, hanya relevan/disimpan kalau Jenis Buku = digital
+      pdfLink: jenisBukuSelect.value === "digital" ? (document.getElementById("pdfLinkInput").value || "").trim() : "",
       tahunTerbit: tahunTerbitInput.value.trim(),
       jumlahHalaman: jumlahHalamanInput.value.trim(),
       lokasiRak: lokasiRakInput.value.trim(),
@@ -4036,6 +4296,7 @@
       books.push({
         id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
         createdAt: Date.now(),
+        catatanBuku: [], // v1.46.0: Bank Catatan & Pembatas Buku
         ...bookData
       });
       saveBooks();
