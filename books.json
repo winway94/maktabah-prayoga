@@ -944,5 +944,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm3w8mhw1psd",
+    "createdAt": 1784121532073,
+    "catatanBuku": [],
+    "isbn": "9789797096502",
+    "judul": "Chairul Tanjung, si anak singkong",
+    "penulis": "Tjahja Gunawan Diredja",
+    "kategori": "Bisnis, Manajemen & Keuangan",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2012",
+    "jumlahHalaman": "384",
+    "lokasiRak": "Ruang Sholat",
+    "penerbit": "Buku kompas",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
