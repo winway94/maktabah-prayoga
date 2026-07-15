@@ -902,5 +902,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm3qh2ullgfj",
+    "createdAt": 1784121263094,
+    "catatanBuku": [],
+    "isbn": "9786021606438",
+    "judul": "Rahasia Nikmatnya Menghafal Al-Qur'an",
+    "penulis": "Deden Muhammad Makhyaruddin",
+    "kategori": "Pengembangan Diri & Edukasi",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2013",
+    "jumlahHalaman": "312",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Noura Book Publising",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
