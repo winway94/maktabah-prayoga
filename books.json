@@ -733,5 +733,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm2tpoojzr42",
+    "createdAt": 1784119734601,
+    "catatanBuku": [],
+    "isbn": "9786028864770",
+    "judul": "Everyone Can Lead",
+    "penulis": "Husnul Suhaimi",
+    "kategori": "Bisnis, Manajemen & Keuangan",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2013",
+    "jumlahHalaman": "196",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Bentang Pustaka",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
