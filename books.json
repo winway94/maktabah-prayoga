@@ -754,5 +754,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm2x2xeiywri",
+    "createdAt": 1784119891730,
+    "catatanBuku": [],
+    "isbn": "9789791567893",
+    "judul": "Misteri Pasukan Panji Hitam",
+    "penulis": "Abu fatiah Al Adnani",
+    "kategori": "Agama & Pemikiran Islam",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2008",
+    "jumlahHalaman": "314",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Granada Mediatama",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
