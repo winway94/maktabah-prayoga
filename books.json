@@ -881,5 +881,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm3mzcalrxgo",
+    "createdAt": 1784121100138,
+    "catatanBuku": [],
+    "isbn": "9786024526986",
+    "judul": "Sebuah Seni untuk Bersikap Bodo Amat",
+    "penulis": "Mark Manson",
+    "kategori": "Pengembangan Diri & Edukasi",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2018",
+    "jumlahHalaman": "246",
+    "lokasiRak": "halawa office",
+    "penerbit": "Gramedia Pustaka Utama",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
