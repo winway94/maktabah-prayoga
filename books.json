@@ -775,5 +775,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm315wf1boxd",
+    "createdAt": 1784120082207,
+    "catatanBuku": [],
+    "isbn": "9786028237956",
+    "judul": "MAJMU'ATU RASA'IL",
+    "penulis": "Hasan Al-Banna",
+    "kategori": "Agama & Pemikiran Islam",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2017",
+    "jumlahHalaman": "658",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "ERA ADICITRA INTERMEDIA",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
