@@ -564,5 +564,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrlu28we43uj6",
+    "createdAt": 1784105016206,
+    "catatanBuku": [],
+    "isbn": "9786235236223",
+    "judul": "Sketsa Perang Jawa Tahun 1825: Kesaksian Pelaku Sejarah",
+    "penulis": "Peter Cerey & Aditia Gunawan",
+    "kategori": "Sejarah & Historiografi",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2025",
+    "jumlahHalaman": "288",
+    "lokasiRak": "halawa office",
+    "penerbit": "Kompas Media Nusantara",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
