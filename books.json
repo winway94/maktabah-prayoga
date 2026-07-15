@@ -585,5 +585,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrlu6p86mz9ac",
+    "createdAt": 1784105223990,
+    "catatanBuku": [],
+    "isbn": "9786028062800",
+    "judul": "AD-DAA' WA AD-DAWAA'",
+    "penulis": "Ibnu Qoyyim al-Jauziyyah",
+    "kategori": "Pengembangan Diri & Edukasi",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2020",
+    "jumlahHalaman": "541",
+    "lokasiRak": "halawa office",
+    "penerbit": "Pustaka Imam Asy-Syafi'i",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
