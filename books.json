@@ -838,5 +838,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm3b2v6ovgml",
+    "createdAt": 1784120544834,
+    "catatanBuku": [],
+    "isbn": "9786022915898",
+    "judul": "Cinta, kesehatan, dan Munajat Emha Ainun Nadjib",
+    "penulis": "dr ADE HASHMAN",
+    "kategori": "Sosiologi & Ilmu Sosial",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2019",
+    "jumlahHalaman": "364",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Bentang Pustaka",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
