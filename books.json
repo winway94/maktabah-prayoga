@@ -649,5 +649,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrlunx775wv3o",
+    "createdAt": 1784106027475,
+    "catatanBuku": [],
+    "isbn": "978623005897",
+    "judul": "Jika Menghafalmu Lillah Jangan Berhenti Karena Lelah",
+    "penulis": "Ahmad Khoirul Anam",
+    "kategori": "Pengembangan Diri & Edukasi",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2025",
+    "jumlahHalaman": "318",
+    "lokasiRak": "halawa office",
+    "penerbit": "PT ELEX MEDIA KOMPUTINDO",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
