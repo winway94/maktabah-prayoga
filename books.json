@@ -606,5 +606,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrlub6fuak4lt",
+    "createdAt": 1784105432922,
+    "catatanBuku": [],
+    "isbn": "9786237327073",
+    "judul": "KIFAB FIRASAT",
+    "penulis": "IMAM FAKHRUDDIN AR-RAZI",
+    "kategori": "Agama & Pemikiran Islam",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2025",
+    "jumlahHalaman": "200",
+    "lokasiRak": "halawa office",
+    "penerbit": "TUROS PUSTAKA",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "73",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
