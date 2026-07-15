@@ -628,5 +628,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrluivqkbuol0",
+    "createdAt": 1784105792300,
+    "catatanBuku": [],
+    "isbn": "9789795929451",
+    "judul": "LUQMANUL HAKIM - Kisah Hidup, Akhlak dan Hikmah",
+    "penulis": "Syaikh Muhammad Khair Ramadhan Yusuf",
+    "kategori": "Agama & Pemikiran Islam",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2021",
+    "jumlahHalaman": "211",
+    "lokasiRak": "halawa office",
+    "penerbit": "Pustaka Al-Kautsar",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
