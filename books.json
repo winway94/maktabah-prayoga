@@ -670,5 +670,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrlur0l5lutvs",
+    "createdAt": 1784106171833,
+    "catatanBuku": [],
+    "isbn": "9786237357452",
+    "judul": "PERANG SUARA - BAHASA DAN POLITIK PERGERAKAN",
+    "penulis": "HILMAR FARID",
+    "kategori": "Sosiologi & Ilmu Sosial",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2024",
+    "jumlahHalaman": "140",
+    "lokasiRak": "halawa office",
+    "penerbit": "Komunitas Bambu",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "24",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
