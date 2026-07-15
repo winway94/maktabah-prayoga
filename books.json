@@ -712,5 +712,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrlux0yho087v",
+    "createdAt": 1784106452249,
+    "catatanBuku": [],
+    "isbn": "9786025792731",
+    "judul": "DARI PENJARA KE PENJARA",
+    "penulis": "Tan Malaka",
+    "kategori": "Sejarah & Historiografi",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2025",
+    "jumlahHalaman": "560",
+    "lokasiRak": "halawa office",
+    "penerbit": "Narasi",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "49",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
