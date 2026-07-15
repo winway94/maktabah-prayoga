@@ -2119,6 +2119,12 @@
         <div class="autocomplete-suggest" id="penulisSuggest" style="display:none;"></div>
       </div>
 
+      <label class="field-label">Penerbit</label>
+      <div class="autocomplete-wrap">
+        <input type="text" id="penerbit" placeholder="cth: Gramedia Pustaka Utama" autocomplete="off">
+        <div class="autocomplete-suggest" id="penerbitSuggest" style="display:none;"></div>
+      </div>
+
       <label class="field-label">Kategori</label>
       <select id="kategori">
         <option value="Sejarah & Historiografi">Sejarah & Historiografi</option>
@@ -2167,12 +2173,6 @@
       <div class="autocomplete-wrap">
         <input type="text" id="lokasiRak" placeholder="cth: Rak A2 / Lemari Kamar" autocomplete="off">
         <div class="autocomplete-suggest" id="lokasiRakSuggest" style="display:none;"></div>
-      </div>
-
-      <label class="field-label">Penerbit</label>
-      <div class="autocomplete-wrap">
-        <input type="text" id="penerbit" placeholder="cth: Gramedia Pustaka Utama" autocomplete="off">
-        <div class="autocomplete-suggest" id="penerbitSuggest" style="display:none;"></div>
       </div>
 
       <label class="field-label">Pemilik Buku</label>
@@ -3461,6 +3461,12 @@
         <div class="autocomplete-suggest" id="modalPenulisSuggest" style="display:none;"></div>
       </div>
 
+      <label class="field-label">Penerbit</label>
+      <div class="autocomplete-wrap">
+        <input type="text" class="detail-input" id="modalPenerbit" value="${escapeHtml(book.penerbit || "")}" autocomplete="off" disabled>
+        <div class="autocomplete-suggest" id="modalPenerbitSuggest" style="display:none;"></div>
+      </div>
+
       ${pillRowHtml}
 
       <div class="field-row">
@@ -3516,12 +3522,6 @@
       <div class="autocomplete-wrap">
         <input type="text" class="detail-input" id="modalLokasiRak" value="${escapeHtml(book.lokasiRak || "")}" autocomplete="off" disabled>
         <div class="autocomplete-suggest" id="modalLokasiRakSuggest" style="display:none;"></div>
-      </div>
-
-      <label class="field-label">Penerbit</label>
-      <div class="autocomplete-wrap">
-        <input type="text" class="detail-input" id="modalPenerbit" value="${escapeHtml(book.penerbit || "")}" autocomplete="off" disabled>
-        <div class="autocomplete-suggest" id="modalPenerbitSuggest" style="display:none;"></div>
       </div>
 
       <label class="field-label">Pemilik Buku</label>
@@ -3836,7 +3836,7 @@
 
       tokenModalStatus.textContent = "✔ Berhasil terhubung!";
       tokenModalStatus.className = "sync-status status-ok";
-      showToast("✔ Sinkronisasi GitHub berhasil terhubung!", "success");
+      showToast("✔ Terhubung Online", "success");
       setTimeout(closeTokenModal, 1200);
     }catch(err){
       // Gagal -- bersihkan lagi supaya tidak nyangkut sebagai "terhubung" palsu
