@@ -543,5 +543,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrle4fl3lexow",
+    "createdAt": 1784078244327,
+    "catatanBuku": [],
+    "isbn": "9791583668",
+    "judul": "Biografi Angka Nol",
+    "penulis": "Charles Seife",
+    "kategori": "Sejarah & Historiografi",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2008",
+    "jumlahHalaman": "340",
+    "lokasiRak": "halawa office",
+    "penerbit": "e-Nusantara",
+    "pemilik": "",
+    "halamanTerakhir": "35",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
