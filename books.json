@@ -505,7 +505,8 @@
     "status": "selesai",
     "peminjam": "",
     "tanggalPinjam": "",
-    "sampulUrl": ""
+    "sampulUrl": "",
+    "pdfLink": ""
   },
   {
     "id": "mrko59uvkw7l1",
