@@ -4020,7 +4020,7 @@
       // v1.45.1: status di atas ("ghSyncStatus") sengaja disembunyikan secara visual
       // (class sr-only-status), jadi user tidak pernah tahu hasil sinkron tiap
       // tambah/edit buku. Tambahkan toast singkat supaya kelihatan.
-      showToast("✔ Buku tersinkron ke GitHub", "success");
+      showToast("✔ Terhubung Online", "success");
     }catch(err){
       setSyncStatus("Gagal menyinkronkan: " + err.message, "err");
       showToast("⚠️ Gagal sinkron ke GitHub: " + err.message, "error");
