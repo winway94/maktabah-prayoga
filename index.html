@@ -2240,9 +2240,15 @@
       <aside class="filter-drawer" id="filterDrawer">
         <div class="filter-drawer-header">
           <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:-2px; margin-right:4px;"><circle cx="11" cy="11" r="7" stroke="var(--brand-600)" stroke-width="2"/><line x1="16.65" y1="16.65" x2="21" y2="21" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"/></svg>Filter Koleksi</span>
-          <button type="button" class="filter-drawer-close" id="filterDrawerClose" aria-label="Tutup menu filter">✕</button>
+          <div class="filter-drawer-header-actions">
+            <button type="button" class="reset-filter-btn" id="resetFilterBtnMobile" style="display:none;">🗑 Hapus Filter</button>
+            <button type="button" class="filter-drawer-close" id="filterDrawerClose" aria-label="Tutup menu filter">✕</button>
+          </div>
         </div>
-        <div class="status-tabs" id="statusTabs"></div>
+        <div class="status-tabs-row">
+          <div class="status-tabs" id="statusTabs"></div>
+          <button type="button" class="reset-filter-btn reset-filter-btn-desktop" id="resetFilterBtnDesktop" style="display:none;">🗑 Hapus Filter</button>
+        </div>
         <div class="filter-groups-row">
           <div class="filter-group">
             <div class="filter-group-label"><svg width="13" height="13" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;"><rect x="3" y="4" width="8" height="6" rx="1" fill="var(--brand-700)"/><rect x="13" y="4" width="8" height="6" rx="1" fill="var(--brand-700)" opacity="0.55"/><rect x="3" y="14" width="8" height="6" rx="1" fill="var(--brand-700)" opacity="0.55"/><rect x="13" y="14" width="8" height="6" rx="1" fill="var(--brand-700)"/></svg>Jenis Buku</div>
@@ -3833,6 +3839,7 @@
       // 200 = file ada, 404 = repo ada tapi file belum ada, dua-duanya OK
       tokenModalStatus.textContent = "Menyinkronkan...";
       await fetchFromGithub();
+      startAutoSync();
 
       tokenModalStatus.textContent = "✔ Berhasil terhubung!";
       tokenModalStatus.className = "sync-status status-ok";
@@ -3942,10 +3949,34 @@
     return `${GITHUB_WORKER_URL}/repos/${ghConfig.owner}/${ghConfig.repo}/contents/${cleanPath}`;
   }
 
+  let ghAutoSyncTimer = null;
+  const GH_AUTO_SYNC_INTERVAL_MS = 20000; // cek update dari GitHub tiap 20 detik
+
+  // ---------- Sinkron otomatis: polling berkala + saat app/tab kembali aktif ----------
+  // Ini melengkapi fetchFromGithub() yang sebelumnya cuma jalan sekali waktu halaman
+  // pertama kali dibuka. Sekarang selama halaman ini terbuka, data akan otomatis
+  // ditarik ulang dari GitHub tanpa perlu refresh manual atau tombol apa pun.
+  function startAutoSync(){
+    if(ghAutoSyncTimer) clearInterval(ghAutoSyncTimer);
+    if(!(ghConfig && ghConfig.owner && ghConfig.repo)) return;
+    ghAutoSyncTimer = setInterval(()=>{
+      if(document.hidden) return; // jangan fetch selagi tab/app di background
+      fetchFromGithub();
+    }, GH_AUTO_SYNC_INTERVAL_MS);
+  }
+
+  // Begitu user membuka kembali tab/app ini (misal habis pindah aplikasi lain di HP),
+  // langsung cek update terbaru dari GitHub tanpa menunggu interval berikutnya.
+  document.addEventListener("visibilitychange", ()=>{
+    if(!document.hidden && ghConfig && ghConfig.owner && ghConfig.repo){
+      fetchFromGithub();
+    }
+  });
+
   async function fetchFromGithub(){
     setSyncStatus("Mengambil data dari GitHub...", "loading");
     try{
-      const res = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}`, { headers: ghHeaders() });
+      const res = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}&_=${Date.now()}`, { headers: ghHeaders(), cache: "no-store" });
       if(res.status === 404){
         setSyncStatus("File belum ada di repo, membuat baru dari data lokal...", "loading");
         await pushToGithub();
@@ -4696,6 +4727,7 @@
   
   if(ghConfig && ghConfig.owner && ghConfig.repo){
     fetchFromGithub();
+    startAutoSync();
   } else {
     // v1.45.0: kalau browser ini belum pernah dihubungkan ke repo GitHub,
     // otomatis buka modal "Hubungkan Sinkronisasi" -- supaya tidak rawan
