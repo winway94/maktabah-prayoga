@@ -817,5 +817,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm382y2t6ezz",
+    "createdAt": 1784120404970,
+    "catatanBuku": [],
+    "isbn": "9789793065557",
+    "judul": "Palestine's children - Kisah Perjuangan Hidup Anak-anak Palestina",
+    "penulis": "Ghassan Kanafani",
+    "kategori": "Sastra, Novel & Puisi",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2011",
+    "jumlahHalaman": "302",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "NAVILA",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "belum",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
