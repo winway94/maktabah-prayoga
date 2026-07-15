@@ -923,5 +923,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm3tb7q09db8",
+    "createdAt": 1784121395462,
+    "catatanBuku": [],
+    "isbn": "9786020340074",
+    "judul": "Gerimis Jatuh",
+    "penulis": "Muhshonah Mujahidah",
+    "kategori": "Pengembangan Diri & Edukasi",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2017",
+    "jumlahHalaman": "158",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Gramedia Pustaka Utama",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
