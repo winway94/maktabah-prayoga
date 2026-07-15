@@ -691,5 +691,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrluushsiinhn",
+    "createdAt": 1784106347968,
+    "catatanBuku": [],
+    "isbn": "9786238849758",
+    "judul": "2 Wajh Hafs'an 'Ashim",
+    "penulis": "Muhammad Ihsan Ufiq, Lc.MA",
+    "kategori": "Agama & Pemikiran Islam",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2024",
+    "jumlahHalaman": "196",
+    "lokasiRak": "halawa office",
+    "penerbit": "MQI Publisher",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
