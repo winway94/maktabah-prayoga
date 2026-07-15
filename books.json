@@ -796,5 +796,26 @@
     "peminjam": "",
     "tanggalPinjam": "",
     "sampulUrl": ""
+  },
+  {
+    "id": "mrm34dpm3eda3",
+    "createdAt": 1784120232299,
+    "catatanBuku": [],
+    "isbn": "9786028975759",
+    "judul": "PANDUAN ILMU TAJWID BERGAMBAR",
+    "penulis": "DR Aiman Rusydi Suwaid",
+    "kategori": "Agama & Pemikiran Islam",
+    "jenisBuku": "cetak",
+    "pdfLink": "",
+    "tahunTerbit": "2017",
+    "jumlahHalaman": "180",
+    "lokasiRak": "Bawah Tv",
+    "penerbit": "Zamzam",
+    "pemilik": "Edwin",
+    "halamanTerakhir": "",
+    "status": "selesai",
+    "peminjam": "",
+    "tanggalPinjam": "",
+    "sampulUrl": ""
   }
 ]
