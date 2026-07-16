@@ -320,7 +320,10 @@
       "halamanTerakhir": "",
       "status": "selesai",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://mojokstore.com/wp-content/uploads/2018/10/Manufacturing-Hope-bisa-600x890.jpg",
+      "updatedAt": 1784182820422
     },
     {
       "id": "mrhooelmu3a1s",
