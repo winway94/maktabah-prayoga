@@ -717,7 +717,9 @@
       "status": "selesai",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://www.tanwirulafkarpenerbit.com/wp-content/uploads/2024/06/2-Wajh-Hafsh-An-Ashim-300x300.jpg",
+      "updatedAt": 1784182089588
     },
     {
       "id": "mrlux0yho087v",
