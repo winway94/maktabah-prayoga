@@ -488,7 +488,10 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzWJf1-Hnn6O2DypPRxoeyHTkTgnAAkzswufxS0ODR9uplx5Bj0hgWel4&s=10",
+      "updatedAt": 1784182522873
     },
     {
       "id": "mrko0p6xcztua",
