@@ -546,7 +546,10 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://proumedia.co.id/wp-content/uploads/2022/04/DRTU-1.png",
+      "updatedAt": 1784182413362
     },
     {
       "id": "mrle4fl3lexow",
