@@ -653,7 +653,9 @@
       "status": "selesai",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDur5RFRY9PvrewM8mSpvSRgxBIqjgFnH8c6bObMS42eJ4HKIL8gtYA9c&s=10",
+      "updatedAt": 1784182203399
     },
     {
       "id": "mrlunx775wv3o",
