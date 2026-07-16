@@ -302,7 +302,10 @@
       "halamanTerakhir": "",
       "status": "selesai",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1390920561i/20646533.jpg",
+      "updatedAt": 1784182868505
     },
     {
       "id": "mrhom6gai46qe",
