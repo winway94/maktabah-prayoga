@@ -781,7 +781,9 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://bukukita.com/babacms/displaybuku/60732_f.jpg",
+      "updatedAt": 1784181972041
     },
     {
       "id": "mrm315wf1boxd",
