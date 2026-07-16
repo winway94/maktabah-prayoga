@@ -2291,8 +2291,18 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.49.5</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.50.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
+    <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
+    <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
+      <button type="button" class="changelog-trigger" id="excelIoTriggerBtn">⇅ Export/Import Excel</button>
+      <div class="excel-io-menu" id="excelIoMenu" style="display:none; position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#fff; border:1px solid var(--slate-200); border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:8px; z-index:50; white-space:nowrap;">
+        <button type="button" class="btn btn-close" id="excelExportBtn" style="width:100%; margin:0 0 6px; padding:8px 14px; font-size:0.82rem;">📤 Export ke Excel (template)</button>
+        <button type="button" class="btn btn-close" id="excelImportBtn" style="width:100%; margin:0; padding:8px 14px; font-size:0.82rem;">📥 Import dari Excel</button>
+        <input type="file" id="excelImportFileInput" accept=".xlsx,.xls" style="display:none;">
+        <div style="font-size:0.68rem; color:var(--slate-600); margin-top:8px; max-width:220px; white-space:normal; line-height:1.4;">Export dulu buat dapat template terisi data koleksimu (buat edit cepat massal), atau kosongkan kolomnya buat tambah buku baru secara massal, lalu Import lagi file yang sama.</div>
+      </div>
+    </div>
   </footer>
 
   <!-- MODAL PENGATURAN REPOSITORY GITHUB -->
@@ -2329,6 +2339,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.50.0</strong> — 📊 Fitur baru: Export/Import Excel untuk tambah &amp; edit cepat massal. Tombol kecil "⇅ Export/Import Excel" ditaruh di footer (tersembunyi rapi, tidak mengganggu tampilan utama). Export menghasilkan file .xlsx berisi seluruh koleksi (lengkap dengan sheet "Petunjuk" berisi daftar nilai valid untuk Kategori/Jenis Buku/Status) — kolom ID biarkan terisi untuk EDIT buku yang sudah ada, atau kosongkan untuk TAMBAH baris/buku baru, lalu Import lagi file yang sama. Hasil import menampilkan ringkasan jumlah buku baru/diperbarui/dilewati beserta peringatan kalau ada nilai kategori/jenis/status yang tidak dikenali.</li>
         <li><strong>v1.49.5</strong> — 🐛 Fix lanjutan dari v1.49.4: pengecekan "apakah ada perubahan" sebelumnya pakai perbandingan yang peka urutan array, padahal urutan hasil gabungan (merge) sinkron bisa beda dari data lokal walau ISINYA sama persis. Akibatnya tetap dianggap "berubah" tiap polling &amp; ikut render ulang — makanya cover buku kosong masih kelihatan kedip-kedip. Sekarang dibandingkan dengan cara yang tidak peduli urutan, cuma isinya, jadi render ulang beneran cuma terjadi kalau ada perubahan sungguhan.</li>
         <li><strong>v1.49.4</strong> — 🤫 Polling sinkron otomatis (tiap 20 detik) sekarang tidak lagi merender ulang grid & carousel kalau ternyata tidak ada perubahan data sama sekali — sebelumnya SELALU render ulang tiap polling, walau data persis sama, sehingga terasa "reload"/flicker & scroll ke atas terus-terusan. Render ulang cuma terjadi kalau hasil sinkron benar-benar mengubah data lokal.</li>
         <li><strong>v1.49.3</strong> — 🐛 Fix: Link Cover Manual tidak muncul di kartu grid "Koleksi Buku" (padahal sudah muncul di carousel Sedang Dibaca & Buku Terbaru). Penyebabnya kartu grid punya logic pemilihan sumber cover sendiri yang terpisah/duplikat, dibuat sebelum fitur Link Cover Manual ada, jadi belum tahu soal field itu. Disatukan supaya semua tempat (grid, carousel, modal detail, saran pencarian) pakai satu fungsi sumber cover yang sama — mencegah celah serupa terulang di kemudian hari.</li>
@@ -2482,6 +2493,8 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
+<!-- SheetJS: baca/tulis file Excel (.xlsx) langsung di browser, dipakai fitur Export/Import Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 (function(){
   "use strict";
@@ -3803,6 +3816,203 @@
   aiResultModalClose.addEventListener("click", closeAiResultModal);
   aiResultModalOverlay.addEventListener("click", (e)=>{
     if(e.target === aiResultModalOverlay) closeAiResultModal();
+  });
+
+  // ---------- v1.50.0: Export/Import Excel (tambah/edit cepat massal) ----------
+  // Daftar nilai yang valid untuk kolom Kategori/Jenis Buku/Status, dipakai untuk
+  // export (label rapi) maupun import (validasi & pemetaan balik ke nilai internal).
+  const EXCEL_KATEGORI_LIST = [
+    "Sejarah & Historiografi", "Sosiologi & Ilmu Sosial", "Politik & Hubungan Internasional",
+    "Filsafat & Logika", "Agama & Pemikiran Islam", "Ekonomi & Teori Pembangunan",
+    "Bisnis, Manajemen & Keuangan", "Sains, Matematika & Alam", "Teknologi, Komputer & Coding",
+    "Kesehatan, Kedokteran & Psikologi", "Sastra, Novel & Puisi", "Komik, Manga & Novel Grafis",
+    "Biografi, Otobiografi & Memoar", "Pengembangan Diri & Edukasi", "Lainnya / Serba-Serbi"
+  ];
+  const EXCEL_JENIS_MAP = { "Cetak (Fisik)": "cetak", "Digital (PDF)": "digital" };
+  const EXCEL_STATUS_MAP = { "Belum Selesai": "belum", "Sudah Selesai": "selesai", "Sedang Dipinjam": "dipinjam" };
+  const EXCEL_JENIS_MAP_REV = { cetak: "Cetak (Fisik)", digital: "Digital (PDF)" };
+  const EXCEL_STATUS_MAP_REV = { belum: "Belum Selesai", selesai: "Sudah Selesai", dipinjam: "Sedang Dipinjam" };
+
+  const excelIoTriggerBtn = document.getElementById("excelIoTriggerBtn");
+  const excelIoMenu = document.getElementById("excelIoMenu");
+  const excelExportBtn = document.getElementById("excelExportBtn");
+  const excelImportBtn = document.getElementById("excelImportBtn");
+  const excelImportFileInput = document.getElementById("excelImportFileInput");
+
+  excelIoTriggerBtn.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    excelIoMenu.style.display = (excelIoMenu.style.display === "none") ? "block" : "none";
+  });
+  document.addEventListener("click", (e)=>{
+    if(!excelIoMenu.contains(e.target) && e.target !== excelIoTriggerBtn){
+      excelIoMenu.style.display = "none";
+    }
+  });
+
+  function exportBooksToExcel(){
+    if(typeof XLSX === "undefined"){
+      alert("⚠️ Modul Excel gagal dimuat (perlu koneksi internet untuk memuatnya pertama kali). Coba lagi.");
+      return;
+    }
+    const rows = books.map(b => ({
+      "ID (JANGAN DIUBAH/DIHAPUS)": b.id,
+      "ISBN": b.isbn || "",
+      "Judul Buku": b.judul || "",
+      "Penulis": b.penulis || "",
+      "Kategori": b.kategori || "",
+      "Jenis Buku": EXCEL_JENIS_MAP_REV[b.jenisBuku] || "Cetak (Fisik)",
+      "Tahun Terbit": b.tahunTerbit || "",
+      "Jumlah Halaman": b.jumlahHalaman || "",
+      "Lokasi Rak": b.lokasiRak || "",
+      "Penerbit": b.penerbit || "",
+      "Pemilik Buku": b.pemilik || "",
+      "Halaman Terakhir Dibaca": b.halamanTerakhir || "",
+      "Status Bacaan": EXCEL_STATUS_MAP_REV[b.status] || "Belum Selesai",
+      "Peminjam": b.peminjam || ""
+    }));
+    // Kalau koleksi masih kosong, tetap kasih 1 baris contoh kosong supaya user
+    // tahu kolom apa saja yang harus diisi buat tambah buku baru secara massal.
+    if(rows.length === 0){
+      rows.push({
+        "ID (JANGAN DIUBAH/DIHAPUS)": "", "ISBN": "", "Judul Buku": "", "Penulis": "",
+        "Kategori": "", "Jenis Buku": "Cetak (Fisik)", "Tahun Terbit": "", "Jumlah Halaman": "",
+        "Lokasi Rak": "", "Penerbit": "", "Pemilik Buku": "", "Halaman Terakhir Dibaca": "",
+        "Status Bacaan": "Belum Selesai", "Peminjam": ""
+      });
+    }
+
+    const wsBuku = XLSX.utils.json_to_sheet(rows);
+    wsBuku["!cols"] = [
+      {wch:22},{wch:16},{wch:30},{wch:22},{wch:28},{wch:14},{wch:12},{wch:14},
+      {wch:18},{wch:22},{wch:18},{wch:20},{wch:16},{wch:18}
+    ];
+
+    const petunjukRows = [
+      ["CARA PAKAI"],
+      ["1. Untuk EDIT buku yang sudah ada: JANGAN ubah kolom ID, cukup ubah kolom lain yang mau diedit, lalu Import file ini lagi."],
+      ["2. Untuk TAMBAH buku baru: tambah baris baru di bawah, KOSONGKAN kolom ID, isi kolom lainnya, lalu Import."],
+      ["3. Kolom Judul Buku WAJIB diisi, sisanya boleh kosong."],
+      ["4. Kolom Kategori, Jenis Buku, dan Status Bacaan harus persis salah satu dari daftar di bawah (huruf besar/kecil bebas)."],
+      [""],
+      ["Pilihan JENIS BUKU:"], ["Cetak (Fisik)"], ["Digital (PDF)"],
+      [""],
+      ["Pilihan STATUS BACAAN:"], ["Belum Selesai"], ["Sudah Selesai"], ["Sedang Dipinjam"],
+      [""],
+      ["Pilihan KATEGORI:"],
+      ...EXCEL_KATEGORI_LIST.map(k => [k])
+    ];
+    const wsPetunjuk = XLSX.utils.aoa_to_sheet(petunjukRows);
+    wsPetunjuk["!cols"] = [{wch:70}];
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, wsBuku, "Buku");
+    XLSX.utils.book_append_sheet(wb, wsPetunjuk, "Petunjuk");
+
+    const todayStr = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(wb, "maktabah-template-" + todayStr + ".xlsx");
+    excelIoMenu.style.display = "none";
+    showToast("✔ Template Excel berhasil diunduh (" + rows.length + " baris).", "success");
+  }
+
+  function importBooksFromExcel(file){
+    if(typeof XLSX === "undefined"){
+      alert("⚠️ Modul Excel gagal dimuat (perlu koneksi internet untuk memuatnya pertama kali). Coba lagi.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try{
+        const wb = XLSX.read(new Uint8Array(e.target.result), { type: "array" });
+        const sheetName = wb.SheetNames.includes("Buku") ? "Buku" : wb.SheetNames[0];
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { defval: "" });
+
+        let jumlahBaru = 0, jumlahDiedit = 0, jumlahDilewati = 0;
+        const peringatan = [];
+
+        rows.forEach((row, idx) => {
+          const judul = String(row["Judul Buku"] || "").trim();
+          if(!judul){
+            jumlahDilewati++;
+            return; // baris kosong / tidak ada judul, lewati diam-diam (biasanya baris kosong bawaan Excel)
+          }
+
+          const idRaw = String(row["ID (JANGAN DIUBAH/DIHAPUS)"] || "").trim();
+          const kategoriRaw = String(row["Kategori"] || "").trim();
+          const kategoriMatch = EXCEL_KATEGORI_LIST.find(k => k.toLowerCase() === kategoriRaw.toLowerCase());
+          if(kategoriRaw && !kategoriMatch){
+            peringatan.push("Baris " + (idx+2) + " (\"" + judul + "\"): Kategori \"" + kategoriRaw + "\" tidak dikenali, dikosongkan.");
+          }
+          const jenisRaw = String(row["Jenis Buku"] || "").trim();
+          const jenisKey = Object.keys(EXCEL_JENIS_MAP).find(k => k.toLowerCase() === jenisRaw.toLowerCase());
+          if(jenisRaw && !jenisKey){
+            peringatan.push("Baris " + (idx+2) + " (\"" + judul + "\"): Jenis Buku \"" + jenisRaw + "\" tidak dikenali, dianggap Cetak.");
+          }
+          const statusRaw = String(row["Status Bacaan"] || "").trim();
+          const statusKey = Object.keys(EXCEL_STATUS_MAP).find(k => k.toLowerCase() === statusRaw.toLowerCase());
+          if(statusRaw && !statusKey){
+            peringatan.push("Baris " + (idx+2) + " (\"" + judul + "\"): Status \"" + statusRaw + "\" tidak dikenali, dianggap Belum Selesai.");
+          }
+
+          const fieldData = {
+            isbn: String(row["ISBN"] || "").trim(),
+            judul: judul,
+            penulis: String(row["Penulis"] || "").trim(),
+            kategori: kategoriMatch || "",
+            jenisBuku: jenisKey ? EXCEL_JENIS_MAP[jenisKey] : "cetak",
+            tahunTerbit: String(row["Tahun Terbit"] || "").trim(),
+            jumlahHalaman: String(row["Jumlah Halaman"] || "").trim(),
+            lokasiRak: String(row["Lokasi Rak"] || "").trim(),
+            penerbit: String(row["Penerbit"] || "").trim(),
+            pemilik: String(row["Pemilik Buku"] || "").trim(),
+            halamanTerakhir: String(row["Halaman Terakhir Dibaca"] || "").trim(),
+            status: statusKey ? EXCEL_STATUS_MAP[statusKey] : "belum",
+            peminjam: String(row["Peminjam"] || "").trim(),
+            updatedAt: Date.now()
+          };
+
+          const existingIdx = idRaw ? books.findIndex(b => String(b.id) === idRaw) : -1;
+          if(existingIdx >= 0){
+            books[existingIdx] = Object.assign({}, books[existingIdx], fieldData);
+            jumlahDiedit++;
+          } else {
+            books.push(Object.assign({
+              id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+              createdAt: Date.now(),
+              sampulUrl: "",
+              sampulManualUrl: ""
+            }, fieldData));
+            jumlahBaru++;
+          }
+        });
+
+        if(jumlahBaru > 0 || jumlahDiedit > 0){
+          saveBooks();
+          renderTable();
+        }
+
+        let ringkasan = "✔ Import selesai:\n• " + jumlahBaru + " buku baru ditambahkan\n• " + jumlahDiedit + " buku diperbarui";
+        if(jumlahDilewati > 0) ringkasan += "\n• " + jumlahDilewati + " baris dilewati (judul kosong)";
+        if(peringatan.length > 0){
+          ringkasan += "\n\n⚠️ Peringatan (" + peringatan.length + "):\n" + peringatan.slice(0, 15).join("\n");
+          if(peringatan.length > 15) ringkasan += "\n... dan " + (peringatan.length - 15) + " lainnya.";
+        }
+        alert(ringkasan);
+      }catch(err){
+        alert("⚠️ Gagal membaca file Excel: " + err.message + "\n\nPastikan format file sesuai template hasil Export.");
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  excelExportBtn.addEventListener("click", exportBooksToExcel);
+  excelImportBtn.addEventListener("click", ()=>{
+    excelIoMenu.style.display = "none";
+    excelImportFileInput.click();
+  });
+  excelImportFileInput.addEventListener("change", (e)=>{
+    const file = e.target.files[0];
+    if(file) importBooksFromExcel(file);
+    excelImportFileInput.value = ""; // reset supaya bisa pilih file yang sama lagi kalau perlu
   });
 
   // ---------- Modal Pengaturan Repository GitHub ----------
