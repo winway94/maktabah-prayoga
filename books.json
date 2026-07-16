@@ -589,7 +589,9 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTordNKKoXW2WliS1HNKdlF_g5PdMgIqGZzPuktHNFC20zdvpQhwzgnfq4&s=10",
+      "updatedAt": 1784182370899
     },
     {
       "id": "mrlu6p86mz9ac",
