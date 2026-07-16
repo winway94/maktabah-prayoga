@@ -610,7 +610,9 @@
       "status": "selesai",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://bukukita.com/babacms/displaybuku/93003_f.jpg",
+      "updatedAt": 1784182295925
     },
     {
       "id": "mrlub6fuak4lt",
