@@ -284,7 +284,10 @@
       "halamanTerakhir": "",
       "status": "belum",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://mojokstore.com/wp-content/uploads/2021/07/Who-Rules-The-World.jpg",
+      "updatedAt": 1784182923343
     },
     {
       "id": "mrho5js8xrwj6",
