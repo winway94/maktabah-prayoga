@@ -2291,7 +2291,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.50.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.50.1</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
     <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
     <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
@@ -2339,6 +2339,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.50.1</strong> — 🐛 Fix: template Export/Import Excel (v1.50.0) ketinggalan kolom "Link Cover Manual" — jadi link cover yang ditempel lewat Excel tidak pernah tersimpan/muncul. Sekarang kolom itu sudah ada di export maupun import, lengkap dengan catatan cara pakai di sheet "Petunjuk".</li>
         <li><strong>v1.50.0</strong> — 📊 Fitur baru: Export/Import Excel untuk tambah &amp; edit cepat massal. Tombol kecil "⇅ Export/Import Excel" ditaruh di footer (tersembunyi rapi, tidak mengganggu tampilan utama). Export menghasilkan file .xlsx berisi seluruh koleksi (lengkap dengan sheet "Petunjuk" berisi daftar nilai valid untuk Kategori/Jenis Buku/Status) — kolom ID biarkan terisi untuk EDIT buku yang sudah ada, atau kosongkan untuk TAMBAH baris/buku baru, lalu Import lagi file yang sama. Hasil import menampilkan ringkasan jumlah buku baru/diperbarui/dilewati beserta peringatan kalau ada nilai kategori/jenis/status yang tidak dikenali.</li>
         <li><strong>v1.49.5</strong> — 🐛 Fix lanjutan dari v1.49.4: pengecekan "apakah ada perubahan" sebelumnya pakai perbandingan yang peka urutan array, padahal urutan hasil gabungan (merge) sinkron bisa beda dari data lokal walau ISINYA sama persis. Akibatnya tetap dianggap "berubah" tiap polling &amp; ikut render ulang — makanya cover buku kosong masih kelihatan kedip-kedip. Sekarang dibandingkan dengan cara yang tidak peduli urutan, cuma isinya, jadi render ulang beneran cuma terjadi kalau ada perubahan sungguhan.</li>
         <li><strong>v1.49.4</strong> — 🤫 Polling sinkron otomatis (tiap 20 detik) sekarang tidak lagi merender ulang grid & carousel kalau ternyata tidak ada perubahan data sama sekali — sebelumnya SELALU render ulang tiap polling, walau data persis sama, sehingga terasa "reload"/flicker & scroll ke atas terus-terusan. Render ulang cuma terjadi kalau hasil sinkron benar-benar mengubah data lokal.</li>
@@ -3868,7 +3869,8 @@
       "Pemilik Buku": b.pemilik || "",
       "Halaman Terakhir Dibaca": b.halamanTerakhir || "",
       "Status Bacaan": EXCEL_STATUS_MAP_REV[b.status] || "Belum Selesai",
-      "Peminjam": b.peminjam || ""
+      "Peminjam": b.peminjam || "",
+      "Link Cover Manual": b.sampulManualUrl || ""
     }));
     // Kalau koleksi masih kosong, tetap kasih 1 baris contoh kosong supaya user
     // tahu kolom apa saja yang harus diisi buat tambah buku baru secara massal.
@@ -3877,14 +3879,14 @@
         "ID (JANGAN DIUBAH/DIHAPUS)": "", "ISBN": "", "Judul Buku": "", "Penulis": "",
         "Kategori": "", "Jenis Buku": "Cetak (Fisik)", "Tahun Terbit": "", "Jumlah Halaman": "",
         "Lokasi Rak": "", "Penerbit": "", "Pemilik Buku": "", "Halaman Terakhir Dibaca": "",
-        "Status Bacaan": "Belum Selesai", "Peminjam": ""
+        "Status Bacaan": "Belum Selesai", "Peminjam": "", "Link Cover Manual": ""
       });
     }
 
     const wsBuku = XLSX.utils.json_to_sheet(rows);
     wsBuku["!cols"] = [
       {wch:22},{wch:16},{wch:30},{wch:22},{wch:28},{wch:14},{wch:12},{wch:14},
-      {wch:18},{wch:22},{wch:18},{wch:20},{wch:16},{wch:18}
+      {wch:18},{wch:22},{wch:18},{wch:20},{wch:16},{wch:18},{wch:36}
     ];
 
     const petunjukRows = [
@@ -3893,6 +3895,7 @@
       ["2. Untuk TAMBAH buku baru: tambah baris baru di bawah, KOSONGKAN kolom ID, isi kolom lainnya, lalu Import."],
       ["3. Kolom Judul Buku WAJIB diisi, sisanya boleh kosong."],
       ["4. Kolom Kategori, Jenis Buku, dan Status Bacaan harus persis salah satu dari daftar di bawah (huruf besar/kecil bebas)."],
+      ["5. Kolom Link Cover Manual: tempel link gambar sampul (harus link langsung ke file gambar, bukan link halaman web). Kosongkan kalau tidak mau pakai cover manual."],
       [""],
       ["Pilihan JENIS BUKU:"], ["Cetak (Fisik)"], ["Digital (PDF)"],
       [""],
@@ -3967,6 +3970,7 @@
             halamanTerakhir: String(row["Halaman Terakhir Dibaca"] || "").trim(),
             status: statusKey ? EXCEL_STATUS_MAP[statusKey] : "belum",
             peminjam: String(row["Peminjam"] || "").trim(),
+            sampulManualUrl: String(row["Link Cover Manual"] || "").trim(),
             updatedAt: Date.now()
           };
 
