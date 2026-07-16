@@ -392,7 +392,10 @@
       "halamanTerakhir": "",
       "status": "selesai",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://perpustakaan.kemlu.go.id/lib/minigalnano/createthumb.php?filename=images/docs/cover_wikileaks-situs-paling-berbahaya-di-dunia-20240819153443.jpg&width=200",
+      "updatedAt": 1784182699426
     },
     {
       "id": "mrhp3pbr1h5wo",
