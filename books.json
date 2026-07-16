@@ -527,7 +527,10 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://library.man1inhil.sch.id/lib/minigalnano/createthumb.php?filename=images/docs/cover_sejarah-agama-yahudi-20250911145731.jpg&width=200",
+      "updatedAt": 1784182450683
     },
     {
       "id": "mrko7m11okqwq",
