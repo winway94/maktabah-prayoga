@@ -2060,7 +2060,7 @@
 
   <div class="search-wrap search-wrap-top" id="searchWrap">
     <svg class="search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="var(--brand-600)" stroke-width="2"/><line x1="16.65" y1="16.65" x2="21" y2="21" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"/></svg>
-    <input type="search" id="searchInput" placeholder="Cari judul, penulis, atau ISBN..." autocomplete="off">
+    <input type="search" id="searchInput" placeholder="Cari judul, penulis, ISBN, penerbit, lokasi rak, atau pemilik..." autocomplete="off">
     <div class="search-suggest-box" id="searchSuggestBox" style="display:none;"></div>
   </div>
 
@@ -2291,7 +2291,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.47.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.49.3</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -2329,6 +2329,11 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.49.3</strong> — 🐛 Fix: Link Cover Manual tidak muncul di kartu grid "Koleksi Buku" (padahal sudah muncul di carousel Sedang Dibaca & Buku Terbaru). Penyebabnya kartu grid punya logic pemilihan sumber cover sendiri yang terpisah/duplikat, dibuat sebelum fitur Link Cover Manual ada, jadi belum tahu soal field itu. Disatukan supaya semua tempat (grid, carousel, modal detail, saran pencarian) pakai satu fungsi sumber cover yang sama — mencegah celah serupa terulang di kemudian hari.</li>
+        <li><strong>v1.49.2</strong> — 🔕 Toast "Terhubung Online" yang muncul tiap tambah/edit/hapus buku dihapus karena terlalu sering & mengganggu (status sinkron cukup dilihat dari indikator footer). 🖼️ Link Cover Manual sekarang langsung menampilkan preview otomatis begitu berhenti mengetik/paste (didebounce 500ms) — di form Tambah Buku maupun modal Edit — tidak perlu klik tombol "Tampilkan" atau simpan buku dulu.</li>
+        <li><strong>v1.49.1</strong> — 🔍 Dropdown saran pencarian (yang muncul saat mengetik di kotak cari) sekarang ikut mencocokkan Penerbit, Lokasi Rak, dan Pemilik Buku — sebelumnya cuma Judul/Penulis/ISBN. Hasil filter utama sebenarnya sudah mencakup field-field ini sejak lama; ini menyamakan dropdown saran supaya konsisten. Placeholder kotak pencarian diperbarui biar jelas.</li>
+        <li><strong>v1.49.0</strong> — 🔀 Perombakan besar mekanisme sinkron: dulu keputusan "data siapa yang dipakai" cuma berdasarkan JUMLAH buku (rawan salah & bisa menghidupkan lagi buku yang sudah dihapus). Sekarang tiap buku bawa <code>updatedAt</code>, dan tiap penghapusan dicatat sebagai "tombstone" (riwayat hapus, tersimpan 180 hari) yang ikut disinkronkan. Saat sinkron, data digabung PER BUKU (bukan ditimpa semua): versi dengan <code>updatedAt</code> terbaru yang menang, dan buku yang sudah dihapus tidak akan hidup lagi kecuali memang diedit ulang setelah waktu hapusnya. Efeknya juga menutup celah "delta sync" — device manapun bisa nambah/edit/hapus offline lalu sinkron belakangan tanpa saling menimpa. Format file <code>books.json</code> di GitHub berubah dari array polos jadi <code>{books, tombstones}</code>, tapi tetap kompatibel baca format lama.</li>
+        <li><strong>v1.48.0</strong> — 💾 Backup otomatis harian: tiap kali sinkron berhasil, snapshot koleksi disimpan terpisah ke folder <code>backups/YYYY-MM-DD.json</code> di repo (maks 1x/hari), backup yang lebih tua dari 3 hari otomatis dihapus. Kalau data korup/salah hapus massal, bisa direstore dari sana. 🕒 Indikator "Sinkron aktif" di footer sekarang juga menampilkan kapan terakhir kali berhasil sinkron (mis. "terakhir 2 menit lalu"), otomatis diperbarui tiap 30 detik.</li>
         <li><strong>v1.47.0</strong> — 🔗 Fitur baru: Link Cover Manual. Kalau sampul buku tidak ditemukan otomatis (ISBN & Google Books kosong), sekarang muncul kolom untuk menempel link gambar sampul sendiri (hasil cari manual di internet), baik di form Tambah Buku maupun Modal Edit. Ukuran gambar otomatis disesuaikan (crop rapi) mengikuti kotak sampul standar Maktabah, jadi tidak acak-acakan. Link manual ini jadi prioritas tertinggi saat ditampilkan di kartu koleksi, carousel, saran pencarian, maupun modal detail. Rekomendasi tautan keluar ke katalog ISBN Perpusnas dihapus, digantikan alur tempel-link ini.</li>
         <li><strong>v1.46.1</strong> — 🖼️ Sampul buku digital kini bisa otomatis diambil dari thumbnail halaman pertama PDF di Google Drive (kalau file di-share "siapa saja dengan link"), sebagai fallback paling akhir setelah ISBN (Open Library) dan Google Books tetap tidak ditemukan/kosong. Berlaku konsisten di kartu koleksi, tampilan list, saran pencarian, dan modal detail.</li>
         <li><strong>v1.46.0</strong> — 📖 Fitur baru: Perpustakaan PDF Explorer Internal Advanced. Form Tambah Buku &amp; Modal Edit kini menampilkan field "Link Google Drive PDF" saat Jenis Buku = Digital. Modal Detail menampilkan pembaca PDF langsung di tempat (iframe, otomatis mengubah link share Drive jadi format /preview), lengkap dengan tombol Mode Fokus (layar penuh) dan Bank Catatan &amp; Pembatas Buku per buku (tambah/hapus catatan halaman). Tidak mengubah fitur LocalStorage, Google Books lookup, sinkron GitHub, service worker, atau modul AI Gemini yang sudah ada.</li>
@@ -2481,6 +2486,10 @@
 
   const STORAGE_KEY = "personal_library_books_v1";
   let books = [];
+  // v1.49.0: riwayat hapus (tombstone) -- {id, deletedAt} -- supaya merge sinkron antar-device
+  // tidak menghidupkan lagi buku yang sudah dihapus di device lain.
+  const TOMBSTONES_KEY = "personal_library_tombstones_v1";
+  let tombstones = [];
   let html5QrCode = null;
   let scannerRunning = false;
 
@@ -2614,9 +2623,16 @@
     }catch(e){
       books = [];
     }
+    try{
+      const rawTomb = localStorage.getItem(TOMBSTONES_KEY);
+      tombstones = rawTomb ? JSON.parse(rawTomb) : [];
+    }catch(e){
+      tombstones = [];
+    }
   }
   function saveBooks(){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+    localStorage.setItem(TOMBSTONES_KEY, JSON.stringify(tombstones));
     // Auto-sync: setiap kali data buku berubah (tambah/edit/hapus), langsung
     // push ke GitHub (lewat Worker proxy) di latar belakang kalau config repo sudah diisi.
     if(ghConfig && ghConfig.owner && ghConfig.repo){
@@ -2699,28 +2715,13 @@
         card.className = "book-grid-card";
         card.setAttribute("data-book-id", b.id);
 
-        const coverUrlRow = b.isbn
-          ? "https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(b.isbn) + "-M.jpg?default=false"
-          : "";
-        const driveUrlRow = getDriveThumbUrl(b, 120); // v1.46.1: fallback terakhir
-        const gbUrlRow = b.sampulUrl || "";
-        // Google Books diprioritaskan: sampul Open Library sering kosong untuk buku terbitan Indonesia.
-        // Urutan akhir: Google Books -> Open Library -> thumbnail Drive PDF.
-        const rowChain = [gbUrlRow, coverUrlRow, driveUrlRow].filter(Boolean);
-        const optimizeRow = (u) => (u === gbUrlRow) ? optimizeCoverUrl(gbUrlRow, 120) : u;
+        // v1.49.3: dulu di sini ada logic cover sendiri yang terpisah/duplikat dari buildCoverHtml,
+        // dibuat sebelum fitur Link Cover Manual ada -- akibatnya link cover manual yang ditempel
+        // user TIDAK muncul di kartu koleksi ini (padahal sudah muncul di carousel Sedang Dibaca/
+        // Buku Terbaru yang memang sudah pakai buildCoverHtml). Sekarang disatukan lewat fungsi yang
+        // sama supaya konsisten & tidak ada lagi celah begini di kemudian hari.
         const fallbackId = "coverFallbackRow_" + b.id;
-        let coverCellHtml = "";
-        if(rowChain.length > 0){
-          // Sama seperti buildCoverHtml: hanya sampul Google Books yang di-proxy lewat weserv.nl.
-          // Open Library & Drive dibiarkan mentah supaya deteksi placeholder 1x1px tetap akurat.
-          const coverSrcRow = optimizeRow(rowChain[0]);
-          const coverFallbackRow = rowChain.slice(1).map(optimizeRow).join("|||");
-          coverCellHtml =
-            '<img class="row-cover-img" src="' + coverSrcRow + '" data-fallback-cover="' + escapeHtml(coverFallbackRow) + '" alt="Sampul buku" loading="lazy" onerror="handleCoverImgError(this,\'' + fallbackId + '\')" onload="handleCoverImgLoad(this,\'' + fallbackId + '\')">' +
-            '<div class="book-grid-cover-fallback" id="' + fallbackId + '" style="display:none;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
-        } else {
-          coverCellHtml = '<div class="book-grid-cover-fallback" id="' + fallbackId + '" style="display:flex;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>';
-        }
+        const coverCellHtml = buildCoverHtml(b, fallbackId, "row-cover-img", "book-grid-cover-fallback");
 
         card.innerHTML = `
           <div class="book-grid-cover-wrap">
@@ -3244,6 +3245,7 @@
       const book = books.find(b => String(b.id) === String(id));
       confirmDelete(book ? book.judul : "").then((ok)=>{
         if(!ok) return;
+        tombstones.push({ id: String(id), deletedAt: Date.now() });
         books = books.filter(b => String(b.id) !== String(id));
         saveBooks();
         renderTable();
@@ -3645,6 +3647,18 @@
     if(modalJumlahHalamanField) restrictToNumeric(modalJumlahHalamanField);
     if(modalHalamanTerakhirField) restrictToNumeric(modalHalamanTerakhirField);
 
+    // v1.49.2: preview otomatis begitu user tempel/ketik link cover manual di modal edit,
+    // tanpa perlu klik "Simpan Perubahan" dulu. Didebounce 500ms.
+    const modalSampulManualUrlField = document.getElementById("modalSampulManualUrl");
+    if(modalSampulManualUrlField){
+      let modalManualCoverDebounce = null;
+      modalSampulManualUrlField.addEventListener("input", () => {
+        clearTimeout(modalManualCoverDebounce);
+        const val = modalSampulManualUrlField.value.trim();
+        modalManualCoverDebounce = setTimeout(() => updateModalCoverPreview(val), 500);
+      });
+    }
+
     detailModalBody.querySelectorAll('#modalStatusToggle input[name="modalStatus"]').forEach(radio=>{
       radio.addEventListener("change", ()=>{
         const checkedEl = detailModalBody.querySelector('#modalStatusToggle input[name="modalStatus"]:checked');
@@ -3685,6 +3699,7 @@
     delBtnEl.textContent = "🗑 Hapus";
     delBtnEl.addEventListener("click", ()=>{
       if(confirm("Yakin ingin menghapus buku \"" + book.judul + "\"?")){
+        tombstones.push({ id: String(book.id), deletedAt: Date.now() });
         books = books.filter(b => String(b.id) !== String(book.id));
         saveBooks();
         renderTable();
@@ -3735,6 +3750,8 @@
       halamanTerakhir: document.getElementById("modalHalamanTerakhir").value.trim(),
       // Link cover yang ditempel manual oleh user (prioritas tertinggi saat ditampilkan).
       sampulManualUrl: (document.getElementById("modalSampulManualUrl")?.value || "").trim(),
+      // v1.49.0: dipakai merge sinkron antar-device untuk menentukan versi mana yang lebih baru.
+      updatedAt: Date.now(),
       status: statusVal,
       peminjam: statusVal === "dipinjam" ? document.getElementById("modalPeminjam").value.trim() : "",
       tanggalPinjam: statusVal === "dipinjam" ? document.getElementById("modalTanggalPinjam").value : ""
@@ -3869,7 +3886,6 @@
 
       tokenModalStatus.textContent = "✔ Berhasil terhubung!";
       tokenModalStatus.className = "sync-status status-ok";
-      showToast("✔ Terhubung Online", "success");
       setTimeout(closeTokenModal, 1200);
     }catch(err){
       // Gagal -- bersihkan lagi supaya tidak nyangkut sebagai "terhubung" palsu
@@ -3922,6 +3938,24 @@
   }
 
   // ---------- Indikator status koneksi sinkronisasi GitHub ----------
+  const LAST_SYNC_KEY = "maktabah_last_sync_at";
+
+  function markSyncedNow(){
+    localStorage.setItem(LAST_SYNC_KEY, String(Date.now()));
+    renderSyncIndicator();
+  }
+
+  function formatRelativeTime(ts){
+    const diffMs = Date.now() - ts;
+    const diffMin = Math.floor(diffMs / 60000);
+    if(diffMin < 1) return "baru saja";
+    if(diffMin < 60) return diffMin + " menit lalu";
+    const diffJam = Math.floor(diffMin / 60);
+    if(diffJam < 24) return diffJam + " jam lalu";
+    const diffHari = Math.floor(diffJam / 24);
+    return diffHari + " hari lalu";
+  }
+
   function renderSyncIndicator(){
     const el = document.getElementById("syncIndicator");
     if(!el) return;
@@ -3930,12 +3964,22 @@
     const terhubung = !!(ghConfig && ghConfig.owner && ghConfig.repo);
     if(terhubung){
       el.className = "sync-indicator connected";
-      el.innerHTML = '<span class="dot"></span>Sinkron aktif';
+      const lastSyncRaw = localStorage.getItem(LAST_SYNC_KEY);
+      const lastSyncTs = lastSyncRaw ? parseInt(lastSyncRaw, 10) : null;
+      const lastSyncText = (lastSyncTs && !isNaN(lastSyncTs))
+        ? " · terakhir " + formatRelativeTime(lastSyncTs)
+        : " · belum pernah sinkron sejak dibuka";
+      el.innerHTML = '<span class="dot"></span>Sinkron aktif' + lastSyncText;
     } else {
       el.className = "sync-indicator disconnected";
       el.innerHTML = '<span class="dot"></span>Sinkron tidak berjalan — <a href="#" id="openTokenModalLink">atur repository &rarr;</a>';
     }
   }
+
+  // Refresh teks "terakhir X lalu" secara berkala biar jalan terus tanpa perlu event sinkron baru.
+  setInterval(()=>{
+    if(!document.hidden) renderSyncIndicator();
+  }, 30000);
 
   function saveGhConfig(cfg){
     ghConfig = cfg;
@@ -3969,7 +4013,10 @@
   }
 
   function ghApiUrl(){
-    const cleanPath = ghConfig.path.replace(/^\/+/, "");
+    return ghApiUrlForPath(ghConfig.path);
+  }
+  function ghApiUrlForPath(path){
+    const cleanPath = String(path).replace(/^\/+/, "");
     // Menembak Cloudflare Worker (reverse proxy), bukan api.github.com langsung.
     // Worker meneruskan request ini ke GitHub sambil menambahkan token secara aman.
     return `${GITHUB_WORKER_URL}/repos/${ghConfig.owner}/${ghConfig.repo}/contents/${cleanPath}`;
@@ -3999,6 +4046,41 @@
     }
   });
 
+  // ---------- v1.49.0: Merge cerdas berbasis updatedAt + tombstone (riwayat hapus) ----------
+  // Dulu logic sinkron cuma bandingkan JUMLAH buku ("lebih banyak = lebih baru") -- gampang salah:
+  // bisa nimpa edit yang lebih baru di device lain, atau menghidupkan lagi buku yang sudah dihapus
+  // (karena penghapusan sama sekali tidak tercatat waktunya). Sekarang tiap buku bawa `updatedAt`
+  // (di-set tiap kali ditambah/diedit), dan tiap penghapusan dicatat sebagai tombstone {id, deletedAt}.
+  // Merge digabung PER BUKU: yang menang adalah versi dengan updatedAt terbaru; kalau ada tombstone
+  // yang lebih baru dari updatedAt manapun untuk id itu, buku tsb dianggap terhapus (tidak dihidupkan lagi).
+  function mergeBooksAndTombstones(localBooks, localTombstones, remoteBooks, remoteTombstones){
+    const tombstoneMap = new Map();
+    for(const t of [...(localTombstones || []), ...(remoteTombstones || [])]){
+      if(!t || t.id === undefined || t.id === null) continue;
+      const id = String(t.id);
+      const prev = tombstoneMap.get(id);
+      if(prev === undefined || t.deletedAt > prev) tombstoneMap.set(id, t.deletedAt);
+    }
+    const bookMap = new Map();
+    for(const b of [...(remoteBooks || []), ...(localBooks || [])]){
+      if(!b || b.id === undefined || b.id === null) continue;
+      const id = String(b.id);
+      const updatedAt = b.updatedAt || 0;
+      const delAt = tombstoneMap.get(id);
+      if(delAt !== undefined && delAt >= updatedAt) continue; // dihapus setelah edit terakhir -> tetap terhapus
+      const existing = bookMap.get(id);
+      if(!existing || updatedAt >= (existing.updatedAt || 0)) bookMap.set(id, b);
+    }
+    // Tombstone tidak perlu disimpan selamanya -- 180 hari cukup untuk device yang jarang online,
+    // supaya file sinkron tidak membengkak oleh riwayat hapus yang sudah sangat lama.
+    const TOMBSTONE_TTL_MS = 1000 * 60 * 60 * 24 * 180;
+    const now = Date.now();
+    const mergedTombstones = Array.from(tombstoneMap.entries())
+      .filter(([, ts]) => (now - ts) < TOMBSTONE_TTL_MS)
+      .map(([id, deletedAt]) => ({ id, deletedAt }));
+    return { books: Array.from(bookMap.values()), tombstones: mergedTombstones };
+  }
+
   async function fetchFromGithub(){
     setSyncStatus("Mengambil data dari GitHub...", "loading");
     try{
@@ -4014,21 +4096,35 @@
       }
       const data = await res.json();
       const content = b64DecodeUnicode(data.content.replace(/\n/g, ""));
-      const remoteBooks = JSON.parse(content);
-      if(Array.isArray(remoteBooks)){
-        // Otomatis: kalau data HP lebih banyak/baru, langsung upload ke GitHub tanpa tanya.
-        // Kalau data GitHub sama banyak atau lebih banyak, langsung pakai data GitHub (sync turun).
-        if(remoteBooks.length < books.length){
-          await pushToGithub();
-          return;
-        }
-        books = remoteBooks;
-        saveBooks();
-        renderTable();
-      }
+      const parsed = JSON.parse(content);
+      // Kompatibel dengan format lama (file cuma array polos, tanpa tombstone) supaya
+      // repo yang sudah ada sebelum v1.49.0 tetap bisa dibaca tanpa migrasi manual.
+      const remoteBooks = Array.isArray(parsed) ? parsed : (parsed.books || []);
+      const remoteTombstones = Array.isArray(parsed) ? [] : (parsed.tombstones || []);
+
+      const merged = mergeBooksAndTombstones(books, tombstones, remoteBooks, remoteTombstones);
+      const remoteNeedsUpdate =
+        JSON.stringify(merged.books) !== JSON.stringify(remoteBooks) ||
+        JSON.stringify(merged.tombstones) !== JSON.stringify(remoteTombstones);
+
+      books = merged.books;
+      tombstones = merged.tombstones;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+      localStorage.setItem(TOMBSTONES_KEY, JSON.stringify(tombstones));
+      renderTable();
+
       ghConfig.sha = data.sha;
       saveGhConfig(ghConfig);
+
+      if(remoteNeedsUpdate){
+        // Ada perubahan lokal (buku baru/edit/hapus) yang belum ada di GitHub -> push balik
+        // hasil gabungannya supaya kedua arah sama-sama sinkron, bukan cuma "ambil punya GitHub".
+        await pushToGithub();
+        return;
+      }
+
       setSyncStatus("✔ Tersinkron — " + new Date().toLocaleTimeString('id-ID'), "ok");
+      markSyncedNow();
     }catch(err){
       setSyncStatus("Gagal mengambil data: " + err.message, "err");
     }
@@ -4040,7 +4136,7 @@
     try{
       const body = {
         message: "Update koleksi buku - " + new Date().toISOString(),
-        content: b64EncodeUnicode(JSON.stringify(books, null, 2)),
+        content: b64EncodeUnicode(JSON.stringify({ books, tombstones }, null, 2)),
         branch: ghConfig.branch
       };
       if(ghConfig.sha) body.sha = ghConfig.sha;
@@ -4074,13 +4170,86 @@
       ghConfig.sha = data.content.sha;
       saveGhConfig(ghConfig);
       setSyncStatus("✔ Tersinkron — " + new Date().toLocaleTimeString('id-ID'), "ok");
-      // v1.45.1: status di atas ("ghSyncStatus") sengaja disembunyikan secara visual
-      // (class sr-only-status), jadi user tidak pernah tahu hasil sinkron tiap
-      // tambah/edit buku. Tambahkan toast singkat supaya kelihatan.
-      showToast("✔ Terhubung Online", "success");
+      markSyncedNow();
+      // v1.49.2: toast "Terhubung Online" yang muncul tiap tambah/edit/hapus buku dihapus
+      // karena terlalu sering & mengganggu. Status sinkron cukup dilihat dari indikator
+      // "🟢 Sinkron aktif · terakhir X lalu" di footer (v1.48.0), tidak perlu toast tiap kali.
+      // v1.48.0: backup harian otomatis (fire-and-forget, tidak boleh mengganggu alur sinkron utama).
+      backupToGithubIfNeeded().catch(err => console.warn("Backup harian gagal:", err));
     }catch(err){
       setSyncStatus("Gagal menyinkronkan: " + err.message, "err");
       showToast("⚠️ Gagal sinkron ke GitHub: " + err.message, "error");
+    }
+  }
+
+  // ---------- v1.48.0: Backup otomatis harian ----------
+  // Sebelum ada ini, kalau data korup/salah hapus massal & sudah kepush ke GitHub,
+  // tidak ada cara balikin lagi (sha lama sudah ketiban). Sekarang tiap hari (maks 1x/hari,
+  // dicek dulu apa sudah ada supaya tidak nulis berkali-kali), snapshot koleksi disimpan
+  // terpisah ke folder backups/ di repo yang sama. Backup lebih tua dari 3 hari otomatis
+  // dihapus supaya repo tidak membengkak selamanya.
+  const BACKUP_RETENTION_DAYS = 3;
+
+  async function backupToGithubIfNeeded(){
+    if(!ghConfig || !ghConfig.owner || !ghConfig.repo) return;
+    const todayStr = new Date().toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
+    const backupPath = "backups/" + todayStr + ".json";
+
+    // Cek dulu apakah backup hari ini sudah ada -- kalau sudah, tidak perlu dibuat ulang.
+    const checkRes = await fetch(`${ghApiUrlForPath(backupPath)}?ref=${encodeURIComponent(ghConfig.branch)}&_=${Date.now()}`, {
+      headers: ghHeaders(), cache: "no-store"
+    });
+    if(checkRes.ok) return; // sudah ada backup hari ini, selesai.
+    if(checkRes.status !== 404){
+      throw new Error("Gagal cek backup harian (HTTP " + checkRes.status + ")");
+    }
+
+    const putRes = await fetch(ghApiUrlForPath(backupPath), {
+      method: "PUT",
+      headers: { ...ghHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: "Backup harian koleksi buku - " + todayStr,
+        content: b64EncodeUnicode(JSON.stringify({ books, tombstones }, null, 2)),
+        branch: ghConfig.branch
+      })
+    });
+    if(!putRes.ok){
+      const errBody = await putRes.json().catch(()=>({}));
+      throw new Error(errBody.message || ("Gagal membuat backup (HTTP " + putRes.status + ")"));
+    }
+
+    await cleanupOldBackups();
+  }
+
+  async function cleanupOldBackups(){
+    const listRes = await fetch(`${ghApiUrlForPath("backups")}?ref=${encodeURIComponent(ghConfig.branch)}&_=${Date.now()}`, {
+      headers: ghHeaders(), cache: "no-store"
+    });
+    if(!listRes.ok) return; // folder belum ada / tidak bisa dibaca -- diamkan, bukan fatal.
+    const files = await listRes.json();
+    if(!Array.isArray(files)) return;
+
+    const cutoff = Date.now() - (BACKUP_RETENTION_DAYS * 24 * 60 * 60 * 1000);
+    for(const file of files){
+      const m = /^(\d{4}-\d{2}-\d{2})\.json$/.exec(file.name || "");
+      if(!m) continue; // lewati file yang bukan format tanggal backup kita
+      const fileDate = new Date(m[1] + "T00:00:00Z").getTime();
+      if(isNaN(fileDate) || fileDate >= cutoff) continue; // masih dalam masa retensi
+
+      try{
+        await fetch(ghApiUrlForPath(file.path), {
+          method: "DELETE",
+          headers: { ...ghHeaders(), "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: "Hapus backup kedaluwarsa (>3 hari) - " + file.name,
+            sha: file.sha,
+            branch: ghConfig.branch
+          })
+        });
+      }catch(err){
+        console.warn("Gagal hapus backup lama " + file.name + ":", err);
+        // Lanjut ke file berikutnya, satu kegagalan hapus tidak boleh menghentikan proses.
+      }
     }
   }
 
@@ -4104,7 +4273,10 @@
     const matches = books.filter(b=>
       (b.judul||"").toLowerCase().includes(query) ||
       (b.penulis||"").toLowerCase().includes(query) ||
-      (b.isbn||"").toLowerCase().includes(query)
+      (b.isbn||"").toLowerCase().includes(query) ||
+      (b.lokasiRak||"").toLowerCase().includes(query) ||
+      (b.penerbit||"").toLowerCase().includes(query) ||
+      (b.pemilik||"").toLowerCase().includes(query)
     ).slice(0, 6);
 
     if(matches.length === 0){
@@ -4224,6 +4396,23 @@
   setupFieldAutocomplete("pemilik", "pemilikSuggest", "pemilik");
 
   // ---------- Save new book ----------
+  // v1.49.2: live preview link cover manual di modal Edit Buku. Beda dari updateCoverPreview
+  // (form Tambah Buku) karena di modal cover-nya sudah dirender lewat buildCoverHtml/coverBlockHtml
+  // dengan struktur DOM berbeda -- di sini kita cukup timpa isinya begitu link terbukti valid.
+  function updateModalCoverPreview(url){
+    const row = detailModalBody ? detailModalBody.querySelector('.cover-photo-row') : null;
+    if(!row) return;
+    const trimmed = (url || "").trim();
+    if(!trimmed) return; // kosong -> biarkan tampilan cover yang sudah ada (ISBN/Google Books) apa adanya
+    const testImg = new Image();
+    testImg.onload = function(){
+      if(testImg.naturalWidth <= 1 || testImg.naturalHeight <= 1) return; // gambar placeholder kosong, abaikan
+      row.innerHTML = '<div class="cover-photo-wrap"><img class="cover-photo-img" src="' + escapeHtml(trimmed) + '" alt="Sampul buku"></div>';
+    };
+    testImg.onerror = function(){ /* link gagal dimuat -- diamkan, biarkan tampilan sebelumnya */ };
+    testImg.src = optimizeCoverUrl(trimmed, 220);
+  }
+
   function updateCoverPreview(isbn, fallbackUrl){
     const row = document.getElementById("coverPreviewRow");
     const img = document.getElementById("coverPreviewImg");
@@ -4359,7 +4548,9 @@
       // Sampul dari Google Books (kalau ada), dipakai sebagai fallback bila Open Library tidak punya cover-nya.
       sampulUrl: googleBooksCoverUrl || "",
       // Link cover yang ditempel manual oleh user (prioritas tertinggi saat ditampilkan).
-      sampulManualUrl: (document.getElementById("manualCoverInput")?.value || "").trim()
+      sampulManualUrl: (document.getElementById("manualCoverInput")?.value || "").trim(),
+      // v1.49.0: dipakai merge sinkron antar-device untuk menentukan versi mana yang lebih baru.
+      updatedAt: Date.now()
     };
 
     if(editingBookId){
@@ -4461,6 +4652,14 @@
         e.preventDefault();
         applyManualCover();
       }
+    });
+    // v1.49.2: preview otomatis begitu user berhenti mengetik/paste link, tanpa perlu
+    // klik tombol "Tampilkan" atau menyimpan buku dulu. Didebounce 500ms supaya tidak
+    // mencoba memuat gambar di setiap ketukan huruf.
+    let manualCoverDebounce = null;
+    manualCoverInputEl.addEventListener("input", () => {
+      clearTimeout(manualCoverDebounce);
+      manualCoverDebounce = setTimeout(applyManualCover, 500);
     });
   }
 
