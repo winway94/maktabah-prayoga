@@ -266,7 +266,10 @@
       "halamanTerakhir": "",
       "status": "belum",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://www.aspirasionline.com/wp-content/uploads/2017/08/the-worlds.jpg",
+      "updatedAt": 1784182966135
     },
     {
       "id": "mrho2ujk3a8wu",
