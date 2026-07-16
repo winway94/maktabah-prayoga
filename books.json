@@ -410,7 +410,10 @@
       "halamanTerakhir": "",
       "status": "selesai",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM0xvVHgqFZEuMZEWQK5p-23XrfkqCvATgZC7yXjUFnA&s=10",
+      "updatedAt": 1784182664130
     },
     {
       "id": "mrhua0bs4pac7",
