@@ -356,7 +356,10 @@
       "halamanTerakhir": "",
       "status": "selesai",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://cdn.gramedia.com/uploads/items/9786025734311_The-Power-of-Ideas.jpg",
+      "updatedAt": 1784182736938
     },
     {
       "id": "mrhove4iybpns",
