@@ -2291,7 +2291,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.49.4</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.49.5</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
   </footer>
 
@@ -2329,6 +2329,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.49.5</strong> — 🐛 Fix lanjutan dari v1.49.4: pengecekan "apakah ada perubahan" sebelumnya pakai perbandingan yang peka urutan array, padahal urutan hasil gabungan (merge) sinkron bisa beda dari data lokal walau ISINYA sama persis. Akibatnya tetap dianggap "berubah" tiap polling &amp; ikut render ulang — makanya cover buku kosong masih kelihatan kedip-kedip. Sekarang dibandingkan dengan cara yang tidak peduli urutan, cuma isinya, jadi render ulang beneran cuma terjadi kalau ada perubahan sungguhan.</li>
         <li><strong>v1.49.4</strong> — 🤫 Polling sinkron otomatis (tiap 20 detik) sekarang tidak lagi merender ulang grid & carousel kalau ternyata tidak ada perubahan data sama sekali — sebelumnya SELALU render ulang tiap polling, walau data persis sama, sehingga terasa "reload"/flicker & scroll ke atas terus-terusan. Render ulang cuma terjadi kalau hasil sinkron benar-benar mengubah data lokal.</li>
         <li><strong>v1.49.3</strong> — 🐛 Fix: Link Cover Manual tidak muncul di kartu grid "Koleksi Buku" (padahal sudah muncul di carousel Sedang Dibaca & Buku Terbaru). Penyebabnya kartu grid punya logic pemilihan sumber cover sendiri yang terpisah/duplikat, dibuat sebelum fitur Link Cover Manual ada, jadi belum tahu soal field itu. Disatukan supaya semua tempat (grid, carousel, modal detail, saran pencarian) pakai satu fungsi sumber cover yang sama — mencegah celah serupa terulang di kemudian hari.</li>
         <li><strong>v1.49.2</strong> — 🔕 Toast "Terhubung Online" yang muncul tiap tambah/edit/hapus buku dihapus karena terlalu sering & mengganggu (status sinkron cukup dilihat dari indikator footer). 🖼️ Link Cover Manual sekarang langsung menampilkan preview otomatis begitu berhenti mengetik/paste (didebounce 500ms) — di form Tambah Buku maupun modal Edit — tidak perlu klik tombol "Tampilkan" atau simpan buku dulu.</li>
@@ -4103,20 +4104,30 @@
       const remoteBooks = Array.isArray(parsed) ? parsed : (parsed.books || []);
       const remoteTombstones = Array.isArray(parsed) ? [] : (parsed.tombstones || []);
 
+      // v1.49.5: perbandingan "apakah ada perubahan" HARUS tidak peduli urutan array --
+      // hasil gabungan (merge) bisa saja urutannya beda dari data lokal walau ISINYA sama
+      // persis (mis. remote taruh buku A duluan, lokal taruh belakangan). JSON.stringify
+      // biasa peka urutan, jadi kalau dipakai langsung akan salah deteksi "berubah" tiap
+      // polling -> render ulang terus -> cover kedip-kedip padahal tidak ada yang berubah.
+      // Diurutkan dulu berdasarkan id sebelum dibandingkan supaya cuma isinya yang dicek.
+      const canonicalize = (arr) => JSON.stringify(
+        [...(arr || [])].sort((a, b) => String(a && a.id).localeCompare(String(b && b.id)))
+      );
+
       // v1.49.4: simpan snapshot data lokal SEBELUM di-merge, supaya nanti bisa dibandingkan --
       // render ulang grid/carousel itu berat secara visual (flicker, scroll ke atas, gambar
       // sempat kedip ulang) jadi jangan dilakukan kalau ternyata hasil merge sama persis dengan
       // yang sudah tampil (kasus paling umum: polling tiap 20 detik tapi memang belum ada perubahan).
-      const localBooksBefore = JSON.stringify(books);
-      const localTombstonesBefore = JSON.stringify(tombstones);
+      const localBooksBefore = canonicalize(books);
+      const localTombstonesBefore = canonicalize(tombstones);
 
       const merged = mergeBooksAndTombstones(books, tombstones, remoteBooks, remoteTombstones);
       const remoteNeedsUpdate =
-        JSON.stringify(merged.books) !== JSON.stringify(remoteBooks) ||
-        JSON.stringify(merged.tombstones) !== JSON.stringify(remoteTombstones);
+        canonicalize(merged.books) !== canonicalize(remoteBooks) ||
+        canonicalize(merged.tombstones) !== canonicalize(remoteTombstones);
       const localChanged =
-        JSON.stringify(merged.books) !== localBooksBefore ||
-        JSON.stringify(merged.tombstones) !== localTombstonesBefore;
+        canonicalize(merged.books) !== localBooksBefore ||
+        canonicalize(merged.tombstones) !== localTombstonesBefore;
 
       books = merged.books;
       tombstones = merged.tombstones;
