@@ -428,7 +428,10 @@
       "halamanTerakhir": "",
       "status": "belum",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5wf3lTRQ5cRsWwwn57dhees2oQKjn0SRyxhv1_X6QAd2Zx-KxFM8nSjQc&s=10",
+      "updatedAt": 1784182599787
     },
     {
       "id": "mrizlrc8kq5xl",
