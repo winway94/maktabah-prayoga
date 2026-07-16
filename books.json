@@ -104,7 +104,11 @@
       "halamanTerakhir": "",
       "status": "belum",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "pemilik": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHtysmFkshASvg3InuxUFdmJhlfwd-FpZxCqFOuXSWNw&s=10",
+      "updatedAt": 1784183489738
     },
     {
       "id": "mrgimks387515",
