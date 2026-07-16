@@ -674,7 +674,9 @@
       "status": "selesai",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVsu67IpfAG_kTlVqEE9uGLmfPk7zi-2wKtLWVg8qFIQ5W1b9D1zw1cKvE&s=10",
+      "updatedAt": 1784182144077
     },
     {
       "id": "mrlur0l5lutvs",
