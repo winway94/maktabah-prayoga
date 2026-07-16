@@ -34,7 +34,10 @@
       "status": "selesai",
       "peminjam": "",
       "tanggalPinjam": "",
-      "pemilik": ""
+      "pemilik": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQneS_1q3QwAAsxjD6Ttpqvi4UBdjCZYyACRfD1x1m2aRnggSIE8qKqg6E&s=10",
+      "updatedAt": 1784183603532
     },
     {
       "id": "mrg7g5gmik183",
