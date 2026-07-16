@@ -70,7 +70,10 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "pemilik": ""
+      "pemilik": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-TU8nkIi2ZBmR7B9RMQR4mXIEYCeRg4dWZrClcrFZ_w&s=10",
+      "updatedAt": 1784183541735
     },
     {
       "id": "mrgewesjoyikq",
