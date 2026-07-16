@@ -760,7 +760,9 @@
       "status": "selesai",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/covBI-012.png",
+      "updatedAt": 1784182024432
     },
     {
       "id": "mrm2x2xeiywri",
