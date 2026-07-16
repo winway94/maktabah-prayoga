@@ -844,7 +844,9 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://bintangpusnas.perpusnas.go.id/api25/public/api/get-image/978-623-7107-15-6.jpg",
+      "updatedAt": 1784181815410
     },
     {
       "id": "mrm3b2v6ovgml",
