@@ -176,7 +176,10 @@
       "halamanTerakhir": "",
       "status": "belum",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKCtCis7M9RB23ccpFp2Fe1OWWlOFAgAxH43xWZGD7CBCuemrPutBVar0&s=10",
+      "updatedAt": 1784183333897
     },
     {
       "id": "mrhndptlwi6eb",
