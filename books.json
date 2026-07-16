@@ -122,7 +122,10 @@
       "halamanTerakhir": "",
       "status": "belum",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqpLnfPE4lC7_B0jwT1bm7-qCBJvsA8ZrVCZasZuFM0vWfmdf6KWcUFZ8&s=10",
+      "updatedAt": 1784183456593
     },
     {
       "id": "mrgis3bm58qkl",
