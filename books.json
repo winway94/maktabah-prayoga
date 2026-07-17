@@ -1591,6 +1591,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "",
       "updatedAt": 1784331174200
+    },
+    {
+      "id": "mrpkrtoos801v",
+      "createdAt": 1784331278088,
+      "catatanBuku": [],
+      "isbn": "9786028062794",
+      "judul": "Metode Asy-Syafi`I : Ilmu Tajwid Praktis",
+      "penulis": "Abu Ya`La Kurnaedi, Lc",
+      "kategori": "Ilmu Qur'an, Hadist & Fiqih",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2014",
+      "jumlahHalaman": "136",
+      "lokasiRak": "halawa office",
+      "penerbit": "pustaka imam asy syafii",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "selesai",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784331278088
     }
   ],
   "tombstones": []
