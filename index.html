@@ -2136,21 +2136,21 @@
 
       <label class="field-label">Kategori</label>
       <select id="kategori">
+        <option value="Agama & Pemikiran Islam">Agama & Pemikiran Islam</option>
+        <option value="Biografi, Otobiografi & Memoar">Biografi, Otobiografi & Memoar</option>
+        <option value="Bisnis, Manajemen & Keuangan">Bisnis, Manajemen & Keuangan</option>
+        <option value="Ekonomi & Teori Pembangunan">Ekonomi & Teori Pembangunan</option>
+        <option value="Filsafat & Logika">Filsafat & Logika</option>
+        <option value="Ilmu Qur'an, Hadist & Fiqih">Ilmu Qur'an, Hadist & Fiqih</option>
+        <option value="Kesehatan, Kedokteran & Psikologi">Kesehatan, Kedokteran & Psikologi</option>
+        <option value="Komik, Manga & Novel Grafis">Komik, Manga & Novel Grafis</option>
+        <option value="Pengembangan Diri & Edukasi">Pengembangan Diri & Edukasi</option>
+        <option value="Politik & Hubungan Internasional">Politik & Hubungan Internasional</option>
+        <option value="Sains, Matematika & Alam">Sains, Matematika & Alam</option>
+        <option value="Sastra, Novel & Puisi">Sastra, Novel & Puisi</option>
         <option value="Sejarah & Historiografi">Sejarah & Historiografi</option>
         <option value="Sosiologi & Ilmu Sosial">Sosiologi & Ilmu Sosial</option>
-        <option value="Politik & Hubungan Internasional">Politik & Hubungan Internasional</option>
-        <option value="Filsafat & Logika">Filsafat & Logika</option>
-        <option value="Agama & Pemikiran Islam">Agama & Pemikiran Islam</option>
-        <option value="Ilmu Qur'an, Hadist & Fiqih">Ilmu Qur'an, Hadist & Fiqih</option>
-        <option value="Ekonomi & Teori Pembangunan">Ekonomi & Teori Pembangunan</option>
-        <option value="Bisnis, Manajemen & Keuangan">Bisnis, Manajemen & Keuangan</option>
-        <option value="Sains, Matematika & Alam">Sains, Matematika & Alam</option>
         <option value="Teknologi, Komputer & Coding">Teknologi, Komputer & Coding</option>
-        <option value="Kesehatan, Kedokteran & Psikologi">Kesehatan, Kedokteran & Psikologi</option>
-        <option value="Sastra, Novel & Puisi">Sastra, Novel & Puisi</option>
-        <option value="Komik, Manga & Novel Grafis">Komik, Manga & Novel Grafis</option>
-        <option value="Biografi, Otobiografi & Memoar">Biografi, Otobiografi & Memoar</option>
-        <option value="Pengembangan Diri & Edukasi">Pengembangan Diri & Edukasi</option>
         <option value="Lainnya / Serba-Serbi">Lainnya / Serba-Serbi</option>
       </select>
 
@@ -2292,7 +2292,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.51.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.51.1</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
     <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
     <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
@@ -2340,6 +2340,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.51.1</strong> — 🔤 Daftar Kategori diurutkan A-Z di semua tempat (dropdown Kategori form Tambah Buku & modal Edit, daftar valid Export/Import Excel, filter Kategori sidebar Koleksi Buku) — kecuali "Lainnya / Serba-Serbi" yang selalu ditaruh paling bawah sebagai pengecualian.</li>
         <li><strong>v1.51.0</strong> — 📚 Kategori baru: "Ilmu Qur'an, Hadist &amp; Fiqih" — ditaruh setelah "Agama &amp; Pemikiran Islam" di dropdown Kategori (form Tambah Buku &amp; modal Edit), daftar valid Export/Import Excel, dan tebakan kategori otomatis dari data Google Books (kata kunci seperti quran, hadits, fiqih, tafsir, tajwid sekarang masuk kategori ini, dipisah dari "Agama &amp; Pemikiran Islam" yang jadi lebih umum).</li>
         <li><strong>v1.50.7</strong> — ⌨️ Saran autocomplete (Penulis/Lokasi Rak/Penerbit/Pemilik, di form Tambah Buku maupun modal Edit) sekarang bisa dinavigasi pakai tombol panah ↓/↑ di keyboard lalu Enter buat memilih, tidak harus klik/tap lagi — berguna terutama di HP saat saran ketutup sebagian sama keyboard virtual.</li>
         <li><strong>v1.50.6</strong> — 🔌 Proxy <code>images.weserv.nl</code> (sempat dihapus total di v1.50.2) dipakai lagi sebagai percobaan pertama buat hemat kuota data + convert WebP, tapi sekarang link asli otomatis jadi cadangan kalau proxy-nya gagal/lambat di jaringan tertentu — jadi dapat manfaat hemat kuota tanpa risiko cover gagal total. Berlaku di semua tempat (grid, carousel, modal detail, saran pencarian, preview form Tambah/Edit).</li>
@@ -3058,7 +3059,13 @@
       counts[cat] = (counts[cat] || 0) + 1;
     });
 
-    const categories = Object.keys(counts).sort((a,b)=> a.localeCompare(b));
+    // v1.51.1: urutkan A-Z, tapi "Lainnya / Serba-Serbi" selalu di paling bawah (pengecualian --
+    // itu kategori "tong sampah" buat yang tidak jelas masuk mana, jadi wajar bukan A-Z murni).
+    const categories = Object.keys(counts).sort((a,b)=>{
+      if(a === "Lainnya / Serba-Serbi") return 1;
+      if(b === "Lainnya / Serba-Serbi") return -1;
+      return a.localeCompare(b);
+    });
 
     if(categories.length === 0){
       categoryFiltersEl.innerHTML = "";
@@ -3547,21 +3554,21 @@
         <div>
           <label class="field-label" style="margin-top:0;">Kategori</label>
           <select class="detail-input" id="modalKategori" disabled>
+            <option value="Agama & Pemikiran Islam">Agama & Pemikiran Islam</option>
+            <option value="Biografi, Otobiografi & Memoar">Biografi, Otobiografi & Memoar</option>
+            <option value="Bisnis, Manajemen & Keuangan">Bisnis, Manajemen & Keuangan</option>
+            <option value="Ekonomi & Teori Pembangunan">Ekonomi & Teori Pembangunan</option>
+            <option value="Filsafat & Logika">Filsafat & Logika</option>
+            <option value="Ilmu Qur'an, Hadist & Fiqih">Ilmu Qur'an, Hadist & Fiqih</option>
+            <option value="Kesehatan, Kedokteran & Psikologi">Kesehatan, Kedokteran & Psikologi</option>
+            <option value="Komik, Manga & Novel Grafis">Komik, Manga & Novel Grafis</option>
+            <option value="Pengembangan Diri & Edukasi">Pengembangan Diri & Edukasi</option>
+            <option value="Politik & Hubungan Internasional">Politik & Hubungan Internasional</option>
+            <option value="Sains, Matematika & Alam">Sains, Matematika & Alam</option>
+            <option value="Sastra, Novel & Puisi">Sastra, Novel & Puisi</option>
             <option value="Sejarah & Historiografi">Sejarah & Historiografi</option>
             <option value="Sosiologi & Ilmu Sosial">Sosiologi & Ilmu Sosial</option>
-            <option value="Politik & Hubungan Internasional">Politik & Hubungan Internasional</option>
-            <option value="Filsafat & Logika">Filsafat & Logika</option>
-            <option value="Agama & Pemikiran Islam">Agama & Pemikiran Islam</option>
-            <option value="Ilmu Qur'an, Hadist & Fiqih">Ilmu Qur'an, Hadist & Fiqih</option>
-            <option value="Ekonomi & Teori Pembangunan">Ekonomi & Teori Pembangunan</option>
-            <option value="Bisnis, Manajemen & Keuangan">Bisnis, Manajemen & Keuangan</option>
-            <option value="Sains, Matematika & Alam">Sains, Matematika & Alam</option>
             <option value="Teknologi, Komputer & Coding">Teknologi, Komputer & Coding</option>
-            <option value="Kesehatan, Kedokteran & Psikologi">Kesehatan, Kedokteran & Psikologi</option>
-            <option value="Sastra, Novel & Puisi">Sastra, Novel & Puisi</option>
-            <option value="Komik, Manga & Novel Grafis">Komik, Manga & Novel Grafis</option>
-            <option value="Biografi, Otobiografi & Memoar">Biografi, Otobiografi & Memoar</option>
-            <option value="Pengembangan Diri & Edukasi">Pengembangan Diri & Edukasi</option>
             <option value="Lainnya / Serba-Serbi">Lainnya / Serba-Serbi</option>
           </select>
         </div>
@@ -3876,11 +3883,12 @@
   // Daftar nilai yang valid untuk kolom Kategori/Jenis Buku/Status, dipakai untuk
   // export (label rapi) maupun import (validasi & pemetaan balik ke nilai internal).
   const EXCEL_KATEGORI_LIST = [
-    "Sejarah & Historiografi", "Sosiologi & Ilmu Sosial", "Politik & Hubungan Internasional",
-    "Filsafat & Logika", "Agama & Pemikiran Islam", "Ilmu Qur'an, Hadist & Fiqih", "Ekonomi & Teori Pembangunan",
-    "Bisnis, Manajemen & Keuangan", "Sains, Matematika & Alam", "Teknologi, Komputer & Coding",
-    "Kesehatan, Kedokteran & Psikologi", "Sastra, Novel & Puisi", "Komik, Manga & Novel Grafis",
-    "Biografi, Otobiografi & Memoar", "Pengembangan Diri & Edukasi", "Lainnya / Serba-Serbi"
+    "Agama & Pemikiran Islam", "Biografi, Otobiografi & Memoar", "Bisnis, Manajemen & Keuangan",
+    "Ekonomi & Teori Pembangunan", "Filsafat & Logika", "Ilmu Qur'an, Hadist & Fiqih",
+    "Kesehatan, Kedokteran & Psikologi", "Komik, Manga & Novel Grafis", "Pengembangan Diri & Edukasi",
+    "Politik & Hubungan Internasional", "Sains, Matematika & Alam", "Sastra, Novel & Puisi",
+    "Sejarah & Historiografi", "Sosiologi & Ilmu Sosial", "Teknologi, Komputer & Coding",
+    "Lainnya / Serba-Serbi"
   ];
   const EXCEL_JENIS_MAP = { "Cetak (Fisik)": "cetak", "Digital (PDF)": "digital" };
   const EXCEL_STATUS_MAP = { "Belum Selesai": "belum", "Sudah Selesai": "selesai", "Sedang Dipinjam": "dipinjam" };
