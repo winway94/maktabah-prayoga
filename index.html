@@ -1311,7 +1311,7 @@
     border-bottom: 1px solid var(--slate-100);
   }
   .autocomplete-item:last-child{ border-bottom:none; }
-  .autocomplete-item:hover{ background: var(--brand-50); }
+  .autocomplete-item:hover, .autocomplete-item.active{ background: var(--brand-50); }
   .autocomplete-item b{ color: var(--brand-700); }
   .search-suggest-item{
     display:flex;
@@ -2291,7 +2291,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.50.6</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.50.7</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
     <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
     <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
@@ -2339,6 +2339,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.50.7</strong> — ⌨️ Saran autocomplete (Penulis/Lokasi Rak/Penerbit/Pemilik, di form Tambah Buku maupun modal Edit) sekarang bisa dinavigasi pakai tombol panah ↓/↑ di keyboard lalu Enter buat memilih, tidak harus klik/tap lagi — berguna terutama di HP saat saran ketutup sebagian sama keyboard virtual.</li>
         <li><strong>v1.50.6</strong> — 🔌 Proxy <code>images.weserv.nl</code> (sempat dihapus total di v1.50.2) dipakai lagi sebagai percobaan pertama buat hemat kuota data + convert WebP, tapi sekarang link asli otomatis jadi cadangan kalau proxy-nya gagal/lambat di jaringan tertentu — jadi dapat manfaat hemat kuota tanpa risiko cover gagal total. Berlaku di semua tempat (grid, carousel, modal detail, saran pencarian, preview form Tambah/Edit).</li>
         <li><strong>v1.50.5</strong> — 🐛 Fix lanjutan dari v1.50.4: bug "Link Cover Manual hilang sendiri" ternyata bisa juga terjadi lewat Simpan Perubahan biasa (bukan cuma Import Excel) — kalau sebuah device belum sempat sinkron duluan (field-nya masih kosong di layar device itu) lalu user klik Simpan untuk alasan lain (misal ubah status baca), field kosong itu ikut tersimpan dengan cap waktu baru dan menimpa link yang sudah ditambahkan di device lain saat sinkron. Sekarang field kosong saat Simpan TIDAK menghapus link yang sudah ada di device manapun. Ditambahkan juga tombol "🗑" di sebelah field itu buat menghapus link secara sengaja/eksplisit kalau memang perlu.</li>
         <li><strong>v1.50.4</strong> — 🐛 Fix penting: kolom "Link Cover Manual" yang kosong di file Excel saat Import kini TIDAK lagi menghapus link cover yang sudah tersimpan pada buku itu. Sebelumnya, meng-import ulang file Excel lama (yang diexport sebelum link cover ditambahkan lewat menu Edit) akan menimpa link yang sudah bagus jadi kosong — dan karena Import juga mencatat waktu edit sebagai "baru saja", penghapusan itu ikut terbawa ke semua device saat sinkron. Sekarang kolom itu cuma menimpa data kalau memang diisi sesuatu di Excel-nya.</li>
@@ -4640,7 +4641,25 @@
     const box = document.getElementById(suggestId);
     if(!input || !box) return;
 
-    function hideBox(){ box.style.display = "none"; box.innerHTML = ""; }
+    // v1.50.7: navigasi keyboard (↓/↑ pindah pilihan, Enter pilih, Esc tutup) -- sebelumnya
+    // saran cuma bisa dipilih dengan klik/tap, padahal di HP saran itu sering ketutup
+    // keyboard virtual jadi susah diklik.
+    let activeIdx = -1;
+
+    function hideBox(){ box.style.display = "none"; box.innerHTML = ""; activeIdx = -1; }
+
+    function updateActiveHighlight(){
+      const items = box.querySelectorAll(".autocomplete-item");
+      items.forEach((el, i) => {
+        el.classList.toggle("active", i === activeIdx);
+        if(i === activeIdx) el.scrollIntoView({ block: "nearest" });
+      });
+    }
+
+    function selectItem(el){
+      input.value = el.getAttribute("data-value");
+      hideBox();
+    }
 
     input.addEventListener("input", ()=>{
       const query = input.value.trim().toLowerCase();
@@ -4655,6 +4674,7 @@
 
       if(matches.length === 0){ hideBox(); return; }
 
+      activeIdx = -1;
       box.innerHTML = matches.map(v=>{
         const escaped = escapeHtml(v);
         // Bold bagian yang cocok dengan query (case-insensitive)
@@ -4671,11 +4691,34 @@
       box.style.display = "block";
     });
 
+    input.addEventListener("keydown", (e)=>{
+      const items = box.querySelectorAll(".autocomplete-item");
+      if(box.style.display === "none" || items.length === 0) return;
+
+      if(e.key === "ArrowDown"){
+        e.preventDefault(); // jangan pindahkan kursor teks, kita yang atur navigasinya
+        activeIdx = (activeIdx + 1) % items.length;
+        updateActiveHighlight();
+      } else if(e.key === "ArrowUp"){
+        e.preventDefault();
+        activeIdx = (activeIdx - 1 + items.length) % items.length;
+        updateActiveHighlight();
+      } else if(e.key === "Enter"){
+        if(activeIdx >= 0){
+          e.preventDefault(); // jangan submit form, pilih saran yang di-highlight dulu
+          selectItem(items[activeIdx]);
+        }
+        // Kalau belum ada yang di-highlight (activeIdx -1), biarkan Enter jalan normal
+        // (tidak dicegah) supaya tidak mengganggu alur form yang sudah ada.
+      } else if(e.key === "Escape"){
+        hideBox();
+      }
+    });
+
     box.addEventListener("click", (e)=>{
       const item = e.target.closest(".autocomplete-item");
       if(!item) return;
-      input.value = item.getAttribute("data-value");
-      hideBox();
+      selectItem(item);
     });
 
     document.addEventListener("click", (e)=>{
