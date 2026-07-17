@@ -1384,6 +1384,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://www.rimbabaca.com/slims9/lib/minigalnano/createthumb.php?filename=images/docs/cover_tanpa_nurani_dunia_psikopat_yang_mengganggu_diantara_kita.jpg&width=200",
       "updatedAt": 1784290522350
+    },
+    {
+      "id": "mrowpostb8wc9",
+      "createdAt": 1784290867661,
+      "catatanBuku": [],
+      "isbn": "9786237490067",
+      "judul": "Sang Pangeran dan Janissary Terakhir",
+      "penulis": "Salim A. Fillah",
+      "kategori": "Sejarah & Historiografi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2019",
+      "jumlahHalaman": "631",
+      "lokasiRak": "halawa office",
+      "penerbit": "Pro-U Media",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784290867661
     }
   ],
   "tombstones": []
