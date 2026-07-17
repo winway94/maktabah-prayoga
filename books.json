@@ -1545,6 +1545,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786021036655_9786021036655.jpg",
       "updatedAt": 1784330298416
+    },
+    {
+      "id": "mrpkawo0i3cog",
+      "createdAt": 1784330488800,
+      "catatanBuku": [],
+      "isbn": "9786230962066",
+      "judul": "Syarh Ringkas dan Terjemah At-Tuhfah As-Samannudiyyah",
+      "penulis": "Muhammad Ihsan Ufiq, Lc.MA",
+      "kategori": "Agama & Pemikiran Islam",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2024",
+      "jumlahHalaman": "174",
+      "lokasiRak": "halawa office",
+      "penerbit": "LEMBAGA KAJIAN DIALEKTIKA",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "selesai",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://next.dialektika.or.id/wp-content/uploads/2024/07/Mock-15.jpg",
+      "updatedAt": 1784330488800
     }
   ],
   "tombstones": []
