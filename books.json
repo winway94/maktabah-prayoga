@@ -1269,6 +1269,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/xa-20--.jpg",
       "updatedAt": 1784271682279
+    },
+    {
+      "id": "mrolg6e07blmt",
+      "createdAt": 1784271948120,
+      "catatanBuku": [],
+      "isbn": "9795612255",
+      "judul": "Taring-Taring Pengkhianat",
+      "penulis": "Najib Al Kailani",
+      "kategori": "Sastra, Novel & Puisi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "1999",
+      "jumlahHalaman": "134",
+      "lokasiRak": "halawa office",
+      "penerbit": "Gema Insani",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://sahabatgemainsani.id/files/products/831/Taring-Taring_Pengkhianat.jpg",
+      "updatedAt": 1784271948120
     }
   ],
   "tombstones": []
