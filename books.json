@@ -1568,6 +1568,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://next.dialektika.or.id/wp-content/uploads/2024/07/Mock-15.jpg",
       "updatedAt": 1784330488800
+    },
+    {
+      "id": "mrpkpliwfcpa4",
+      "createdAt": 1784331174200,
+      "catatanBuku": [],
+      "isbn": "9786230961625",
+      "judul": "Talwin Manzhmah Hirz Al-Amani wa Wajh At-Tahani (Syarah Matan As-Syathibiyyah)",
+      "penulis": "Muhammad Ihsan Ufiq, Lc.MA",
+      "kategori": "Ilmu Qur'an, Hadist & Fiqih",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2023",
+      "jumlahHalaman": "116",
+      "lokasiRak": "halawa office",
+      "penerbit": "Lumintu Jaya Negara",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784331174200
     }
   ],
   "tombstones": []
