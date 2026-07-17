@@ -2291,7 +2291,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.50.3</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.50.5</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
     <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
     <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
@@ -2339,6 +2339,8 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.50.5</strong> — 🐛 Fix lanjutan dari v1.50.4: bug "Link Cover Manual hilang sendiri" ternyata bisa juga terjadi lewat Simpan Perubahan biasa (bukan cuma Import Excel) — kalau sebuah device belum sempat sinkron duluan (field-nya masih kosong di layar device itu) lalu user klik Simpan untuk alasan lain (misal ubah status baca), field kosong itu ikut tersimpan dengan cap waktu baru dan menimpa link yang sudah ditambahkan di device lain saat sinkron. Sekarang field kosong saat Simpan TIDAK menghapus link yang sudah ada di device manapun. Ditambahkan juga tombol "🗑" di sebelah field itu buat menghapus link secara sengaja/eksplisit kalau memang perlu.</li>
+        <li><strong>v1.50.4</strong> — 🐛 Fix penting: kolom "Link Cover Manual" yang kosong di file Excel saat Import kini TIDAK lagi menghapus link cover yang sudah tersimpan pada buku itu. Sebelumnya, meng-import ulang file Excel lama (yang diexport sebelum link cover ditambahkan lewat menu Edit) akan menimpa link yang sudah bagus jadi kosong — dan karena Import juga mencatat waktu edit sebagai "baru saja", penghapusan itu ikut terbawa ke semua device saat sinkron. Sekarang kolom itu cuma menimpa data kalau memang diisi sesuatu di Excel-nya.</li>
         <li><strong>v1.50.3</strong> — 🐛 Fix: sebagian cover (terutama dari domain toko buku seperti Mizan) gagal tampil kalau ditanam (embed) di aplikasi ini, walau link-nya sendiri terbukti valid kalau dibuka langsung. Penyebabnya proteksi anti-hotlink berbasis header Referer di server gambar tersebut — server menolak permintaan gambar yang datang dari domain lain (aplikasi ini), meski mengizinkan kalau dibuka langsung di browser. Semua tag gambar cover sekarang diberi <code>referrerpolicy="no-referrer"</code> supaya browser tidak mengirim informasi asal permintaan sama sekali, sehingga proteksi semacam itu tidak lagi menghalangi.</li>
         <li><strong>v1.50.2</strong> — 🔌 Hapus ketergantungan ke proxy pihak ketiga <code>images.weserv.nl</code> yang dulu dipakai buat resize/convert cover Google Books & Link Cover Manual. Ini jadi satu titik gagal ekstra yang bisa lambat/diblokir di jaringan tertentu (terutama seluler) — padahal ukuran tampilan sudah dirapikan lewat CSS <code>object-fit:cover</code>, jadi proxy itu cuma bonus, bukan kebutuhan. Sekarang semua link cover dipakai langsung apa adanya, di semua tempat (grid, carousel, modal detail, saran pencarian, preview form).</li>
         <li><strong>v1.50.1</strong> — 🐛 Fix: template Export/Import Excel (v1.50.0) ketinggalan kolom "Link Cover Manual" — jadi link cover yang ditempel lewat Excel tidak pernah tersimpan/muncul. Sekarang kolom itu sudah ada di export maupun import, lengkap dengan catatan cara pakai di sheet "Petunjuk".</li>
@@ -3470,9 +3472,14 @@
     }
 
     // Field editable untuk link cover manual (prioritas tertinggi saat ditampilkan).
+    // v1.50.5: tombol "Hapus" terpisah -- field kosong SAJA tidak lagi cukup buat menghapus
+    // link yang tersimpan (lihat catatan di saveModalEdit), jadi perlu aksi eksplisit ini.
     const manualCoverFieldHtml =
       '<label class="field-label">🔗 Link Cover Manual (opsional)</label>' +
-      '<input type="text" class="detail-input" id="modalSampulManualUrl" value="' + escapeHtml(book.sampulManualUrl || "") + '" placeholder="Tempel link gambar sampul di sini" autocomplete="off" disabled>';
+      '<div style="display:flex; gap:8px;">' +
+        '<input type="text" class="detail-input" id="modalSampulManualUrl" value="' + escapeHtml(book.sampulManualUrl || "") + '" placeholder="Tempel link gambar sampul di sini" autocomplete="off" disabled style="flex:1;">' +
+        '<button type="button" class="btn btn-close" id="modalSampulManualUrlClearBtn" title="Hapus link cover manual" disabled style="width:auto; margin:0; padding:0 12px;">🗑</button>' +
+      '</div>';
 
     // Pill badge kategori & jenis buku (dekoratif, ringkasan visual di atas — field asli untuk edit tetap di bawah, tidak diubah)
     const pillRowHtml =
@@ -3642,6 +3649,8 @@
     const fields = detailModalBody.querySelectorAll('.detail-input');
     fields.forEach(f => { f.disabled = false; });
     detailModalBody.querySelectorAll('#modalStatusToggle input[type="radio"]').forEach(r => { r.disabled = false; });
+    const modalSampulManualUrlClearBtn = document.getElementById("modalSampulManualUrlClearBtn");
+    if(modalSampulManualUrlClearBtn) modalSampulManualUrlClearBtn.disabled = false;
 
     // Sugesti kata (autocomplete) sama seperti di form Tambah Buku
     setupFieldAutocomplete("modalPenulis", "modalPenulisSuggest", "penulis");
@@ -3677,9 +3686,24 @@
     if(modalSampulManualUrlField){
       let modalManualCoverDebounce = null;
       modalSampulManualUrlField.addEventListener("input", () => {
+        // Begitu user mengetik/menempel sesuatu lagi, batalkan status "sengaja dihapus"
+        // sebelumnya (kalau ada), supaya nilai baru ini yang tersimpan saat Simpan Perubahan.
+        delete modalSampulManualUrlField.dataset.explicitClear;
         clearTimeout(modalManualCoverDebounce);
         const val = modalSampulManualUrlField.value.trim();
         modalManualCoverDebounce = setTimeout(() => updateModalCoverPreview(val), 500);
+      });
+    }
+    const modalSampulManualUrlClearBtn2 = document.getElementById("modalSampulManualUrlClearBtn");
+    if(modalSampulManualUrlClearBtn2 && modalSampulManualUrlField){
+      modalSampulManualUrlClearBtn2.addEventListener("click", () => {
+        if(!modalSampulManualUrlField.value.trim() || confirm("Hapus link cover manual dari buku ini?")){
+          modalSampulManualUrlField.value = "";
+          // v1.50.5: tanda eksplisit bahwa user SENGAJA mengosongkan field ini, supaya
+          // saveModalEdit tahu ini beda dari "kosong karena device belum sinkron" -- lihat
+          // catatan di saveModalEdit soal kenapa field kosong biasa tidak menghapus otomatis.
+          modalSampulManualUrlField.dataset.explicitClear = "1";
+        }
       });
     }
 
@@ -3772,14 +3796,23 @@
       penerbit: document.getElementById("modalPenerbit").value.trim(),
       pemilik: document.getElementById("modalPemilik").value.trim(),
       halamanTerakhir: document.getElementById("modalHalamanTerakhir").value.trim(),
-      // Link cover yang ditempel manual oleh user (prioritas tertinggi saat ditampilkan).
-      sampulManualUrl: (document.getElementById("modalSampulManualUrl")?.value || "").trim(),
       // v1.49.0: dipakai merge sinkron antar-device untuk menentukan versi mana yang lebih baru.
       updatedAt: Date.now(),
       status: statusVal,
       peminjam: statusVal === "dipinjam" ? document.getElementById("modalPeminjam").value.trim() : "",
       tanggalPinjam: statusVal === "dipinjam" ? document.getElementById("modalTanggalPinjam").value : ""
     };
+
+    // v1.50.5: Link Cover Manual yang KOSONG saat Simpan TIDAK menghapus link yang sudah ada.
+    // Dulu ini bug nyata: device yang belum sempat sinkron duluan (field-nya masih kosong di
+    // layar device itu) bisa menimpa link yang sudah ditambahkan di device lain, karena disimpan
+    // dengan updatedAt "baru" dan dianggap versi terbaru saat sinkron. Sekarang cuma ditimpa kalau
+    // memang diisi sesuatu, ATAU user memang sengaja menghapusnya lewat tombol "🗑 Hapus" di sebelah field.
+    const modalSampulManualUrlField = document.getElementById("modalSampulManualUrl");
+    const sampulManualUrlBaru = (modalSampulManualUrlField?.value || "").trim();
+    if(sampulManualUrlBaru || modalSampulManualUrlField?.dataset.explicitClear === "1"){
+      updatedData.sampulManualUrl = sampulManualUrlBaru;
+    }
 
     const idx = books.findIndex(b => String(b.id) === String(id));
     if(idx !== -1){
@@ -3964,6 +3997,8 @@
             peringatan.push("Baris " + (idx+2) + " (\"" + judul + "\"): Status \"" + statusRaw + "\" tidak dikenali, dianggap Belum Selesai.");
           }
 
+          const linkCoverExcel = String(row["Link Cover Manual"] || "").trim();
+
           const fieldData = {
             isbn: String(row["ISBN"] || "").trim(),
             judul: judul,
@@ -3978,12 +4013,17 @@
             halamanTerakhir: String(row["Halaman Terakhir Dibaca"] || "").trim(),
             status: statusKey ? EXCEL_STATUS_MAP[statusKey] : "belum",
             peminjam: String(row["Peminjam"] || "").trim(),
-            sampulManualUrl: String(row["Link Cover Manual"] || "").trim(),
             updatedAt: Date.now()
           };
 
           const existingIdx = idRaw ? books.findIndex(b => String(b.id) === idRaw) : -1;
           if(existingIdx >= 0){
+            // v1.50.4: kolom Link Cover Manual yang KOSONG di Excel TIDAK menghapus link yang
+            // sudah tersimpan -- dulu ini bug nyata: re-import file lama (diexport SEBELUM link
+            // cover ditambahkan lewat menu Edit) menimpa link yang sudah bagus jadi kosong, dan
+            // karena import juga mencatat updatedAt=sekarang, penghapusan itu ikut kebawa sinkron
+            // ke semua device. Sekarang cuma ditimpa kalau kolomnya memang diisi sesuatu.
+            if(linkCoverExcel) fieldData.sampulManualUrl = linkCoverExcel;
             books[existingIdx] = Object.assign({}, books[existingIdx], fieldData);
             jumlahDiedit++;
           } else {
@@ -3991,7 +4031,7 @@
               id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
               createdAt: Date.now(),
               sampulUrl: "",
-              sampulManualUrl: ""
+              sampulManualUrl: linkCoverExcel
             }, fieldData));
             jumlahBaru++;
           }
