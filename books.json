@@ -1407,6 +1407,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "",
       "updatedAt": 1784290867661
+    },
+    {
+      "id": "mrowrr7l1vpgx",
+      "createdAt": 1784290964097,
+      "catatanBuku": [],
+      "isbn": "9791273960",
+      "judul": "Menyimak Kicau Merajut Makna",
+      "penulis": "Salim A. Fillah",
+      "kategori": "Pengembangan Diri & Edukasi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2012",
+      "jumlahHalaman": "408",
+      "lokasiRak": "Ruang Sholat",
+      "penerbit": "Pro-U Media",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784290964097
     }
   ],
   "tombstones": []
