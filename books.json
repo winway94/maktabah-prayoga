@@ -1154,6 +1154,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/product-metas/za0rtmac5r.jpg",
       "updatedAt": 1784270227576
+    },
+    {
+      "id": "mrokkp94cn6z4",
+      "createdAt": 1784270479576,
+      "catatanBuku": [],
+      "isbn": "9789792232929",
+      "judul": "Powerhouse",
+      "penulis": "Rhenald Kasali",
+      "kategori": "Bisnis, Manajemen & Keuangan",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2008",
+      "jumlahHalaman": "370",
+      "lokasiRak": "halawa office",
+      "penerbit": "Gramedia Pustaka Utama",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://www.gramedia.com/blog/content/images/2018/11/Buku-Rhenald-2.jpg",
+      "updatedAt": 1784270479576
     }
   ],
   "tombstones": []
