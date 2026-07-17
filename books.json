@@ -1246,6 +1246,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577095760i/49762677.jpg",
       "updatedAt": 1784271030072
+    },
+    {
+      "id": "mrolah9jenb21",
+      "createdAt": 1784271682279,
+      "catatanBuku": [],
+      "isbn": "9786028648189",
+      "judul": "Atlas Wali Songo",
+      "penulis": "Agus Sunyoto",
+      "kategori": "Sejarah & Historiografi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2017",
+      "jumlahHalaman": "473",
+      "lokasiRak": "halawa office",
+      "penerbit": "Pustaka Iiman",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/xa-20--.jpg",
+      "updatedAt": 1784271682279
     }
   ],
   "tombstones": []
