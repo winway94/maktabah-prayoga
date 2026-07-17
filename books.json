@@ -1476,6 +1476,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://proumedia.co.id/wp-content/uploads/2022/07/KKPN1.png",
       "updatedAt": 1784291228665
+    },
+    {
+      "id": "mrox6rrgxb4v3",
+      "createdAt": 1784291664652,
+      "catatanBuku": [],
+      "isbn": "9786024816421",
+      "judul": "Kisah Brang Wetan",
+      "penulis": "KARSONO HARDJOSEPUTRO",
+      "kategori": "Sejarah & Historiografi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2021",
+      "jumlahHalaman": "292",
+      "lokasiRak": "halawa office",
+      "penerbit": "Kepustakaan Populer Gramedia",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786024816421_Kisah_Brang_Wetan_FINAL_f.jpg",
+      "updatedAt": 1784291664652
     }
   ],
   "tombstones": []
