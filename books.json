@@ -1522,6 +1522,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/719060803_Cover_The_Deals_of_Warren_Buffet.jpg",
       "updatedAt": 1784330221497
+    },
+    {
+      "id": "mrpk6trkuz646",
+      "createdAt": 1784330298416,
+      "catatanBuku": [],
+      "isbn": "9786021036655",
+      "judul": "Tajir Melintir",
+      "penulis": "Mardigu Wp",
+      "kategori": "Bisnis, Manajemen & Keuangan",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2017",
+      "jumlahHalaman": "250",
+      "lokasiRak": "halawa office",
+      "penerbit": "Kawah Media",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786021036655_9786021036655.jpg",
+      "updatedAt": 1784330298416
     }
   ],
   "tombstones": []
