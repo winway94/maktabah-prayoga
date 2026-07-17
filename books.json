@@ -281,11 +281,13 @@
       "jumlahHalaman": "",
       "lokasiRak": "Bawah Tv",
       "penerbit": "",
-      "pemilik": "",
+      "pemilik": "Edwin",
       "halamanTerakhir": "",
       "status": "selesai",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "updatedAt": 1784332330416
     },
     {
       "id": "mrhnzo30ejwe1",
