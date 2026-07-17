@@ -1499,6 +1499,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786024816421_Kisah_Brang_Wetan_FINAL_f.jpg",
       "updatedAt": 1784291664652
+    },
+    {
+      "id": "mrpk4lcadhn22",
+      "createdAt": 1784330194186,
+      "catatanBuku": [],
+      "isbn": "9786230001758",
+      "judul": "The Deals of Warren Buffet: Bagaimana Buffett Menghasilkan $100 Juta Pertamanya",
+      "penulis": "Glen Arnold",
+      "kategori": "Bisnis, Manajemen & Keuangan",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2019",
+      "jumlahHalaman": "342",
+      "lokasiRak": "halawa office",
+      "penerbit": "PT ELEX MEDIA KOMPUTINDO",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784330194186
     }
   ],
   "tombstones": []
