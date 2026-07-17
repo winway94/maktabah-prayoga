@@ -1338,6 +1338,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://lib.stialan.ac.id/lib/minigalnano/createthumb.php?filename=images/docs/cover_jonan-dan-evolusi-kereta-api-indonesia-20251215104606.jpg&width=200",
       "updatedAt": 1784289950170
+    },
+    {
+      "id": "mrowcldtbxxvv",
+      "createdAt": 1784290256705,
+      "catatanBuku": [],
+      "isbn": "9789795925613",
+      "judul": "Mukaddimah",
+      "penulis": "Ibnu Khaldun",
+      "kategori": "Sejarah & Historiografi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "1120",
+      "jumlahHalaman": "",
+      "lokasiRak": "Ruang Sholat",
+      "penerbit": "Pustaka Al-Kautsar",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://www.kautsar.co.id/wp-content/uploads/2025/02/book_mukaddimah.jpg",
+      "updatedAt": 1784290256705
     }
   ],
   "tombstones": []
