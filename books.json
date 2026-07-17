@@ -1200,6 +1200,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://books.google.co.id/books/publisher/content?id=HuByDwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE71ErdzMm1WktmZ8plvXDhWUgq4xWbPpAz6jSZd_sHK1NSu3GS9lYTLdXlUA0gcmBCSeu4eqa7C528EAFE8UQAgGW8pRYgVGPrvF2HTAj2L4E2Ccqn9Ku8FAfgDc2m_6CjtJRnDI",
       "updatedAt": 1784270617384
+    },
+    {
+      "id": "mrokr4bzcsnyu",
+      "createdAt": 1784270779055,
+      "catatanBuku": [],
+      "isbn": "9786020637181",
+      "judul": "Thinking, Fast and Slow",
+      "penulis": "Daniel Kahneman",
+      "kategori": "Pengembangan Diri & Edukasi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2019",
+      "jumlahHalaman": "652",
+      "lokasiRak": "halawa office",
+      "penerbit": "Gramedia Pustaka Utama",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786020637181_THINKING_FAST_AND_SLOW_C_1_4-1.jpg",
+      "updatedAt": 1784270779055
     }
   ],
   "tombstones": []
