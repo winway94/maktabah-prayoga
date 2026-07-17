@@ -2,24 +2,24 @@
   "books": [
     {
       "id": "mre2lp3wj0czx",
-      "isbn": "9786232411855",
+      "isbn": "9786232411821",
       "judul": "Takdir (Riwayat Pangeran Diponegoro)",
       "penulis": "Peter Carey",
-      "kategori": "",
+      "kategori": "Sejarah & Historiografi",
       "status": "selesai",
       "createdAt": 1783635631196,
       "jenisBuku": "cetak",
-      "tahunTerbit": "",
-      "jumlahHalaman": "",
-      "lokasiRak": "",
-      "penerbit": "",
-      "pemilik": "",
+      "tahunTerbit": "2023",
+      "jumlahHalaman": "464",
+      "lokasiRak": "Bawah Tv",
+      "penerbit": "Penerbit Buku Kompas",
+      "pemilik": "Edwin",
       "halamanTerakhir": "",
       "peminjam": "",
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://image.gramedia.net/plain/https://s3-ap-southeast-1.amazonaws.com/ebook-previews/52262/198617/1.jpg",
-      "updatedAt": 1784270050319
+      "updatedAt": 1784332510088
     },
     {
       "id": "mrg75hh6hx2mo",
