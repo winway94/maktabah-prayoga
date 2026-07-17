@@ -1085,6 +1085,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://opacperpustakaan.jogjakota.go.id/inlislite3/uploaded_files/sampul_koleksi/original/Monograf/50457.jpg",
       "updatedAt": 1784267539136
+    },
+    {
+      "id": "mrok60cx51npy",
+      "createdAt": 1784269794129,
+      "catatanBuku": [],
+      "isbn": "9786231344052",
+      "judul": "Babad Diponegoro: Sebuah Kehidupan yang Ditakdirkan (Jilid 1 dan Jilid 2)",
+      "penulis": "Peter Carey",
+      "kategori": "Sejarah & Historiografi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2025",
+      "jumlahHalaman": "656",
+      "lokasiRak": "halawa office",
+      "penerbit": "Kepustakaan Populer Gramedia",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784269794129
     }
   ],
   "tombstones": []
