@@ -2101,7 +2101,7 @@
 
       <div class="cover-preview-row" id="coverPreviewRow" style="display:none;">
         <div class="cover-preview-wrap" id="coverPreviewWrap">
-          <img id="coverPreviewImg" alt="Pratinjau sampul buku">
+          <img id="coverPreviewImg" alt="Pratinjau sampul buku" referrerpolicy="no-referrer">
         </div>
         <div class="cover-preview-fallback" id="coverPreviewFallback" style="display:none;">
           <span class="cover-preview-fallback-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></span>
@@ -2291,7 +2291,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.50.2</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.50.3</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
     <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
     <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
@@ -2339,6 +2339,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.50.3</strong> — 🐛 Fix: sebagian cover (terutama dari domain toko buku seperti Mizan) gagal tampil kalau ditanam (embed) di aplikasi ini, walau link-nya sendiri terbukti valid kalau dibuka langsung. Penyebabnya proteksi anti-hotlink berbasis header Referer di server gambar tersebut — server menolak permintaan gambar yang datang dari domain lain (aplikasi ini), meski mengizinkan kalau dibuka langsung di browser. Semua tag gambar cover sekarang diberi <code>referrerpolicy="no-referrer"</code> supaya browser tidak mengirim informasi asal permintaan sama sekali, sehingga proteksi semacam itu tidak lagi menghalangi.</li>
         <li><strong>v1.50.2</strong> — 🔌 Hapus ketergantungan ke proxy pihak ketiga <code>images.weserv.nl</code> yang dulu dipakai buat resize/convert cover Google Books & Link Cover Manual. Ini jadi satu titik gagal ekstra yang bisa lambat/diblokir di jaringan tertentu (terutama seluler) — padahal ukuran tampilan sudah dirapikan lewat CSS <code>object-fit:cover</code>, jadi proxy itu cuma bonus, bukan kebutuhan. Sekarang semua link cover dipakai langsung apa adanya, di semua tempat (grid, carousel, modal detail, saran pencarian, preview form).</li>
         <li><strong>v1.50.1</strong> — 🐛 Fix: template Export/Import Excel (v1.50.0) ketinggalan kolom "Link Cover Manual" — jadi link cover yang ditempel lewat Excel tidak pernah tersimpan/muncul. Sekarang kolom itu sudah ada di export maupun import, lengkap dengan catatan cara pakai di sheet "Petunjuk".</li>
         <li><strong>v1.50.0</strong> — 📊 Fitur baru: Export/Import Excel untuk tambah &amp; edit cepat massal. Tombol kecil "⇅ Export/Import Excel" ditaruh di footer (tersembunyi rapi, tidak mengganggu tampilan utama). Export menghasilkan file .xlsx berisi seluruh koleksi (lengkap dengan sheet "Petunjuk" berisi daftar nilai valid untuk Kategori/Jenis Buku/Status) — kolom ID biarkan terisi untuk EDIT buku yang sudah ada, atau kosongkan untuk TAMBAH baris/buku baru, lalu Import lagi file yang sama. Hasil import menampilkan ringkasan jumlah buku baru/diperbarui/dilewati beserta peringatan kalau ada nilai kategori/jenis/status yang tidak dikenali.</li>
@@ -2893,7 +2894,7 @@
     // sebenarnya cuma bonus optimasi, bukan kebutuhan. Sekarang semua link dipakai apa adanya.
     const primaryOpt = chain[0];
     const queueOpt = chain.slice(1).join("|||");
-    return '<img class="' + imgClass + '" src="' + primaryOpt + '" data-fallback-cover="' + escapeHtml(queueOpt) + '" alt="Sampul buku" loading="lazy" onerror="handleCoverImgError(this,\'' + fallbackId + '\')" onload="handleCoverImgLoad(this,\'' + fallbackId + '\')">' +
+    return '<img class="' + imgClass + '" src="' + primaryOpt + '" data-fallback-cover="' + escapeHtml(queueOpt) + '" alt="Sampul buku" loading="lazy" referrerpolicy="no-referrer" onerror="handleCoverImgError(this,\'' + fallbackId + '\')" onload="handleCoverImgLoad(this,\'' + fallbackId + '\')">' +
            '<div class="' + fallbackClass + '" id="' + fallbackId + '" style="display:none;">' + FALLBACK_ICON_SVG + '</div>';
   }
 
@@ -3457,7 +3458,7 @@
       coverBlockHtml =
         '<div class="cover-photo-row">' +
           '<div class="cover-photo-wrap">' +
-            '<img class="cover-photo-img" src="' + coverUrl + '" data-fallback-cover="' + escapeHtml(coverFallback) + '" alt="Sampul buku" onerror="handleCoverImgError(this,\'coverFallbackBoxImg\',true)" onload="handleCoverImgLoad(this,\'coverFallbackBoxImg\',true)">' +
+            '<img class="cover-photo-img" src="' + coverUrl + '" data-fallback-cover="' + escapeHtml(coverFallback) + '" alt="Sampul buku" referrerpolicy="no-referrer" onerror="handleCoverImgError(this,\'coverFallbackBoxImg\',true)" onload="handleCoverImgLoad(this,\'coverFallbackBoxImg\',true)">' +
           '</div>' +
           '<div class="cover-fallback-box" id="coverFallbackBoxImg" style="display:none;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg></div>' +
         '</div>';
@@ -4542,7 +4543,7 @@
       const coverUrl = suggestChain[0] || "";
       const coverFallbackS = suggestChain.slice(1).join("|||");
       const coverHtml = coverUrl
-        ? '<img class="search-suggest-cover-img" src="' + coverUrl + '" data-fallback-cover="' + escapeHtml(coverFallbackS) + '" alt="" loading="lazy" onerror="handleCoverImgError(this,null)" onload="handleCoverImgLoad(this,null)">' +
+        ? '<img class="search-suggest-cover-img" src="' + coverUrl + '" data-fallback-cover="' + escapeHtml(coverFallbackS) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="handleCoverImgError(this,null)" onload="handleCoverImgLoad(this,null)">' +
           '<span class="search-suggest-fallback-icon" style="display:none;">' + BOOK_SVG_ICON + '</span>'
         : BOOK_SVG_ICON;
       return '<div class="search-suggest-item" data-suggest-id="' + b.id + '">' +
@@ -4650,9 +4651,10 @@
     const trimmed = (url || "").trim();
     if(!trimmed) return; // kosong -> biarkan tampilan cover yang sudah ada (ISBN/Google Books) apa adanya
     const testImg = new Image();
+    testImg.referrerPolicy = "no-referrer";
     testImg.onload = function(){
       if(testImg.naturalWidth <= 1 || testImg.naturalHeight <= 1) return; // gambar placeholder kosong, abaikan
-      row.innerHTML = '<div class="cover-photo-wrap"><img class="cover-photo-img" src="' + escapeHtml(trimmed) + '" alt="Sampul buku"></div>';
+      row.innerHTML = '<div class="cover-photo-wrap"><img class="cover-photo-img" src="' + escapeHtml(trimmed) + '" alt="Sampul buku" referrerpolicy="no-referrer"></div>';
     };
     testImg.onerror = function(){ /* link gagal dimuat -- diamkan, biarkan tampilan sebelumnya */ };
     testImg.src = trimmed; // v1.50.2: proxy images.weserv.nl dihapus, tes langsung pakai link asli
