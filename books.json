@@ -1660,6 +1660,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "",
       "updatedAt": 1784331726328
+    },
+    {
+      "id": "mrpl34xc02eor",
+      "createdAt": 1784331805872,
+      "catatanBuku": [],
+      "isbn": "9786238862245",
+      "judul": "The Power of Sun Tzu",
+      "penulis": "Kai Tan",
+      "kategori": "Sosiologi & Ilmu Sosial",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2024",
+      "jumlahHalaman": "200",
+      "lokasiRak": "halawa office",
+      "penerbit": "JENDELA PENERBIT",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "selesai",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784331805872
     }
   ],
   "tombstones": []
