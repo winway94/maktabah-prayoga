@@ -1177,6 +1177,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://www.gramedia.com/blog/content/images/2018/11/Buku-Rhenald-2.jpg",
       "updatedAt": 1784270479576
+    },
+    {
+      "id": "mroknnl4ipxp9",
+      "createdAt": 1784270617384,
+      "catatanBuku": [],
+      "isbn": "9786020504087",
+      "judul": "Journey to Find Happiness in HaloBCA",
+      "penulis": "WANI SABU",
+      "kategori": "Bisnis, Manajemen & Keuangan",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2018",
+      "jumlahHalaman": "332",
+      "lokasiRak": "halawa office",
+      "penerbit": "Gramedia Widiasarana Indonesia",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://books.google.co.id/books/publisher/content?id=HuByDwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE71ErdzMm1WktmZ8plvXDhWUgq4xWbPpAz6jSZd_sHK1NSu3GS9lYTLdXlUA0gcmBCSeu4eqa7C528EAFE8UQAgGW8pRYgVGPrvF2HTAj2L4E2Ccqn9Ku8FAfgDc2m_6CjtJRnDI",
+      "updatedAt": 1784270617384
     }
   ],
   "tombstones": []
