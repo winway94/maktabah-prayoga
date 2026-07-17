@@ -1637,6 +1637,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "",
       "updatedAt": 1784331546880
+    },
+    {
+      "id": "mrpl1fjs2l6fq",
+      "createdAt": 1784331726328,
+      "catatanBuku": [],
+      "isbn": "9789793942933",
+      "judul": "Syarah Hadits Arba'in : menyelami keagungan Islam melalui hadits Nabi",
+      "penulis": "Imam An-Nawawi",
+      "kategori": "Ilmu Qur'an, Hadist & Fiqih",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2008",
+      "jumlahHalaman": "302",
+      "lokasiRak": "halawa office",
+      "penerbit": "Al-Qowam",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784331726328
     }
   ],
   "tombstones": []
