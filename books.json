@@ -1453,6 +1453,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "",
       "updatedAt": 1784291083883
+    },
+    {
+      "id": "mrowxfcp6s8ad",
+      "createdAt": 1784291228665,
+      "catatanBuku": [],
+      "isbn": "9786237490661",
+      "judul": "Kisah-Kisah Pahlawan Nusantara",
+      "penulis": "Salim A. Fillah",
+      "kategori": "Lainnya / Serba-Serbi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2022",
+      "jumlahHalaman": "398",
+      "lokasiRak": "Ruang Sholat",
+      "penerbit": "Pro-U Media",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "selesai",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://proumedia.co.id/wp-content/uploads/2022/07/KKPN1.png",
+      "updatedAt": 1784291228665
     }
   ],
   "tombstones": []
