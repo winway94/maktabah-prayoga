@@ -1108,6 +1108,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/product-metas/-2h-kklsni.jpeg",
       "updatedAt": 1784269816400
+    },
+    {
+      "id": "mrokafu8lo38g",
+      "createdAt": 1784270000816,
+      "catatanBuku": [],
+      "isbn": "9786024125349",
+      "judul": "Urip Iku Urub",
+      "penulis": "Peter Cerey",
+      "kategori": "Lainnya / Serba-Serbi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2019",
+      "jumlahHalaman": "608",
+      "lokasiRak": "halawa office",
+      "penerbit": "Penerbit Buku Kompas",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786024125349_urip_iku_urub.jpg",
+      "updatedAt": 1784270000816
     }
   ],
   "tombstones": []
