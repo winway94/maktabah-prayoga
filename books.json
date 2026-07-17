@@ -1614,6 +1614,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/207943092_Metode-Asy-Syafi.jpg",
       "updatedAt": 1784331328896
+    },
+    {
+      "id": "mrpkxl34evv8s",
+      "createdAt": 1784331546880,
+      "catatanBuku": [],
+      "isbn": "9786239349400",
+      "judul": "Mengarungi Samudera Kemuliaan 10 Imam Qira'at",
+      "penulis": "Moh. Fathurrozi dan Rif'iyatul Fahimah",
+      "kategori": "Ilmu Qur'an, Hadist & Fiqih",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2021",
+      "jumlahHalaman": "204",
+      "lokasiRak": "halawa office",
+      "penerbit": "DAWUH GURU",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "selesai",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784331546880
     }
   ],
   "tombstones": []
