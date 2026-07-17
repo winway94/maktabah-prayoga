@@ -1315,6 +1315,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://www.quantummedia.id/wp-content/uploads/2026/03/Mengenal-Sosok-Ki-Ageng-Basyariyah-Lewat-Buku-Babad-Sewulan-600x416.png.webp",
       "updatedAt": 1784272218231
+    },
+    {
+      "id": "mrow60uym1lb6",
+      "createdAt": 1784289950170,
+      "catatanBuku": [],
+      "isbn": "9786021411605",
+      "judul": "Jonan & evolusi kereta api Indonesia",
+      "penulis": "Hadi Mustofa Djuraid",
+      "kategori": "Bisnis, Manajemen & Keuangan",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2013",
+      "jumlahHalaman": "336",
+      "lokasiRak": "Ruang Sholat",
+      "penerbit": "Jalur Mediasuara Shakti BUMN",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://lib.stialan.ac.id/lib/minigalnano/createthumb.php?filename=images/docs/cover_jonan-dan-evolusi-kereta-api-indonesia-20251215104606.jpg&width=200",
+      "updatedAt": 1784289950170
     }
   ],
   "tombstones": []
