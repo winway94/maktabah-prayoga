@@ -2291,7 +2291,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.50.5</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.50.6</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
     <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
     <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
@@ -2339,6 +2339,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.50.6</strong> — 🔌 Proxy <code>images.weserv.nl</code> (sempat dihapus total di v1.50.2) dipakai lagi sebagai percobaan pertama buat hemat kuota data + convert WebP, tapi sekarang link asli otomatis jadi cadangan kalau proxy-nya gagal/lambat di jaringan tertentu — jadi dapat manfaat hemat kuota tanpa risiko cover gagal total. Berlaku di semua tempat (grid, carousel, modal detail, saran pencarian, preview form Tambah/Edit).</li>
         <li><strong>v1.50.5</strong> — 🐛 Fix lanjutan dari v1.50.4: bug "Link Cover Manual hilang sendiri" ternyata bisa juga terjadi lewat Simpan Perubahan biasa (bukan cuma Import Excel) — kalau sebuah device belum sempat sinkron duluan (field-nya masih kosong di layar device itu) lalu user klik Simpan untuk alasan lain (misal ubah status baca), field kosong itu ikut tersimpan dengan cap waktu baru dan menimpa link yang sudah ditambahkan di device lain saat sinkron. Sekarang field kosong saat Simpan TIDAK menghapus link yang sudah ada di device manapun. Ditambahkan juga tombol "🗑" di sebelah field itu buat menghapus link secara sengaja/eksplisit kalau memang perlu.</li>
         <li><strong>v1.50.4</strong> — 🐛 Fix penting: kolom "Link Cover Manual" yang kosong di file Excel saat Import kini TIDAK lagi menghapus link cover yang sudah tersimpan pada buku itu. Sebelumnya, meng-import ulang file Excel lama (yang diexport sebelum link cover ditambahkan lewat menu Edit) akan menimpa link yang sudah bagus jadi kosong — dan karena Import juga mencatat waktu edit sebagai "baru saja", penghapusan itu ikut terbawa ke semua device saat sinkron. Sekarang kolom itu cuma menimpa data kalau memang diisi sesuatu di Excel-nya.</li>
         <li><strong>v1.50.3</strong> — 🐛 Fix: sebagian cover (terutama dari domain toko buku seperti Mizan) gagal tampil kalau ditanam (embed) di aplikasi ini, walau link-nya sendiri terbukti valid kalau dibuka langsung. Penyebabnya proteksi anti-hotlink berbasis header Referer di server gambar tersebut — server menolak permintaan gambar yang datang dari domain lain (aplikasi ini), meski mengizinkan kalau dibuka langsung di browser. Semua tag gambar cover sekarang diberi <code>referrerpolicy="no-referrer"</code> supaya browser tidak mengirim informasi asal permintaan sama sekali, sehingga proteksi semacam itu tidak lagi menghalangi.</li>
@@ -2817,11 +2818,12 @@
   const FALLBACK_ICON_SVG = '<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M4 4.8C4 3.8 4.8 3 5.8 3H12V21H5.8C4.8 21 4 20.2 4 19.2V4.8Z" fill="var(--brand-400)"/><path d="M20 4.8C20 3.8 19.2 3 18.2 3H12V21H18.2C19.2 21 20 20.2 20 19.2V4.8Z" fill="var(--brand-600)"/></svg>';
 
   // ---------- Helper: optimasi gambar sampul lewat images.weserv.nl ----------
-  // v1.50.2: SUDAH TIDAK DIPAKAI di mana pun -- proxy pihak ketiga ini jadi satu titik
-  // gagal ekstra (bisa lambat/diblokir jaringan tertentu, terutama seluler) padahal cuma
-  // bonus optimasi (resize + convert webp), bukan kebutuhan wajib, karena ukuran tampilan
-  // sudah dirapikan lewat CSS object-fit:cover. Fungsi ini dibiarkan (tidak dihapus) sebagai
-  // cadangan andai suatu saat perlu diaktifkan lagi, tapi tidak dipanggil dari kode manapun.
+  // v1.50.6: dipakai lagi sebagai PERCOBAAN PERTAMA di semua chain cover (hemat kuota data +
+  // convert webp), tapi sekarang link asli selalu jadi cadangan otomatis kalau proxy ini
+  // gagal/lambat (lihat buildCoverHtml, detailChain modal, suggestChain, updateCoverPreview,
+  // updateModalCoverPreview) -- jadi dapat manfaat hemat kuota tanpa risiko cover gagal total
+  // kalau proxy bermasalah di jaringan tertentu (riwayat: sempat dihapus total di v1.50.2
+  // karena masalah itu, sebelum ketahuan penyebab sebenarnya kasus lain adalah bug sinkron).
   function optimizeCoverUrl(url, width){
     if(!url) return "";
     const w = width || 120;
@@ -2883,17 +2885,22 @@
       : "";
     const gbUrl = book.sampulUrl || "";
     const driveUrl = getDriveThumbUrl(book, 200); // v1.46.1: fallback terakhir, cuma dipakai kalau ISBN & Google Books tidak ada
-    // Link cover manual (ditempel user) diprioritaskan paling atas karena pilihan eksplisit user.
-    // Urutan berikutnya: Google Books -> Open Library -> thumbnail Drive PDF.
-    const chain = [manualUrl, gbUrl, olUrl, driveUrl].filter(Boolean);
+    // v1.50.6: proxy images.weserv.nl dipakai lagi sebagai PERCOBAAN PERTAMA (hemat kuota +
+    // convert webp), tapi sekarang link ASLI otomatis jadi cadangan kalau proxy-nya gagal/lambat
+    // -- jadi dapat manfaat hemat kuota tanpa risiko cover gagal total kalau proxy bermasalah
+    // di jaringan tertentu (kasus yang pernah terjadi sebelumnya). Cuma manual & Google Books
+    // yang diproxy (link user/pihak ketiga, ukuran tidak terkontrol); Open Library & Drive
+    // thumbnail sudah cukup kecil apa adanya, tidak perlu diproxy.
+    const withProxyFallback = (u) => u ? [optimizeCoverUrl(u, 200), u] : [];
+    const chain = [
+      ...withProxyFallback(manualUrl),
+      ...withProxyFallback(gbUrl),
+      olUrl,
+      driveUrl
+    ].filter(Boolean);
     if(chain.length === 0){
       return '<div class="' + fallbackClass + '" id="' + fallbackId + '" style="display:flex;">' + FALLBACK_ICON_SVG + '</div>';
     }
-    // v1.50.2: dulu link Google Books & cover manual dilewatkan dulu ke proxy pihak ketiga
-    // (images.weserv.nl) buat resize/convert webp. Dihapus -- itu jadi satu titik gagal
-    // ekstra yang di luar kendali (bisa lambat/diblokir jaringan tertentu, terutama seluler),
-    // padahal ukuran tampilan sudah dirapikan lewat CSS object-fit:cover, jadi proxy itu
-    // sebenarnya cuma bonus optimasi, bukan kebutuhan. Sekarang semua link dipakai apa adanya.
     const primaryOpt = chain[0];
     const queueOpt = chain.slice(1).join("|||");
     return '<img class="' + imgClass + '" src="' + primaryOpt + '" data-fallback-cover="' + escapeHtml(queueOpt) + '" alt="Sampul buku" loading="lazy" referrerpolicy="no-referrer" onerror="handleCoverImgError(this,\'' + fallbackId + '\')" onload="handleCoverImgLoad(this,\'' + fallbackId + '\')">' +
@@ -3444,12 +3451,13 @@
       : "";
     const driveThumbForDetail = getDriveThumbUrl(book, 220); // v1.46.1: fallback terakhir kalau ISBN & Google Books tidak ada
     // Link cover manual (ditempel user) diprioritaskan paling atas karena pilihan eksplisit user.
-    // v1.50.2: proxy images.weserv.nl dihapus dari seluruh chain cover (lihat catatan di
-    // buildCoverHtml) -- semua link dipakai apa adanya, termasuk di modal detail ini.
+    // v1.50.6: proxy images.weserv.nl dipakai sebagai percobaan pertama (hemat kuota), link asli
+    // otomatis jadi cadangan kalau proxy gagal/lambat -- lihat catatan lengkap di buildCoverHtml.
+    const withProxyFallbackDetail = (u) => u ? [optimizeCoverUrl(u, 220), u] : [];
     const detailChain = [
-      book.sampulManualUrl || "",
+      ...withProxyFallbackDetail(book.sampulManualUrl || ""),
       coverUrlOl,
-      book.sampulUrl || "",
+      ...withProxyFallbackDetail(book.sampulUrl || ""),
       driveThumbForDetail
     ].filter(Boolean);
     const coverUrl = detailChain[0] || "";
@@ -4579,7 +4587,8 @@
         : "";
       const driveUrlS = getDriveThumbUrl(b, 64); // v1.46.1: fallback terakhir
       // OL (primary) tetap raw untuk deteksi placeholder 1x1px; Google Books & Drive (fallback) dioptimasi/dipakai belakangan.
-      const suggestChain = [b.sampulManualUrl || "", coverUrlOlS, b.sampulUrl || "", driveUrlS].filter(Boolean);
+      const withProxyFallbackS = (u) => u ? [optimizeCoverUrl(u, 64), u] : [];
+      const suggestChain = [...withProxyFallbackS(b.sampulManualUrl || ""), coverUrlOlS, ...withProxyFallbackS(b.sampulUrl || ""), driveUrlS].filter(Boolean);
       const coverUrl = suggestChain[0] || "";
       const coverFallbackS = suggestChain.slice(1).join("|||");
       const coverHtml = coverUrl
@@ -4690,14 +4699,23 @@
     if(!row) return;
     const trimmed = (url || "").trim();
     if(!trimmed) return; // kosong -> biarkan tampilan cover yang sudah ada (ISBN/Google Books) apa adanya
-    const testImg = new Image();
-    testImg.referrerPolicy = "no-referrer";
-    testImg.onload = function(){
-      if(testImg.naturalWidth <= 1 || testImg.naturalHeight <= 1) return; // gambar placeholder kosong, abaikan
-      row.innerHTML = '<div class="cover-photo-wrap"><img class="cover-photo-img" src="' + escapeHtml(trimmed) + '" alt="Sampul buku" referrerpolicy="no-referrer"></div>';
+    // v1.50.6: coba lewat proxy weserv.nl dulu (hemat kuota), kalau gagal baru coba link asli.
+    const candidates = [optimizeCoverUrl(trimmed, 220), trimmed];
+    let idx = 0;
+    const tryNext = () => {
+      if(idx >= candidates.length) return; // semua percobaan gagal -- diamkan, biarkan tampilan sebelumnya
+      const testImg = new Image();
+      testImg.referrerPolicy = "no-referrer";
+      const thisUrl = candidates[idx];
+      idx++;
+      testImg.onload = function(){
+        if(testImg.naturalWidth <= 1 || testImg.naturalHeight <= 1){ tryNext(); return; }
+        row.innerHTML = '<div class="cover-photo-wrap"><img class="cover-photo-img" src="' + escapeHtml(thisUrl) + '" alt="Sampul buku" referrerpolicy="no-referrer"></div>';
+      };
+      testImg.onerror = tryNext;
+      testImg.src = thisUrl;
     };
-    testImg.onerror = function(){ /* link gagal dimuat -- diamkan, biarkan tampilan sebelumnya */ };
-    testImg.src = trimmed; // v1.50.2: proxy images.weserv.nl dihapus, tes langsung pakai link asli
+    tryNext();
   }
 
   function updateCoverPreview(isbn, fallbackUrl){
@@ -4719,8 +4737,11 @@
 
     // Sumber sampul, berjenjang: link manual (kalau user tempel) -> Open Library (dari ISBN)
     // -> sampul Google Books (hasil tangkapan lookupISBN) -> ikon placeholder.
+    // v1.50.6: link manual & Google Books dicoba dulu lewat proxy weserv.nl (hemat kuota),
+    // link asli otomatis jadi cadangan kalau proxy gagal/lambat.
     const olUrl = isbn ? ("https://covers.openlibrary.org/b/isbn/" + encodeURIComponent(isbn) + "-M.jpg?default=false") : "";
-    const chain = [manualUrl, olUrl, fallbackUrl].filter(Boolean);
+    const withProxyFallbackForm = (u) => u ? [optimizeCoverUrl(u, 200), u] : [];
+    const chain = [...withProxyFallbackForm(manualUrl), olUrl, ...withProxyFallbackForm(fallbackUrl)].filter(Boolean);
     if(manualRow) manualRow.style.display = "block";
     if(chain.length === 0){
       row.style.display = "flex";
@@ -4745,7 +4766,7 @@
       }
       const u = chain[chainIdx];
       chainIdx++;
-      img.src = u; // v1.50.2: proxy images.weserv.nl dihapus, semua sumber cover dipakai apa adanya
+      img.src = u;
     };
     img.onerror = tryLoad;
     img.onload = function(){
