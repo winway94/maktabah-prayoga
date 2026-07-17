@@ -1223,6 +1223,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786020637181_THINKING_FAST_AND_SLOW_C_1_4-1.jpg",
       "updatedAt": 1784270779055
+    },
+    {
+      "id": "mrokwi0o0xt3x",
+      "createdAt": 1784271030072,
+      "catatanBuku": [],
+      "isbn": "9786239197506",
+      "judul": "Model Kebangkitan Umat Islam",
+      "penulis": "Dr. Majid 'Irsan al-Kilani",
+      "kategori": "Agama & Pemikiran Islam",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2019",
+      "jumlahHalaman": "444",
+      "lokasiRak": "halawa office",
+      "penerbit": "Mahdara Publishing",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577095760i/49762677.jpg",
+      "updatedAt": 1784271030072
     }
   ],
   "tombstones": []
