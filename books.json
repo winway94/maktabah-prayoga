@@ -633,7 +633,8 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBanDQgVG12LGn9qsW4Sy8__z0akfPqB29oEjK9q-bhYTiSgVhgIv9jv0&s=10"
     },
     {
       "id": "mrlu28we43uj6",
@@ -700,7 +701,8 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://cdn.gramedia.com/uploads/items/img20210114_13263105.jpg"
     },
     {
       "id": "mrluivqkbuol0",
@@ -767,7 +769,8 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://komunitasbambu.id/wp-content/uploads/2023/12/Pages-from-Sampul-utk-mock-up-2-scaled.jpg"
     },
     {
       "id": "mrluushsiinhn",
@@ -811,7 +814,8 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://cdn.gramedia.com/uploads/items/Autobiografi_Tan_Malaka_Dari_Penjara_Ke_Penjara_u2Tywwk.jpg"
     },
     {
       "id": "mrm2tpoojzr42",
@@ -966,7 +970,8 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://bukukita.com/babacms/displaybuku/92345_f.jpg"
     },
     {
       "id": "mrm3mzcalrxgo",
@@ -987,7 +992,8 @@
       "status": "belum",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/sebuah_seni_untuk_bersikap_bodo_amat_hard_cover_font_revisi-1.jpg"
     },
     {
       "id": "mrm3qh2ullgfj",
@@ -1008,7 +1014,8 @@
       "status": "selesai",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/covNB-014.jpg"
     },
     {
       "id": "mrm3tb7q09db8",
@@ -1029,7 +1036,8 @@
       "status": "selesai",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/gerimis-jatuh.jpg"
     },
     {
       "id": "mrm3w8mhw1psd",
@@ -1050,7 +1058,8 @@
       "status": "selesai",
       "peminjam": "",
       "tanggalPinjam": "",
-      "sampulUrl": ""
+      "sampulUrl": "",
+      "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2JwTmc4N8IJn6vKRigg0TvJFlJWylUx1-Z2tyBnI28w&s=10"
     }
   ],
   "tombstones": []
