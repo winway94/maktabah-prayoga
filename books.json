@@ -99,7 +99,10 @@
       "halamanTerakhir": "",
       "status": "selesai",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "pemilik": "Edwin",
+      "updatedAt": 1784332361375
     },
     {
       "id": "mrgfdmr8knlsd",
