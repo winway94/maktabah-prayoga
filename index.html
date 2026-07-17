@@ -2141,6 +2141,7 @@
         <option value="Politik & Hubungan Internasional">Politik & Hubungan Internasional</option>
         <option value="Filsafat & Logika">Filsafat & Logika</option>
         <option value="Agama & Pemikiran Islam">Agama & Pemikiran Islam</option>
+        <option value="Ilmu Qur'an, Hadist & Fiqih">Ilmu Qur'an, Hadist & Fiqih</option>
         <option value="Ekonomi & Teori Pembangunan">Ekonomi & Teori Pembangunan</option>
         <option value="Bisnis, Manajemen & Keuangan">Bisnis, Manajemen & Keuangan</option>
         <option value="Sains, Matematika & Alam">Sains, Matematika & Alam</option>
@@ -2291,7 +2292,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.50.7</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.51.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
     <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
     <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
@@ -2339,6 +2340,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.51.0</strong> — 📚 Kategori baru: "Ilmu Qur'an, Hadist &amp; Fiqih" — ditaruh setelah "Agama &amp; Pemikiran Islam" di dropdown Kategori (form Tambah Buku &amp; modal Edit), daftar valid Export/Import Excel, dan tebakan kategori otomatis dari data Google Books (kata kunci seperti quran, hadits, fiqih, tafsir, tajwid sekarang masuk kategori ini, dipisah dari "Agama &amp; Pemikiran Islam" yang jadi lebih umum).</li>
         <li><strong>v1.50.7</strong> — ⌨️ Saran autocomplete (Penulis/Lokasi Rak/Penerbit/Pemilik, di form Tambah Buku maupun modal Edit) sekarang bisa dinavigasi pakai tombol panah ↓/↑ di keyboard lalu Enter buat memilih, tidak harus klik/tap lagi — berguna terutama di HP saat saran ketutup sebagian sama keyboard virtual.</li>
         <li><strong>v1.50.6</strong> — 🔌 Proxy <code>images.weserv.nl</code> (sempat dihapus total di v1.50.2) dipakai lagi sebagai percobaan pertama buat hemat kuota data + convert WebP, tapi sekarang link asli otomatis jadi cadangan kalau proxy-nya gagal/lambat di jaringan tertentu — jadi dapat manfaat hemat kuota tanpa risiko cover gagal total. Berlaku di semua tempat (grid, carousel, modal detail, saran pencarian, preview form Tambah/Edit).</li>
         <li><strong>v1.50.5</strong> — 🐛 Fix lanjutan dari v1.50.4: bug "Link Cover Manual hilang sendiri" ternyata bisa juga terjadi lewat Simpan Perubahan biasa (bukan cuma Import Excel) — kalau sebuah device belum sempat sinkron duluan (field-nya masih kosong di layar device itu) lalu user klik Simpan untuk alasan lain (misal ubah status baca), field kosong itu ikut tersimpan dengan cap waktu baru dan menimpa link yang sudah ditambahkan di device lain saat sinkron. Sekarang field kosong saat Simpan TIDAK menghapus link yang sudah ada di device manapun. Ditambahkan juga tombol "🗑" di sebelah field itu buat menghapus link secara sengaja/eksplisit kalau memang perlu.</li>
@@ -3550,6 +3552,7 @@
             <option value="Politik & Hubungan Internasional">Politik & Hubungan Internasional</option>
             <option value="Filsafat & Logika">Filsafat & Logika</option>
             <option value="Agama & Pemikiran Islam">Agama & Pemikiran Islam</option>
+            <option value="Ilmu Qur'an, Hadist & Fiqih">Ilmu Qur'an, Hadist & Fiqih</option>
             <option value="Ekonomi & Teori Pembangunan">Ekonomi & Teori Pembangunan</option>
             <option value="Bisnis, Manajemen & Keuangan">Bisnis, Manajemen & Keuangan</option>
             <option value="Sains, Matematika & Alam">Sains, Matematika & Alam</option>
@@ -3874,7 +3877,7 @@
   // export (label rapi) maupun import (validasi & pemetaan balik ke nilai internal).
   const EXCEL_KATEGORI_LIST = [
     "Sejarah & Historiografi", "Sosiologi & Ilmu Sosial", "Politik & Hubungan Internasional",
-    "Filsafat & Logika", "Agama & Pemikiran Islam", "Ekonomi & Teori Pembangunan",
+    "Filsafat & Logika", "Agama & Pemikiran Islam", "Ilmu Qur'an, Hadist & Fiqih", "Ekonomi & Teori Pembangunan",
     "Bisnis, Manajemen & Keuangan", "Sains, Matematika & Alam", "Teknologi, Komputer & Coding",
     "Kesehatan, Kedokteran & Psikologi", "Sastra, Novel & Puisi", "Komik, Manga & Novel Grafis",
     "Biografi, Otobiografi & Memoar", "Pengembangan Diri & Edukasi", "Lainnya / Serba-Serbi"
@@ -5021,7 +5024,8 @@
       ["Sosiologi & Ilmu Sosial", ["sociology","social science","anthropology","culture","society","sosiologi","antropologi","budaya","masyarakat","ilmu sosial"]],
       ["Politik & Hubungan Internasional", ["politics","political","government","international relations","diplomacy","geopolitics","politik","pemerintahan","hubungan internasional","diplomasi","geopolitik","kenegaraan"]],
       ["Filsafat & Logika", ["philosophy","logic","ethics","metaphysics","epistemology","filsafat","logika","etika","metafisika"]],
-      ["Agama & Pemikiran Islam", ["religion","spiritual","islam","islamic","christian","buddhis","buddhism","hindu","catholic","bible","quran","qur'an","prayer","faith","agama","islami","kristen","katolik","budha","alquran","al-quran","doa","dakwah","tasawuf","akhlak","fikih","fiqih","hadits","tafsir","ibadah","spiritualitas","rohani","religius","ustadz","ulama","pemikiran islam"]],
+      ["Ilmu Qur'an, Hadist & Fiqih", ["quran","qur'an","koran (islam)","hadith","hadits","hadis","fiqih","fiqh","fikih","tafsir","tajwid","ushul fiqih","muamalah","sunnah","al-quran","alquran","asbabun nuzul","qiraat","musthalah hadits","fatwa"]],
+      ["Agama & Pemikiran Islam", ["religion","spiritual","islam","islamic","christian","buddhis","buddhism","hindu","catholic","bible","prayer","faith","agama","islami","kristen","katolik","budha","doa","dakwah","tasawuf","akhlak","ibadah","spiritualitas","rohani","religius","ustadz","ulama","pemikiran islam"]],
       ["Ekonomi & Teori Pembangunan", ["economics","economy","development economics","macroeconomics","microeconomics","ekonomi","pembangunan","makroekonomi","mikroekonomi","teori ekonomi"]],
       ["Bisnis, Manajemen & Keuangan", ["business","finance","management","marketing","entrepreneurship","investment","bisnis","keuangan","manajemen","pemasaran","kewirausahaan","investasi","wirausaha","akuntansi","perbankan","perdagangan","usaha","startup"]],
       ["Sains, Matematika & Alam", ["science","physics","biology","chemistry","astronomy","mathematics","math","geology","nature","environment","sains","fisika","biologi","kimia","astronomi","matematika","geologi","ilmu alam","ilmu pengetahuan","lingkungan"]],
