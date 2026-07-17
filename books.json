@@ -1430,6 +1430,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "",
       "updatedAt": 1784290964097
+    },
+    {
+      "id": "mrowubmzcjdu4",
+      "createdAt": 1784291083883,
+      "catatanBuku": [],
+      "isbn": "9786027820500",
+      "judul": "Rihlah Dakwah",
+      "penulis": "Salim A. Fillah",
+      "kategori": "Lainnya / Serba-Serbi",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2016",
+      "jumlahHalaman": "384",
+      "lokasiRak": "Ruang Sholat",
+      "penerbit": "Pro-U Media",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1784291083883
     }
   ],
   "tombstones": []
