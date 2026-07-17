@@ -237,7 +237,10 @@
       "halamanTerakhir": "",
       "status": "selesai",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "pdfLink": "",
+      "updatedAt": 1784268697016,
+      "sampulManualUrl": "https://desty-upload-indonesia.oss-ap-southeast-5.aliyuncs.com/desty-store/be0f5f084ed844bd99c1d8e1894a262d?x-oss-process=image/format,webp"
     },
     {
       "id": "mrhnjafetw5h8",
