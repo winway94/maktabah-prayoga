@@ -1361,6 +1361,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://www.kautsar.co.id/wp-content/uploads/2025/02/book_mukaddimah.jpg",
       "updatedAt": 1784290256705
+    },
+    {
+      "id": "mrowiacu9x2ll",
+      "createdAt": 1784290522350,
+      "catatanBuku": [],
+      "isbn": "9781572304512",
+      "judul": "Tanpa Nurani: Dunia Psikopat yang Mengganggu diantara Kita",
+      "penulis": "Robert D. Hare",
+      "kategori": "Filsafat & Logika",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2006",
+      "jumlahHalaman": "228",
+      "lokasiRak": "Ruang Sholat",
+      "penerbit": "Graha Media Medika",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://www.rimbabaca.com/slims9/lib/minigalnano/createthumb.php?filename=images/docs/cover_tanpa_nurani_dunia_psikopat_yang_mengganggu_diantara_kita.jpg&width=200",
+      "updatedAt": 1784290522350
     }
   ],
   "tombstones": []
