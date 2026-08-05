@@ -1734,6 +1734,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/covUD-73.png",
       "updatedAt": 1784332109487
+    },
+    {
+      "id": "msgo6dmq5vcxu",
+      "createdAt": 1785969582722,
+      "catatanBuku": [],
+      "isbn": "",
+      "judul": "Hantu Ginza dan Cerita-Cerita Misterius lainnya",
+      "penulis": "Osaka Keikichi",
+      "kategori": "Komik, Manga & Novel Grafis",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "",
+      "jumlahHalaman": "",
+      "lokasiRak": "",
+      "penerbit": "Mai",
+      "pemilik": "Ayah",
+      "halamanTerakhir": "",
+      "status": "dipinjam",
+      "peminjam": "Ainun",
+      "tanggalPinjam": "2026-08-02",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "updatedAt": 1785969582722
     }
   ],
   "tombstones": []
