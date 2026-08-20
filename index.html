@@ -53,6 +53,7 @@
   --alert-warning-text:#8A5321;
   --mushaf-tap-bg:#FDECC8;
   --mushaf-playing-bg:#D9EEE6;
+  --mushaf-paper-bg:#FBF6EA;
   --heat-1:#BFE0D6;
   --heat-2:#7FC2AC;
   --font-sans:'Inter','DM Sans','Segoe UI',sans-serif;
@@ -94,6 +95,7 @@
   --alert-warning-text:#F5CE8C;
   --mushaf-tap-bg:#4A3B1A;
   --mushaf-playing-bg:#1E3A32;
+  --mushaf-paper-bg:#241B12;
   --heat-1:#234A3E;
   --heat-2:#2F7A64;
   --shadow-sm:0 1px 2px rgba(0,0,0,0.3);
@@ -405,7 +407,7 @@ button{font-family:var(--font-sans);}
    kiri-kanan walau lebar layar beda-beda. Kata (.qcf4-word) numpang
    class "mushaf-ayah" yang sudah ada supaya tap-untuk-audio & highlight
    otomatis ikut jalan tanpa kode terpisah. ---- */
-.qcf4-page{direction:rtl;padding:6px 2px 16px;}
+.qcf4-page{direction:rtl;padding:16px 14px 20px;background:var(--mushaf-paper-bg);border-radius:var(--radius-md,10px);}
 .qcf4-line{direction:rtl;white-space:nowrap;line-height:2.1;margin-bottom:4px;will-change:transform;}
 .qcf4-line .mushaf-ayah,.qcf4-deco{font-size:var(--mushaf-font-size, 26px);color:var(--gray-900);}
 .qcf4-deco{padding:0 1px;}
@@ -1585,7 +1587,13 @@ function buildQcf4PageHtml(pageData){
 function adjustQcf4LineWidths(){
   const wrap = document.getElementById('mushafTextWrap');
   if(!wrap) return;
-  const wrapWidth = wrap.clientWidth;
+  const page = wrap.querySelector('.qcf4-page');
+  if(!page) return;
+  // lebar target = lebar dalam .qcf4-page dikurangi padding kiri-kanannya
+  // sendiri (dulu wrapper luar dipakai langsung -- sekarang meleset
+  // karena .qcf4-page sudah punya padding kertas sendiri)
+  const cs = getComputedStyle(page);
+  const wrapWidth = page.clientWidth - parseFloat(cs.paddingLeft||0) - parseFloat(cs.paddingRight||0);
   if(!wrapWidth) return;
   wrap.querySelectorAll('.qcf4-line').forEach(line=>{
     line.style.transform = 'none';
