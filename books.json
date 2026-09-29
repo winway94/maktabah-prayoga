@@ -1757,6 +1757,29 @@
       "sampulUrl": "",
       "sampulManualUrl": "",
       "updatedAt": 1785969720023
+    },
+    {
+      "id": "mumes5878rzfk",
+      "createdAt": 1790670163831,
+      "catatanBuku": [],
+      "isbn": "9786231865298",
+      "judul": "Ketika Quran Jatuh di Hati Hamba yang Merasa Biasa",
+      "penulis": "Prof. Dr. H. Nadirsyah Hosen, LL.M., M.A. (Hons), Ph.D.",
+      "kategori": "Ilmu Qur'an, Hadist & Fiqih",
+      "jenisBuku": "cetak",
+      "pdfLink": "",
+      "tahunTerbit": "2025",
+      "jumlahHalaman": "332",
+      "lokasiRak": "",
+      "penerbit": "Bentang Pustaka",
+      "pemilik": "Edwin",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/f:webp/plain/https://cdn.gramedia.com/uploads/product-metas/a-ahejusak.jpg",
+      "updatedAt": 1790670163831
     }
   ],
   "tombstones": []
