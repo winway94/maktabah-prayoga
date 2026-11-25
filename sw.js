@@ -4,10 +4,18 @@
    MODE: paksa update — begitu ada versi baru terdeteksi, service worker
    baru langsung aktif dan halaman otomatis reload sendiri (lihat
    controllerchange di index.html), tanpa perlu klik apa pun.
-   Naikkan CACHE_VERSION setiap kali index.html/manifest/ikon diubah,
-   supaya pengguna otomatis dapat versi terbaru.
+   OTOMATIS IKUT TERUPDATE (sejak v117): halaman (index.html, "./") dan
+   manifest.json sekarang diambil dari INTERNET DULU (network-first) —
+   simpanan HP hanya dipakai kalau offline / internet lambat (> 4 detik).
+   Jadi setiap index.html baru diunggah, aplikasi langsung tampil versi
+   terbaru tanpa perlu menaikkan CACHE_VERSION lagi.
+   CACHE_VERSION cukup dinaikkan kalau IKON diganti, atau kalau file
+   service worker ini sendiri diubah.
    ============================================================ */
-const CACHE_VERSION = "v116";
+const CACHE_VERSION = "v117";
+// Batas tunggu internet utk halaman: lewat dari ini pakai simpanan HP dulu
+// (halaman baru tetap diunduh di latar belakang utk pembukaan berikutnya).
+const BATAS_TUNGGU_HALAMAN_MS = 4000;
 const CACHE_NAME = "hafalan-" + CACHE_VERSION;
 // Cache TERPISAH untuk aset statis pihak ketiga (SVG halaman mushaf +
 // audio murottal per-ayat). SENGAJA tidak ikut prefix "hafalan-"/
@@ -117,6 +125,19 @@ self.addEventListener("fetch", (event) => {
 
   if (!isSameOrigin) return; // domain lain (Worker API, dst) biarkan lewat apa adanya
 
+  // ---------- HALAMAN & MANIFEST: network-first (v117) ----------
+  // Selalu coba ambil versi terbaru dari internet dulu, supaya setiap
+  // index.html yang baru diunggah LANGSUNG dipakai — tanpa perlu menaikkan
+  // CACHE_VERSION manual. Simpanan HP hanya jadi cadangan saat offline /
+  // internet lambat.
+  const jalur = url.pathname;
+  const isHalaman = req.mode === "navigate" || req.destination === "document" ||
+    /\/$|\/index\.html$|\/manifest\.json$/.test(jalur);
+  if (isHalaman) {
+    event.respondWith(ambilHalamanTerbaru(event, req));
+    return;
+  }
+
   event.respondWith(
     caches.match(req).then((cached) => {
       const networkFetch = fetch(req)
@@ -132,3 +153,31 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+/* Network-first dgn batas waktu: internet menang kalau menjawab < 4 detik;
+   kalau lambat/offline pakai simpanan HP. Hasil dari internet selalu
+   disimpan utk cadangan berikutnya. */
+function ambilHalamanTerbaru(event, req) {
+  const dariInternet = fetch(req, { cache: "no-store" }).then((res) => {
+    if (res && res.status === 200) {
+      const salinan = res.clone();
+      event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.put(req, salinan)));
+    }
+    return res;
+  });
+  const dariSimpanan = () =>
+    caches.match(req).then((c) => c || caches.match("./index.html")).then((c) => c || caches.match("./"));
+
+  return new Promise((resolve) => {
+    let selesai = false;
+    const pakai = (res) => { if (!selesai && res) { selesai = true; resolve(res); } };
+    // internet lambat -> tampilkan simpanan dulu (kalau ada)
+    const timer = setTimeout(() => dariSimpanan().then(pakai), BATAS_TUNGGU_HALAMAN_MS);
+    dariInternet
+      .then((res) => { clearTimeout(timer); pakai(res); })
+      .catch(() => {
+        clearTimeout(timer);
+        dariSimpanan().then((c) => pakai(c || new Response("Offline — halaman belum pernah tersimpan.", { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } })));
+      });
+  });
+}

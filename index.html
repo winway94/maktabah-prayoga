@@ -1030,6 +1030,33 @@
     border-radius:999px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.25);
   }
+  /* v1.52.0: tanda ebook dari bot Telegram @maktabah_prayoga_bot */
+  .book-grid-badge-ebook{
+    position:absolute;
+    bottom:8px;
+    left:8px;
+    background: #229ed9;
+    color:white;
+    font-size:0.65rem;
+    font-weight:800;
+    padding: 3px 8px;
+    border-radius:999px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  }
+  .ebook-tg-box{
+    margin: 12px 0 4px;
+    padding: 12px;
+    border: 1px solid #bfe3f5;
+    background: #eef8fd;
+    border-radius: 12px;
+  }
+  .ebook-tg-box .ebook-tg-info{ font-size:0.85rem; color: var(--slate-700, #334155); margin-bottom:8px; }
+  .ebook-tg-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    background:#229ed9; color:#fff; text-decoration:none; font-weight:700;
+    padding:8px 14px; border-radius:10px; font-size:0.9rem;
+  }
+  .ebook-tg-btn:hover{ background:#1b8bc0; }
   .book-grid-info{
     padding: 10px 12px 12px;
     display:flex;
@@ -2292,7 +2319,7 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.51.1</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.52.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
     <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
     <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
@@ -2340,6 +2367,7 @@
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.52.0</strong> — 📱 Perpustakaan ebook Telegram: ebook yang di-upload ke channel perpustakaan otomatis didata bot <code>@maktabah_prayoga_bot</code> dan masuk ke koleksi ini. Kartu buku yang punya ebook diberi tanda <b>📱 Ebook</b>; di Detail buku ada tombol <b>Kirim ke Telegram saya</b> (bot mengirim file-nya, khusus ID yang terdaftar). Buku fisik yang ebook-nya ada tetap satu entri. Ketik "ebook" di kolom cari untuk menampilkan semua buku ber-ebook.</li>
         <li><strong>v1.51.1</strong> — 🔤 Daftar Kategori diurutkan A-Z di semua tempat (dropdown Kategori form Tambah Buku & modal Edit, daftar valid Export/Import Excel, filter Kategori sidebar Koleksi Buku) — kecuali "Lainnya / Serba-Serbi" yang selalu ditaruh paling bawah sebagai pengecualian.</li>
         <li><strong>v1.51.0</strong> — 📚 Kategori baru: "Ilmu Qur'an, Hadist &amp; Fiqih" — ditaruh setelah "Agama &amp; Pemikiran Islam" di dropdown Kategori (form Tambah Buku &amp; modal Edit), daftar valid Export/Import Excel, dan tebakan kategori otomatis dari data Google Books (kata kunci seperti quran, hadits, fiqih, tafsir, tajwid sekarang masuk kategori ini, dipisah dari "Agama &amp; Pemikiran Islam" yang jadi lebih umum).</li>
         <li><strong>v1.50.7</strong> — ⌨️ Saran autocomplete (Penulis/Lokasi Rak/Penerbit/Pemilik, di form Tambah Buku maupun modal Edit) sekarang bisa dinavigasi pakai tombol panah ↓/↑ di keyboard lalu Enter buat memilih, tidak harus klik/tap lagi — berguna terutama di HP saat saran ketutup sebagian sama keyboard virtual.</li>
@@ -2618,6 +2646,11 @@
   // URL Cloudflare Worker (reverse proxy) untuk sinkronisasi GitHub. Worker
   // ini yang menyimpan GITHUB_TOKEN sebagai Secret Env & meneruskan request
   // GET/PUT ke api.github.com -- browser tidak pernah memegang token GitHub.
+  // v1.52.0: bot Telegram perpustakaan ebook (Worker_Maktabah_Bot). Tombol "Kirim ke Telegram saya" membuka bot ini
+  // dengan kode buku -> bot langsung mengirim file ebook ke chat Anda (hanya ID yang terdaftar di bot).
+  const MAKTABAH_BOT_USERNAME = "maktabah_prayoga_bot";
+  function linkEbookTelegram(book){ return "https://t.me/" + MAKTABAH_BOT_USERNAME + "?start=b_" + encodeURIComponent(String(book.id)); }
+  function formatUkuranEbook(b){ if(!b) return ""; return b >= 1048576 ? (b/1048576).toFixed(1).replace(".", ",") + " MB" : Math.max(1, Math.round(b/1024)) + " KB"; }
   const GITHUB_WORKER_URL = "https://still-cake-b87e.edw-yoga1.workers.dev";
 
   const GOOGLE_BOOKS_KEY_STORAGE = "maktabah_google_books_key";
@@ -2698,7 +2731,8 @@
              (b.lokasiRak||"").toLowerCase().includes(query) ||
              (b.penerbit||"").toLowerCase().includes(query) ||
              (b.pemilik||"").toLowerCase().includes(query) ||
-             (b.peminjam||"").toLowerCase().includes(query);
+             (b.peminjam||"").toLowerCase().includes(query) ||
+             (!!b.ebook && (query === "ebook" || query === "telegram"));
       const matchCategory = activeCategoryFilter === "Semua" ||
              (b.kategori || "Lainnya / Serba-Serbi") === activeCategoryFilter;
       const bookStatus = b.status || "belum";
@@ -2753,6 +2787,7 @@
             ${coverCellHtml}
             ${isBaru ? '<span class="book-grid-badge-new">Baru</span>' : ''}
             ${isDipinjam ? '<span class="book-grid-badge-dipinjam">Dipinjam</span>' : ''}
+            ${b.ebook ? '<span class="book-grid-badge-ebook" title="Ebook tersedia di Telegram">📱 Ebook</span>' : ''}
           </div>
           <div class="book-grid-info">
             <div class="book-grid-title">${escapeHtml(b.judul || "-")}</div>
@@ -3528,8 +3563,19 @@
       ? buildPdfReaderHtml(book)
       : '';
 
+    // v1.52.0: buku yang ebook-nya ada di perpustakaan Telegram -> info + tombol kirim lewat bot
+    const ebookTgHtml = book.ebook
+      ? '<div class="ebook-tg-box">' +
+          '<div class="ebook-tg-info">📱 <b>Ebook tersedia</b> di perpustakaan Telegram' +
+            ' (' + escapeHtml([book.ebook.format, formatUkuranEbook(book.ebook.ukuran)].filter(Boolean).join(" · ")) + ')</div>' +
+          '<a class="ebook-tg-btn" href="' + linkEbookTelegram(book) + '" target="_blank" rel="noopener">✈️ Kirim ke Telegram saya</a>' +
+        '</div>'
+      : '';
+
     detailModalBody.innerHTML = `
       ${coverBlockHtml}
+
+      ${ebookTgHtml}
 
       ${manualCoverFieldHtml}
 
