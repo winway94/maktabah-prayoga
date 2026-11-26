@@ -19,7 +19,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://image.gramedia.net/plain/https://s3-ap-southeast-1.amazonaws.com/ebook-previews/52262/198617/1.jpg",
-      "updatedAt": 1784332510088
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0001"
     },
     {
       "id": "mrg75hh6hx2mo",
@@ -40,7 +41,8 @@
       "pemilik": "Edwin",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQneS_1q3QwAAsxjD6Ttpqvi4UBdjCZYyACRfD1x1m2aRnggSIE8qKqg6E&s=10",
-      "updatedAt": 1784332404224
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0002"
     },
     {
       "id": "mrg7g5gmik183",
@@ -60,8 +62,9 @@
       "tanggalPinjam": "",
       "pemilik": "Edwin",
       "pdfLink": "",
-      "updatedAt": 1784332383136,
-      "sampulManualUrl": "https://down-id.img.susercontent.com/file/d7f54eb517aa4878a6e19f044a73b007@resize_w450_nl.webp"
+      "updatedAt": 1795686884819,
+      "sampulManualUrl": "https://down-id.img.susercontent.com/file/d7f54eb517aa4878a6e19f044a73b007@resize_w450_nl.webp",
+      "noDok": "MP-0003"
     },
     {
       "id": "mrg8d9upw2f1s",
@@ -82,7 +85,8 @@
       "pemilik": "Edwin",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-TU8nkIi2ZBmR7B9RMQR4mXIEYCeRg4dWZrClcrFZ_w&s=10",
-      "updatedAt": 1784332368639
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0004"
     },
     {
       "id": "mrgewesjoyikq",
@@ -102,7 +106,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "pemilik": "Edwin",
-      "updatedAt": 1784332361375
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0005"
     },
     {
       "id": "mrgfdmr8knlsd",
@@ -123,7 +128,8 @@
       "pdfLink": "",
       "pemilik": "Edwin",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHtysmFkshASvg3InuxUFdmJhlfwd-FpZxCqFOuXSWNw&s=10",
-      "updatedAt": 1784332355760
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0006"
     },
     {
       "id": "mrgimks387515",
@@ -144,7 +150,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqpLnfPE4lC7_B0jwT1bm7-qCBJvsA8ZrVCZasZuFM0vWfmdf6KWcUFZ8&s=10",
-      "updatedAt": 1784270030680
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0007"
     },
     {
       "id": "mrgis3bm58qkl",
@@ -165,7 +172,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3l2BO1iSN0HNhWG9K9TrRHJ9skp_k1ttS_UUneNVmXkG6SZOlxb1XWog&s=10",
-      "updatedAt": 1784183416823
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0008"
     },
     {
       "id": "mrhn6dy62acwu",
@@ -185,8 +193,9 @@
       "peminjam": "",
       "tanggalPinjam": "",
       "pdfLink": "",
-      "updatedAt": 1784267870136,
-      "sampulManualUrl": "https://perpustakaan.smamda.sch.id/lib/minigalnano/createthumb.php?filename=images/docs/6607.jpg.jpg&width=200"
+      "updatedAt": 1795686884819,
+      "sampulManualUrl": "https://perpustakaan.smamda.sch.id/lib/minigalnano/createthumb.php?filename=images/docs/6607.jpg.jpg&width=200",
+      "noDok": "MP-0009"
     },
     {
       "id": "mrhnar1xaj579",
@@ -207,7 +216,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKCtCis7M9RB23ccpFp2Fe1OWWlOFAgAxH43xWZGD7CBCuemrPutBVar0&s=10",
-      "updatedAt": 1784183333897
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0010"
     },
     {
       "id": "mrhndptlwi6eb",
@@ -227,8 +237,9 @@
       "peminjam": "",
       "tanggalPinjam": "",
       "pdfLink": "",
-      "updatedAt": 1784268767008,
-      "sampulManualUrl": "https://omahbukumuslim.id/wp-content/uploads/2021/08/MENJADI-HAMBA-YANG.jpeg"
+      "updatedAt": 1795686884819,
+      "sampulManualUrl": "https://omahbukumuslim.id/wp-content/uploads/2021/08/MENJADI-HAMBA-YANG.jpeg",
+      "noDok": "MP-0011"
     },
     {
       "id": "mrhngsabrc9x5",
@@ -248,8 +259,9 @@
       "peminjam": "",
       "tanggalPinjam": "",
       "pdfLink": "",
-      "updatedAt": 1784332347680,
-      "sampulManualUrl": "https://desty-upload-indonesia.oss-ap-southeast-5.aliyuncs.com/desty-store/be0f5f084ed844bd99c1d8e1894a262d?x-oss-process=image/format,webp"
+      "updatedAt": 1795686884819,
+      "sampulManualUrl": "https://desty-upload-indonesia.oss-ap-southeast-5.aliyuncs.com/desty-store/be0f5f084ed844bd99c1d8e1894a262d?x-oss-process=image/format,webp",
+      "noDok": "MP-0012"
     },
     {
       "id": "mrhnjafetw5h8",
@@ -270,7 +282,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXLBftUgpE4iImNYpQbJ0VH3n2X8ynrI-artE6HhJhATwPS9fw8v-YaRA&s=10",
-      "updatedAt": 1784332338616
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0013"
     },
     {
       "id": "mrhnnggd5qd8n",
@@ -290,7 +303,8 @@
       "peminjam": "",
       "tanggalPinjam": "",
       "pdfLink": "",
-      "updatedAt": 1784332802409
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0014"
     },
     {
       "id": "mrhnzo30ejwe1",
@@ -311,7 +325,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://www.aspirasionline.com/wp-content/uploads/2017/08/the-worlds.jpg",
-      "updatedAt": 1784286756057
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0015"
     },
     {
       "id": "mrho2ujk3a8wu",
@@ -332,7 +347,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://mojokstore.com/wp-content/uploads/2021/07/Who-Rules-The-World.jpg",
-      "updatedAt": 1784182923343
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0016"
     },
     {
       "id": "mrho5js8xrwj6",
@@ -353,7 +369,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1390920561i/20646533.jpg",
-      "updatedAt": 1784182868505
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0017"
     },
     {
       "id": "mrhom6gai46qe",
@@ -374,7 +391,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://mojokstore.com/wp-content/uploads/2018/10/Manufacturing-Hope-bisa-600x890.jpg",
-      "updatedAt": 1784332735552
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0018"
     },
     {
       "id": "mrhooelmu3a1s",
@@ -395,7 +413,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1315697801i/12582489.jpg",
-      "updatedAt": 1784332683392
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0019"
     },
     {
       "id": "mrhoqzu8o57id",
@@ -416,7 +435,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://cdn.gramedia.com/uploads/items/9786025734311_The-Power-of-Ideas.jpg",
-      "updatedAt": 1784332645152
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0020"
     },
     {
       "id": "mrhove4iybpns",
@@ -434,7 +454,9 @@
       "halamanTerakhir": "",
       "status": "belum",
       "peminjam": "",
-      "tanggalPinjam": ""
+      "tanggalPinjam": "",
+      "noDok": "MP-0021",
+      "updatedAt": 1795686884819
     },
     {
       "id": "mrhp15ej36a7o",
@@ -455,7 +477,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://perpustakaan.kemlu.go.id/lib/minigalnano/createthumb.php?filename=images/docs/cover_wikileaks-situs-paling-berbahaya-di-dunia-20240819153443.jpg&width=200",
-      "updatedAt": 1784332614904
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0022"
     },
     {
       "id": "mrhp3pbr1h5wo",
@@ -476,7 +499,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM0xvVHgqFZEuMZEWQK5p-23XrfkqCvATgZC7yXjUFnA&s=10",
-      "updatedAt": 1784182664130
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0023"
     },
     {
       "id": "mrhua0bs4pac7",
@@ -497,7 +521,8 @@
       "tanggalPinjam": "",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5wf3lTRQ5cRsWwwn57dhees2oQKjn0SRyxhv1_X6QAd2Zx-KxFM8nSjQc&s=10",
-      "updatedAt": 1784182599787
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0024"
     },
     {
       "id": "mrizlrc8kq5xl",
@@ -519,7 +544,8 @@
       "sampulUrl": "",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6zN1Inx6KgcB3y6E955rUtQm77azPqmwiqLsCS1pHAw&s=10",
-      "updatedAt": 1784182559020
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0025"
     },
     {
       "id": "mrk3427upqfeh",
@@ -541,7 +567,8 @@
       "sampulUrl": "",
       "pdfLink": "",
       "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/covBB-504.png",
-      "updatedAt": 1784260751530
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0026"
     },
     {
       "id": "mrknvk7sb5098",
@@ -563,7 +590,8 @@
       "sampulUrl": "",
       "pdfLink": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzWJf1-Hnn6O2DypPRxoeyHTkTgnAAkzswufxS0ODR9uplx5Bj0hgWel4&s=10",
-      "updatedAt": 1784182522873
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0027"
     },
     {
       "id": "mrko0p6xcztua",
@@ -585,7 +613,8 @@
       "sampulUrl": "",
       "pdfLink": "",
       "sampulManualUrl": "https://www.kautsar.co.id/wp-content/uploads/2025/02/book_biografi-khalid-bin-walid-1-600x800.jpg",
-      "updatedAt": 1784182490746
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0028"
     },
     {
       "id": "mrko59uvkw7l1",
@@ -607,7 +636,8 @@
       "sampulUrl": "",
       "pdfLink": "",
       "sampulManualUrl": "https://library.man1inhil.sch.id/lib/minigalnano/createthumb.php?filename=images/docs/cover_sejarah-agama-yahudi-20250911145731.jpg&width=200",
-      "updatedAt": 1784182450683
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0029"
     },
     {
       "id": "mrko7m11okqwq",
@@ -629,7 +659,8 @@
       "sampulUrl": "",
       "pdfLink": "",
       "sampulManualUrl": "https://proumedia.co.id/wp-content/uploads/2022/04/DRTU-1.png",
-      "updatedAt": 1784182413362
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0030"
     },
     {
       "id": "mrle4fl3lexow",
@@ -652,7 +683,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBanDQgVG12LGn9qsW4Sy8__z0akfPqB29oEjK9q-bhYTiSgVhgIv9jv0&s=10",
-      "updatedAt": 1784332317704
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0031"
     },
     {
       "id": "mrlu28we43uj6",
@@ -675,7 +707,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTordNKKoXW2WliS1HNKdlF_g5PdMgIqGZzPuktHNFC20zdvpQhwzgnfq4&s=10",
-      "updatedAt": 1784270070591
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0032"
     },
     {
       "id": "mrlu6p86mz9ac",
@@ -698,7 +731,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://bukukita.com/babacms/displaybuku/93003_f.jpg",
-      "updatedAt": 1784182295925
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0033"
     },
     {
       "id": "mrlub6fuak4lt",
@@ -721,7 +755,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1435663397i/25823634.jpg",
-      "updatedAt": 1784267109961
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0034"
     },
     {
       "id": "mrluivqkbuol0",
@@ -744,7 +779,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDur5RFRY9PvrewM8mSpvSRgxBIqjgFnH8c6bObMS42eJ4HKIL8gtYA9c&s=10",
-      "updatedAt": 1784182203399
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0035"
     },
     {
       "id": "mrlunx775wv3o",
@@ -767,7 +803,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVsu67IpfAG_kTlVqEE9uGLmfPk7zi-2wKtLWVg8qFIQ5W1b9D1zw1cKvE&s=10",
-      "updatedAt": 1784332768440
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0036"
     },
     {
       "id": "mrlur0l5lutvs",
@@ -790,7 +827,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://komunitasbambu.id/wp-content/uploads/2023/12/Pages-from-Sampul-utk-mock-up-2-scaled.jpg",
-      "updatedAt": 1784267234969
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0037"
     },
     {
       "id": "mrluushsiinhn",
@@ -813,7 +851,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://www.tanwirulafkarpenerbit.com/wp-content/uploads/2024/06/2-Wajh-Hafsh-An-Ashim-300x300.jpg",
-      "updatedAt": 1784182089588
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0038"
     },
     {
       "id": "mrlux0yho087v",
@@ -836,7 +875,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://kubuku.id/api/generic/showCover/BK20400",
-      "updatedAt": 1784267285433
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0039"
     },
     {
       "id": "mrm2tpoojzr42",
@@ -859,7 +899,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/covBI-012.png",
-      "updatedAt": 1784182024432
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0040"
     },
     {
       "id": "mrm2x2xeiywri",
@@ -882,7 +923,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://bukukita.com/babacms/displaybuku/60732_f.jpg",
-      "updatedAt": 1784181972041
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0041"
     },
     {
       "id": "mrm315wf1boxd",
@@ -904,8 +946,9 @@
       "peminjam": "",
       "tanggalPinjam": "",
       "sampulUrl": "",
-      "updatedAt": 1784268595152,
-      "sampulManualUrl": "https://store.eraintermedia.com/image/cache/catalog/produk/eraintermedia/maret2016/Majmuatu%201-500x747.jpg"
+      "updatedAt": 1795686884819,
+      "sampulManualUrl": "https://store.eraintermedia.com/image/cache/catalog/produk/eraintermedia/maret2016/Majmuatu%201-500x747.jpg",
+      "noDok": "MP-0042"
     },
     {
       "id": "mrm34dpm3eda3",
@@ -927,8 +970,9 @@
       "peminjam": "",
       "tanggalPinjam": "",
       "sampulUrl": "",
-      "updatedAt": 1784268645346,
-      "sampulManualUrl": "https://perpus.stiqisykarima.ac.id/lib/minigalnano/createthumb.php?filename=images/docs/cover_panduan-ilmu-tajwid-bergambar-20250629131614.jpg&width=200"
+      "updatedAt": 1795686884819,
+      "sampulManualUrl": "https://perpus.stiqisykarima.ac.id/lib/minigalnano/createthumb.php?filename=images/docs/cover_panduan-ilmu-tajwid-bergambar-20250629131614.jpg&width=200",
+      "noDok": "MP-0043"
     },
     {
       "id": "mrm382y2t6ezz",
@@ -951,7 +995,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://bintangpusnas.perpusnas.go.id/api25/public/api/get-image/978-623-7107-15-6.jpg",
-      "updatedAt": 1784181815410
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0044"
     },
     {
       "id": "mrm3b2v6ovgml",
@@ -974,7 +1019,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqjA8l2sEicrI9SdsBcM2Uy1F9LMMp7k2BGT8uBsH6Vw&s=10",
-      "updatedAt": 1784181733341
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0045"
     },
     {
       "id": "mrm3fsdmrmpys",
@@ -997,7 +1043,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://bukukita.com/babacms/displaybuku/92345_f.jpg",
-      "updatedAt": 1784267782400
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0046"
     },
     {
       "id": "mrm3mzcalrxgo",
@@ -1020,7 +1067,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/sebuah_seni_untuk_bersikap_bodo_amat_hard_cover_font_revisi-1.jpg",
-      "updatedAt": 1784267760944
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0047"
     },
     {
       "id": "mrm3qh2ullgfj",
@@ -1043,7 +1091,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/covNB-014.jpg",
-      "updatedAt": 1784267733576
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0048"
     },
     {
       "id": "mrm3tb7q09db8",
@@ -1066,7 +1115,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/gerimis-jatuh.jpg",
-      "updatedAt": 1784267580888
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0049"
     },
     {
       "id": "mrm3w8mhw1psd",
@@ -1089,7 +1139,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://opacperpustakaan.jogjakota.go.id/inlislite3/uploaded_files/sampul_koleksi/original/Monograf/50457.jpg",
-      "updatedAt": 1784267539136
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0050"
     },
     {
       "id": "mrok60cx51npy",
@@ -1112,7 +1163,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/product-metas/-2h-kklsni.jpeg",
-      "updatedAt": 1784269816400
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0051"
     },
     {
       "id": "mrokafu8lo38g",
@@ -1135,7 +1187,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786024125349_urip_iku_urub.jpg",
-      "updatedAt": 1784270248152
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0052"
     },
     {
       "id": "mrokfat4l55wz",
@@ -1158,7 +1211,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/product-metas/za0rtmac5r.jpg",
-      "updatedAt": 1784270227576
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0053"
     },
     {
       "id": "mrokkp94cn6z4",
@@ -1181,7 +1235,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://www.gramedia.com/blog/content/images/2018/11/Buku-Rhenald-2.jpg",
-      "updatedAt": 1784270479576
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0054"
     },
     {
       "id": "mroknnl4ipxp9",
@@ -1204,7 +1259,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://books.google.co.id/books/publisher/content?id=HuByDwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE71ErdzMm1WktmZ8plvXDhWUgq4xWbPpAz6jSZd_sHK1NSu3GS9lYTLdXlUA0gcmBCSeu4eqa7C528EAFE8UQAgGW8pRYgVGPrvF2HTAj2L4E2Ccqn9Ku8FAfgDc2m_6CjtJRnDI",
-      "updatedAt": 1784270617384
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0055"
     },
     {
       "id": "mrokr4bzcsnyu",
@@ -1227,7 +1283,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786020637181_THINKING_FAST_AND_SLOW_C_1_4-1.jpg",
-      "updatedAt": 1784270779055
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0056"
     },
     {
       "id": "mrokwi0o0xt3x",
@@ -1250,7 +1307,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577095760i/49762677.jpg",
-      "updatedAt": 1784271030072
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0057"
     },
     {
       "id": "mrolah9jenb21",
@@ -1273,7 +1331,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/xa-20--.jpg",
-      "updatedAt": 1784271682279
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0058"
     },
     {
       "id": "mrolg6e07blmt",
@@ -1296,7 +1355,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://sahabatgemainsani.id/files/products/831/Taring-Taring_Pengkhianat.jpg",
-      "updatedAt": 1784271948120
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0059"
     },
     {
       "id": "mroljo9zul6q6",
@@ -1319,7 +1379,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://www.quantummedia.id/wp-content/uploads/2026/03/Mengenal-Sosok-Ki-Ageng-Basyariyah-Lewat-Buku-Babad-Sewulan-600x416.png.webp",
-      "updatedAt": 1784272218231
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0060"
     },
     {
       "id": "mrow60uym1lb6",
@@ -1342,7 +1403,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://lib.stialan.ac.id/lib/minigalnano/createthumb.php?filename=images/docs/cover_jonan-dan-evolusi-kereta-api-indonesia-20251215104606.jpg&width=200",
-      "updatedAt": 1784289950170
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0061"
     },
     {
       "id": "mrowcldtbxxvv",
@@ -1365,7 +1427,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://www.kautsar.co.id/wp-content/uploads/2025/02/book_mukaddimah.jpg",
-      "updatedAt": 1784290256705
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0062"
     },
     {
       "id": "mrowiacu9x2ll",
@@ -1388,7 +1451,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://www.rimbabaca.com/slims9/lib/minigalnano/createthumb.php?filename=images/docs/cover_tanpa_nurani_dunia_psikopat_yang_mengganggu_diantara_kita.jpg&width=200",
-      "updatedAt": 1784290522350
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0063"
     },
     {
       "id": "mrowpostb8wc9",
@@ -1411,7 +1475,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "",
-      "updatedAt": 1784290867661
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0064"
     },
     {
       "id": "mrowrr7l1vpgx",
@@ -1434,7 +1499,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "",
-      "updatedAt": 1784291089791
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0065"
     },
     {
       "id": "mrowubmzcjdu4",
@@ -1457,7 +1523,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "",
-      "updatedAt": 1784291083883
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0066"
     },
     {
       "id": "mrowxfcp6s8ad",
@@ -1480,7 +1547,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://proumedia.co.id/wp-content/uploads/2022/07/KKPN1.png",
-      "updatedAt": 1784291228665
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0067"
     },
     {
       "id": "mrox6rrgxb4v3",
@@ -1503,7 +1571,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786024816421_Kisah_Brang_Wetan_FINAL_f.jpg",
-      "updatedAt": 1784291664652
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0068"
     },
     {
       "id": "mrpk4lcadhn22",
@@ -1526,7 +1595,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/719060803_Cover_The_Deals_of_Warren_Buffet.jpg",
-      "updatedAt": 1784332755296
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0069"
     },
     {
       "id": "mrpk6trkuz646",
@@ -1549,7 +1619,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/9786021036655_9786021036655.jpg",
-      "updatedAt": 1784330298416
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0070"
     },
     {
       "id": "mrpkawo0i3cog",
@@ -1572,7 +1643,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://next.dialektika.or.id/wp-content/uploads/2024/07/Mock-15.jpg",
-      "updatedAt": 1784330488800
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0071"
     },
     {
       "id": "mrpkpliwfcpa4",
@@ -1595,7 +1667,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "",
-      "updatedAt": 1784331174200
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0072"
     },
     {
       "id": "mrpkrtoos801v",
@@ -1618,7 +1691,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/items/207943092_Metode-Asy-Syafi.jpg",
-      "updatedAt": 1784331328896
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0073"
     },
     {
       "id": "mrpkxl34evv8s",
@@ -1641,7 +1715,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "",
-      "updatedAt": 1784331546880
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0074"
     },
     {
       "id": "mrpl1fjs2l6fq",
@@ -1664,7 +1739,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "",
-      "updatedAt": 1784331726328
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0075"
     },
     {
       "id": "mrpl34xc02eor",
@@ -1687,7 +1763,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/picture_meta/2024/3/21/mduobsxuu5h63agxbipacc.jpg",
-      "updatedAt": 1784332286080
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0076"
     },
     {
       "id": "mrpl68if5t2p5",
@@ -1710,7 +1787,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://img.bukabuku.net/product/4/a/4a6e94751fe03c1ccb7d456fc7d5e205.jpg",
-      "updatedAt": 1784331950487
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0077"
     },
     {
       "id": "mrpl9n73vyyee",
@@ -1733,7 +1811,8 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://static.mizanstore.com/d/img/book/cover/covUD-73.png",
-      "updatedAt": 1784332109487
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0078"
     },
     {
       "id": "msgo6dmq5vcxu",
@@ -1756,7 +1835,8 @@
       "tanggalPinjam": "2026-08-02",
       "sampulUrl": "",
       "sampulManualUrl": "",
-      "updatedAt": 1785969720023
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0079"
     },
     {
       "id": "mumes5878rzfk",
@@ -1779,12 +1859,13 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/f:webp/plain/https://cdn.gramedia.com/uploads/product-metas/a-ahejusak.jpg",
-      "updatedAt": 1790670163831
+      "updatedAt": 1795686884819,
+      "noDok": "MP-0080"
     },
     {
       "id": "mwwt7p175fl3s",
       "createdAt": 1795652631410,
-      "updatedAt": 1795652631410,
+      "updatedAt": 1795686884819,
       "judul": "Mukaddimah Ibnu Khaldun",
       "penulis": "Ibnu Khaldun",
       "kategori": "Sejarah & Historiografi",
@@ -1809,7 +1890,8 @@
         "bot": "maktabah_prayoga_bot",
         "ditambahkan": 1795652631410,
         "post": "https://t.me/c/5794350539/3"
-      }
+      },
+      "noDok": "MP-0081"
     }
   ],
   "tombstones": []
