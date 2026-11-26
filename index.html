@@ -1030,19 +1030,26 @@
     border-radius:999px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.25);
   }
-  /* v1.52.0: tanda ebook dari bot Telegram @maktabah_prayoga_bot */
-  .book-grid-badge-ebook{
-    position:absolute;
-    bottom:8px;
-    left:8px;
-    background: #229ed9;
-    color:white;
-    font-size:0.65rem;
-    font-weight:800;
-    padding: 3px 8px;
-    border-radius:999px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  /* v1.53.0: penanda jenis (📖 Cetak / 📱 Ebook -- bisa dua-duanya) + nomor dokumen */
+  .jenis-badges{
+    position:absolute; bottom:8px; left:8px; right:8px;
+    display:flex; flex-wrap:wrap; gap:4px; pointer-events:none; z-index:2;
   }
+  .jenis-badge{
+    color:white; font-size:0.62rem; font-weight:800; padding:3px 7px; border-radius:999px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.25); line-height:1.2; white-space:nowrap;
+  }
+  .jenis-badge.cetak{ background:#7c4a1e; }
+  .jenis-badge.ebook{ background:#229ed9; }
+  .no-dok{ font-size:0.68rem; font-weight:700; color:var(--slate-500, #64748b); letter-spacing:0.02em; }
+  .gabung-pasangan{ border:1px solid var(--slate-200, #e2e8f0); border-radius:12px; padding:10px 12px; margin-bottom:8px; }
+  .gabung-pasangan .gp-judul{ font-weight:700; font-size:0.9rem; margin-bottom:4px; }
+  .gabung-pasangan .gp-baris{ font-size:0.8rem; color:var(--slate-600, #475569); }
+  .gabung-pasangan .gp-aksi{ margin-top:8px; display:flex; justify-content:flex-end; }
+  .gabung-input-row{ display:flex; gap:8px; flex-wrap:wrap; align-items:flex-end; }
+  .gabung-input-row .field{ flex:1; min-width:120px; }
+  .gabung-input-row input{ width:100%; padding:8px 10px; border:1px solid var(--slate-200, #e2e8f0); border-radius:10px; font-size:0.9rem; text-transform:uppercase; }
+  .gabung-pratinjau{ font-size:0.82rem; margin-top:8px; line-height:1.5; }
   .ebook-tg-box{
     margin: 12px 0 4px;
     padding: 12px;
@@ -2319,8 +2326,10 @@
 
   <footer>
     <p id="syncIndicator" class="sync-indicator"></p>
-    <p class="version-tag">Maktabah Prayoga <strong>v1.52.0</strong></p>
+    <p class="version-tag">Maktabah Prayoga <strong>v1.53.0</strong></p>
     <button type="button" class="changelog-trigger" id="openChangelogBtn">📋 Lihat Riwayat Update</button>
+    <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
+    <button type="button" class="changelog-trigger" id="openGabungBtn">🔗 Gabungkan Buku</button>
     <span style="display:inline-block; width:1px; height:12px; background:var(--slate-200); margin:0 6px; vertical-align:middle;"></span>
     <div class="excel-io-wrap" id="excelIoWrap" style="position:relative; display:inline-block;">
       <button type="button" class="changelog-trigger" id="excelIoTriggerBtn">⇅ Export/Import Excel</button>
@@ -2362,11 +2371,36 @@
   </div>
 
   <!-- MODAL RIWAYAT UPDATE -->
+  <div class="modal-overlay" id="gabungModalOverlay">
+    <div class="modal-card" style="max-width:560px;">
+      <button class="modal-close" id="gabungModalClose" aria-label="Tutup">✕</button>
+      <h3 class="changelog-modal-title">🔗 Gabungkan Buku</h3>
+      <div style="font-size:0.82rem; color:var(--slate-600); margin-bottom:12px; line-height:1.5;">
+        Satukan buku <b>cetak</b> dan <b>ebook</b>-nya yang tercatat terpisah. Buku <b>utama</b> dipertahankan (nomor, rak, status baca, peminjam tetap);
+        ebook & data yang kosong diambil dari buku kedua, lalu buku kedua dihapus. <b>ISBN &amp; jumlah halaman tidak dipindahkan</b>
+        (cetak & ebook bisa berbeda) — ISBN ebook disimpan terpisah.
+      </div>
+      <div style="font-weight:700; margin:6px 0;">Gabungkan lewat nomor dokumen</div>
+      <div class="gabung-input-row">
+        <div class="field"><label style="font-size:0.75rem;">Buku utama (dipertahankan)</label><input id="gabungNoUtama" placeholder="MP-0012"></div>
+        <div class="field"><label style="font-size:0.75rem;">Buku yang digabungkan (dihapus)</label><input id="gabungNoKedua" placeholder="MP-0345"></div>
+      </div>
+      <div class="gabung-pratinjau" id="gabungPratinjau"></div>
+      <div style="display:flex; justify-content:flex-end; margin-top:8px;"><button type="button" class="btn btn-edit" id="gabungManualBtn" disabled>🔗 Gabungkan</button></div>
+      <hr style="border:none; border-top:1px solid var(--slate-200); margin:16px 0;">
+      <div style="font-weight:700; margin-bottom:6px;">📋 Buku kembar (judul sama)</div>
+      <div id="gabungDaftarSama"></div>
+      <div style="font-weight:700; margin:14px 0 6px;">🤔 Mungkin sama (judul mirip) — cek dulu</div>
+      <div id="gabungDaftarMirip"></div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="changelogModalOverlay">
     <div class="modal-card" id="changelogModalCard">
       <button class="modal-close" id="changelogModalClose" aria-label="Tutup">✕</button>
       <h3 class="changelog-modal-title">📋 Riwayat Update</h3>
       <ul class="changelog-list changelog-list-modal">
+        <li><strong>v1.53.0</strong> — 🆔 <b>Nomor dokumen</b> untuk setiap buku (MP-0001, MP-0002, …; buku lama dinomori urut tanggal ditambahkan, buku baru otomatis dapat nomor berikutnya) — tampil di kartu &amp; Detail, dan bisa dicari. 📖📱 <b>Penanda Cetak / Ebook</b> di kartu Koleksi, Sedang Dibaca &amp; Buku Terbaru — buku yang punya keduanya dapat dua penanda. 🔗 Menu <b>Gabungkan Buku</b> (bawah halaman): daftar otomatis buku kembar (judul sama / mirip) + gabung manual lewat 2 nomor dokumen. Buku utama dipertahankan; ebook &amp; data kosong dipindah; <b>ISBN &amp; jumlah halaman tidak dipindah</b> (cetak &amp; ebook beda — ISBN ebook disimpan terpisah). Sinkron: saat bentrok dengan perubahan dari tempat lain (mis. bot Telegram), data digabung dulu sebelum disimpan, tidak lagi ditimpa.</li>
         <li><strong>v1.52.0</strong> — 📱 Perpustakaan ebook Telegram: ebook yang di-upload ke channel perpustakaan otomatis didata bot <code>@maktabah_prayoga_bot</code> dan masuk ke koleksi ini. Kartu buku yang punya ebook diberi tanda <b>📱 Ebook</b>; di Detail buku ada tombol <b>Kirim ke Telegram saya</b> (bot mengirim file-nya, khusus ID yang terdaftar). Buku fisik yang ebook-nya ada tetap satu entri. Ketik "ebook" di kolom cari untuk menampilkan semua buku ber-ebook.</li>
         <li><strong>v1.51.1</strong> — 🔤 Daftar Kategori diurutkan A-Z di semua tempat (dropdown Kategori form Tambah Buku & modal Edit, daftar valid Export/Import Excel, filter Kategori sidebar Koleksi Buku) — kecuali "Lainnya / Serba-Serbi" yang selalu ditaruh paling bawah sebagai pengecualian.</li>
         <li><strong>v1.51.0</strong> — 📚 Kategori baru: "Ilmu Qur'an, Hadist &amp; Fiqih" — ditaruh setelah "Agama &amp; Pemikiran Islam" di dropdown Kategori (form Tambah Buku &amp; modal Edit), daftar valid Export/Import Excel, dan tebakan kategori otomatis dari data Google Books (kata kunci seperti quran, hadits, fiqih, tafsir, tajwid sekarang masuk kategori ini, dipisah dari "Agama &amp; Pemikiran Islam" yang jadi lebih umum).</li>
@@ -2649,7 +2683,49 @@
   // v1.52.0: bot Telegram perpustakaan ebook (Worker_Maktabah_Bot). Tombol "Kirim ke Telegram saya" membuka bot ini
   // dengan kode buku -> bot langsung mengirim file ebook ke chat Anda (hanya ID yang terdaftar di bot).
   const MAKTABAH_BOT_USERNAME = "maktabah_prayoga_bot";
-  function linkEbookTelegram(book){ return "https://t.me/" + MAKTABAH_BOT_USERNAME + "?start=b_" + encodeURIComponent(String(book.id)); }
+  // v1.53.0: setelah digabung, ebook pindah ke buku cetak tapi KODE bot-nya tetap kode lama (ebook.kode)
+  function linkEbookTelegram(book){ return "https://t.me/" + MAKTABAH_BOT_USERNAME + "?start=b_" + encodeURIComponent(String((book.ebook && book.ebook.kode) || book.id)); }
+  function isBukuCetak(b){ return (b && b.jenisBuku) !== "digital"; }
+  function isBukuEbook(b){ return !!b && (b.jenisBuku === "digital" || !!b.ebook); }
+  function htmlPenandaJenis(b){
+    return '<div class="jenis-badges">' +
+      (isBukuCetak(b) ? '<span class="jenis-badge cetak">📖 Cetak</span>' : '') +
+      (isBukuEbook(b) ? '<span class="jenis-badge ebook">📱 Ebook</span>' : '') +
+    '</div>';
+  }
+
+  /* ---------- v1.53.0: NOMOR DOKUMEN (MP-0001, MP-0002, ...) ----------
+     Tiap buku punya nomor tetap (field noDok). Buku lama dinomori urut tanggal ditambahkan (tertua = MP-0001);
+     buku baru dapat nomor berikutnya. Nomor buku yang sudah DIGABUNG disimpan di buku utamanya
+     (noDokDigabung) supaya tidak pernah dipakai lagi & tetap bisa dicari. Kalau 2 perangkat sempat memberi
+     nomor sama ke 2 buku berbeda, buku yang lebih tua tetap memegang nomornya, yang lain diberi nomor baru.
+     Balikan true kalau ada buku yang diberi/diubah nomornya. */
+  function angkaNoDok(n){ const m = String(n || "").match(/^MP-(\d+)$/i); return m ? parseInt(m[1], 10) : 0; }
+  function formatNoDok(a){ return "MP-" + String(a).padStart(4, "0"); }
+  function pastikanNoDok(daftar){
+    daftar = daftar || books;
+    let berubah = false, maks = 0;
+    const urutTua = daftar.slice().sort((a, b) => (a.createdAt || a.updatedAt || 0) - (b.createdAt || b.updatedAt || 0) || String(a.id).localeCompare(String(b.id)));
+    for(const b of daftar){ maks = Math.max(maks, angkaNoDok(b.noDok), ...((b.noDokDigabung || []).map(angkaNoDok))); }
+    const dipakai = new Set();
+    for(const b of urutTua){
+      const a = angkaNoDok(b.noDok);
+      if(a && !dipakai.has(a)){ dipakai.add(a); continue; }
+      if(a){ b.noDok = ""; } // nomor kembar -> buku yang lebih baru dinomori ulang di bawah
+    }
+    for(const b of urutTua){
+      if(angkaNoDok(b.noDok)) continue;
+      b.noDok = formatNoDok(++maks);
+      b.updatedAt = Date.now();
+      berubah = true;
+    }
+    return berubah;
+  }
+  function cariBukuDenganNoDok(no){
+    const a = angkaNoDok(String(no || "").trim().toUpperCase().replace(/^MP\s*-?\s*/, "MP-"));
+    if(!a) return null;
+    return books.find(b => angkaNoDok(b.noDok) === a) || null;
+  }
   function formatUkuranEbook(b){ if(!b) return ""; return b >= 1048576 ? (b/1048576).toFixed(1).replace(".", ",") + " MB" : Math.max(1, Math.round(b/1024)) + " KB"; }
   const GITHUB_WORKER_URL = "https://still-cake-b87e.edw-yoga1.workers.dev";
 
@@ -2689,6 +2765,7 @@
     }
   }
   function saveBooks(){
+    pastikanNoDok(); // v1.53.0: buku baru langsung dapat nomor dokumen
     localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
     localStorage.setItem(TOMBSTONES_KEY, JSON.stringify(tombstones));
     // Auto-sync: setiap kali data buku berubah (tambah/edit/hapus), langsung
@@ -2732,7 +2809,9 @@
              (b.penerbit||"").toLowerCase().includes(query) ||
              (b.pemilik||"").toLowerCase().includes(query) ||
              (b.peminjam||"").toLowerCase().includes(query) ||
-             (!!b.ebook && (query === "ebook" || query === "telegram"));
+             (!!b.ebook && (query === "ebook" || query === "telegram")) ||
+             (b.noDok||"").toLowerCase().includes(query) ||
+             (b.noDokDigabung||[]).some(n => String(n).toLowerCase().includes(query));
       const matchCategory = activeCategoryFilter === "Semua" ||
              (b.kategori || "Lainnya / Serba-Serbi") === activeCategoryFilter;
       const bookStatus = b.status || "belum";
@@ -2787,9 +2866,10 @@
             ${coverCellHtml}
             ${isBaru ? '<span class="book-grid-badge-new">Baru</span>' : ''}
             ${isDipinjam ? '<span class="book-grid-badge-dipinjam">Dipinjam</span>' : ''}
-            ${b.ebook ? '<span class="book-grid-badge-ebook" title="Ebook tersedia di Telegram">📱 Ebook</span>' : ''}
+            ${htmlPenandaJenis(b)}
           </div>
           <div class="book-grid-info">
+            ${b.noDok ? `<div class="no-dok">${escapeHtml(b.noDok)}</div>` : ''}
             <div class="book-grid-title">${escapeHtml(b.judul || "-")}</div>
             <div class="book-grid-author">${escapeHtml(b.penulis || "Penulis tidak diketahui")}</div>
             <div class="book-grid-chips">
@@ -2964,7 +3044,7 @@
         const coverHtml = buildCoverHtml(b, fallbackId, "carousel-img", "carousel-card-cover-fallback");
         const pct = Math.min(100, Math.round((parseInt(b.halamanTerakhir,10) / parseInt(b.jumlahHalaman,10)) * 100));
         return '<div class="carousel-card" data-book-id="' + b.id + '">' +
-          '<div class="carousel-card-cover">' + coverHtml + '</div>' +
+          '<div class="carousel-card-cover">' + coverHtml + htmlPenandaJenis(b) + '</div>' +
           '<div class="carousel-card-title">' + escapeHtml(b.judul || "-") + '</div>' +
           '<div class="carousel-card-author">' + escapeHtml(b.penulis || "-") + '</div>' +
           '<div class="carousel-progress-track"><div class="carousel-progress-fill" style="width:' + pct + '%;"></div></div>' +
@@ -2985,7 +3065,7 @@
         return '<div class="carousel-card" data-book-id="' + b.id + '">' +
           '<div class="carousel-card-cover">' +
             '<span class="carousel-badge-new">Baru</span>' +
-            coverHtml +
+            coverHtml + htmlPenandaJenis(b) +
           '</div>' +
           '<div class="carousel-card-title">' + escapeHtml(b.judul || "-") + '</div>' +
           '<div class="carousel-card-author">' + escapeHtml(b.penulis || "-") + '</div>' +
@@ -3564,13 +3644,19 @@
       : '';
 
     // v1.52.0: buku yang ebook-nya ada di perpustakaan Telegram -> info + tombol kirim lewat bot
-    const ebookTgHtml = book.ebook
-      ? '<div class="ebook-tg-box">' +
-          '<div class="ebook-tg-info">📱 <b>Ebook tersedia</b> di perpustakaan Telegram' +
-            ' (' + escapeHtml([book.ebook.format, formatUkuranEbook(book.ebook.ukuran)].filter(Boolean).join(" · ")) + ')</div>' +
-          '<a class="ebook-tg-btn" href="' + linkEbookTelegram(book) + '" target="_blank" rel="noopener">✈️ Kirim ke Telegram saya</a>' +
-        '</div>'
-      : '';
+    const eb = book.ebook || null;
+    const ebookTgHtml =
+      '<div class="ebook-tg-box" style="' + (eb ? '' : 'background:#f8fafc;border-color:#e2e8f0;') + '">' +
+        '<div class="ebook-tg-info">' +
+          (book.noDok ? '🆔 No. Dokumen: <b>' + escapeHtml(book.noDok) + '</b>' : '') +
+          ((book.noDokDigabung || []).length ? ' <span class="no-dok">(gabungan dari ' + escapeHtml(book.noDokDigabung.join(", ")) + ')</span>' : '') +
+          '<br>' + (isBukuCetak(book) ? '📖 Cetak' : '') + (isBukuCetak(book) && isBukuEbook(book) ? ' + ' : '') + (isBukuEbook(book) ? '📱 Ebook' : '') +
+          (eb && eb.bot ? ' — tersedia di perpustakaan Telegram (' + escapeHtml([eb.format, formatUkuranEbook(eb.ukuran)].filter(Boolean).join(" · ")) + ')' : '') +
+          (eb && eb.isbn ? '<br>🔖 ISBN ebook: ' + escapeHtml(eb.isbn) : '') +
+        '</div>' +
+        (eb && eb.bot ? '<a class="ebook-tg-btn" href="' + linkEbookTelegram(book) + '" target="_blank" rel="noopener">✈️ Kirim ke Telegram saya</a> ' : '') +
+        (eb && eb.driveLink ? '<a class="ebook-tg-btn" style="background:#475569" href="' + escapeHtml(eb.driveLink) + '" target="_blank" rel="noopener">📄 Buka ebook (Google Drive)</a>' : '') +
+      '</div>';
 
     detailModalBody.innerHTML = `
       ${coverBlockHtml}
@@ -3897,6 +3983,107 @@
   detailModalOverlay.addEventListener("click", (e)=>{
     if(e.target === detailModalOverlay) closeDetailModal();
   });
+
+  /* ================= v1.53.0: GABUNGKAN BUKU (cetak + ebook) ================= */
+  const gabungModalOverlay = document.getElementById("gabungModalOverlay");
+  const gabungNoUtama = document.getElementById("gabungNoUtama");
+  const gabungNoKedua = document.getElementById("gabungNoKedua");
+  const gabungPratinjau = document.getElementById("gabungPratinjau");
+  const gabungManualBtn = document.getElementById("gabungManualBtn");
+  function normalJudul(s){ return String(s || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9؀-ۿ]+/g, " ").replace(/\s+/g, " ").trim(); }
+  function bigramJudul(s){ const t = " " + s + " "; const m = new Map(); for(let i = 0; i < t.length - 1; i++){ const g = t.slice(i, i + 2); m.set(g, (m.get(g) || 0) + 1); } return m; }
+  function diceJudul(A, B){ let sama = 0, a = 0, b = 0; for(const v of A.values()) a += v; for(const v of B.values()) b += v; for(const [g, v] of A) sama += Math.min(v, B.get(g) || 0); return a + b ? 2 * sama / (a + b) : 0; }
+  /* Pasangan cetak (yang belum punya ebook) + entri ebook terpisah. */
+  function cariPasanganKembar(){
+    const cetak = books.filter(b => isBukuCetak(b) && !b.ebook).map(b => ({ b, n: normalJudul(b.judul) })).filter(x => x.n);
+    const ebook = books.filter(b => b.jenisBuku === "digital").map(b => ({ b, n: normalJudul(b.judul) })).filter(x => x.n);
+    const sama = [], mirip = [];
+    const bgE = ebook.map(x => bigramJudul(x.n));
+    for(const c of cetak){
+      const bgC = bigramJudul(c.n);
+      ebook.forEach((e, i) => {
+        if(e.n === c.n) sama.push([c.b, e.b]);
+        else { const s = diceJudul(bgC, bgE[i]); if(s >= 0.8) mirip.push([c.b, e.b, s]); }
+      });
+    }
+    mirip.sort((x, y) => y[2] - x[2]);
+    return { sama, mirip: mirip.slice(0, 30) };
+  }
+  function ringkasBuku(b){
+    return (isBukuCetak(b) ? "📖" : "📱") + " <b>" + escapeHtml(b.noDok || "-") + "</b> · " + escapeHtml(b.judul || "-") +
+      (b.penulis ? " — " + escapeHtml(b.penulis) : "") + (b.penerbit ? " · " + escapeHtml(b.penerbit) : "") + (b.tahunTerbit ? " " + escapeHtml(b.tahunTerbit) : "");
+  }
+  function htmlPasangan(p){
+    return '<div class="gabung-pasangan"><div class="gp-judul">' + escapeHtml(p[0].judul || "-") + (p[2] ? ' <span class="no-dok">(mirip ' + Math.round(p[2] * 100) + '%)</span>' : '') + '</div>' +
+      '<div class="gp-baris">' + ringkasBuku(p[0]) + '</div><div class="gp-baris">' + ringkasBuku(p[1]) + '</div>' +
+      '<div class="gp-aksi"><button type="button" class="btn btn-edit" data-gabung-utama="' + escapeHtml(p[0].noDok) + '" data-gabung-kedua="' + escapeHtml(p[1].noDok) + '">🔗 Gabungkan</button></div></div>';
+  }
+  function renderGabungModal(){
+    pastikanNoDok();
+    const { sama, mirip } = cariPasanganKembar();
+    document.getElementById("gabungDaftarSama").innerHTML = sama.length ? sama.map(htmlPasangan).join("") : '<div class="no-dok">Tidak ada buku kembar.</div>';
+    document.getElementById("gabungDaftarMirip").innerHTML = mirip.length ? mirip.map(htmlPasangan).join("") : '<div class="no-dok">Tidak ada.</div>';
+    perbaruiPratinjauGabung();
+  }
+  function cekBisaGabung(utama, kedua){
+    if(!utama || !kedua) return "Nomor dokumen tidak ditemukan.";
+    if(utama === kedua) return "Nomor utama dan kedua tidak boleh sama.";
+    if(utama.ebook && kedua.ebook) return "Kedua buku sama-sama sudah punya ebook Telegram — tidak bisa digabung otomatis.";
+    return "";
+  }
+  function perbaruiPratinjauGabung(){
+    const u = cariBukuDenganNoDok(gabungNoUtama.value), k = cariBukuDenganNoDok(gabungNoKedua.value);
+    if(!gabungNoUtama.value.trim() && !gabungNoKedua.value.trim()){ gabungPratinjau.innerHTML = ""; gabungManualBtn.disabled = true; return; }
+    const err = (u && k) ? cekBisaGabung(u, k) : "";
+    gabungPratinjau.innerHTML =
+      (u ? "Utama: " + ringkasBuku(u) : (gabungNoUtama.value.trim() ? "⚠️ Nomor utama tidak ditemukan" : "")) + "<br>" +
+      (k ? "Digabungkan: " + ringkasBuku(k) : (gabungNoKedua.value.trim() ? "⚠️ Nomor kedua tidak ditemukan" : "")) +
+      (err ? "<br>⚠️ " + escapeHtml(err) : "");
+    gabungManualBtn.disabled = !(u && k) || !!err;
+  }
+  /* Inti penggabungan. ISBN & jumlah halaman TIDAK dipindahkan (cetak & ebook beda). */
+  function gabungkanBuku(utama, kedua){
+    const err = cekBisaGabung(utama, kedua);
+    if(err){ showToast("⚠️ " + err, "error"); return false; }
+    const kosong = (v) => v === undefined || v === null || String(v).trim() === "";
+    for(const f of ["penulis", "penerbit", "tahunTerbit", "kategori"]) if(kosong(utama[f]) && !kosong(kedua[f])) utama[f] = kedua[f];
+    if(kosong(utama.sampulUrl) && kosong(utama.sampulManualUrl)){ utama.sampulUrl = kedua.sampulUrl || ""; utama.sampulManualUrl = kedua.sampulManualUrl || ""; }
+    if(kedua.ebook){
+      utama.ebook = Object.assign({}, kedua.ebook, { kode: kedua.ebook.kode || kedua.id, isbn: kedua.ebook.isbn || (kedua.jenisBuku === "digital" ? (kedua.isbn || "") : "") });
+    } else if(kedua.jenisBuku === "digital" && kedua.pdfLink && !(utama.ebook && utama.ebook.driveLink) && isBukuCetak(utama)){
+      utama.ebook = Object.assign({}, utama.ebook || {}, { driveLink: kedua.pdfLink, isbn: kedua.isbn || "" });
+    } else if(kedua.jenisBuku === "digital" && kedua.pdfLink && !isBukuCetak(utama) && kosong(utama.pdfLink)){
+      utama.pdfLink = kedua.pdfLink;
+    }
+    utama.noDokDigabung = Array.from(new Set([...(utama.noDokDigabung || []), kedua.noDok, ...(kedua.noDokDigabung || [])].filter(Boolean)));
+    utama.updatedAt = Date.now();
+    books = books.filter(b => b !== kedua);
+    tombstones.push({ id: String(kedua.id), deletedAt: Date.now() });
+    saveBooks();
+    renderTable();
+    showToast("✅ " + (kedua.noDok || "") + " digabung ke " + (utama.noDok || ""), "success");
+    return true;
+  }
+  function konfirmasiGabung(noUtama, noKedua){
+    const u = cariBukuDenganNoDok(noUtama), k = cariBukuDenganNoDok(noKedua);
+    const err = cekBisaGabung(u, k);
+    if(err){ showToast("⚠️ " + err, "error"); return; }
+    const teks = "Gabungkan buku ini?\n\nUTAMA (dipertahankan): " + u.noDok + " · " + (u.judul || "-") + (isBukuCetak(u) ? " [Cetak]" : " [Ebook]") +
+      "\nDIGABUNGKAN (dihapus): " + k.noDok + " · " + (k.judul || "-") + (isBukuCetak(k) ? " [Cetak]" : " [Ebook]") +
+      "\n\nEbook & data yang kosong pindah ke buku utama. ISBN & jumlah halaman buku utama tidak diubah.";
+    if(!confirm(teks)) return;
+    if(gabungkanBuku(u, k)){ gabungNoUtama.value = ""; gabungNoKedua.value = ""; renderGabungModal(); }
+  }
+  document.getElementById("openGabungBtn").addEventListener("click", ()=>{ renderGabungModal(); gabungModalOverlay.classList.add("open"); });
+  document.getElementById("gabungModalClose").addEventListener("click", ()=> gabungModalOverlay.classList.remove("open"));
+  gabungModalOverlay.addEventListener("click", (e)=>{
+    if(e.target === gabungModalOverlay){ gabungModalOverlay.classList.remove("open"); return; }
+    const btn = e.target.closest("[data-gabung-utama]");
+    if(btn) konfirmasiGabung(btn.getAttribute("data-gabung-utama"), btn.getAttribute("data-gabung-kedua"));
+  });
+  gabungNoUtama.addEventListener("input", perbaruiPratinjauGabung);
+  gabungNoKedua.addEventListener("input", perbaruiPratinjauGabung);
+  gabungManualBtn.addEventListener("click", ()=> konfirmasiGabung(gabungNoUtama.value, gabungNoKedua.value));
 
   // ---------- Modal Riwayat Update (Changelog) ----------
   const openChangelogBtn = document.getElementById("openChangelogBtn");
@@ -4450,6 +4637,7 @@
       const localTombstonesBefore = canonicalize(tombstones);
 
       const merged = mergeBooksAndTombstones(books, tombstones, remoteBooks, remoteTombstones);
+      pastikanNoDok(merged.books); // v1.53.0: buku yang baru masuk (mis. dari bot Telegram) ikut dinomori
       const remoteNeedsUpdate =
         canonicalize(merged.books) !== canonicalize(remoteBooks) ||
         canonicalize(merged.tombstones) !== canonicalize(remoteTombstones);
@@ -4500,10 +4688,23 @@
       });
 
       if(!res.ok && (res.status === 409 || res.status === 422)){
-        // sha basi -> ambil sha terbaru lalu retry sekali
-        const getRes = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}`, { headers: ghHeaders() });
+        // sha basi -> ambil versi terbaru, GABUNGKAN dulu (v1.53.0: sebelumnya langsung ditimpa, sehingga buku yang
+        // baru ditambahkan bot Telegram / perangkat lain di sela-sela itu bisa hilang), lalu retry sekali
+        const getRes = await fetch(`${ghApiUrl()}?ref=${encodeURIComponent(ghConfig.branch)}&_=${Date.now()}`, { headers: ghHeaders(), cache: "no-store" });
         if(getRes.ok){
           const getData = await getRes.json();
+          try{
+            const parsedRemote = JSON.parse(b64DecodeUnicode(String(getData.content || "").replace(/\n/g, "")));
+            const mergedRetry = mergeBooksAndTombstones(books, tombstones,
+              Array.isArray(parsedRemote) ? parsedRemote : (parsedRemote.books || []),
+              Array.isArray(parsedRemote) ? [] : (parsedRemote.tombstones || []));
+            pastikanNoDok(mergedRetry.books);
+            books = mergedRetry.books; tombstones = mergedRetry.tombstones;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+            localStorage.setItem(TOMBSTONES_KEY, JSON.stringify(tombstones));
+            body.content = b64EncodeUnicode(JSON.stringify({ books, tombstones }, null, 2));
+            renderTable();
+          }catch(eMerge){ console.warn("Gabung ulang sebelum retry gagal:", eMerge); }
           body.sha = getData.sha;
           res = await fetch(ghApiUrl(), {
             method: "PUT",
@@ -5388,6 +5589,7 @@
   // seluruh otentikasi kini murni ditangani oleh Cloudflare Worker (GITHUB_WORKER_URL)
   // lewat Secret Env di dasbornya.
   loadBooks();
+  if(pastikanNoDok()){ localStorage.setItem(STORAGE_KEY, JSON.stringify(books)); } // v1.53.0: penomoran awal
   renderTable();
   loadGhConfig();
   
