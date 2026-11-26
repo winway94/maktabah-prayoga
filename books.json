@@ -1780,6 +1780,36 @@
       "sampulUrl": "",
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/f:webp/plain/https://cdn.gramedia.com/uploads/product-metas/a-ahejusak.jpg",
       "updatedAt": 1790670163831
+    },
+    {
+      "id": "mwwt7p175fl3s",
+      "createdAt": 1795652631410,
+      "updatedAt": 1795652631410,
+      "judul": "Mukaddimah Ibnu Khaldun",
+      "penulis": "Ibnu Khaldun",
+      "kategori": "Sejarah & Historiografi",
+      "jenisBuku": "digital",
+      "pdfLink": "",
+      "tahunTerbit": "",
+      "jumlahHalaman": "1336",
+      "isbn": "",
+      "lokasiRak": "Telegram",
+      "penerbit": "",
+      "pemilik": "",
+      "halamanTerakhir": "",
+      "status": "belum",
+      "peminjam": "",
+      "tanggalPinjam": "",
+      "sampulUrl": "",
+      "sampulManualUrl": "",
+      "ebook": {
+        "format": "PDF",
+        "ukuran": 59697514,
+        "namaFile": "Mukaddimah Ibnu Khaldun.pdf",
+        "bot": "maktabah_prayoga_bot",
+        "ditambahkan": 1795652631410,
+        "post": "https://t.me/c/5794350539/3"
+      }
     }
   ],
   "tombstones": []
