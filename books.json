@@ -1427,8 +1427,21 @@
       "tanggalPinjam": "",
       "sampulUrl": "",
       "sampulManualUrl": "https://www.kautsar.co.id/wp-content/uploads/2025/02/book_mukaddimah.jpg",
-      "updatedAt": 1795686884819,
-      "noDok": "MP-0062"
+      "updatedAt": 1795686967192,
+      "noDok": "MP-0062",
+      "ebook": {
+        "format": "PDF",
+        "ukuran": 59697514,
+        "namaFile": "Mukaddimah Ibnu Khaldun.pdf",
+        "bot": "maktabah_prayoga_bot",
+        "ditambahkan": 1795652631410,
+        "post": "https://t.me/c/5794350539/3",
+        "kode": "mwwt7p175fl3s",
+        "isbn": ""
+      },
+      "noDokDigabung": [
+        "MP-0081"
+      ]
     },
     {
       "id": "mrowiacu9x2ll",
@@ -1861,38 +1874,12 @@
       "sampulManualUrl": "https://image.gramedia.net/rs:fit:0:0/f:webp/plain/https://cdn.gramedia.com/uploads/product-metas/a-ahejusak.jpg",
       "updatedAt": 1795686884819,
       "noDok": "MP-0080"
-    },
-    {
-      "id": "mwwt7p175fl3s",
-      "createdAt": 1795652631410,
-      "updatedAt": 1795686884819,
-      "judul": "Mukaddimah Ibnu Khaldun",
-      "penulis": "Ibnu Khaldun",
-      "kategori": "Sejarah & Historiografi",
-      "jenisBuku": "digital",
-      "pdfLink": "",
-      "tahunTerbit": "",
-      "jumlahHalaman": "1336",
-      "isbn": "",
-      "lokasiRak": "Telegram",
-      "penerbit": "",
-      "pemilik": "",
-      "halamanTerakhir": "",
-      "status": "belum",
-      "peminjam": "",
-      "tanggalPinjam": "",
-      "sampulUrl": "",
-      "sampulManualUrl": "",
-      "ebook": {
-        "format": "PDF",
-        "ukuran": 59697514,
-        "namaFile": "Mukaddimah Ibnu Khaldun.pdf",
-        "bot": "maktabah_prayoga_bot",
-        "ditambahkan": 1795652631410,
-        "post": "https://t.me/c/5794350539/3"
-      },
-      "noDok": "MP-0081"
     }
   ],
-  "tombstones": []
+  "tombstones": [
+    {
+      "id": "mwwt7p175fl3s",
+      "deletedAt": 1795686967193
+    }
+  ]
 }
